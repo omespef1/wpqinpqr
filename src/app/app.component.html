@@ -1,20 +1,191 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="container">
+  <form #pqrForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <!-- Tipo de solicitid -->
+      <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12">
+        <label for="ite_tpqr">Tipo de solicitud</label>
+        <select class="form-control" id="ite_tpqr" name="ite_tpqr" [(ngModel)]="pqr.ite_pqr" required #ite_tpqr="ngModel">
+          <option *ngFor="let type of GnItemsItePqr" [value]="type.ite_cont">{{type.ite_nomb}}</option>
+        </select>
+        <div [hidden]="ite_tpqr.valid || ite_tpqr.pristine" class="alert alert-danger">
+          Tipo de solicitud es requerido
+        </div>
+      </div>
+      <!-- Asunto -->
+      <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12">
+        <label for="ite_tipi">Asunto</label>
+        <select class="form-control" id="ite_tipi" name="ite_tipi" [(ngModel)]="pqr.ite_tipo" required #ite_tipi="ngModel">
+          <option *ngFor="let type of GnItemsIteTipi" [value]="type.ite_cont">{{type.ite_nomb}}</option>
+        </select>
+        <div [hidden]="ite_tipi.valid || ite_tipi.pristine" class="alert alert-danger">
+          Asunto es requerido
+        </div>
+      </div>
+      <!-- Medio de respuesta -->
+      <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12">
+        <label for="inp_mres">Medio de respuesta</label>
+        <select class="form-control" id="inp_mres" name="inp_mres" [(ngModel)]="pqr.inp_mres" required #inp_mres="ngModel">
+          <option value="C">Correo electrónico</option>
+          <option value="D">Dirección</option>
+          <option value="O">Otro</option>
+        </select>
+        <div [hidden]="inp_mres.valid || inp_mres.pristine" class="alert alert-danger">
+          Medio de respuesta es requerido
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- nombres -->
+      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+        <label for="inp_nomb"></label>Nombres
+        <div class="input-group">
+          <span class="input-group-addon"></span>
+          <input type="text" class="form-control" name="inp_nomb" id="inp_nomb" [(ngModel)]="pqr.inp_nomb" required>
+          <div [hidden]="inp_nomb.valid || inp_nomb.pristine" class="alert alert-danger">
+            Nombres son requeridos
+          </div>
+        </div>
+      </div>
+      <!-- Apellidos -->
+      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+        <label for="inp_apel"></label>
+        <div class="input-group">
+          <span class="input-group-addon"></span>
+          <input type="text" class="form-control" placeholder="Apellidos" name="inp_apel" id="inp_apel" [(ngModel)]="pqr.inp_apel" required>
+          <div [hidden]="inp_apel.valid || inp_apel.pristine" class="alert alert-danger">
+            Apellidos son requeridos
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Tipo de documento -->
+      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+        <label for="inp_tido"></label>
+        <select class="form-control" id="inp_tido" name="inp_tido" [(ngModel)]="pqr.inp_tido" required #inp_tido="ngModel">
+          <option *ngFor="let type of GnItemsInp_tido" [value]="type.ite_cont">{{type.ite_nomb}}</option>
+        </select>
+        <div [hidden]="inp_tido.valid || inp_tido.pristine" class="alert alert-danger">
+          Tipo de documento es requerido
+        </div>
+      </div>
+      <!-- Número de documento -->
+      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+        <label for="inp_nide"></label>
+        <div class="input-group">
+          <span class="input-group-addon"></span>
+          <input type="text" class="form-control" placeholder="Número de documento" name="inp_nide" id="inp_nide" [(ngModel)]="pqr.inp_nide" required>
+          <div [hidden]="inp_nide.valid || inp_nide.pristine" class="alert alert-danger">
+            Número de documento requerido
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Dirección -->
+      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+        <label for="inp_dire"></label>
+        <div class="input-group">
+          <span class="input-group-addon"></span>
+          <input type="text" class="form-control" placeholder="Dirección" name="inp_dire" id="inp_dire" [(ngModel)]="pqr.inp_dire" required>
+          <div [hidden]="inp_dire.valid || inp_dire.pristine" class="alert alert-danger">
+            Dirección es requerida
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Fijo -->
+      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+        <label for="inp_ntel"></label>
+        <div class="input-group">
+          <span class="input-group-addon"></span>
+          <input type="tel" class="form-control" placeholder="Teléfono fijo" name="inp_ntel" id="inp_ntel" [(ngModel)]="pqr.inp_ntel" required>
+          <div [hidden]="inp_ntel.valid || inp_ntel.pristine" class="alert alert-danger">
+            Teléfono fijo requerido
+          </div>
+        </div>
+      </div>
+      <!-- Celular -->
+      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+        <label for="inp_ncel"></label>
+        <div class="input-group">
+          <span class="input-group-addon"></span>
+          <input type="tel" class="form-control" placeholder="Teléfono Celular" name="inp_ncel" id="inp_ncel" [(ngModel)]="pqr.inp_ncel" required>
+          <div [hidden]="inp_ncel.valid || inp_ncel.pristine" class="alert alert-danger">
+            Teléfono celular requerido
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Email -->
+      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+        <label for="inp_mail"></label>
+        <div class="input-group">
+          <span class="input-group-addon"></span>
+          <input type="email" class="form-control" placeholder="Email" name="inp_mail" id="inp_mail" [(ngModel)]="pqr.inp_mail" required>
+          <div [hidden]="inp_mail.valid || inp_mail.pristine" class="alert alert-danger">
+            Email requerido
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- País -->
+      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+        <label for="pai_codi"></label>
+        <select class="form-control" id="pai_codi" name="pai_codi" [(ngModel)]="pqr.pai_codi" required #pai_codi="ngModel">
+          <option *ngFor="let paise of gnpaise" [value]="paise.pai_codi">{{paise.pai_nomb}}</option>
+        </select>
+        <div [hidden]="pai_codi.valid || pai_codi.pristine" class="alert alert-danger">
+          País requerido
+        </div>
+      </div>
+      <!-- Grupo -->
+      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+        <label for="inp_gper"></label>
+        <select class="form-control" id="inp_gper" name="inp_gper" [(ngModel)]="pqr.inp_gper" required #inp_gper="ngModel">
+          <option *ngFor="let dpara of pqdpara" [value]="dpara.dpa_codi">{{dpara.dpa_nomb}}</option>
+        </select>
+        <div [hidden]="inp_gper.valid || inp_gper.pristine" class="alert alert-danger">
+          Grupo es requerido
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Archivo -->
+      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+        <label for="adj_file"></label>
+        <div class="input-group">
+          <span class="input-group-addon"></span>
+          <input type="file" class="form-control" placeholder="Adjunta un archivo" name="adj_file" id="adj_file" [(ngModel)]="adj_file">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Texto archivo -->
+      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+        <p>
+          Cuando requiera o sea de su interés presentar algún documento que soporte su petición puede adjuntarlo en esta sección.
+          Lo anterior sin perjuicio a que dichos documentos de conformidad con la Ley, deba allegarse de forma física.
+          Nota: Los documentos permitidos deben ser de tipo .PDF .DOC .DOCX .JPG .PNG .XLS .XLSX.
+          Tamaño máximo permitido de archivo 2MB.
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <!-- captcha -->
+      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
 
+      </div>
+    </div>
+    <div class="row">
+      <!-- Boton enviar -->
+      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+        <button type="submit" class="btn btn-success" [disabled]="!heroForm.form.valid">Enviar PQR</button>
+      </div>
+    </div>
+  </form>
+</div>
