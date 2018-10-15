@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule,ReactiveFormsModule }   from '@angular/forms';
-
+import { FormsModule } from '@angular/forms';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { AppComponent } from './app.component';
 
 @NgModule({
@@ -10,8 +10,8 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     FormsModule,                               // <========== Add this line!
-     ReactiveFormsModule   ,
-    BrowserModule
+    BrowserModule,
+    Ng4LoadingSpinnerModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
