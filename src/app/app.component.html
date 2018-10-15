@@ -42,11 +42,8 @@
       <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
         <label for="inp_nomb">Nombres</label>
         <div class="input-group">
-              
                 <input type="text" class="form-control"  placeholder="Nombres" name="inp_nomb" id="inp_nomb" [(ngModel)]="pqr.inp_nomb" required #inp_nomb="ngModel">
               </div>
-
-
           <div [hidden]="inp_nomb.valid || inp_nomb.pristine" class="alert alert-danger">
             Nombres son requeridos
           </div>
