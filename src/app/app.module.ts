@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+//Services
+import {ComunicationsService} from '../services/comunications.service';
 
 @NgModule({
   declarations: [
@@ -11,9 +14,12 @@ import { AppComponent } from './app.component';
   imports: [
     FormsModule,                               // <========== Add this line!
     BrowserModule,
-    Ng4LoadingSpinnerModule.forRoot()
+    Ng4LoadingSpinnerModule.forRoot(),
+      HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    ComunicationsService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
