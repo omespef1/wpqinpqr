@@ -30,7 +30,7 @@ export class AppComponent {
   inscription:number=0;
   safeHtml: SafeHtml;
   constructor(private spinnerService: Ng4LoadingSpinnerService, private _comu: ComunicationsService,private sanitizer: DomSanitizer) {
-    this.Load();
+    //this.Load();
 
   }
 
