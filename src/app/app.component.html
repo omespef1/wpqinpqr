@@ -1,7 +1,7 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="container">
-  <div class="card card-primary">
-    <div class="card-header">Nueva PQR</div>
+  <div class="card">
+    <div class="card-header bg-primary text-white">Nueva PQR</div>
     <div class="card-body">
       <form #pqrForm="ngForm" (ngSubmit)="PostPqr(pqrForm)">
         <ng4-loading-spinner> </ng4-loading-spinner>
@@ -324,12 +324,12 @@
         <div class="row">
           <!-- Texto archivo -->
           <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-            <p>
+            <strong>
               Cuando requiera o sea de su interés presentar algún documento que soporte su petición puede adjuntarlo en esta sección.
               Lo anterior sin perjuicio a que dichos documentos de conformidad con la Ley, deba allegarse de forma física.
               Nota: Los documentos permitidos deben ser de tipo .PDF .DOC .DOCX .JPG .PNG .XLS .XLSX.
               Tamaño máximo permitido de archivo 2MB.
-            </p>
+          </strong>
           </div>
         </div>
         <div class="row">
@@ -341,7 +341,7 @@
         <div class="row">
           <!-- Boton enviar -->
           <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center">
-            <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="!pqrForm.form.valid">Generar nueva PQR</button>
+            <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!pqrForm.form.valid">Generar nueva PQR</button>
           </div>
         </div>
       </form>
