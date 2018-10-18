@@ -1,222 +1,275 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="container">
+  <div class="card card-primary">
+    <div class="card-header">Nueva PQR</div>
+    <div class="card-body">
+      <form #pqrForm="ngForm" (ngSubmit)="PostPqr(pqrForm)">
+        <ng4-loading-spinner> </ng4-loading-spinner>
+        <div class="row">
+          <!-- Tipo de solicitid -->
+          <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+            <label for="ite_tpqr">Tipo de solicitud</label>
+            <select class="form-control" id="ite_tpqr" name="ite_tpqr" [(ngModel)]="pqr.ite_tpqr" required #ite_tpqr="ngModel">
+              <option *ngFor="let type of GnItemsItePqr" (change)="lookForInscription()" [value]="type.ite_cont">{{type.ite_nomb | titlecase}}</option>
+            </select>
+            <div [hidden]="ite_tpqr.valid || ite_tpqr.pristine" class="alert alert-danger">
+              Tipo de solicitud es requerido
+            </div>
+          </div>
+          <!-- Area de inscripción -->
+          <div *ngIf="pqr.ite_tpqr == inscription" class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+            <label for="ite_stip">Area de inscripción</label>
+            <select class="form-control" id="ite_stip" name="ite_stip" [(ngModel)]="pqr.ite_stip" required #ite_stip="ngModel">
+              <option *ngFor="let type of GnItemsIte_stip" [value]="type.ite_cont">{{type.ite_nomb}}</option>
+            </select>
+            <div [hidden]="ite_stip.valid || ite_stip.pristine" class="alert alert-danger">
+              Area de inscripción requerida
+            </div>
+          </div>
+          <!-- Asunto -->
+          <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+            <label for="ite_tipi">Asunto</label>
+            <select class="form-control" id="ite_tipi" name="ite_tipi" [(ngModel)]="pqr.ite_tipi" required #ite_tipi="ngModel">
+              <option *ngFor="let type of GnItemsIteTipi" [value]="type.ite_cont">{{type.ite_nomb | titlecase}}</option>
+            </select>
+            <div [hidden]="ite_tipi.valid || ite_tipi.pristine" class="alert alert-danger">
+              Asunto es requerido
+            </div>
+          </div>
+          <!-- Medio de respuesta -->
+          <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+            <label for="inp_mres">Medio de respuesta</label>
+            <select class="form-control" id="inp_mres" name="inp_mres" [(ngModel)]="pqr.inp_mres" required #inp_mres="ngModel">
+              <option value="C">Correo electrónico</option>
+              <option value="D">Dirección</option>
+              <option value="O">Otro</option>
+            </select>
+            <div [hidden]="inp_mres.valid || inp_mres.pristine" class="alert alert-danger">
+              Medio de respuesta es requerido
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!-- nombres -->
+          <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+            <label for="inp_nomb">Nombres</label>
+            <div class="input-group">
+<input type="text" class="form-control" placeholder="Nombres" name="inp_nomb" id="inp_nomb" [(ngModel)]="pqr.inp_nomb" required #inp_nomb="ngModel">
+            </div>
+            <div [hidden]="inp_nomb.valid || inp_nomb.pristine" class="alert alert-danger">
+              Nombres son requeridos
+            </div>
 
-  <form #pqrForm="ngForm" (ngSubmit)="onSubmit(pqrForm)">
-    <ng4-loading-spinner> </ng4-loading-spinner>
-    <div class="row">
-      <!-- Tipo de solicitid -->
-      <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12">
-        <label for="ite_tpqr">Tipo de solicitud</label>
-        <select class="form-control" id="ite_tpqr" name="ite_tpqr" [(ngModel)]="pqr.ite_pqr" required #ite_tpqr="ngModel">
-          <option *ngFor="let type of GnItemsItePqr" [value]="type.ite_cont">{{type.ite_nomb}}</option>
-        </select>
-        <div [hidden]="ite_tpqr.valid || ite_tpqr.pristine" class="alert alert-danger">
-          Tipo de solicitud es requerido
+          </div>
+          <!-- Apellidos -->
+          <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+            <label for="inp_apel">Apellidos</label>
+            <div class="input-group">
+
+              <input type="text" class="form-control" placeholder="Apellidos" name="inp_apel" id="inp_apel" [(ngModel)]="pqr.inp_apel" required #inp_apel="ngModel">
+            </div>
+
+            <div [hidden]="inp_apel.valid || inp_apel.pristine" class="alert alert-danger">
+              Apellidos son requeridos
+
+            </div>
+          </div>
         </div>
-      </div>
-      <!-- Asunto -->
-      <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12">
-        <label for="ite_tipi">Asunto</label>
-        <select class="form-control" id="ite_tipi" name="ite_tipi" [(ngModel)]="pqr.ite_tipo" required #ite_tipi="ngModel">
-          <option *ngFor="let type of GnItemsIteTipi" [value]="type.ite_cont">{{type.ite_nomb}}</option>
-        </select>
-        <div [hidden]="ite_tipi.valid || ite_tipi.pristine" class="alert alert-danger">
-          Asunto es requerido
+        <div class="row">
+          <!-- Tipo de documento -->
+          <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+            <label for="inp_tido">Tipo de documento</label>
+            <select class="form-control" id="inp_tido" name="inp_tido" [(ngModel)]="pqr.inp_tido" required #inp_tido="ngModel" #inp_tido="ngModel">
+              <option value="CC">Cédula de Ciudadanía</option>
+              <option value="CE">Cédula de Extranjería</option>
+              <option value="NIT">Identificación Tributaria</option>
+              <option value="PAS">Pasaporte></option>
+              <option value="TI">Tarjeta de Identidad</option>
+              <option value="O">Otro></option>
+            </select>
+            <div [hidden]="inp_tido.valid || inp_tido.pristine" class="alert alert-danger">
+              Tipo de documento es requerido
+            </div>
+          </div>
+          <!-- Número de documento -->
+          <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+            <label for="inp_nide">Número de documento</label>
+
+
+            <input type="text" class="form-control" placeholder="Número de documento" name="inp_nide" id="inp_nide" [(ngModel)]="pqr.inp_nide" required #inp_nide="ngModel">
+            <div [hidden]="inp_nide.valid || inp_nide.pristine" class="alert alert-danger">
+              Número de documento es requerido
+            </div>
+          </div>
+
         </div>
-      </div>
-      <!-- Medio de respuesta -->
-      <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12">
-        <label for="inp_mres">Medio de respuesta</label>
-        <select class="form-control" id="inp_mres" name="inp_mres" [(ngModel)]="pqr.inp_mres" required #inp_mres="ngModel">
-          <option value="C">Correo electrónico</option>
-          <option value="D">Dirección</option>
-          <option value="O">Otro</option>
-        </select>
-        <div [hidden]="inp_mres.valid || inp_mres.pristine" class="alert alert-danger">
-          Medio de respuesta es requerido
+        <div class="row">
+          <!-- Dirección -->
+          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+            <label for="inp_dire">Dirección</label>
+
+
+            <input type="text" class="form-control" placeholder="Dirección" name="inp_dire" id="inp_dire" [(ngModel)]="pqr.inp_dire" required #inp_dire="ngModel">
+            <div [hidden]="inp_dire.valid || inp_dire.pristine" class="alert alert-danger">
+              Dirección es requerida
+            </div>
+
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <!-- nombres -->
-      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-        <label for="inp_nomb">Nombres</label>
-        <div class="input-group">
-                <input type="text" class="form-control"  placeholder="Nombres" name="inp_nomb" id="inp_nomb" [(ngModel)]="pqr.inp_nomb" required #inp_nomb="ngModel">
+        <div class="row">
+          <!-- Fijo -->
+          <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+            <label for="inp_ntel">Teléfono fijo</label>
+            <input type="number" class="form-control" placeholder="Teléfono fijo" name="inp_ntel" id="inp_ntel" [(ngModel)]="pqr.inp_ntel" required #inp_ntel="ngModel">
+            <div [hidden]="inp_ntel.valid || inp_ntel.pristine" class="alert alert-danger">
+              Teléfono fijo requerido
+            </div>
+
+          </div>
+          <!-- Celular -->
+          <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+            <label for="inp_ncel">Teléfono Celular</label>
+            <div class="input-group">
+              <input type="number" class="form-control" placeholder="Teléfono Celular" name="inp_ncel" id="inp_ncel" [(ngModel)]="pqr.inp_ncel" required #inp_ncel="ngModel">
+            </div>
+            <div [hidden]="inp_ncel.valid || inp_ncel.pristine" class="alert alert-danger">
+              Teléfono celular requerido
+            </div>
+
+          </div>
+        </div>
+        <div class="row">
+          <!-- Email -->
+          <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+            <label for="inp_mail">Email</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">@</div>
               </div>
-          <div [hidden]="inp_nomb.valid || inp_nomb.pristine" class="alert alert-danger">
-            Nombres son requeridos
+              <input type="email" class="form-control" placeholder="Email" name="inp_mail" id="inp_mail" [(ngModel)]="pqr.inp_mail" required #inp_mail="ngModel">
+
+            </div>
+            <div [hidden]="inp_mail.valid || inp_mail.pristine" class="alert alert-danger">
+              Email requerido
+            </div>
+
+
           </div>
-
-      </div>
-      <!-- Apellidos -->
-      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-        <label for="inp_apel">Apellidos</label>
-        <div class="input-group">
-
-                <input type="text" class="form-control" placeholder="Apellidos" name="inp_apel" id="inp_apel" [(ngModel)]="pqr.inp_apel" required #inp_apel="ngModel">
-              </div>
-
-          <div [hidden]="inp_apel.valid || inp_apel.pristine" class="alert alert-danger">
-            Apellidos son requeridos
-
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <!-- Tipo de documento -->
-      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-        <label for="inp_tido">Tipo de documento</label>
-        <select class="form-control" id="inp_tido" name="inp_tido" [(ngModel)]="pqr.inp_tido" required #inp_tido="ngModel" #inp_tido="ngModel">
-          <option *ngFor="let type of GnItemsInp_tido" [value]="type.ite_cont">{{type.ite_nomb}}</option>
-        </select>
-        <div [hidden]="inp_tido.valid || inp_tido.pristine" class="alert alert-danger">
-          Tipo de documento es requerido
-        </div>
-      </div>
-      <!-- Número de documento -->
-      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-        <label for="inp_nide">Número de documento</label>
-
-
-          <input type="text" class="form-control" placeholder="Número de documento" name="inp_nide" id="inp_nide" [(ngModel)]="pqr.inp_nide" required #inp_nide="ngModel">
-          <div [hidden]="inp_nide.valid || inp_nide.pristine" class="alert alert-danger">
-            Número de documento es requerido
+          <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+            <label for="inp_gper">Grupo al que pertenece</label>
+            <select class="form-control" id="inp_gper" name="inp_gper" [(ngModel)]="pqr.inp_gper" required #inp_gper="ngModel" #inp_gper="ngModel">
+              <option *ngFor="let dpara of pqdpara" [value]="dpara.dpa_codi">{{dpara.dpa_grup | titlecase}}</option>
+            </select>
+            <div [hidden]="inp_gper.valid || inp_gper.pristine" class="alert alert-danger">
+              Grupo es requerido
+            </div>
           </div>
         </div>
-
-    </div>
-    <div class="row">
-      <!-- Dirección -->
-      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-        <label for="inp_dire">Dirección</label>
-
-
-          <input type="text" class="form-control" placeholder="Dirección" name="inp_dire" id="inp_dire" [(ngModel)]="pqr.inp_dire" required #inp_dire="ngModel">
-          <div [hidden]="inp_dire.valid || inp_dire.pristine" class="alert alert-danger">
-            Dirección es requerida
+        <div class="row">
+          <!-- País -->
+          <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12">
+            <label for="pai_codi">País</label>
+            <select class="form-control" id="pai_codi" name="pai_codi" [(ngModel)]="pqr.pai_codi" required #pai_codi="ngModel" #pai_codi="ngModel">
+              <option *ngFor="let paise of gnpaise" [value]="paise.pai_codi">{{paise.pai_nomb | titlecase}}</option>
+            </select>
+            <div [hidden]="pai_codi.valid || pai_codi.pristine" class="alert alert-danger">
+              País requerido
+            </div>
           </div>
-
-      </div>
-    </div>
-    <div class="row">
-      <!-- Fijo -->
-      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-        <label for="inp_ntel">Teléfono fijo</label>
-          <input type="number" class="form-control" placeholder="Teléfono fijo" name="inp_ntel" id="inp_ntel" [(ngModel)]="pqr.inp_ntel" required #inp_ntel="ngModel">
-          <div [hidden]="inp_ntel.valid || inp_ntel.pristine" class="alert alert-danger">
-            Teléfono fijo requerido
+          <!-- Departamento -->
+          <div *ngIf="pqr.pai_codi==169" class="col-lg-4 col-md-6 col-xs-12 col-sm-12">
+            <label for="dep_codi">Departamento</label>
+            <select class="form-control" id="dep_codi" (change)="filterCities()" name="dep_codi" [(ngModel)]="pqr.dep_codi" required #dep_codi="ngModel">
+              <option *ngFor="let depar of gndepar" [value]="depar.dep_codi">{{depar.dep_nomb | titlecase}}</option>
+            </select>
+            <div [hidden]="dep_codi.valid || dep_codi.pristine" class="alert alert-danger">
+              Departamento es requerido
+            </div>
           </div>
-
-      </div>
-      <!-- Celular -->
-      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-        <label for="inp_ncel">Teléfono Celular</label>
-        <div class="input-group">
-          <input type="number" class="form-control" placeholder="Teléfono Celular" name="inp_ncel" id="inp_ncel" [(ngModel)]="pqr.inp_ncel" required #inp_ncel="ngModel">
+          <!-- Ciudad -->
+          <div *ngIf="pqr.dep_codi!=0 && pqr.pai_codi==169" class="col-lg-4 col-md-6 col-xs-12 col-sm-12">
+            <label for="mun_codi">Ciudad</label>
+            <select class="form-control" id="mun_codi" name="mun_codi" [(ngModel)]="pqr.mun_codi" required #mun_codi="ngModel">
+              <option *ngFor="let munic of gnmunicF" [value]="munic.mun_codi">{{munic.mun_nomb}}</option>
+            </select>
+            <div [hidden]="mun_codi.valid || mun_codi.pristine" class="alert alert-danger">
+              Ciudad es requerida
+            </div>
           </div>
-          <div [hidden]="inp_ncel.valid || inp_ncel.pristine" class="alert alert-danger">
-            Teléfono celular requerido
-          </div>
+          <!-- Grupo -->
 
-      </div>
-    </div>
-    <div class="row">
-      <!-- Email -->
-      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-        <label for="inp_mail">Email</label>
-        <div class="input-group">
-                <div class="input-group-prepend">
-                  <div class="input-group-text">@</div>
-                </div>
-                <input type="email" class="form-control" placeholder="Email" name="inp_mail" id="inp_mail" [(ngModel)]="pqr.inp_mail" required #inp_mail="ngModel">
-
-              </div>
-              <div [hidden]="inp_mail.valid || inp_mail.pristine" class="alert alert-danger">
-                Email requerido
-              </div>
-
-
-      </div>
-    </div>
-    <div class="row">
-      <!-- País -->
-      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-        <label for="pai_codi">País</label>
-        <select class="form-control" id="pai_codi" name="pai_codi" [(ngModel)]="pqr.pai_codi" required #pai_codi="ngModel" #pai_codi="ngModel">
-          <option *ngFor="let paise of gnpaise" [value]="paise.pai_codi">{{paise.pai_nomb}}</option>
-        </select>
-        <div [hidden]="pai_codi.valid || pai_codi.pristine" class="alert alert-danger">
-          País requerido
         </div>
-      </div>
-      <!-- Grupo -->
-      <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-        <label for="inp_gper">Grupo al que pertenece</label>
-        <select class="form-control" id="inp_gper" name="inp_gper" [(ngModel)]="pqr.inp_gper" required #inp_gper="ngModel" #inp_gper="ngModel">
-          <option *ngFor="let dpara of pqdpara" [value]="dpara.dpa_codi">{{dpara.dpa_nomb}}</option>
-        </select>
-        <div [hidden]="inp_gper.valid || inp_gper.pristine" class="alert alert-danger">
-          Grupo es requerido
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+            <label for="inp_mpqr">Descripción</label>
+
+            <div class="input-group">
+              <textarea type="text" class="form-control" multiple placeholder="Descripción" name="inp_mpqr" id="inp_mpqr" [(ngModel)]="pqr.inp_mpqr" required #inp_mpqr="ngModel"></textarea>
+            </div>
+            <div [hidden]="inp_mpqr.valid || inp_mpqr.pristine" class="alert alert-danger">
+              Debe ingresar una descripción para la PQR
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <!-- Archivo -->
-      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-        <label for="adj_file">Adjunto</label>
+        <div class="row">
+          <!-- Archivo -->
+          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+            <label for="adj_file">Adjunto</label>
 
-          <span class="input-group-addon"></span>
-          <input type="file" class="form-control"   (change)="handleFileInput($event.target.files)" placeholder="Adjunta un archivo" name="adj_file" id="adj_file"  multiple>
+            <span class="input-group-addon"></span>
+            <input type="file" class="form-control" (change)="handleFileInput($event.target.files)" placeholder="Adjunta un archivo" name="adj_file" id="adj_file" multiple>
+          </div>
+
         </div>
+        <div class="row">
+          <!-- Texto archivo -->
+          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+            <p>
+              Cuando requiera o sea de su interés presentar algún documento que soporte su petición puede adjuntarlo en esta sección.
+              Lo anterior sin perjuicio a que dichos documentos de conformidad con la Ley, deba allegarse de forma física.
+              Nota: Los documentos permitidos deben ser de tipo .PDF .DOC .DOCX .JPG .PNG .XLS .XLSX.
+              Tamaño máximo permitido de archivo 2MB.
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <!-- captcha -->
+          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
 
+          </div>
+        </div>
+        <div class="row">
+          <!-- Boton enviar -->
+          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center">
+            <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="!pqrForm.form.valid">Generar nueva PQR</button>
+          </div>
+        </div>
+      </form>
     </div>
-    <div class="row">
-      <!-- Texto archivo -->
-      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-        <p>
-          Cuando requiera o sea de su interés presentar algún documento que soporte su petición puede adjuntarlo en esta sección.
-          Lo anterior sin perjuicio a que dichos documentos de conformidad con la Ley, deba allegarse de forma física.
-          Nota: Los documentos permitidos deben ser de tipo .PDF .DOC .DOCX .JPG .PNG .XLS .XLSX.
-          Tamaño máximo permitido de archivo 2MB.
-        </p>
-      </div>
-    </div>
-    <div class="row">
-      <!-- captcha -->
-      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+  </div>
 
-      </div>
-    </div>
-    <div class="row">
-      <!-- Boton enviar -->
-      <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center">
-        <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="!pqrForm.form.valid">Generar nueva PQR</button>
-      </div>
-    </div>
-  </form>
   <!-- Button trigger modal -->
-<button id="btnModal" hidden type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-  Launch demo modal
-</button>
+  <button id="btnModal" hidden type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Launch demo modal
+  </button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        {{message}}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Mensaje del sistema</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div [innerHTML]="safeHtml" class="modal-body" >
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </div>

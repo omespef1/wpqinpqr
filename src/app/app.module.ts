@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { NgxCaptchaModule } from 'ngx-captcha';
 //Services
 import {ComunicationsService} from '../services/comunications.service';
 
@@ -16,6 +18,7 @@ import {ComunicationsService} from '../services/comunications.service';
     BrowserModule,
     Ng4LoadingSpinnerModule.forRoot(),
       HttpClientModule,
+      AngularFontAwesomeModule
   ],
   providers: [
     ComunicationsService
