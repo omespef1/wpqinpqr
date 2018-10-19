@@ -8,10 +8,14 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 //Services
 import {ComunicationsService} from '../services/comunications.service';
+import { ConsultaComponent } from './consulta/consulta.component';
+import { CreacionComponent } from './creacion/creacion.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ConsultaComponent,
+    CreacionComponent
   ],
   imports: [
     FormsModule,                               // <========== Add this line!

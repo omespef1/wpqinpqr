@@ -5,3 +5,9 @@
 .ng-invalid:not(form)  {
   border-left: 5px solid #a94442; /* red */
 }
+.card-gray {
+  background-color: #f6f6f6 !important;
+}
+strong {
+  color:gray;
+}

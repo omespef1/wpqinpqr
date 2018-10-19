@@ -1,21 +1,20 @@
 import { Component, Input } from '@angular/core';
-import { pqinpqr } from '../classes/pqinpqr';
+import { pqinpqr } from '../../classes/pqinpqr';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { NgForm } from '@angular/forms';
-import { ComunicationsService } from '../services/comunications.service';
+import { ComunicationsService } from '../../services/comunications.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //Models
-import { gnItem } from '../classes/models';
-import { ServiceUrl } from '../assets/config/config';
-//Services
-
+import { gnItem } from '../../classes/models';
+import { ServiceUrl } from '../../assets/config/config';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-creacion',
+  templateUrl: './creacion.component.html',
+  styleUrls: ['./creacion.component.css']
 })
-export class AppComponent {
+export class CreacionComponent implements OnInit {
+
   pqr: pqinpqr = new pqinpqr();
   @Input() GnItemsItePqr: gnItem[];
   @Input() GnItemsIteTipi: gnItem[];
@@ -116,6 +115,5 @@ GetExtension(fileName:string){
   return   fileName.split('.').pop();
 
 }
-
 
 }
