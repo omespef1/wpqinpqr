@@ -1,12 +1,12 @@
-import { Component, Input } from '@angular/core';
-import { pqinpqr } from '../../classes/pqinpqr';
-import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { Component, Input,OnInit } from '@angular/core';
+import { pqinpqr } from '../../../classes/pqinpqr';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { NgForm } from '@angular/forms';
-import { ComunicationsService } from '../../services/comunications.service';
+import { ComunicationsService } from '../../../services/comunications.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 //Models
-import { gnItem } from '../../classes/models';
-import { ServiceUrl } from '../../assets/config/config';
+import { gnItem } from '../../../classes/models';
+import { ServiceUrl } from '../../../assets/config/config';
 
 @Component({
   selector: 'app-creacion',
@@ -29,13 +29,17 @@ export class CreacionComponent implements OnInit {
   inscription: number = 0;
   safeHtml: SafeHtml;
   submitted: boolean = false;
-  constructor(private spinnerService: Ng4LoadingSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer) {
-    this.Load();
-  }
+  loading:string="";
+  constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer) {
 
+  }
+ngOnInit(){
+    this.Load();
+}
   //Carga inicial de datos necesarios
   Load() {
-    this.spinnerService.show();
+    this.spinner.show();
+
     this._comu.Get('api/PqrTransactionLoad').subscribe((resp: any) => {
       console.log(resp);
       if (resp.retorno == 0) {
@@ -50,11 +54,11 @@ export class CreacionComponent implements OnInit {
         this.gndigfl = resp.objTransaction.digiflag.objTransaction;
         //Si el valor seleccionado coincide con el del digiflag se muestra el desplegable de area de inscripción
         this.inscription = this.GnItemsItePqr.filter((t) => t.ite_codi == this.gndigfl.dig_valo)[0].ite_cont;
-        this.spinnerService.hide();
+        this.spinner.hide();
       }
     }, err => {
       console.log(err);
-      this.spinnerService.hide();
+      this.spinner.hide();
       this.showAlertMesssage(`Error conectado con el servidor, verfique que la dirección ${ServiceUrl} sea correcta`);
     })
   }
@@ -71,18 +75,20 @@ export class CreacionComponent implements OnInit {
   //Envío de pqr
   PostPqr(form: NgForm) {
     this.submitted = true;
-    this.spinnerService.show();
+    this.spinner.show();
+    this.loading ="Enviando PQR...";
     this._comu.Post('api/PqInpqr', this.pqr).subscribe((resp: any) => {
-    this.spinnerService.hide();
+    this.spinner.hide();
       if (resp.retorno != undefined) {
         this.submitted = false;
         if (resp.retorno == 0) {
           let inp_cont:number = resp.objTransaction.inp_cont;
           if(this.pqr.adj_file!=null){
             const fd = new FormData();
+              this.loading ="Subiendo adjunto...";
             fd.append('file',this.pqr.adj_file,`${inp_cont}.${this.GetExtension(this.pqr.adj_file.name)}`)   ;
             this._comu.Post('api/upload', fd).subscribe((respAdj:any)=>{
-              debugger;
+
               if(respAdj.retorno==1)
                 this.showAlertMesssage("Se produjo un error subiendo el archivo. Intentelo nuevamente");
                 else {

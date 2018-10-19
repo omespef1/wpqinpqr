@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
@@ -11,7 +11,7 @@ import {ComunicationsService} from '../services/comunications.service';
 import { ConsultaComponent } from './components/consulta/consulta.component';
 import { CreacionComponent } from './components/creacion/creacion.component';
 //RUTAS
-import {appr_routes} from './app-routes';
+import {app_routing} from './app.routes';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,10 +21,10 @@ import {appr_routes} from './app-routes';
   imports: [
     FormsModule,                               // <========== Add this line!
     BrowserModule,
-    Ng4LoadingSpinnerModule.forRoot(),
+  NgxSpinnerModule,
       HttpClientModule,
       AngularFontAwesomeModule,
-      appr_routes
+      app_routing
   ],
   providers: [
     ComunicationsService
