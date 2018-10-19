@@ -8,9 +8,10 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 //Services
 import {ComunicationsService} from '../services/comunications.service';
-import { ConsultaComponent } from './consulta/consulta.component';
-import { CreacionComponent } from './creacion/creacion.component';
-
+import { ConsultaComponent } from './components/consulta/consulta.component';
+import { CreacionComponent } from './components/creacion/creacion.component';
+//RUTAS
+import {appr_routes} from './app-routes';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +23,8 @@ import { CreacionComponent } from './creacion/creacion.component';
     BrowserModule,
     Ng4LoadingSpinnerModule.forRoot(),
       HttpClientModule,
-      AngularFontAwesomeModule
+      AngularFontAwesomeModule,
+      appr_routes
   ],
   providers: [
     ComunicationsService
