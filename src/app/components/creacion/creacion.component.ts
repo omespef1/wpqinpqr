@@ -1,5 +1,5 @@
 import { Component, Input,OnInit } from '@angular/core';
-import { pqinpqr } from '../../../classes/pqinpqr';
+import { pqinpqr } from '../../../classes/models';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgForm } from '@angular/forms';
 import { ComunicationsService } from '../../../services/comunications.service';

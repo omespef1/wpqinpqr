@@ -1,0 +1,28 @@
+import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
+@Component({
+  selector: 'app-alert',
+  templateUrl: './alert.component.html',
+  styleUrls: ['./alert.component.css']
+})
+export class AlertComponent implements OnInit {
+safeHtml:SafeHtml;
+public message:string;
+  constructor(private sanitizer:DomSanitizer) { }
+
+  ngOnInit() {
+  }
+
+
+
+  showMessage(msg:string){
+    this.message = msg;
+    console.log(this.message);
+    document.getElementById("btnModal").click();
+  }
+  showHtmlMessage(msg:string){
+    this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(msg);
+    document.getElementById("btnModal").click();
+  }
+}

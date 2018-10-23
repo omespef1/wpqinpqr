@@ -12,11 +12,15 @@ import { ConsultaComponent } from './components/consulta/consulta.component';
 import { CreacionComponent } from './components/creacion/creacion.component';
 //RUTAS
 import {app_routing} from './app.routes';
+import { AlertComponent } from './components/alert/alert.component';
+import { EstadosPipe } from './pipes/estados.pipe';
 @NgModule({
   declarations: [
     AppComponent,
     ConsultaComponent,
-    CreacionComponent
+    CreacionComponent,
+    AlertComponent,
+    EstadosPipe
   ],
   imports: [
     FormsModule,                               // <========== Add this line!
@@ -24,10 +28,12 @@ import {app_routing} from './app.routes';
   NgxSpinnerModule,
       HttpClientModule,
       AngularFontAwesomeModule,
-      app_routing
+      app_routing,
+
   ],
   providers: [
-    ComunicationsService
+    ComunicationsService,
+    AlertComponent
   ],
   bootstrap: [AppComponent]
 })

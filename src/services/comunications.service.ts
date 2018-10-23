@@ -31,6 +31,25 @@ headers: new HttpHeaders({
     return this.http.post(url, params,constOptions);
 }
 
+open(urlController:string){
+ window.open(`${ServiceUrl}${urlController}`);
+}
+download(urlController:string){
+  let constOptions = {
+headers: new HttpHeaders({
+  'Access-Control-Allow-Origin':'*'
+})
+  }
+  this.http.get(`${ServiceUrl}${urlController}`,{responseType: 'arraybuffer'} )
+      .subscribe(response => this.downLoadFile(response, "image/png"));
+}
+downLoadFile(data: any, type: string) {
+        var blob = new Blob([data], { type: type});
+        var url = window.URL.createObjectURL(blob);
+        var pwa = window.open(url);
+        if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+            alert( 'Please disable your Pop-up blocker and try again.');
+        }
 
-
+}
 }
