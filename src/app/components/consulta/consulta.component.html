@@ -5,7 +5,7 @@
   </div>
 </div>
 <div class="container">
-  <div   class="card card-gray">
+  <div class="card card-gray">
     <div class="card-header bg-primary text-white">Consultar el estado de una Solicitud</div>
     <div class="card-body">
       <form #pqrForm="ngForm" (ngSubmit)="postPqr()">
@@ -16,7 +16,7 @@
             <div class="input-group">
               <div class="input-group-prepend">
                 <div class="input-group-text">
-                  <span>  <span><i class="fas fa-hashtag"></i></span></span>
+                  <span> <span><i class="fas fa-hashtag"></i></span></span>
                 </div>
               </div>
               <input type="number" class="form-control" placeholder="Número de radicado" name="inp_cont" id="inp_cont" [(ngModel)]="pqrIn.inp_cont" required #inp_cont="ngModel">
@@ -143,6 +143,32 @@
           </button>
 
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container pt-3">
+  <div class="card-gray">
+    <div class="card-header bg-primary text-white">
+      Encuesta
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="encuesta"  *ngFor="let ask of encuesta">
+        <div class="encuesta-encabezado">
+          <h3> {{ask.askText}}</h3>
+        </div>
+        <div class="encuesta-body" *ngFor="let answer of ask.askOptions">
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="optradio">{{answer}}
+            </label>
+          </div>
+        </div>
+      </div>
+
+
       </div>
     </div>
   </div>

@@ -29,3 +29,13 @@ export class pqinpqr {
     public inp_gper:number ;
     public adj_file:File= null
 }
+export class ask {
+
+constructor(
+  askText: string,
+  askOptions:string[],
+)
+{}
+
+
+}
