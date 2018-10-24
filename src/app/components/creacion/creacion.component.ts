@@ -14,8 +14,8 @@ import { ServiceUrl } from '../../../assets/config/config';
   styleUrls: ['./creacion.component.css']
 })
 export class CreacionComponent implements OnInit {
-  @ViewChild('pqr_file');
-  fileAttchment: ElementRef;
+  // @ViewChild('pqr_file');
+  // fileAttchment: ElementRef;
   pqr: pqinpqr = new pqinpqr();
   @Input() GnItemsItePqr: gnItem[];
   @Input() GnItemsIteTipi: gnItem[];
@@ -107,13 +107,13 @@ ngOnInit(){
                 else {
                   this.showAlertMesssage(resp.objTransaction.msg);
                   form.reset();
-                  this.fileAttchment.nativeElement.value = "";
+                  // this.fileAttchment.nativeElement.value = "";
                 }
             })
           }else {
             this.showAlertMesssage(resp.objTransaction.msg);
             form.reset();
-              this.fileAttchment.nativeElement.value = "";
+              // this.fileAttchment.nativeElement.value = "";
           }
 
         }

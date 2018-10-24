@@ -51,13 +51,16 @@ logo:string;
 
   }
   async postPqr() {
-    await this.GetInfoPqr();
+  let pqr = <any> await  this.GetInfoPqr();
+  console.log(pqr);
+if(pqr.retorno==0){
     await this.GetAttchment();
     this.GetInfoEncuesta();
     this.submitted = true;
   }
+  }
 
-  async GetInfoPqr() {
+  async GetInfoPqr():any {
     //Obitiene todos los datos de la qpr
     const info: any = <any>await this._conmu.Get(`api/PqInpqr?inp_cont=${this.pqrIn.inp_cont}&inp_pass=${this.pqrIn.inp_pass}`).toPromise();
     console.log(info);
@@ -65,6 +68,7 @@ logo:string;
       console.log(info.objTransaction);
       this.pqr = info.objTransaction;
     }
+    return info;
   }
 
   async LoadPqrFormBasicData() {
@@ -117,7 +121,9 @@ logo:string;
     this._conmu.Post('api/PqEncue', this.encuesta).toPromise().then((resp: any) => {
       this.spinner.hide();
       if (resp.retorno == 0) {
+        this.showEncuesta = false;
         this.alert.showMessage('Encuesta enviada!');
+
       }
       else
         this.alert.showMessage(resp.txtRetorno);
