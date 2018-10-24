@@ -1,3 +1,6 @@
+
+  <!-- <p text-center style="font-size: 15px; color: gray">{{loading}}</p> -->
+
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
     <h1 class="display-4">Formulario de consulta de peticiones quejas y reclamos.</h1>
@@ -5,7 +8,17 @@
   </div>
 </div>
 <div class="container">
-  <div class="card card-gray">
+  <ngx-spinner  bdColor="rgba(51,51,51,0.3)" size="large" >
+    </ngx-spinner>
+
+    <div class="row">
+      <div class="col-lg-4 col-md-1 col-sm-1">
+        <img src="data:image/jpeg;base64,{{logo}}" class="img-fluid" alt="Responsive image">
+      </div>
+    </div>
+
+
+  <div class="card card-gray" *ngIf="!submitted">
     <div class="card-header bg-primary text-white">Consultar el estado de una Solicitud</div>
     <div class="card-body">
       <form #pqrForm="ngForm" (ngSubmit)="postPqr()">
@@ -56,9 +69,9 @@
       </form>
     </div>
   </div>
-</div>
-<div class="container pt-3">
-  <div class="card-gray" *ngIf="pqrForm.submitted">
+
+
+  <div class="card-gray" *ngIf="submitted">
     <div class="card-header bg-primary text-white">
       Datos de la solicitud
     </div>
@@ -145,34 +158,86 @@
         </div>
       </div>
     </div>
-  </div>
+
 </div>
 
-<div class="container pt-3">
-  <div class="card-gray">
+  <div class="card-gray" *ngIf="showEncuesta">
     <div class="card-header bg-primary text-white">
       Encuesta
     </div>
     <div class="card-body">
-      <div class="row">
-        <div class="encuesta"  *ngFor="let ask of encuesta">
-        <div class="encuesta-encabezado">
-          <h3> {{ask.askText}}</h3>
-        </div>
-        <div class="encuesta-body" *ngFor="let answer of ask.askOptions">
-          <div class="form-check">
-            <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optradio">{{answer}}
-            </label>
-          </div>
+      <div>
+      <h3>
+        <h3> {{preguntas[0]}}</h3>
+      </h3>
+      <div class="funkyradio">
+        <div class="funkyradio-default">
+          <input type="radio" name="radio1" id="radio1" (change)="onSelectionChange(1,'Si')" />
+          <label for="radio1">Si</label>
         </div>
       </div>
-
-
+      <div class="funkyradio">
+        <div class="funkyradio-default">
+          <input type="radio" name="radio1" id="radio1" (change)="onSelectionChange(1,'No')" />
+          <label for="radio1">No</label>
+        </div>
       </div>
+    </div>
+ <!-- Segunda pregunta -->
+
+ <div>
+ <h3>
+   <h3> {{preguntas[1]}}</h3>
+ </h3>
+ <div class="funkyradio">
+   <div class="funkyradio-default">
+     <input type="radio" name="radio2" id="radio2"(change)="onSelectionChange(2,'Mala')" />
+     <label for="radio2">Buena</label>
+   </div>
+ </div>
+ <div class="funkyradio">
+   <div class="funkyradio-default">
+     <input type="radio" name="radio2" id="radio2" (change)="onSelectionChange(2,'Buena')"/>
+     <label for="radio2">Mala</label>
+   </div>
+ </div>
+ <div class="funkyradio">
+   <div class="funkyradio-default">
+     <input type="radio" name="radio2" id="radio2" (change)="onSelectionChange(3,'Excelente')"/>
+     <label for="radio2">Excelente</label>
+   </div>
+ </div>
+</div>
+<!-- Tercera preguntas -->
+
+<div>
+<h3>
+  <h3> {{preguntas[2]}}</h3>
+</h3>
+<div class="funkyradio">
+  <div class="funkyradio-default">
+    <input type="radio" name="radio3" id="radio3" (change)="onSelectionChange(3,'Si')" />
+    <label for="radio3">Si</label>
+  </div>
+</div>
+<div class="funkyradio">
+  <div class="funkyradio-default">
+    <input type="radio" name="radio3" id="radio3" (change)="onSelectionChange(3,'No')"/>
+    <label for="radio3">No</label>
+  </div>
+</div>
+</div>
+
+
+
+  <div class="row">
+    <div class="col-md-6">
+      <button type="button" [disabled]="respuestas.length<3" class="btn btn-primary btn-block" (click)="postEncue()">Enviar encuesta</button>
     </div>
   </div>
 </div>
+</div>
 
+</div>
 <app-alert>
 </app-alert>

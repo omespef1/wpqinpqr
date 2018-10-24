@@ -1,4 +1,4 @@
-import { Component, Input,OnInit } from '@angular/core';
+import { Component, Input,OnInit ,ViewChild,ElementRef } from '@angular/core';
 import { pqinpqr } from '../../../classes/models';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgForm } from '@angular/forms';
@@ -14,7 +14,8 @@ import { ServiceUrl } from '../../../assets/config/config';
   styleUrls: ['./creacion.component.css']
 })
 export class CreacionComponent implements OnInit {
-
+  @ViewChild('pqr_file');
+  fileAttchment: ElementRef;
   pqr: pqinpqr = new pqinpqr();
   @Input() GnItemsItePqr: gnItem[];
   @Input() GnItemsIteTipi: gnItem[];
@@ -30,10 +31,14 @@ export class CreacionComponent implements OnInit {
   safeHtml: SafeHtml;
   submitted: boolean = false;
   loading:string="";
+  logo:SafeHtml;
+  allowedFormats:string[];
+  pqr_file:any;
   constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer) {
 
   }
 ngOnInit(){
+  this.allowedFormats = [ "PDF","DOC","DOCX","JPG","PNG","XLS","XLSX"];
     this.Load();
 }
   //Carga inicial de datos necesarios
@@ -52,6 +57,7 @@ ngOnInit(){
         this.gnmunic = resp.objTransaction.cities.objTransaction;
         this.pqdpara = resp.objTransaction.pqrGroup.objTransaction;
         this.gndigfl = resp.objTransaction.digiflag.objTransaction;
+        this.logo = resp.objTransaction.pqrImage;
         //Si el valor seleccionado coincide con el del digiflag se muestra el desplegable de area de inscripción
         this.inscription = this.GnItemsItePqr.filter((t) => t.ite_codi == this.gndigfl.dig_valo)[0].ite_cont;
         this.spinner.hide();
@@ -65,7 +71,14 @@ ngOnInit(){
 
   //Manejo de archivos
   handleFileInput(files: FileList) {
+
     if(files.length>0){
+
+      let extension =this.GetExtension(files[0].name);
+      if(this.allowedFormats.indexOf(extension.toUpperCase())<0){
+        this.showAlertMesssage(`El formato de archivo '${extension}' no es válido`);
+        return;
+      }
       this.pqr.adj_file = files[0];
     }
 
@@ -94,11 +107,13 @@ ngOnInit(){
                 else {
                   this.showAlertMesssage(resp.objTransaction.msg);
                   form.reset();
+                  this.fileAttchment.nativeElement.value = "";
                 }
             })
           }else {
             this.showAlertMesssage(resp.objTransaction.msg);
             form.reset();
+              this.fileAttchment.nativeElement.value = "";
           }
 
         }
