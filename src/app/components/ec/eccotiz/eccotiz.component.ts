@@ -14,9 +14,10 @@ export class EccotizComponent implements OnInit {
      fec_fini:"",
      fec_ffin:""
    }
-  constructor() { }
+  constructor(private _comu:ComunicationsService) { }
 
   ngOnInit() {
+
   }
 
   initSearch(){
