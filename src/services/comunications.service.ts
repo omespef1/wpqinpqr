@@ -52,4 +52,9 @@ downLoadFile(data: any, type: string) {
         }
 
 }
+
+
+Get(){
+this.
+}
 }

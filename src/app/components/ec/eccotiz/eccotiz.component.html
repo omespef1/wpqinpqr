@@ -3,7 +3,7 @@
    <div class="card-header bg-primary text-white">Parámetros de búsqueda</div>
    <div class="card-body">
   <div class="row">
-    <div class="col-lg-3 col-md-4 col-xs-12 col-sm-12">
+    <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
         <label for="ter_coda">Identificación</label>
         <div class="input-group">
           <div class="input-group-prepend">
@@ -16,9 +16,112 @@
        <div [hidden]="ter_coda.valid || ter_coda.pristine" class="alert alert-danger">
          Identificación es requerida
        </div>
-      
+
+    </div>
+    <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+        <label for="ter_nomb">Nombres</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+                <span><i class="fas fa-user-circle"></i></span>
+            </div>
+          </div>
+            <input type="text" disabled class="form-control" placeholder="Nombre" name="ter_nomb" id="ter_nomb" [(ngModel)]="par_busq.ter_nomb" required #ter_nomb="ngModel">
+       </div>
+       <div [hidden]="ter_nomb.valid || ter_nomb.pristine" class="alert alert-danger">
+         Nombre es requerido
+       </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+        <label for="fec_fini">Fecha inicial</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+                <span><i class="fas fa-user-circle"></i></span>
+            </div>
+          </div>
+          <input matInput placeholder="Fecha inicial" [matDatepicker]="fec_finiP" type="text" class="form-control"    name="fec_fini" id="fec_fini" [(ngModel)]="par_busq.fec_fini" required #fec_fini="ngModel">
+          <mat-datepicker-toggle [for]="fec_finiP" ></mat-datepicker-toggle  >
+          <mat-datepicker  #fec_finiP touchUi ></mat-datepicker>
+
+       </div>
+       <div [hidden]="fec_fini.valid || fec_fini.pristine" class="alert alert-danger">
+         Fecha inicial es requerida
+       </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+        <label for="fec_ffin">Fecha final</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+                <span><i class="fas fa-user-circle"></i></span>
+            </div>
+          </div>
+          <input matInput placeholder="Fecha final" [matDatepicker]="fec_ffinP" type="text" class="form-control"    name="fec_ffin" id="fec_ffin" [(ngModel)]="par_busq.fec_ffin" required #fec_ffin="ngModel">
+          <mat-datepicker-toggle [for]="fec_ffinP" ></mat-datepicker-toggle  >
+          <mat-datepicker  #fec_ffinP touchUi ></mat-datepicker>
+
+       </div>
+       <div [hidden]="fec_ffin.valid || fec_ffin.pristine" class="alert alert-danger">
+         Fecha final es requerida
+       </div>
+    </div>
+    <div class="col-md-12 text-center pt-3">
+
+           <button type="button" class="btn btn-success btn-block">Consultar</button>
+
+    </div>
+   </div>
+   </div>
+   <div class="card card-gray">
+  <div class="card-header bg-primary text-white">Cotizaciones</div>
+  <div class="card-body">
+    <div class="row">
+      <ul class="nav nav-pills nav-fill">
+  <li class="nav-item">
+    <a class="nav-link" href="#cotizaciones">Cotizaciones</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Invitados</a>
+  </li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane fade show active" id="cotizaciones" role="tabpanel" aria-labelledby="cotizaciones-tab">...</div>
+  <div class="tab-pane fade show" id="invitados" role="tabpanel" aria-labelledby="invitados-tab">...</div>
+
+</div>
+<div class="cotizaciones">
+  <table class="table table-hover">
+<thead>
+<tr>
+  <th scope="col">Operación</th>
+  <th scope="col">Número</th>
+  <th scope="col">Fecha</th>
+  <th scope="col">Coordinador</th>
+  <th scope="col">Ejecutivo</th>
+  <th scope="col">Capitán</th>
+  <th scope="col">Teléfono contacto</th>
+  <th scope="col">Correo contacto</th>
+  <th scope="col">Observaciones</th>
+</tr>
+</thead>
+<tbody>
+<tr >
+  <th scope="row">1</th>
+  <td>Mark</td>
+  <td>Otto</td>
+  <td>@mdo</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+<div class="invitados">
+
+</div>
+
+
     </div>
   </div>
-   </div>
-   </div>
+  </div>
 </div>
