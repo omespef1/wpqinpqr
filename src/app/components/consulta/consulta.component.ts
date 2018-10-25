@@ -27,7 +27,9 @@ export class ConsultaComponent implements OnInit {
   submitted: boolean = false;
   queryInp_Cont: string = "0";
   queryInp_Pass:string ="";
+  submittedEncue:boolean = false;
 logo:string;
+message:string;
 
   constructor(private _conmu: ComunicationsService, private spinner: NgxSpinnerService, private alert: AlertComponent, private route: ActivatedRoute) {
     this.preguntas.push("¿Su requerimiento fue atendido dentro de los términos establecidos?");
@@ -60,13 +62,17 @@ if(pqr.retorno==0){
   }
   }
 
-  async GetInfoPqr():any {
+  async GetInfoPqr() {
     //Obitiene todos los datos de la qpr
     const info: any = <any>await this._conmu.Get(`api/PqInpqr?inp_cont=${this.pqrIn.inp_cont}&inp_pass=${this.pqrIn.inp_pass}`).toPromise();
     console.log(info);
     if (info.retorno == 0) {
       console.log(info.objTransaction);
       this.pqr = info.objTransaction;
+    }
+    else {
+     this.message = info.txtRetorno;
+      this.alert.showMessage();
     }
     return info;
   }
@@ -81,11 +87,15 @@ if(pqr.retorno==0){
         this.GnItemsItePqr = resp.objTransaction;
       }
     }, err => {
-      this.alert.showMessage('Error conectando con el servidor');
+      this.showMessage('Error conectando con el servidor');
       this.spinner.hide();
       // this.showAlertMesssage(`Error conectado con el servidor, verfique que la dirección ${ServiceUrl} sea correcta`);
     })
 
+  }
+  showMessage(msg:string){
+    this.message = msg;
+    this.alert.showMessage();
   }
 
   async GetAttchment() {
@@ -105,6 +115,8 @@ if(pqr.retorno==0){
 
 
   postEncue() {
+    this.submittedEncue = true;
+    debugger;
     //Envía la encuesta se satisfacción
     this.spinner.show();
     for (let i = 0; i < 3; i++) {
@@ -122,13 +134,13 @@ if(pqr.retorno==0){
       this.spinner.hide();
       if (resp.retorno == 0) {
         this.showEncuesta = false;
-        this.alert.showMessage('Encuesta enviada!');
+        this.showMessage('Encuesta enviada!');
 
       }
       else
-        this.alert.showMessage(resp.txtRetorno);
+        this.showMessage(resp.txtRetorno);
     }, err => {
-      this.alert.showMessage("Error conectando con el servidor");
+      this.showMessage("Error conectando con el servidor");
       this.spinner.hide();
     })
   }
@@ -161,7 +173,7 @@ if(pqr.retorno==0){
       }
     }, err => {
       this.spinner.hide();
-      this.alert.showMessage("Error conectando con el servidor");
+      this.showMessage("Error conectando con el servidor");
     })
 
   }
@@ -172,7 +184,7 @@ async  GetLogo(){
          this.logo = resp.objTransaction.emp_logs;
       }
     },err=>{
-      this.alert.showMessage('Error conectando con el servidor');
+      this.showMessage('Error conectando con el servidor');
     })
   }
 }

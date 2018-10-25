@@ -14,13 +14,15 @@ import { CreacionComponent } from './components/creacion/creacion.component';
 import {app_routing} from './app.routes';
 import { AlertComponent } from './components/alert/alert.component';
 import { EstadosPipe } from './pipes/estados.pipe';
+import { EccotizComponent } from './ec/eccotiz/eccotiz.component';
 @NgModule({
   declarations: [
     AppComponent,
     ConsultaComponent,
     CreacionComponent,
     AlertComponent,
-    EstadosPipe
+    EstadosPipe,
+    EccotizComponent
   ],
   imports: [
     FormsModule,                               // <========== Add this line!

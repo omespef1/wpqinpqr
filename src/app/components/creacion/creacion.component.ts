@@ -27,7 +27,7 @@ export class CreacionComponent implements OnInit {
   @Input() pqdpara: any[];
   gndigfl: any;
   message: string = "";
-  inscription: number = 0;
+  inscription: string = "0";
   safeHtml: SafeHtml;
   submitted: boolean = false;
   loading:string="";
@@ -59,7 +59,7 @@ ngOnInit(){
         this.gndigfl = resp.objTransaction.digiflag.objTransaction;
         this.logo = resp.objTransaction.pqrImage;
         //Si el valor seleccionado coincide con el del digiflag se muestra el desplegable de area de inscripción
-        this.inscription = this.GnItemsItePqr.filter((t) => t.ite_codi == this.gndigfl.dig_valo)[0].ite_cont;
+        this.inscription = this.GnItemsItePqr.filter((t) => t.ite_codi == this.gndigfl.dig_valo)[0].ite_cont.toString();
         this.spinner.hide();
       }
     }, err => {

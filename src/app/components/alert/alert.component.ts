@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
@@ -8,7 +8,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 })
 export class AlertComponent implements OnInit {
 safeHtml:SafeHtml;
-public message:string;
+@Input() message:string;
   constructor(private sanitizer:DomSanitizer) { }
 
   ngOnInit() {
@@ -16,9 +16,8 @@ public message:string;
 
 
 
-  showMessage(msg:string){
-    this.message = msg;
-    console.log(this.message);
+  showMessage(){
+
     document.getElementById("btnModal").click();
   }
   showHtmlMessage(msg:string){
