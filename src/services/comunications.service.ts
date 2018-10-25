@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable ,ErrorHandler} from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import {ServiceUrl} from '../assets/config/config';
-
+//models
+import {ToTransaction} from '../classes/models';
 @Injectable({
   providedIn: 'root'
 })
@@ -11,15 +12,15 @@ export class ComunicationsService {
   constructor(private http: HttpClient) { }
 
   Get(urlController:string){
-    const constOptions = {
-  headers: new HttpHeaders({
-
-    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
-  })
-    }
     let url = `${ServiceUrl}${urlController}`;
   return  this.http.get(url);
   }
+async getAync(urlController:string){
+  await this.http.get<ToTransaction>(`${ServiceUrl}${urlController}`).subscribe((resp:ToTransaction))=>{
+    if(resp.Retorno == 0)
+     return resp.ObjTransaction;
+  });
+}
 
 Post(urlController:string, params:any){
   let constOptions = {
@@ -34,12 +35,9 @@ headers: new HttpHeaders({
 open(urlController:string){
  window.open(`${ServiceUrl}${urlController}`);
 }
+
 download(urlController:string){
-  let constOptions = {
-headers: new HttpHeaders({
-  'Access-Control-Allow-Origin':'*'
-})
-  }
+
   this.http.get(`${ServiceUrl}${urlController}`,{responseType: 'arraybuffer'} )
       .subscribe(response => this.downLoadFile(response, "image/png"));
 }
@@ -54,7 +52,5 @@ downLoadFile(data: any, type: string) {
 }
 
 
-Get(){
-this.
-}
+
 }

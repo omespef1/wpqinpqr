@@ -81,3 +81,8 @@ export class pqEncue {
 
   }
 }
+export interface ToTransaction{
+  Retorno:number;
+  TxtError:string,
+  ObjTransaction:any
+}

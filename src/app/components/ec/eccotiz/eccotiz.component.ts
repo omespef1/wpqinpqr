@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {ComunicationsService} from '../../../../services/comunications.service'
 @Component({
   selector: 'app-eccotiz',
   templateUrl: './eccotiz.component.html',
@@ -16,6 +17,10 @@ export class EccotizComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  initSearch(){
+
   }
 
 }
