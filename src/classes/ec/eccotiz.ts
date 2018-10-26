@@ -98,7 +98,6 @@ export  interface TOEcDespa {
   esp_cont:string;
   des_capa:string;
   ter_codi:string;
-  tip_codi:string;
   des_dinv:string;
   des_ninv:string;
   pro_cont:string;

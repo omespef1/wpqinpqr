@@ -79,90 +79,243 @@
         <div class="row">
           <ul class="nav nav-pills nav-fill">
             <li class="nav-item">
-              <a class="nav-link" href="#cotizaciones">Cotizaciones</a>
+              <a class="nav-link active" data-toggle="tab" href="#cotizaciones">Cotizaciones</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Invitados</a>
+              <a class="nav-link" data-toggle="tab" href="#invitados">Invitados</a>
             </li>
           </ul>
           <div class="tab-content">
-            <div class="tab-pane fade show active" id="cotizaciones" role="tabpanel" aria-labelledby="cotizaciones-tab">...</div>
-            <div class="tab-pane fade show" id="invitados" role="tabpanel" aria-labelledby="invitados-tab">...</div>
+            <div class="tab-pane fade show" id="cotizaciones" role="tabpanel" aria-labelledby="cotizaciones-tab">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Operación</th>
+                    <th scope="col">Número</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Coordinador</th>
+                    <th scope="col">Ejecutivo</th>
+                    <th scope="col">Capitán</th>
+                    <th scope="col">Teléfono contacto</th>
+                    <th scope="col">Correo contacto</th>
+                    <th scope="col">Observaciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let cotizacion of cotizaciones" >
+                    <td>{{cotizacion.top_nomb}}</td>
+                    <td><a  (click)="setCotizacion(cotizacion)" >{{cotizacion.cot_nume}}</a> </td>
+                    <td>{{cotizacion.cot_fech}}</td>
+
+                    <td>{{cotizacion.cor_coor}} - {{cotizacion.cot_ncoo}}</td>
+                    <td>{{cotizacion.ter_coda_ej}} - {{cotizacion.ter_noco_ej}}</td>
+                    <td>{{cotizacion.ter_coda_ej}} - {{cotizacion.ter_noco_ej}}</td>
+                    <td>{{cotizacion.cot_tcoo}} </td>
+                    <td>{{cotizacion.cot_mail}} </td>
+                    <td>{{cotizacion.cot_obse}} </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+            <div class="tab-pane fade show" id="invitados" role="tabpanel" aria-labelledby="invitados-tab">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Número</th>
+                        <th scope="col">Identificación</th>
+                        <th scope="col">Nombre</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let detalle of cotizacion.detalles;let i=index" (click)="showProductos(detalle)">
+                     <th scope="row">{{i+1}}</th>
+                    <td></td>
+                    <td>{{detalle.des_fsal}}</td>
+                    <td>{{detalle.cla_codi}} - {{detalle.cla_nomb}}</td>
+                    <td>{{detalle.esp_codi}} - {{detalle.esp_nomb}}</td>
+                    <td>{{detalle.des_capa}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
           </div>
-          <div class="cotizaciones">
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">Operación</th>
-                  <th scope="col">Número</th>
-                  <th scope="col">Fecha</th>
-                  <th scope="col">Coordinador</th>
-                  <th scope="col">Ejecutivo</th>
-                  <th scope="col">Capitán</th>
-                  <th scope="col">Teléfono contacto</th>
-                  <th scope="col">Correo contacto</th>
-                  <th scope="col">Observaciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let cotizacion of cotizaciones" (click)="showDetalle(cotizacion)">
-                  <td>{{cotizacion.top_nomb}}</td>
-                  <td>{{cotizacion.cot_nume}}</td>
-                  <td>{{cotizacion.cot_fech}}</td>
-                  <td>{{cotizacion.cot_fech}}</td>
-                  <td>{{cotizacion.cor_coor}} - {{cotizacion.cot_ncoo}}</td>
-                  <td>{{cotizacion.ter_coda_ej}} - {{cotizacion.ter_noco_ej}}</td>
-                  <td>{{cotizacion.ter_coda_ej}} - {{cotizacion.ter_noco_ej}}</td>
-                  <td>{{cotizacion.cot_tcoo}} </td>
-                  <td>{{cotizacion.cot_mail}} </td>
-                  <td>{{cotizacion.cot_obse}} </td>
-                </tr>
 
-              </tbody>
-            </table>
-          </div>
 
-          <div class="invitados">
 
-          </div>
 
 
         </div>
       </div>
     </div>
 
-    <div class="card card-gray">
-      <div class="card-header bg-primary text-white">Nueva PQR</div>
-      <div class="card-body">
-        <div class="row">
-          <!-- <div #detalles class="detalle-espacio">
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">Fecha y hora de inicio</th>
-                  <th scope="col">Fecha y hora de finalización</th>
-                  <th scope="col">Clase</th>
-                  <th scope="col">Espacio</th>
-                  <th scope="col">Capacidad</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let detalle of detalles" (click)>
-                  <td>{{detalle.des_fing}}</td>
-                  <td>{{detalle.des_fsal}}</td>
-                  <td>{{detalle.cla_codi}} - {{detalle.cla_nomb}}</td>
-                    <td>{{detalle.esp_codi}} - {{detalle.esp_nomb}}</td>
-                  <td>{{detalle.des_capa}}</td>
-                </tr>
 
-              </tbody>
-            </table>
-          </div> -->
+    <!-- Modal de detalles de espacio -->
 
+
+
+    <button id="btnModalDetalles" hidden type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDetalles">
+  Launch demo modal
+</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalDetalles" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Detalles</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+          </div>
+          <div class="modal-body">
+            <div class="container">
+              <ul class="nav nav-pills flex-column flex-sm-row">
+                <li class="flex-sm-fill text-sm-center nav-link">
+                  <a class="nav-link-active" data-toggle="tab" href="#espacios">Detalle de espacio</a>
+                </li>
+                <li class="flex-sm-fill text-sm-center nav-link">
+                  <a class="nav-link" data-toggle="tab" href="#liquidación">liquidación</a>
+                </li>
+                <li>
+                  <a class="flex-sm-fill text-sm-center nav-link" data-toggle="tab" href="#anticipos">Anticipo</a>
+                </li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane fade show active" id="espacios" role="tabpanel" aria-labelledby="espacios-tab">
+
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                         <th scope="col">#</th>
+                        <th scope="col">Fecha y hora de inicio</th>
+                        <th scope="col">Fecha y hora de finalización</th>
+                        <th scope="col">Clase</th>
+                        <th scope="col">Espacio</th>
+                        <th scope="col">Capacidad</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let detalle of cotizacion.detalles;let i=index" (click)="showProductos(detalle)">
+                         <th scope="row">{{i+1}}</th>
+                        <td>{{detalle.des_fing}}</td>
+                        <td>{{detalle.des_fsal}}</td>
+                        <td>{{detalle.cla_codi}} - {{detalle.cla_nomb}}</td>
+                        <td>{{detalle.esp_codi}} - {{detalle.esp_nomb}}</td>
+                        <td>{{detalle.des_capa}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="tab-pane fade show" id="liquidacion" role="tabpanel" aria-labelledby="liquidacion-tab">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Concepto</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Valor base</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let liquida of cotizacion.liquidacion">
+                        <td>{{liquida.liq_cons}}</td>
+                        <td>{{liquida.liq_valo}}</td>
+                        <td>{{liquida.liq_base}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="tab-pane fade show" id="anticipos" role="tabpanel" aria-labelledby="anticipos-tab">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Tipo de operación </th>
+                        <th scope="col">Número </th>
+                        <th scope="col">Fecha </th>
+                        <th scope="col">Valor </th>
+                        <th scope="col">Saldo </th>
+
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let anticipo of cotizacion.anticipos">
+                        <td>{{anticipo.tip_codi}} - {{anticipo.top_nomb}}</td>
+                        <td>{{anticipo.fac_nume}}</td>
+                        <td>{{anticipo.fac_fech}}</td>
+                        <td>{{anticipo.det_vant}}</td>
+                        <td>{{anticipo.det_sald}}</td>
+
+                      </tr>
+
+                    </tbody>
+                  </table>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+          </div>
         </div>
       </div>
+    </div>
+<!-- Modal de productos -->
+<!-- Button trigger modal -->
+
+<button id="btnModalProductos" hidden type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalProductos">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="modalProductos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Productos</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+      <div  class="modal-body" >
+        <div class="row">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Tipo de operación </th>
+                <th scope="col">Número </th>
+                <th scope="col">Fecha </th>
+                <th scope="col">Valor </th>
+                <th scope="col">Saldo </th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let producto of detalleEspacio.productos">
+                <td>{{producto.tip_codi}} - {{anticipo.top_nomb}}</td>
+                <td>{{producto.fac_nume}}</td>
+                <td>{{producto.fac_fech}}</td>
+                <td>{{producto.det_vant}}</td>
+                <td>{{producto.det_sald}}</td>
+
+              </tr>
+
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
   </div>

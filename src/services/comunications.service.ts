@@ -16,11 +16,12 @@ export class ComunicationsService {
   return  this.http.get(url);
   }
 async getAsync(urlController:string){
-  await this.http.get<ToTransaction>(`${ServiceUrl}${urlController}`).subscribe((resp:ToTransaction))=>{
-    if(resp.Retorno == 0)
+  await this.http.get<ToTransaction>(`${ServiceUrl}${urlController}`).subscribe((resp:ToTransaction)=>{
+    if(resp.Retorno==0){
+      return resp.ObjTransaction;
+    }
+  })
 
-     return resp.ObjTransaction;
-  });
 }
 
 Post(urlController:string, params:any){
