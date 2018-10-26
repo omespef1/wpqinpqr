@@ -1,7 +1,8 @@
 <div class="container">
-  <div class="card card-gray">
+  <div class="card">
     <div class="card-header bg-primary text-white">Parámetros de búsqueda</div>
     <div class="card-body">
+      <form #eccotizForm="ngForm" (ngSubmit)="search()" >
       <div class="row">
         <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
           <label for="ter_coda">Identificación</label>
@@ -68,10 +69,11 @@
         </div>
         <div class="col-md-12 text-center pt-3">
 
-          <button type="button" class="btn btn-success btn-block">Consultar</button>
+          <button type="button" [disabled] ="!eccotizForm.valid" class="btn btn-success btn-block">Consultar</button>
 
         </div>
       </div>
+    </form>
     </div>
     </div>
     <div class="card card-gray">

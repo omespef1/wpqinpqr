@@ -4,6 +4,7 @@ import {ComunicationsService} from '../../../../services/comunications.service'
 
 //models
 import {eccotiz,TOEcDespa} from '../../../../classes/ec/eccotiz';
+import {ToTransaction} from '../../../../classes/models';
 @Component({
   selector: 'app-eccotiz',
   templateUrl: './eccotiz.component.html',
@@ -92,12 +93,16 @@ export class EccotizComponent implements OnInit {
 
   ngOnInit() {
     this.cotizaciones =this.cotizacionesObj;
-    this.coti
+  
     console.log(this.cotizaciones);
   }
 
-  initSearch(){
-   // this.cotizaciones =   this._comu.getAsync('');
+  search(){
+    this._comu.Get(`api/eecotiz?ter_coda=${this.par_busq.ter_coda}&usu_codi=${this.par_busq.usu_codi}&fec`).subscribe((resp:ToTransaction)=>{
+        if(resp.Retorno==0){
+          this.cotizaciones = resp.ObjTransaction;
+        }
+   })
   }
   setCotizacion(cotizacion:eccotiz){
     console.log(cotizacion);
