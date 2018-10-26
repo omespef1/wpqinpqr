@@ -73,6 +73,7 @@
         </div>
       </div>
     </div>
+    </div>
     <div class="card card-gray">
       <div class="card-header bg-primary text-white">Cotizaciones</div>
       <div class="card-body">
@@ -102,9 +103,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let cotizacion of cotizaciones" >
+                  <tr *ngFor="let cotizacion of cotizaciones">
                     <td>{{cotizacion.top_nomb}}</td>
-                    <td><a  (click)="setCotizacion(cotizacion)" >{{cotizacion.cot_nume}}</a> </td>
+                    <td><a (click)="setCotizacion(cotizacion)">{{cotizacion.cot_nume}}</a> </td>
                     <td>{{cotizacion.cot_fech}}</td>
 
                     <td>{{cotizacion.cor_coor}} - {{cotizacion.cot_ncoo}}</td>
@@ -122,15 +123,15 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Número</th>
-                        <th scope="col">Identificación</th>
-                        <th scope="col">Nombre</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Número</th>
+                    <th scope="col">Identificación</th>
+                    <th scope="col">Nombre</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let detalle of cotizacion.detalles;let i=index" (click)="showProductos(detalle)">
-                     <th scope="row">{{i+1}}</th>
+                    <th scope="row">{{i+1}}</th>
                     <td></td>
                     <td>{{detalle.des_fsal}}</td>
                     <td>{{detalle.cla_codi}} - {{detalle.cla_nomb}}</td>
@@ -157,8 +158,8 @@
 
 
     <button id="btnModalDetalles" hidden type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDetalles">
-  Launch demo modal
-</button>
+      Launch demo modal
+    </button>
 
     <!-- Modal -->
     <div class="modal fade" id="modalDetalles" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -167,8 +168,8 @@
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLongTitle">Detalles</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
           <div class="modal-body">
             <div class="container">
@@ -189,7 +190,7 @@
                   <table class="table table-hover">
                     <thead>
                       <tr>
-                         <th scope="col">#</th>
+                        <th scope="col">#</th>
                         <th scope="col">Fecha y hora de inicio</th>
                         <th scope="col">Fecha y hora de finalización</th>
                         <th scope="col">Clase</th>
@@ -199,7 +200,7 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let detalle of cotizacion.detalles;let i=index" (click)="showProductos(detalle)">
-                         <th scope="row">{{i+1}}</th>
+                        <th scope="row">{{i+1}}</th>
                         <td>{{detalle.des_fing}}</td>
                         <td>{{detalle.des_fsal}}</td>
                         <td>{{detalle.cla_codi}} - {{detalle.cla_nomb}}</td>
@@ -263,58 +264,58 @@
         </div>
       </div>
     </div>
-<!-- Modal de productos -->
-<!-- Button trigger modal -->
+    <!-- Modal de productos -->
+    <!-- Button trigger modal -->
 
-<button id="btnModalProductos" hidden type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalProductos">
-  Launch demo modal
-</button>
+    <button id="btnModalProductos" hidden type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalProductos">
+      Launch demo modal
+    </button>
 
-<!-- Modal -->
-<div class="modal fade" id="modalProductos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Productos</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div  class="modal-body" >
-        <div class="row">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col">Tipo de operación </th>
-                <th scope="col">Número </th>
-                <th scope="col">Fecha </th>
-                <th scope="col">Valor </th>
-                <th scope="col">Saldo </th>
+    <!-- Modal -->
+    <div class="modal fade" id="modalProductos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Productos</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">Tipo de operación </th>
+                    <th scope="col">Número </th>
+                    <th scope="col">Fecha </th>
+                    <th scope="col">Valor </th>
+                    <th scope="col">Saldo </th>
 
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let producto of detalleEspacio.productos">
-                <td>{{producto.tip_codi}} - {{anticipo.top_nomb}}</td>
-                <td>{{producto.fac_nume}}</td>
-                <td>{{producto.fac_fech}}</td>
-                <td>{{producto.det_vant}}</td>
-                <td>{{producto.det_sald}}</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let producto of detalleEspacio.productos">
+                    <td>{{producto.tip_codi}} - {{anticipo.top_nomb}}</td>
+                    <td>{{producto.fac_nume}}</td>
+                    <td>{{producto.fac_fech}}</td>
+                    <td>{{producto.det_vant}}</td>
+                    <td>{{producto.det_sald}}</td>
 
-              </tr>
+                  </tr>
 
-            </tbody>
-          </table>
+                </tbody>
+              </table>
 
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+          </div>
         </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
       </div>
     </div>
-  </div>
-</div>
 
 
 

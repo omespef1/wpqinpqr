@@ -92,6 +92,7 @@ export class EccotizComponent implements OnInit {
 
   ngOnInit() {
     this.cotizaciones =this.cotizacionesObj;
+    this.coti
     console.log(this.cotizaciones);
   }
 
