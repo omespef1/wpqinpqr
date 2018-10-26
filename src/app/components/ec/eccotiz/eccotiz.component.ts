@@ -10,95 +10,36 @@ import {ToTransaction} from '../../../../classes/models';
   templateUrl: './eccotiz.component.html',
   styleUrls: ['./eccotiz.component.css']
 })
+
 export class EccotizComponent implements OnInit {
   myDatepicker:any;
-   par_busq: any= {
-     ter_coda:"",
-     ter_nomb:"",
-     fec_fini:"",
-     fec_ffin:""
-   }
+  par_busq:search;
    cotizaciones : eccotiz[];
    cotizacion:any={};
    conceptos:any[]=[];
    detalleEspacio:any={};
-   cotizacionesObj:any[] = [
-
-     {
-        top_codi:"1",
-        top_nomb:"Tipo de prueba",
-        cot_nume:"34",
-          cot_fech: "01/05/1995",
-          cot_ncoo:"Juan Morales",
-          cot_coor:"342342",
-          ter_coda_ej:"1031169208",
-          ter_noco_ej:"Omar Pérez",
-          cot_tcoo:"test",
-          cot_mail:"omespef1@hotmail.com",
-          cot_obse:"Observaciones",
-          cot_cont :1,
-          detalles : [
-            {
-              emp_codi:102,
-             cot_cont:1,
-             des_fing: "01/05/1995 8:45",
-             des_fsal:"01/05/1995 9:45",
-             cla_codi:"1",
-             cla_nomb:"Piscina",
-             esp_codi:"1",
-             esp_nomb:"espacio",
-             des_capa:"4"
-           },
-           {
-            emp_codi:102,
-            cot_cont:1,
-            des_fing: "01/05/1995 8:45",
-            des_fsal:"01/05/1995 9:45",
-            cla_codi:"2",
-            cla_nomb:"Bosque",
-            esp_codi:"2",
-            esp_nomb:"espacio 2",
-            des_capa:"4"
-          },
-        ],
-        anticipos: [
-          {
-            tip_codi:"4",
-            fac_nume:56,
-            fac_fech:"01/05/1996",
-            det_vant:"44555",
-            det_sald:"78"
-          },
-          {
-            tip_codi:"4",
-            fac_nume:57,
-            fac_fech:"01/05/1996",
-            det_vant:"44555",
-            det_sald:"79"
-          }
-        ],
-        liquidacion : [
-          {
-            liq_cons:"1",
-            liq_valo:"456",
-            liq_base:"44"
-          }
-        ]
-
-
-     }
-   ]
+   cotizacionesObj:any[] = [];
    detalles:TOEcDespa[];
+    par_busq:any = {
+      ter_coda:"";
+      ter_nomb:"";
+      fec_fini: new Date();
+      fec_ffin: new Date();
+      usu_codi:""
+    };
   constructor(private _comu:ComunicationsService) { }
 
   ngOnInit() {
     this.cotizaciones =this.cotizacionesObj;
-  
+
     console.log(this.cotizaciones);
   }
 
   search(){
-    this._comu.Get(`api/eecotiz?ter_coda=${this.par_busq.ter_coda}&usu_codi=${this.par_busq.usu_codi}&fec`).subscribe((resp:ToTransaction)=>{
+    let fec_fini = this.par_busq.fec_fini.getFullYear().toString() + this.par_busq.fec_fini.getMonth().toString() + this.par_busq.fec_fini.getDay().toString();
+        let fec_ffin = this.par_busq.fec_ffin.getFullYear().toString() + this.par_busq.fec_ffin.getMonth().toString() + this.par_busq.fec_ffin.getDay().toString();
+        console.log(fec_ffin);
+    this._comu.Get(`api/eecotiz?ter_coda=${this.par_busq.ter_coda}&usu_codi=${this.par_busq.usu_codi}&fec_fini=${fec_fini}&fec_ffin=${fec_ffin}`).subscribe((resp:ToTransaction)=>{
         if(resp.Retorno==0){
           this.cotizaciones = resp.ObjTransaction;
         }
