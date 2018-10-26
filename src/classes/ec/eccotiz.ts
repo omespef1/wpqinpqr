@@ -6,7 +6,7 @@ emp_codi    :string;
 cot_cont    :string;
 top_codi    :string;
 cot_nume    :string;
-cot_fech    :string;
+cot_fech  :  Date;
 cot_nech    :string;
 cot_anop    :string;
 cot_mesp    :string;
@@ -92,9 +92,9 @@ export  interface TOEcDespa {
   emp_codi:string;
   cot_cont:string;
   des_cont:string;
-  des_fing:string;
+  des_fing:Date;
   des_ndia:string;
-  des_fsal:string;
+  des_fsal:Date;
   esp_cont:string;
   des_capa:string;
   ter_codi:string;
@@ -207,4 +207,14 @@ cla_pocl:string;
 cla_tica:string;
 cla_fchr:string;
 cla_desc:string;
+}
+export interface TOEcLisev {
+  emp_codi:string;
+eve_cont:string;
+dli_cont:string;
+dli_idin:string;
+dli_noin:string;
+dli_apin:string;
+dli_noco:string;
+dli_obse:string;
 }

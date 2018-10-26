@@ -1,10 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import {NgForm} from '@angular/forms';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {ComunicationsService} from '../../../../services/comunications.service'
+//components
+import {AlertComponent} from '../../alert/alert.component';
 
 //models
 import {eccotiz,TOEcDespa} from '../../../../classes/ec/eccotiz';
 import {ToTransaction} from '../../../../classes/models';
+import { ActivatedRoute } from "@angular/router";
+import * as moment from 'moment';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-eccotiz',
   templateUrl: './eccotiz.component.html',
@@ -13,43 +19,77 @@ import {ToTransaction} from '../../../../classes/models';
 
 export class EccotizComponent implements OnInit {
   myDatepicker:any;
-  par_busq:search;
+  message:string;
    cotizaciones : eccotiz[];
    cotizacion:any={};
    conceptos:any[]=[];
    detalleEspacio:any={};
-   cotizacionesObj:any[] = [];
    detalles:TOEcDespa[];
+   submitted:boolean= false;
     par_busq:any = {
-      ter_coda:"";
-      ter_nomb:"";
-      fec_fini: new Date();
-      fec_ffin: new Date();
-      usu_codi:""
+      ter_coda:"",
+      ter_noco:"",
+      fec_fini: "",
+      fec_ffin: "",
+      usu_codi:"",
+
     };
-  constructor(private _comu:ComunicationsService) { }
+  constructor(private _comu:ComunicationsService, private route: ActivatedRoute, private _alert:AlertComponent,private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
-    this.cotizaciones =this.cotizacionesObj;
-
-    console.log(this.cotizaciones);
+    //Busca el tercero desde la url y lo carga
+     this.getGnTerce();
   }
+async getGnTerce(){
+  this.route.queryParamMap.subscribe(queryParams => {
 
+   this.par_busq.usu_codi =   atob(queryParams.get("usu_codi")) ;
+   if(this.par_busq.usu_codi!=null)  {
+     this.spinner.show();
+       this._comu.Get(`api/gnterce?usu_codi=${this.par_busq.usu_codi}`).toPromise().then((resp:ToTransaction)=>{
+         this.spinner.hide();
+         if(resp.Retorno==0){
+           this.par_busq.ter_coda = resp.ObjTransaction.ter_coda;
+           this.par_busq.ter_noco = resp.ObjTransaction.ter_noco;
+         }
+       },err=>{
+         this.spinner.hide();
+         this.showMessage("Error conectando con el servidor");
+       })
+   }
+   else {
+     this.message = "No se ha especificado ningún usuario seven";
+     this._alert.showMessage();
+   }
+ });
+
+
+}
+//Realiza la búsqueda
   search(){
-    let fec_fini = this.par_busq.fec_fini.getFullYear().toString() + this.par_busq.fec_fini.getMonth().toString() + this.par_busq.fec_fini.getDay().toString();
-        let fec_ffin = this.par_busq.fec_ffin.getFullYear().toString() + this.par_busq.fec_ffin.getMonth().toString() + this.par_busq.fec_ffin.getDay().toString();
-        console.log(fec_ffin);
-    this._comu.Get(`api/eecotiz?ter_coda=${this.par_busq.ter_coda}&usu_codi=${this.par_busq.usu_codi}&fec_fini=${fec_fini}&fec_ffin=${fec_ffin}`).subscribe((resp:ToTransaction)=>{
+  this.submitted = true;
+  this.spinner.show();
+    let fini = moment(this.par_busq.fec_fini).format('YYYYMMDD');
+    let ffin = moment(this.par_busq.fec_ffin).format('YYYYMMDD');
+
+    this._comu.Get(`api/eccotiz?ter_coda=${this.par_busq.ter_coda}&usu_codi=${this.par_busq.usu_codi}&fec_fini=${fini}&fec_ffin=${ffin}`).subscribe((resp:ToTransaction)=>{
+      console.log(resp);
+      this.spinner.hide();
         if(resp.Retorno==0){
           this.cotizaciones = resp.ObjTransaction;
         }
+        else{
+          this.showMessage(resp.TxtError);
+        }
+   },err=>{
+     this.spinner.hide();
+     this.showMessage("Error conectando con el servidor");
    })
   }
   setCotizacion(cotizacion:eccotiz){
     console.log(cotizacion);
     this.cotizacion = cotizacion;
     this.showModales("detalles");
-
   }
 //Despliega los modales
   showModales(tipo:string){
@@ -68,6 +108,10 @@ export class EccotizComponent implements OnInit {
   showProductos(detalleEspacio: any){
     this.detalleEspacio = detalleEspacio;
     this.showModales("Productos");
+  }
+  showMessage(msg:string){
+    this.message = msg;
+    this._alert.showMessage();
   }
 
 }

@@ -19,6 +19,18 @@ import { EccotizComponent } from './components/ec/eccotiz/eccotiz.component';
 //Angular material
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material';
+import {MomentDateAdapter} from '@angular/material-moment-adapter';
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'DD/MM/YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +54,8 @@ import {MatNativeDateModule} from '@angular/material';
   ],
   providers: [
      {provide: MAT_DATE_LOCALE, useValue: 'es-ES'},
+     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+   {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
     ComunicationsService,
     AlertComponent,
     MatNativeDateModule
