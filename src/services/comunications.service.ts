@@ -15,9 +15,10 @@ export class ComunicationsService {
     let url = `${ServiceUrl}${urlController}`;
   return  this.http.get(url);
   }
-async getAync(urlController:string){
+async getAsync(urlController:string){
   await this.http.get<ToTransaction>(`${ServiceUrl}${urlController}`).subscribe((resp:ToTransaction))=>{
     if(resp.Retorno == 0)
+
      return resp.ObjTransaction;
   });
 }
