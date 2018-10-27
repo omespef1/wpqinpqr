@@ -53,6 +53,7 @@ async getGnTerce(){
            this.par_busq.ter_noco = resp.ObjTransaction.ter_noco;
          }
        },err=>{
+      
          this.spinner.hide();
          this.showMessage("Error conectando con el servidor");
        })

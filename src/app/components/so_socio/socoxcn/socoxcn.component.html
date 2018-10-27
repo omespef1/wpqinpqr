@@ -1,0 +1,71 @@
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Mis productos y servicios</h1>
+
+  </div>
+</div>
+<div class="container">
+	  <div class="card">
+    <div class="card-header bg-primary text-white">Parámetros de búsqueda</div>
+    <div class="card-body">
+      <form #socoxcnForm="ngForm" >
+        <ngx-spinner  bdColor="rgba(51,51,51,0.3)" size="large" >
+        <!-- <p text-center style="font-size: 15px; color: gray">{{loading}}</p> -->
+        </ngx-spinner>
+        <div class="row">
+          <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+            <label for="ter_coda">Identificación</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <span><i class="fas fa-id-card-alt"></i></span>
+                </div>
+              </div>
+              <input  type="text" class="form-control" placeholder="Identificación" name="ter_coda" id="ter_coda" [(ngModel)]="par_busq.ter_coda" required #ter_coda="ngModel" readonly>
+            </div>
+            <div [hidden]="ter_coda.valid || ter_coda.pristine" class="alert alert-danger">
+              Identificación es requerida
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+            <label for="ter_nomb">Nombres</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <span><i class="fas fa-user-circle"></i></span>
+                </div>
+              </div>
+              <input type="text"  class="form-control" placeholder="Nombre" name="ter_noco" id="ter_noco" [(ngModel)]="par_busq.ter_noco" required #ter_noco="ngModel" readonly>
+            </div>
+            <div [hidden]="ter_noco.valid || ter_noco.pristine" class="alert alert-danger">
+              Nombre es requerido
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+            <label for="fec_fini">Fecha de vigencia</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text">
+                  <span><i class="fas fa-calendar-alt"></i></span>
+                </div>
+              </div>
+              <input matInput placeholder="Fecha inicial" [matDatepicker]="fec_finiP" type="text" class="form-control" name="fec_fini" id="fec_fini" [(ngModel)]="par_busq.fec_fini" required #fec_fini="ngModel" readonly>
+              <mat-datepicker-toggle [for]="fec_finiP"></mat-datepicker-toggle>
+              <mat-datepicker disabled="false" #fec_finiP touchUi></mat-datepicker>
+            </div>
+            <div [hidden]="fec_fini.valid || fec_fini.pristine" class="alert alert-danger">
+              Fecha de vigencia es requerida
+            </div>
+          </div>
+  
+          <div class="col-md-12 text-center pt-3">
+            <button type="submit" [disabled]="!socoxcnForm.form.valid" class="btn btn-success btn-block">Consultar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<app-alert [message]="message">
+	</app-alert>

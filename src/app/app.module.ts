@@ -14,12 +14,14 @@ import { CreacionComponent } from './components/creacion/creacion.component';
 //RUTAS
 import {app_routing} from './app.routes';
 import { AlertComponent } from './components/alert/alert.component';
+import { SocoxcnComponent } from './components/so_socio/socoxcn/socoxcn.component';
 import { EstadosPipe } from './pipes/estados.pipe';
 import { EccotizComponent } from './components/ec/eccotiz/eccotiz.component';
 //Angular material
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
+
 export const MY_FORMATS = {
   parse: {
     dateInput: 'DD/MM/YYYY',
@@ -38,7 +40,8 @@ export const MY_FORMATS = {
     CreacionComponent,
     AlertComponent,
     EstadosPipe,
-    EccotizComponent
+    EccotizComponent,
+    SocoxcnComponent
   ],
   imports: [
     FormsModule,                               // <========== Add this line!
