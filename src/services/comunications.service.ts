@@ -13,6 +13,7 @@ export class ComunicationsService {
 
   Get(urlController:string){
     let url = `${ServiceUrl}${urlController}`;
+    console.log(url);
   return  this.http.get(url);
   }
 async getAsync(urlController:string){

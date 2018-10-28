@@ -27,9 +27,10 @@ export class SocoxcnComponent implements OnInit {
   }
 
   consultarcartera(){
-    console.log(moment(this.par_busq.fec_ffin).format("YYYY-MM-DD"));
-     this._comu.Get(`api/cacxcob?cli_coda=${this.par_busq.fec_ffin}&fcxc_fech=${this.par_busq.fec_ffin}`).subscribe((resp:ToTransaction)=>{
+    let fec_ffin =moment(this.par_busq.fec_ffin).format("YYYY-MM-DD");
+     this._comu.Get(`api/cacxcob?cli_coda=${this.par_busq.ter_coda}&cxc_fech=${fec_ffin}`).subscribe((resp:ToTransaction)=>{
          if(resp.Retorno==0){
+           this.submitted = true;
              this.cuentasxcobrar = resp.ObjTransaction;
          }
          else{
