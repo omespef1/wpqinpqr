@@ -18,7 +18,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 
 export class EccotizComponent implements OnInit {
-  myDatepicker:any;
   message:string;
    cotizaciones : eccotiz[];
    cotizacion:any={};
