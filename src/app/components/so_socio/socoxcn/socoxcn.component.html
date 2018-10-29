@@ -136,7 +136,7 @@
                   <td>{{producto.cox_afin}}/ {{producto.cox_mfin}}</td>
                   <td>{{producto.pro_valo || currency}}</td>
                   <td>{{producto.sbe_nomb}}</td>
-                  <td>medio de pago nulo</td>
+                  <td>{{producto.pro_fpag | tarjetas}} </td>
                   <td>{{producto.dco_plac}}</td>
                 </tr>
               </tbody>

@@ -7,6 +7,8 @@ import * as moment from 'moment';
 import {ComunicationsService} from '../../../../services/comunications.service';
 //Models
 import {ToTransaction} from '../../../../classes/models';
+//pipes
+import {TarjetasPipe} from '../../../pipes/socoxcn/tarjetas.pipe';
 @Component({
   selector: 'app-socoxcn',
   templateUrl: './socoxcn.component.html',

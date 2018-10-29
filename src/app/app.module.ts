@@ -21,6 +21,7 @@ import { EccotizComponent } from './components/ec/eccotiz/eccotiz.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import { TarjetasPipe } from './pipes/socoxcn/tarjetas.pipe';
 
 export const MY_FORMATS = {
   parse: {
@@ -41,7 +42,8 @@ export const MY_FORMATS = {
     AlertComponent,
     EstadosPipe,
     EccotizComponent,
-    SocoxcnComponent
+    SocoxcnComponent,
+    TarjetasPipe
   ],
   imports: [
     FormsModule,                               // <========== Add this line!
