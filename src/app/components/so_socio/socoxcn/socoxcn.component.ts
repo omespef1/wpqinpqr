@@ -37,6 +37,7 @@ export class SocoxcnComponent implements OnInit {
     let fec_ffin =moment(this.par_busq.fec_ffin).format("YYYY-MM-DD");
     this.submitted = true;
    await  this._comu.Get(`api/cacxcob?cli_coda=${this.par_busq.ter_coda}&cxc_fech=${fec_ffin}`).subscribe((resp:ToTransaction)=>{
+      console.log("obtiene  cartera");
          if(resp.Retorno==0){
              this.cuentasxcobrar = resp.ObjTransaction;
          }
@@ -49,6 +50,7 @@ export class SocoxcnComponent implements OnInit {
      })
 
     await this._comu.Get(`api/socoxcn?soc_codi=${this.par_busq.ter_coda}&cox_fech=${fec_ffin}`).subscribe((resp:ToTransaction)=>{
+      console.log("obtiene  productos");
        if(resp.Retorno==0){
              this.misproductos = resp.ObjTransaction;
        }
@@ -58,6 +60,7 @@ export class SocoxcnComponent implements OnInit {
      },err=>{
        this.showMessage("Error conectando con el servidor");
      })
+    console.log("cierr spinner");
     this.spinner.hide();
 
   }
