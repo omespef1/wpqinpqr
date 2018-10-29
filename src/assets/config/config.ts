@@ -1,2 +1,2 @@
 
-export const ServiceUrl:string ='http://localhost:57011/';
+export const ServiceUrl:string ='http://localhost/RSOCOXCN/';
