@@ -42,7 +42,7 @@ export class SocoxcnComponent implements OnInit {
        this.showMessage("Error conectando con el servidor");
      })
 
-     this._comu.Get(`api/socoxcn?soc_codi=${this.par_busq.ter_coda}&cox_fech=${this.par_busq.fec_ffin}`).subscribe((resp:ToTransaction)=>{
+     this._comu.Get(`api/socoxcn?soc_codi=${this.par_busq.ter_coda}&cox_fech=${fec_ffin}`).subscribe((resp:ToTransaction)=>{
        if(resp.Retorno==0){
              this.misproductos = resp.ObjTransaction;
        }
