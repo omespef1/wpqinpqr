@@ -19,8 +19,8 @@ export class SocoxcnComponent implements OnInit {
       fec_ffin: "",
     };
      submitted:boolean= false;
-    cuentasxcobrar : any[];
-    misproductos:any[];
+    cuentasxcobrar : any[]=[];
+    misproductos:any[]=[];
   constructor(private _alert:AlertComponent,private _comu:ComunicationsService) { }
  message:string;
   ngOnInit() {
