@@ -1,3 +1,2 @@
 
-export const ServiceUrl:string ='http://localhost/RSOCOXCN/';
-export const servicePay:string = 'http://google.com.co'
+export const ServiceUrl:string ='http://10.216.162.67/restServices/ec_cotiz/';
