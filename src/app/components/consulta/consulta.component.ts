@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Title }     from '@angular/platform-browser';
 //Services
 import { ComunicationsService } from '../../../services/comunications.service';
 //Models
@@ -31,12 +32,13 @@ export class ConsultaComponent implements OnInit {
 logo:string;
 message:string;
 
-  constructor(private _conmu: ComunicationsService, private spinner: NgxSpinnerService, private alert: AlertComponent, private route: ActivatedRoute) {
+  constructor(private _conmu: ComunicationsService, private spinner: NgxSpinnerService, private alert: AlertComponent, private route: ActivatedRoute,private titleService: Title) {
     this.preguntas.push("¿Su requerimiento fue atendido dentro de los términos establecidos?");
     this.preguntas.push("¿La calidad en la atención de su requerimiento fue?");
     this.preguntas.push("¿El servidor brindó una respuesta clara y oportuna?");
   }
   async ngOnInit() {
+    this.setTitle("Consulta de PQR");
    await this.LoadPqrFormBasicData();
    await this.GetLogo();
      this.route.queryParamMap.subscribe(queryParams => {
@@ -51,6 +53,9 @@ message:string;
 
 
 
+  }
+     public setTitle( newTitle: string) {
+    this.titleService.setTitle( newTitle );
   }
   async postPqr() {
   let pqr = <any> await  this.GetInfoPqr();

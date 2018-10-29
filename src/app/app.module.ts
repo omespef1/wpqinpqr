@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule,Title } from '@angular/platform-browser';
 import { NgModule  } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -63,7 +63,8 @@ export const MY_FORMATS = {
    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
     ComunicationsService,
     AlertComponent,
-    MatNativeDateModule
+    MatNativeDateModule,
+    Title
   ],
   bootstrap: [AppComponent]
 })

@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { NgForm } from '@angular/forms';
 import { ComunicationsService } from '../../../services/comunications.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import{ Title }     from '@angular/platform-browser';
 //Models
 import { gnItem } from '../../../classes/models';
 import { ServiceUrl } from '../../../assets/config/config';
@@ -34,13 +35,18 @@ export class CreacionComponent implements OnInit {
   logo:SafeHtml;
   allowedFormats:string[];
   pqr_file:any;
-  constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer) {
+  constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer,private titleService: Title) {
 
   }
 ngOnInit(){
+  this.setTitle("Creación de PQR");
   this.allowedFormats = [ "PDF","DOC","DOCX","JPG","PNG","XLS","XLSX"];
     this.Load();
 }
+
+   public setTitle( newTitle: string) {
+    this.titleService.setTitle( newTitle );
+  }
   //Carga inicial de datos necesarios
   Load() {
     this.spinner.show();

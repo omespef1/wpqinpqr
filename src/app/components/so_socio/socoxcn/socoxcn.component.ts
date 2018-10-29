@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title }     from '@angular/platform-browser';
 //components
 import {AlertComponent} from '../../alert/alert.component';
 import {NgForm} from '@angular/forms';
@@ -27,13 +28,16 @@ export class SocoxcnComponent implements OnInit {
     cuentasxcobrar : any[]=[];
     misproductos:any[]=[];
     pasarela:string;
-  constructor(private _alert:AlertComponent,private _comu:ComunicationsService,private spinner: NgxSpinnerService, private route: ActivatedRoute) { }
+  constructor(private _alert:AlertComponent,private _comu:ComunicationsService,private spinner: NgxSpinnerService, private route: ActivatedRoute,private titleService: Title ) { }
  message:string;
   ngOnInit() {
+    this.setTitle("Mis productos y servicios");
   this.getGnterce();
   this.getPasarela();
   }
-
+ public setTitle( newTitle: string) {
+    this.titleService.setTitle( newTitle );
+  }
   async consultarcartera(){
   this.spinner.show();
     let fec_ffin =moment(this.par_busq.fec_ffin).format("YYYY-MM-DD");

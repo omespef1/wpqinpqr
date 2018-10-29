@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {ComunicationsService} from '../../../../services/comunications.service'
+import { Title }     from '@angular/platform-browser';
 //components
 import {AlertComponent} from '../../alert/alert.component';
 
@@ -33,11 +34,15 @@ export class EccotizComponent implements OnInit {
       usu_codi:"",
 
     };
-  constructor(private _comu:ComunicationsService, private route: ActivatedRoute, private _alert:AlertComponent,private spinner: NgxSpinnerService) { }
+  constructor(private _comu:ComunicationsService, private route: ActivatedRoute, private _alert:AlertComponent,private spinner: NgxSpinnerService,private titleService: Title ) { }
 
   ngOnInit() {
+       this.setTitle("Cotizaciones");
     //Busca el tercero desde la url y lo carga
      this.getGnTerce();
+  }
+   public setTitle( newTitle: string) {
+    this.titleService.setTitle( newTitle );
   }
 async getGnTerce(){
   this.route.queryParamMap.subscribe(queryParams => {
