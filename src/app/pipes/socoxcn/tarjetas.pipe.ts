@@ -10,8 +10,8 @@ export class TarjetasPipe implements PipeTransform {
     switch (value) {
 
     	case "EFECTIVO":
-    		// code...
-    		break;
+    		return value;
+    		
     	
     	default:
     		let desglose:string = value.toString();
