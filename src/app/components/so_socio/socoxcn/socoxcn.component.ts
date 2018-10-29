@@ -107,7 +107,7 @@ this.spinner.show();
 
     })
   }
-  goPasarel(){
+  pagar(){
     if(this.pasarela=="1")
       this.showMessage("Pasarela de pago no definida en api");
     else {
