@@ -29,7 +29,7 @@ export class SocoxcnComponent implements OnInit {
   constructor(private _alert:AlertComponent,private _comu:ComunicationsService,private spinner: NgxSpinnerService, private route: ActivatedRoute) { }
  message:string;
   ngOnInit() {
-
+  this.getGnterce();
   }
 
   async consultarcartera(){
