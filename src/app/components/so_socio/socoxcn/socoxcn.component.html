@@ -72,7 +72,7 @@
           <a class="nav-link active" data-toggle="tab" href="#cuentasxcobrar">Cartera pendiente</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#liquidacion">liquidación</a>
+          <a class="nav-link" data-toggle="tab" href="#liquidacion">Mis productos</a>
         </li>
       </ul>
       <div class="tab-content">
@@ -90,7 +90,7 @@
               <tbody>
                 <tr *ngFor="let cuenta of cuentasxcobrar;let i=index">
                   <th scope="row">
-                   {{i+1}}
+                    {{i+1}}
                   </th>
                   <td>{{cuenta.tip_nomb}}</td>
                   <td>{{cuenta.cxc_tota | currency}}</td>
@@ -100,11 +100,44 @@
             </table>
           </div>
           <div class="form-group">
-           <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-             <button type="button" class="btn btn-success btn-sm" (click)="pagar()">
-               <span>   <span><i class="fas fa-id-card-alt"></i></span></span> &nbsp; Pagar
-             </button>
-           </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+              <button type="button" class="btn btn-success btn-sm" (click)="pagar()">
+              <span>   <span><i class="fas fa-id-card-alt"></i></span></span> &nbsp; Pagar
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade show active p-2" id="misproductos" role="tabpanel" aria-labelledby="misproductos-tab">
+          <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">PRODUCTO</th>
+                  <th scope="col">VIGENCIA DESDE</th>
+                  <th scope="col">VIGENCIA HASTA</th>
+                  <th scope="col">VALOR PRODUCTO</th>
+                  <th scope="col">BENEFICIARIO</th>
+                  <th scope="col">MEDIO DE PAGO</th>
+                  <th scope="col">DESCRIPCIÓN</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let producto of misproductos;let i=index">
+                  <th scope="row">
+                    {{i+1}}
+                  </th>
+                  <td>{{producto.pro_codi}} - {{producto.pro_nomb}}</td>
+                  <td>{{producto.cox_aini}}/ {{producto.cox_mini}}</td>
+                  <td>{{producto.cox_afin}}/ {{producto.cox_mfin}}</td>
+                  <td>{{producto.pro_valo}}</td>
+                  <td>{{producto.sbe_nomb}}</td>
+                  <td>medio de pago nulo</td>
+                    <td>{{producto.dco_plac}}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

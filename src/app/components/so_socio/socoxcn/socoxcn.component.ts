@@ -20,6 +20,7 @@ export class SocoxcnComponent implements OnInit {
     };
      submitted:boolean= false;
     cuentasxcobrar : any[];
+    misproductos:any[];
   constructor(private _alert:AlertComponent,private _comu:ComunicationsService) { }
  message:string;
   ngOnInit() {
@@ -28,9 +29,9 @@ export class SocoxcnComponent implements OnInit {
 
   consultarcartera(){
     let fec_ffin =moment(this.par_busq.fec_ffin).format("YYYY-MM-DD");
+    this.submitted = true;
      this._comu.Get(`api/cacxcob?cli_coda=${this.par_busq.ter_coda}&cxc_fech=${fec_ffin}`).subscribe((resp:ToTransaction)=>{
          if(resp.Retorno==0){
-           this.submitted = true;
              this.cuentasxcobrar = resp.ObjTransaction;
          }
          else{
@@ -40,6 +41,18 @@ export class SocoxcnComponent implements OnInit {
      },err=>{
        this.showMessage("Error conectando con el servidor");
      })
+
+     this._comu.Get(`api/socoxcn?soc_codi=${this.par_busq.ter_coda}&cox_fech=${this.par_busq.fec_ffin}`).subscribe((resp:ToTransaction)=>{
+       if(resp.Retorno==0){
+             this.misproductos = resp.ObjTransaction;
+       }
+       else{
+         this.showMessage(resp.TxtError);
+       }
+     },err=>{
+       this.showMessage("Error conectando con el servidor");
+     })
+
   }
 
   showMessage(msg:string){
