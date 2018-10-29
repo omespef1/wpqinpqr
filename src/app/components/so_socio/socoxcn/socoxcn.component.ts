@@ -26,10 +26,12 @@ export class SocoxcnComponent implements OnInit {
      submitted:boolean= false;
     cuentasxcobrar : any[]=[];
     misproductos:any[]=[];
+    pasarela:string;
   constructor(private _alert:AlertComponent,private _comu:ComunicationsService,private spinner: NgxSpinnerService, private route: ActivatedRoute) { }
  message:string;
   ngOnInit() {
   this.getGnterce();
+  this.getPasarela();
   }
 
   async consultarcartera(){
@@ -94,6 +96,23 @@ this.spinner.show();
   showMessage(msg:string){
   	this.message = msg;
   	this._alert.showMessage();
+  }
+
+  getPasarela(){
+    this._comu.Get("api/papagos").subscribe((resp:string)=>{
+      
+     
+        this.pasarela = resp;
+      
+
+    })
+  }
+  goPasarel(){
+    if(this.pasarela=="1")
+      this.showMessage("Pasarela de pago no definida en api");
+    else {
+      window.open(this.pasarela);
+    }
   }
 
 }
