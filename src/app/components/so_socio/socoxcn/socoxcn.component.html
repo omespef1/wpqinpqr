@@ -51,7 +51,7 @@
               </div>
               <input matInput placeholder="Fecha de vigencia" [matDatepicker]="fec_ffinP" type="text" class="form-control" name="fec_ffin" id="fec_ffin" [(ngModel)]="par_busq.fec_ffin" required #fec_ffin="ngModel" readonly>
               <mat-datepicker-toggle [for]="fec_ffinP"></mat-datepicker-toggle>
-              <mat-datepicker disabled="false" #fec_ffinP touchUi></mat-datepicker>
+              <mat-datepicker disabled #fec_ffinP touchUi></mat-datepicker>
             </div>
             <div [hidden]="fec_ffin.valid || fec_ffin.pristine" class="alert alert-danger">
               Fecha de vigencia es requerida

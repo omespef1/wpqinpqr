@@ -1,6 +1,6 @@
 import { Injectable ,ErrorHandler} from '@angular/core';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
-import {ServiceUrl} from '../assets/config/config';
+import { EnvService } from '../app/env.service';
 //models
 import {ToTransaction} from '../classes/models';
 @Injectable({
@@ -9,15 +9,15 @@ import {ToTransaction} from '../classes/models';
 export class ComunicationsService {
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private env: EnvService) { }
 
-  Get(urlController:string){
-    let url = `${ServiceUrl}${urlController}`;
+  Get(urlController:string){    
+    let url = `${this.env.apiUrl}${urlController}`;
     console.log(url);
   return  this.http.get(url);
   }
 async getAsync(urlController:string){
-  await this.http.get<ToTransaction>(`${ServiceUrl}${urlController}`).subscribe((resp:ToTransaction)=>{
+  await this.http.get<ToTransaction>(`${this.env.apiUrl}${urlController}`).subscribe((resp:ToTransaction)=>{
     if(resp.Retorno==0){
       return resp.ObjTransaction;
     }
@@ -31,17 +31,17 @@ headers: new HttpHeaders({
   'Access-Control-Allow-Origin':'*'
 })
   }
-  let url = `${ServiceUrl}${urlController}`;
+  let url = `${this.env.apiUrl}${urlController}`;
     return this.http.post(url, params,constOptions);
 }
 
 open(urlController:string){
- window.open(`${ServiceUrl}${urlController}`);
+ window.open(`${this.env.apiUrl}${urlController}`);
 }
 
 download(urlController:string){
 
-  this.http.get(`${ServiceUrl}${urlController}`,{responseType: 'arraybuffer'} )
+  this.http.get(`${this.env.apiUrl}${urlController}`,{responseType: 'arraybuffer'} )
       .subscribe(response => this.downLoadFile(response, "image/png"));
 }
 downLoadFile(data: any, type: string) {

@@ -22,6 +22,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import { TarjetasPipe } from './pipes/socoxcn/tarjetas.pipe';
+import { EnvServiceProvider } from './env.service.provider';
 
 export const MY_FORMATS = {
   parse: {
@@ -64,7 +65,8 @@ export const MY_FORMATS = {
     ComunicationsService,
     AlertComponent,
     MatNativeDateModule,
-    Title
+    Title,
+    EnvServiceProvider
   ],
   bootstrap: [AppComponent]
 })

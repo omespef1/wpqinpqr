@@ -184,8 +184,8 @@
                           </button>
                         </div>
                       </th>
-                      <td>{{detalle.des_fing | date : 'dd/MM/yyyy mm:hh'}}</td>
-                      <td>{{detalle.des_fsal}}</td>
+                      <td>{{detalle.des_fing | date : 'dd/MM/yyyy hh:mm'}}</td>
+                      <td>{{detalle.des_fsal | date : 'dd/MM/yyyy hh:mm'}}</td>
                       <td>{{detalle.cla_codi }} - {{detalle.cla_nomb | titlecase}}</td>
                       <td>{{detalle.esp_codi}} - {{detalle.esp_nomb | titlecase}}</td>
                       <td>{{detalle.des_capa}}</td>
@@ -206,7 +206,7 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let liquida of cotizacion.liquidacion">
-                      <td>{{liquida.liq_nomb}}</td>
+                      <td> {{liquida.liq_cons}}.{{liquida.liq_nomb}}</td>
                       <td>{{liquida.liq_valo}}</td>
                       <td>{{liquida.liq_base}}</td>
                     </tr>

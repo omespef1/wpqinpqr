@@ -21,7 +21,7 @@ export class SocoxcnComponent implements OnInit {
       par_busq:any = {
       ter_coda:"",
       ter_noco:"",
-      fec_ffin: "",
+      fec_ffin: new Date(),
       usu_codi:"",
     };
      submitted:boolean= false;

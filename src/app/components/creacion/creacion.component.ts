@@ -7,7 +7,6 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import{ Title }     from '@angular/platform-browser';
 //Models
 import { gnItem } from '../../../classes/models';
-import { ServiceUrl } from '../../../assets/config/config';
 
 @Component({
   selector: 'app-creacion',
@@ -71,7 +70,7 @@ ngOnInit(){
     }, err => {
       console.log(err);
       this.spinner.hide();
-      this.showAlertMesssage(`Error conectado con el servidor, verfique que la dirección ${ServiceUrl} sea correcta`);
+      this.showAlertMesssage(`Error conectado con el servidor, verfique que el servidor configurado esté escrito correctamente`);
     })
   }
 
