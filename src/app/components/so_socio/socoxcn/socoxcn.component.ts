@@ -115,7 +115,10 @@ this.spinner.show();
     if(this.pasarela=="1")
       this.showMessage("Pasarela de pago no definida en api");
     else {
-      window.open(this.pasarela);
+      if(this.pasarela.indexOf("http")>0)
+          window.open(this.pasarela);
+        else
+           window.open(`http://${this.pasarela}`);
     }
   }
 
