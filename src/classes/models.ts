@@ -21,7 +21,7 @@ export class pqinpqr {
   public inp_dire: string = "";
   public inp_ncel: string = "";
   public pai_codi: number;
-  public dep_codi: string;
+  public dep_codi: number;
   public mun_codi: number;
   public reg_codi: number;
   public inp_mres: string = "";

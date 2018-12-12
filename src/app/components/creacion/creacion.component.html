@@ -22,7 +22,30 @@
     <div class="card-header bg-primary text-white">Nueva PQR</div>
     <div class="card-body">
       <form #pqrForm="ngForm" (ngSubmit)="PostPqr(pqrForm)">
-
+            <div class="row">
+              <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+                <label for="ite_tpqr">Tipo de cliente</label>
+                <div class="input-group">
+                  <div class="input-group-preprend">
+                    <div class="group-text">
+                      <span><i class="fas fa-book-reader"></i></span>
+                    </div>
+                  </div>
+                </div>
+                <select class="form-control" id="ite_tpqr" name="ite_tpqr" [(ngModel)]="pqr.ite_tpqr" required #ite_tpqr="ngModel">
+                  <option *ngFor="let type of GnItemsItePqr" (change)="lookForInscription()" [value]="type.ite_cont">{{type.ite_nomb | titlecase}}</option>
+                </select>
+              </div>
+              <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+                <label for="ite_tpqr">Seccional</label>
+              </div>
+              <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+                <label for="ite_tpqr">Número de contrato</label>
+              </div>
+              <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+                <label for="ite_tpqr">Línea de Negocio</label>
+              </div>
+            </div>
         <div class="row">
           <!-- Tipo de solicitid -->
           <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
@@ -105,7 +128,7 @@
                     <span><i class="fas fa-user-circle"></i></span>
                 </div>
               </div>
-              <input type="text" class="form-control" placeholder="Nombres" name="inp_nomb" id="inp_nomb" [(ngModel)]="pqr.inp_nomb" required #inp_nomb="ngModel">
+              <input type="text" class="form-control" [disabled] = "formDisabled" placeholder="Nombres" name="inp_nomb" id="inp_nomb" [(ngModel)]="pqr.inp_nomb" required #inp_nomb="ngModel">
             </div>
             <div [hidden]="inp_nomb.valid || inp_nomb.pristine" class="alert alert-danger">
               Nombres son requeridos
@@ -122,7 +145,7 @@
                     <span><i class="fas fa-user-circle"></i></span>
                 </div>
               </div>
-                <input type="text" class="form-control" placeholder="Apellidos" name="inp_apel" id="inp_apel" [(ngModel)]="pqr.inp_apel" required #inp_apel="ngModel">
+                <input type="text" [disabled] = "formDisabled" class="form-control" placeholder="Apellidos" name="inp_apel" id="inp_apel" [(ngModel)]="pqr.inp_apel" required #inp_apel="ngModel">
             </div>
 
             <div [hidden]="inp_apel.valid || inp_apel.pristine" class="alert alert-danger">
@@ -141,7 +164,7 @@
                     <span><i class="fas fa-chalkboard-teacher"></i></span>
                 </div>
               </div>
-              <select class="form-control" id="inp_tido" name="inp_tido" [(ngModel)]="pqr.inp_tido" required #inp_tido="ngModel" #inp_tido="ngModel">
+              <select [disabled] = "formDisabled" class="form-control" id="inp_tido" name="inp_tido" [(ngModel)]="pqr.inp_tido" required #inp_tido="ngModel" #inp_tido="ngModel">
                 <option value="CC">Cédula de Ciudadanía</option>
                 <option value="CE">Cédula de Extranjería</option>
                 <option value="NIT">Identificación Tributaria</option>
@@ -165,7 +188,7 @@
                     <span><i class="fas fa-id-card"></i></span>
                 </div>
               </div>
-            <input type="text" class="form-control" placeholder="Número de documento" name="inp_nide" id="inp_nide" [(ngModel)]="pqr.inp_nide" #inp_nide="ngModel">
+            <input type="text" [disabled] = "formDisabled" class="form-control" placeholder="Número de documento" name="inp_nide" id="inp_nide" [(ngModel)]="pqr.inp_nide" #inp_nide="ngModel">
           </div>
             <!-- <div [hidden]="inp_nide.valid || inp_nide.pristine" class="alert alert-danger">
               Número de documento es requerido
@@ -184,7 +207,7 @@
                     <span><i class="fas fa-map-marked-alt"></i></span>
                 </div>
               </div>
-            <input type="text" class="form-control" placeholder="Dirección" name="inp_dire" id="inp_dire" [(ngModel)]="pqr.inp_dire" required #inp_dire="ngModel">
+            <input type="text" [disabled] = "formDisabled" class="form-control" placeholder="Dirección" name="inp_dire" id="inp_dire" [(ngModel)]="pqr.inp_dire" required #inp_dire="ngModel">
           </div>
             <div [hidden]="inp_dire.valid || inp_dire.pristine" class="alert alert-danger">
               Dirección es requerida
@@ -202,7 +225,7 @@
                     <span><i class="fas fa-phone"></i></span>
                 </div>
               </div>
-            <input type="number" class="form-control" placeholder="Teléfono fijo" name="inp_ntel" id="inp_ntel" [(ngModel)]="pqr.inp_ntel" required #inp_ntel="ngModel">
+            <input type="number" [disabled] = "formDisabled" class="form-control" placeholder="Teléfono fijo" name="inp_ntel" id="inp_ntel" [(ngModel)]="pqr.inp_ntel" required #inp_ntel="ngModel">
           </div>
             <div [hidden]="inp_ntel.valid || inp_ntel.pristine" class="alert alert-danger">
               Teléfono fijo requerido
@@ -236,7 +259,7 @@
                     <span><i class="fas fa-at"></i></span>
                 </div>
               </div>
-              <input type="email" class="form-control" placeholder="Email" name="inp_mail" id="inp_mail" [(ngModel)]="pqr.inp_mail" required #inp_mail="ngModel">
+              <input type="email" [disabled] = "formDisabled" class="form-control" placeholder="Email" name="inp_mail" id="inp_mail" [(ngModel)]="pqr.inp_mail" required #inp_mail="ngModel">
 
             </div>
             <div [hidden]="inp_mail.valid || inp_mail.pristine" class="alert alert-danger">
@@ -272,7 +295,7 @@
                     <span><i class="fas fa-globe-americas"></i></span>
                 </div>
               </div>
-            <select class="form-control" id="pai_codi" name="pai_codi" [(ngModel)]="pqr.pai_codi" required #pai_codi="ngModel" #pai_codi="ngModel">
+            <select [disabled] = "formDisabled" class="form-control" id="pai_codi" name="pai_codi" [(ngModel)]="pqr.pai_codi" required #pai_codi="ngModel" #pai_codi="ngModel">
               <option *ngFor="let paise of gnpaise" [value]="paise.pai_codi">{{paise.pai_nomb | titlecase}}</option>
             </select>
           </div>
@@ -289,7 +312,7 @@
                     <span><i class="fas fa-map-marked-alt"></i></span>
                 </div>
               </div>
-            <select class="form-control" id="dep_codi" (change)="filterCities()" name="dep_codi" [(ngModel)]="pqr.dep_codi" required #dep_codi="ngModel">
+            <select [disabled] = "formDisabled" class="form-control" id="dep_codi" (change)="filterCities()" name="dep_codi" [(ngModel)]="pqr.dep_codi" required #dep_codi="ngModel">
               <option *ngFor="let depar of gndepar" [value]="depar.dep_codi">{{depar.dep_nomb | titlecase}}</option>
             </select>
           </div>
@@ -306,7 +329,7 @@
                     <span><i class="fas fa-city"></i></span>
                 </div>
               </div>
-            <select class="form-control" id="mun_codi" name="mun_codi" [(ngModel)]="pqr.mun_codi" required #mun_codi="ngModel">
+            <select [disabled] = "formDisabled" class="form-control" id="mun_codi" name="mun_codi" [(ngModel)]="pqr.mun_codi" required #mun_codi="ngModel">
               <option *ngFor="let munic of gnmunicF" [value]="munic.mun_codi">{{munic.mun_nomb}}</option>
             </select>
           </div>

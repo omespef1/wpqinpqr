@@ -5,8 +5,10 @@ import { NgForm } from '@angular/forms';
 import { ComunicationsService } from '../../../services/comunications.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import{ Title }     from '@angular/platform-browser';
+import { ActivatedRoute } from "@angular/router";
 //Models
 import { gnItem } from '../../../classes/models';
+import { faclien } from 'src/classes/fa/faclien';
 
 @Component({
   selector: 'app-creacion',
@@ -32,9 +34,11 @@ export class CreacionComponent implements OnInit {
   submitted: boolean = false;
   loading:string="";
   logo:SafeHtml;
+  client :string;
   allowedFormats:string[];
   pqr_file:any;
-  constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer,private titleService: Title) {
+  constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer,private titleService: Title,
+  private route: ActivatedRoute) {
 
   }
 ngOnInit(){
@@ -54,17 +58,25 @@ ngOnInit(){
       console.log(resp);
       if (resp.retorno == 0) {
         console.log(resp);
-        this.GnItemsIteTipi = resp.objTransaction.pqrSubject.objTransaction;
-        this.GnItemsItePqr = resp.objTransaction.pqrType.objTransaction;
-        this.GnItemsIteTipi = resp.objTransaction.pqrSubject.objTransaction;
-        this.gnpaise = resp.objTransaction.countries.objTransaction;
-        this.gndepar = resp.objTransaction.states.objTransaction;
-        this.gnmunic = resp.objTransaction.cities.objTransaction;
-        this.pqdpara = resp.objTransaction.pqrGroup.objTransaction;
-        this.gndigfl = resp.objTransaction.digiflag.objTransaction;
+        this.GnItemsIteTipi = resp.objTransaction.pqrSubject;
+        this.GnItemsItePqr = resp.objTransaction.pqrType;
+        this.GnItemsIteTipi = resp.objTransaction.pqrSubject;
+        this.gnpaise = resp.objTransaction.countries;
+        this.gndepar = resp.objTransaction.states;
+        this.gnmunic = resp.objTransaction.cities;
+        this.pqdpara = resp.objTransaction.pqrGroup;
+        this.gndigfl = resp.objTransaction.digiflag;
         this.logo = resp.objTransaction.pqrImage;
         //Si el valor seleccionado coincide con el del digiflag se muestra el desplegable de area de inscripción
         this.inscription = this.GnItemsItePqr.filter((t) => t.ite_codi == this.gndigfl.dig_valo)[0].ite_cont.toString();
+        //Carga los datos del cliente si aplica
+        if(resp.objTransaction.client!= null && resp.objTransaction.client != undefined){
+          let client:faclien = resp.objTransaction.client;
+            this.pqr.inp_apel = client.cli_apel;
+            this.pqr.inp_nomb = client.cli_nomb;
+
+            
+        }
         this.spinner.hide();
       }
       else {
@@ -75,6 +87,16 @@ ngOnInit(){
       console.log(err);
       this.spinner.hide();
       this.showAlertMesssage(`Error conectando con el servidor, verfique que el servidor configurado esté escrito correctamente`);
+    })
+  }
+
+  VerifyAccess(){
+    this.route.queryParamMap.subscribe(queryParams => {
+      this.client = queryParams.get("client")
+      if(this.client!=null &&  this.client!=undefined){
+        //Cuando se está ingresando desde el selfservice
+        
+      }
     })
   }
 
