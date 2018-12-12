@@ -67,10 +67,14 @@ ngOnInit(){
         this.inscription = this.GnItemsItePqr.filter((t) => t.ite_codi == this.gndigfl.dig_valo)[0].ite_cont.toString();
         this.spinner.hide();
       }
+      else {
+          this.spinner.hide();
+         this.showAlertMesssage(`Error conectando con el servidor: ${resp.txtRetorno}`);
+      }
     }, err => {
       console.log(err);
       this.spinner.hide();
-      this.showAlertMesssage(`Error conectado con el servidor, verfique que el servidor configurado esté escrito correctamente`);
+      this.showAlertMesssage(`Error conectando con el servidor, verfique que el servidor configurado esté escrito correctamente`);
     })
   }
 
@@ -108,7 +112,7 @@ ngOnInit(){
             this._comu.Post('api/upload', fd).subscribe((respAdj:any)=>{
 
               if(respAdj.retorno==1)
-                this.showAlertMesssage("Se produjo un error subiendo el archivo. Intentelo nuevamente");
+                this.showAlertMesssage(`Se produjo un error subiendo el archivo. Intentelo nuevamente : ${respAdj.txtRetorno}`);
                 else {
                   this.showAlertMesssage(resp.objTransaction.msg);
                   form.reset();

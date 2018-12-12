@@ -165,11 +165,11 @@
                     <span><i class="fas fa-id-card"></i></span>
                 </div>
               </div>
-            <input type="text" class="form-control" placeholder="Número de documento" name="inp_nide" id="inp_nide" [(ngModel)]="pqr.inp_nide" required #inp_nide="ngModel">
+            <input type="text" class="form-control" placeholder="Número de documento" name="inp_nide" id="inp_nide" [(ngModel)]="pqr.inp_nide" #inp_nide="ngModel">
           </div>
-            <div [hidden]="inp_nide.valid || inp_nide.pristine" class="alert alert-danger">
+            <!-- <div [hidden]="inp_nide.valid || inp_nide.pristine" class="alert alert-danger">
               Número de documento es requerido
-            </div>
+            </div> -->
           </div>
 
         </div>
