@@ -27,7 +27,10 @@ export class pqinpqr {
   public inp_mres: string = "";
   public ite_frec: string = "";
   public inp_gper: number;
-  public adj_file: File = null
+  public adj_file: File = null;
+  public inp_tcli:string;
+  public arb_csuc:string;
+  public arb_nomb:string;
 }
 export class ask {
   askText: string;

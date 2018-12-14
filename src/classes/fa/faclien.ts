@@ -2,6 +2,7 @@ export interface faclien {
 emp_codi:string;
 cli_coda:string;
 arb_csuc:string;
+arb_nomb:string;
 tip_codi:number;
 tip_nomb:string;
 cli_nomb:string;

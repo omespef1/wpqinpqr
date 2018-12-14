@@ -10,6 +10,9 @@ import { ActivatedRoute } from "@angular/router";
 import { gnItem } from '../../../classes/models';
 import { faclien } from 'src/classes/fa/faclien';
 
+//components
+import {ConfirmDialogComponent} from '../dialogs/confirm-dialog/confirm-dialog.component';
+import {TableSearchComponent} from '../tools/table-search/table-search.component';
 @Component({
   selector: 'app-creacion',
   templateUrl: './creacion.component.html',
@@ -27,6 +30,7 @@ export class CreacionComponent implements OnInit {
   gnmunic: any[];
   @Input() gnmunicF: any[];
   @Input() pqdpara: any[];
+  //Var
   gndigfl: any;
   message: string = "";
   inscription: string = "0";
@@ -34,16 +38,22 @@ export class CreacionComponent implements OnInit {
   submitted: boolean = false;
   loading:string="";
   logo:SafeHtml;
-  client :string;
-  allowedFormats:string[];
+  client :string="";
+  allowedFormats:string[]=[ "PDF","DOC","DOCX","JPG","PNG","XLS","XLSX"];
   pqr_file:any;
+  contracts: any[];
+
   constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer,private titleService: Title,
-  private route: ActivatedRoute) {
+  private route: ActivatedRoute,private _confirm:ConfirmDialogComponent,private _table:TableSearchComponent) {
 
   }
-ngOnInit(){
-  this.setTitle("Creación de PQR");
-  this.allowedFormats = [ "PDF","DOC","DOCX","JPG","PNG","XLS","XLSX"];
+async ngOnInit(){
+  this.setTitle("Creación de PQR");  
+  await this.GetParams();  
+  console.log(this.client)  ;
+  if(this.client)
+   this._confirm.show(); 
+  if(!this.client)
     this.Load();
 }
 
@@ -51,10 +61,13 @@ ngOnInit(){
     this.titleService.setTitle( newTitle );
   }
   //Carga inicial de datos necesarios
-  Load() {
+  Load() {   
     this.spinner.show();
-
-    this._comu.Get('api/PqrTransactionLoad').subscribe((resp: any) => {
+    let query:string = "api/PqrTransactionLoad?";
+    console.log(this.client);
+    if(this.client)
+     query+= `cli_coda=${this.client}`;
+    this._comu.Get(query).subscribe((resp: any) => {
       console.log(resp);
       if (resp.retorno == 0) {
         console.log(resp);
@@ -72,16 +85,36 @@ ngOnInit(){
         //Carga los datos del cliente si aplica
         if(resp.objTransaction.client!= null && resp.objTransaction.client != undefined){
           let client:faclien = resp.objTransaction.client;
+          if(this.client){
+          
+            this.pqr.inp_tcli = "F";
             this.pqr.inp_apel = client.cli_apel;
             this.pqr.inp_nomb = client.cli_nomb;
-
+            this.pqr.inp_dire = client.dcl_dire;
+            this.pqr.inp_mail = client.dcl_mail;
+            this.pqr.inp_nide = client.cli_coda;
+            this.pqr.inp_ntel = client.dcl_ntel;
+            this.pqr.pai_codi = client.pai_codi;
+            this.pqr.dep_codi = client.dep_codi;
+            this.filterCities();                                      
+              this.pqr.arb_csuc  = client.arb_csuc;
+              this.pqr.arb_nomb =  client.arb_nomb;
+              this.pqr.mun_codi = client.mun_codi;  
+              this.contracts = resp.objTransaction.contracts; 
+              this._table.mySource = this.contracts;
+              this._table.ngOnInit();
+             
+             
             
+            }             
+            else
+            this.pqr.inp_tcli = "O";                        
         }
         this.spinner.hide();
       }
       else {
           this.spinner.hide();
-         this.showAlertMesssage(`Error conectando con el servidor: ${resp.txtRetorno}`);
+         this.showAlertMesssage(`Error conectando con el servidor: ${resp.txtRetorno}`)
       }
     }, err => {
       console.log(err);
@@ -90,13 +123,10 @@ ngOnInit(){
     })
   }
 
-  VerifyAccess(){
+  GetParams(){
     this.route.queryParamMap.subscribe(queryParams => {
-      this.client = queryParams.get("client")
-      if(this.client!=null &&  this.client!=undefined){
-        //Cuando se está ingresando desde el selfservice
-        
-      }
+      this.client = queryParams.get("client") ;   
+      console.log(this.client)  ;
     })
   }
 
@@ -159,12 +189,25 @@ ngOnInit(){
     document.getElementById("btnModal").click();
   }
   //Filtrado de ciudades
-  filterCities() {
-    this.gnmunicF = this.gnmunic.filter((v) => v.dep_codi == this.pqr.dep_codi)
+   filterCities() {
+     this.gnmunicF =  this.gnmunic.filter((v) => v.dep_codi == this.pqr.dep_codi)
+     console.log('filtro');
   }
 //Obtener extensión de archivo
 GetExtension(fileName:string){
   return   fileName.split('.').pop();
+
+}
+setOptionConfirm(option:string){
+  console.log(option);
+ switch(option){
+   case "RIGHT":
+      this.Load();
+      break;
+      case "LEFT":
+      this.client = undefined;
+      this.Load();
+ }
 
 }
 

@@ -19,10 +19,13 @@ import { EstadosPipe } from './pipes/estados.pipe';
 import { EccotizComponent } from './components/ec/eccotiz/eccotiz.component';
 //Angular material
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material';
+import {MatNativeDateModule,MatFormFieldModule,MatInputModule,MatTableModule,MatPaginatorModule} from '@angular/material';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import { TarjetasPipe } from './pipes/socoxcn/tarjetas.pipe';
 import { EnvServiceProvider } from './env.service.provider';
+import { ConfirmDialogComponent } from './components/dialogs/confirm-dialog/confirm-dialog.component';
+import { TableSearchComponent } from './components/tools/table-search/table-search.component';
+import { AlertDialogComponent } from './components/dialogs/alert-dialog/alert-dialog.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -44,7 +47,10 @@ export const MY_FORMATS = {
     EstadosPipe,
     EccotizComponent,
     SocoxcnComponent,
-    TarjetasPipe
+    TarjetasPipe,
+    ConfirmDialogComponent,
+    TableSearchComponent,
+    AlertDialogComponent
   ],
   imports: [
     FormsModule,                               // <========== Add this line!
@@ -55,7 +61,11 @@ export const MY_FORMATS = {
       app_routing,
       BrowserAnimationsModule,
       MatDatepickerModule,
-      MatNativeDateModule
+      MatNativeDateModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatTableModule,
+      MatPaginatorModule
 
   ],
   providers: [
@@ -66,7 +76,9 @@ export const MY_FORMATS = {
     AlertComponent,
     MatNativeDateModule,
     Title,
-    EnvServiceProvider
+    EnvServiceProvider,
+    ConfirmDialogComponent,
+    TableSearchComponent
   ],
   bootstrap: [AppComponent]
 })
