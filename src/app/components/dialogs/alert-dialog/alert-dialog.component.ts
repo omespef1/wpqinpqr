@@ -22,4 +22,8 @@ export class AlertDialogComponent implements OnInit {
    document.getElementById('alert_button').click();
   }
 
+  executeAction(value:string){
+    this.buttonClick.emit(value);
+  }
+
 }

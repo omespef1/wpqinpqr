@@ -13,4 +13,6 @@ dcl_dire:string;
 pai_codi:number;
 dep_codi:number;
 mun_codi:number;
+reg_codi:number;
+tip_abre:string;
 }

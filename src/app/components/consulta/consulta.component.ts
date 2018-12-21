@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit ,ViewChild} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Title }     from '@angular/platform-browser';
@@ -17,6 +17,7 @@ import { ActivatedRoute } from "@angular/router";
   styleUrls: ['./consulta.component.css']
 })
 export class ConsultaComponent implements OnInit {
+  @ViewChild(AlertComponent) _alert : AlertComponent;
   GnItemsItePqr: gnItem[];
   pqr: pqinpqr = new pqinpqr();
   encuesta: pqEncue[] = [];
@@ -32,7 +33,7 @@ export class ConsultaComponent implements OnInit {
 logo:string;
 message:string;
 
-  constructor(private _conmu: ComunicationsService, private spinner: NgxSpinnerService, private alert: AlertComponent, private route: ActivatedRoute,private titleService: Title) {
+  constructor(private _conmu: ComunicationsService, private spinner: NgxSpinnerService, private route: ActivatedRoute,private titleService: Title) {
     this.preguntas.push("¿Su requerimiento fue atendido dentro de los términos establecidos?");
     this.preguntas.push("¿La calidad en la atención de su requerimiento fue?");
     this.preguntas.push("¿El servidor brindó una respuesta clara y oportuna?");
@@ -75,9 +76,8 @@ if(pqr.retorno==0){
       console.log(info.objTransaction);
       this.pqr = info.objTransaction;
     }
-    else {
-     this.message = info.txtRetorno;
-      this.alert.showMessage();
+    else {    
+      this._alert.showMessage(info.txtRetorno());
     }
     return info;
   }
@@ -98,9 +98,8 @@ if(pqr.retorno==0){
     })
 
   }
-  showMessage(msg:string){
-    this.message = msg;
-    this.alert.showMessage();
+  showMessage(msg:string){   
+    this._alert.showMessage(msg);
   }
 
   async GetAttchment() {

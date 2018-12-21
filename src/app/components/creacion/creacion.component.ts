@@ -9,10 +9,12 @@ import { ActivatedRoute } from "@angular/router";
 //Models
 import { gnItem } from '../../../classes/models';
 import { faclien } from 'src/classes/fa/faclien';
+import { gnarbol } from 'src/classes/gn/gnarbol';
 
 //components
 import {ConfirmDialogComponent} from '../dialogs/confirm-dialog/confirm-dialog.component';
 import {TableSearchComponent} from '../tools/table-search/table-search.component';
+import {AlertComponent} from '../alert/alert.component';
 @Component({
   selector: 'app-creacion',
   templateUrl: './creacion.component.html',
@@ -21,6 +23,8 @@ import {TableSearchComponent} from '../tools/table-search/table-search.component
 export class CreacionComponent implements OnInit {
   // @ViewChild('pqr_file');
   // fileAttchment: ElementRef;
+  @ViewChild(TableSearchComponent) _table : TableSearchComponent;
+  @ViewChild(AlertComponent) alert : AlertComponent;
   pqr: pqinpqr = new pqinpqr();
   @Input() GnItemsItePqr: gnItem[];
   @Input() GnItemsIteTipi: gnItem[];
@@ -30,9 +34,12 @@ export class CreacionComponent implements OnInit {
   gnmunic: any[];
   @Input() gnmunicF: any[];
   @Input() pqdpara: any[];
+  @Input() ctcontr:any ={};
+  @Input() area:any={};
+  @Input() spq000001 : any ={};
+  message:string="";
   //Var
   gndigfl: any;
-  message: string = "";
   inscription: string = "0";
   safeHtml: SafeHtml;
   submitted: boolean = false;
@@ -42,14 +49,16 @@ export class CreacionComponent implements OnInit {
   allowedFormats:string[]=[ "PDF","DOC","DOCX","JPG","PNG","XLS","XLSX"];
   pqr_file:any;
   contracts: any[];
+  
 
   constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer,private titleService: Title,
-  private route: ActivatedRoute,private _confirm:ConfirmDialogComponent,private _table:TableSearchComponent) {
+  private route: ActivatedRoute,private _confirm:ConfirmDialogComponent) {
 
   }
 async ngOnInit(){
   this.setTitle("Creación de PQR");  
-  await this.GetParams();  
+  await this.GetParams(); 
+  //Si vienen parámetros en url despleiga el modal para preguntar como se quiere acceder 
   console.log(this.client)  ;
   if(this.client)
    this._confirm.show(); 
@@ -85,8 +94,8 @@ async ngOnInit(){
         //Carga los datos del cliente si aplica
         if(resp.objTransaction.client!= null && resp.objTransaction.client != undefined){
           let client:faclien = resp.objTransaction.client;
-          if(this.client){
-          
+          if(this.client){          
+            this.spq000001 = resp.objTransaction.spq000001;
             this.pqr.inp_tcli = "F";
             this.pqr.inp_apel = client.cli_apel;
             this.pqr.inp_nomb = client.cli_nomb;
@@ -96,16 +105,16 @@ async ngOnInit(){
             this.pqr.inp_ntel = client.dcl_ntel;
             this.pqr.pai_codi = client.pai_codi;
             this.pqr.dep_codi = client.dep_codi;
+            console.log(client.tip_abre);
+            console.log(client.tip_abre.length);
+            this.pqr.inp_tido = client.tip_abre.replace(/\s/g,"");
             this.filterCities();                                      
-              this.pqr.arb_csuc  = client.arb_csuc;
+              this.pqr.arb_sucu  = client.arb_csuc;
               this.pqr.arb_nomb =  client.arb_nomb;
-              this.pqr.mun_codi = client.mun_codi;  
-              this.contracts = resp.objTransaction.contracts; 
-              this._table.mySource = this.contracts;
-              this._table.ngOnInit();
-             
-             
-            
+              this.pqr.mun_codi = (`${client.mun_codi}-${client.reg_codi}`);
+              console.log(this.pqr.mun_codi);
+              this.contracts = resp.objTransaction.contracts;     
+              this._table.render(this.contracts);                                                            
             }             
             else
             this.pqr.inp_tcli = "O";                        
@@ -122,10 +131,20 @@ async ngOnInit(){
       this.showAlertMesssage(`Error conectando con el servidor, verfique que el servidor configurado esté escrito correctamente`);
     })
   }
-
+  setContract(rowSelected:any){
+    console.log(rowSelected);
+      this.ctcontr = rowSelected;
+      this._comu.Get(`api/gnarbol?con_cont=${rowSelected.con_cont}`).subscribe((resp:any)=>{
+        this.area = resp.objTransaction;
+      })
+      
+  }
+  openLupa(){
+    this._table.show();
+  }
   GetParams(){
     this.route.queryParamMap.subscribe(queryParams => {
-      this.client = queryParams.get("client") ;   
+      this.client = atob(queryParams.get("client")) ;         
       console.log(this.client)  ;
     })
   }
@@ -149,10 +168,12 @@ async ngOnInit(){
   //Envío de pqr
   PostPqr(form: NgForm) {
     this.submitted = true;
+    this.pqr.con_cont = this.ctcontr.con_cont;
     this.spinner.show();
     this.loading ="Enviando PQR...";
     this._comu.Post('api/PqInpqr', this.pqr).subscribe((resp: any) => {
     this.spinner.hide();
+    console.log(resp);
       if (resp.retorno != undefined) {
         this.submitted = false;
         if (resp.retorno == 0) {
@@ -166,14 +187,15 @@ async ngOnInit(){
               if(respAdj.retorno==1)
                 this.showAlertMesssage(`Se produjo un error subiendo el archivo. Intentelo nuevamente : ${respAdj.txtRetorno}`);
                 else {
-                  this.showAlertMesssage(resp.objTransaction.msg);
+                  this.alert.showHtmlMessage(resp.objTransaction.msg);
                   form.reset();
                   // this.fileAttchment.nativeElement.value = "";
                 }
             })
-          }else {
-            this.showAlertMesssage(resp.objTransaction.msg);
+          }else {          
+            this.alert.showHtmlMessage(resp.objTransaction.msg);
             form.reset();
+            this.Load();
               // this.fileAttchment.nativeElement.value = "";
           }
 
@@ -185,8 +207,7 @@ async ngOnInit(){
   }
 //Mostrar mensajes
   showAlertMesssage(msg: string) {
-    this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(msg);
-    document.getElementById("btnModal").click();
+    this.alert.showMessage(msg);
   }
   //Filtrado de ciudades
    filterCities() {

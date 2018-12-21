@@ -16,8 +16,9 @@ safeHtml:SafeHtml;
 
 
 
-  showMessage(){
-
+  showMessage(msg:string){  
+    this.message = msg;
+    console.log(this.message);
     document.getElementById("btnModal").click();
   }
   showHtmlMessage(msg:string){

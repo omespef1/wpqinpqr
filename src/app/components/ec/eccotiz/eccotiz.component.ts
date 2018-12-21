@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {ComunicationsService} from '../../../../services/comunications.service'
@@ -19,6 +19,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 
 export class EccotizComponent implements OnInit {
+  @ViewChild(AlertComponent) _alert : AlertComponent;
   message:string;
    cotizaciones : eccotiz[];
    cotizacion:any={};
@@ -34,7 +35,7 @@ export class EccotizComponent implements OnInit {
       usu_codi:"",
 
     };
-  constructor(private _comu:ComunicationsService, private route: ActivatedRoute, private _alert:AlertComponent,private spinner: NgxSpinnerService,private titleService: Title ) { }
+  constructor(private _comu:ComunicationsService, private route: ActivatedRoute,private spinner: NgxSpinnerService,private titleService: Title ) { }
 
   ngOnInit() {
        this.setTitle("Cotizaciones");
@@ -62,9 +63,8 @@ async getGnTerce(){
          this.showMessage("Error conectando con el servidor");
        })
    }
-   else {
-     this.message = "No se ha especificado ningún usuario seven";
-     this._alert.showMessage();
+   else {    
+     this._alert.showMessage("No se ha especificado ningún usuario seven");
    }
  });
 
@@ -115,8 +115,7 @@ async getGnTerce(){
     this.showModales("Productos");
   }
   showMessage(msg:string){
-    this.message = msg;
-    this._alert.showMessage();
+    this._alert.showMessage(msg);
   }
 
 }

@@ -1,3 +1,5 @@
+import { gnarbol } from "./gn/gnarbol";
+
 export interface gnItem {
   ite_nomb: string;
   ite_codi: string;
@@ -22,15 +24,17 @@ export class pqinpqr {
   public inp_ncel: string = "";
   public pai_codi: number;
   public dep_codi: number;
-  public mun_codi: number;
+  public mun_codi: string;
   public reg_codi: number;
   public inp_mres: string = "";
   public ite_frec: string = "";
   public inp_gper: number;
   public adj_file: File = null;
   public inp_tcli:string;
-  public arb_csuc:string;
+  public arb_sucu:string;
   public arb_nomb:string;
+  public con_cont:number;
+  public arb_care:number;
 }
 export class ask {
   askText: string;

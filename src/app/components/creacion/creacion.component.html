@@ -38,38 +38,53 @@
               </div>
               </div>
               <!-- Seccional -->
-              <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+              <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12" *ngIf="spq000001.dig_valo=='S'">
                 <label for="arb_csuc">Seccional</label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <div class="input-group-text">
-                        <span><i class="fas fa-comment"></i></span>
+                        <span><i class="fas fa-building"></i></span>
                     </div>
                   </div>
-                  <input type="text" disabled = "true" class="form-control" placeholder="Seccional" name="arb_csuc" id="arb_csuc" [(ngModel)]="pqr.arb_csuc" required #arb_csuc="ngModel">
-                  <input type="text" disabled = "true" class="form-control" placeholder="Seccional" name="arb_nomb" id="arb_nomb" [(ngModel)]="pqr.arb_nomb" required #arb_nomb="ngModel">
+                  <input type="text" [readOnly]="pqr.inp_tcli == 'F'"  class="form-control" placeholder="Código" name="arb_sucu" id="arb_sucu" [(ngModel)]="pqr.arb_sucu" required #arb_sucu="ngModel">
+                  <input type="text" [disabled]="pqr.inp_tcli == 'F'" class="form-control" placeholder="Descripción" name="arb_nomb" id="arb_nomb" [(ngModel)]="pqr.arb_nomb" required #arb_nomb="ngModel">
               </div>
-                <div [hidden]="arb_csuc.valid || arb_csuc.pristine" class="alert alert-danger">
+                <div [hidden]="arb_sucu.valid || arb_sucu.pristine" class="alert alert-danger">
                   seccional es requerido
                 </div>
               </div>
-              <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+              <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12" *ngIf="spq000001.dig_valo=='S'">
                 <label for="con_cont">No.Contrato</label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <div class="input-group-text">
-                        <span><i class="fas fa-comment"></i></span>
-                    </div>
+                      <span><i class="fas fa-hashtag"></i></span>
                   </div>
-                  <input type="text" disabled = "true" class="form-control" placeholder="Nro Contrato" name="con_ncon" id="con_ncon" [(ngModel)]="pqr.con_ncon" required #con_ncon="ngModel">
-                  <input type="text" disabled = "true" class="form-control" placeholder="Descripcion" name="arb_nomb" id="con_desc" [(ngModel)]="pqr.con_desc" required #con_desc="ngModel">
+                  </div>
+                  <input type="text" data-toggle="tooltip" data-placement="bottom" [title]="ctcontr.con_ncon" [readOnly]="pqr.inp_tcli == 'F'" class="form-control"  name="con_ncon" id="con_ncon" [(ngModel)]="ctcontr.con_ncon" required #con_ncon="ngModel">
+                  <input type="text" data-toggle="tooltip" data-placement="bottom" [title]="ctcontr.con_desc" disabled = "true" class="form-control"  name="con_desc" id="con_desc" [(ngModel)]="ctcontr.con_desc" required #con_desc="ngModel">
+                  <button type="button" class="btn btn-primary" (click)= "openLupa()">
+                    <span><i class="fas fa-search"></i></span>
+                 </button>
               </div>
-                <div [hidden]="arb_csuc.valid || arb_csuc.pristine" class="alert alert-danger">
+                <div [hidden]="con_ncon.valid || con_ncon.pristine" class="alert alert-danger">
                   No Contrato es requerido
                 </div>
               </div>
-              <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
-                <label for="ite_tpqr">Línea de Negocio</label>
+              <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12"  *ngIf="area && spq000001.dig_valo=='S'">
+                <label for="con_cont">Línea de negocio</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                       <span><i class="fas fa-external-link-square-alt"></i></span>
+                    </div>
+                  </div>
+                  <input  data-toggle="tooltip" data-placement="top" [title]="area.arb_codi" type="text" [readOnly]="pqr.inp_tcli == 'F'"  class="form-control"  name="arb_codia" id="arb_codia" [(ngModel)]="area.arb_codi" required #arb_codia="ngModel">
+                  <input type="text" data-toggle="tooltip" data-placement="bottom" [title]="area.arb_nomb" disabled="true" class="form-control"  name="arb_nomba" id="arb_nomba" [(ngModel)]="area.arb_nomb" required #arb_nomba="ngModel">
+              </div>
+                <div [hidden]="arb_codia.valid || arb_codia.pristine" class="alert alert-danger">
+                 Línea de negocio es requerida
+                </div>
               </div>
             </div>
         <div class="row">
@@ -130,7 +145,7 @@
             <div class="input-group">
               <div class="input-group-prepend">
                 <div class="input-group-text">
-                    <span><i class="fas fa-id-card"></i></span>
+                  <span><i class="far fa-envelope-open"></i></span>
                 </div>
               </div>
             <select class="form-control" id="inp_mres" name="inp_mres" [(ngModel)]="pqr.inp_mres" required #inp_mres="ngModel">
@@ -154,7 +169,7 @@
                     <span><i class="fas fa-user-circle"></i></span>
                 </div>
               </div>
-              <input [disabled]="pqr.inp_tcli == 'F'" type="text" class="form-control"  placeholder="Nombres" name="inp_nomb" id="inp_nomb" [(ngModel)]="pqr.inp_nomb" required #inp_nomb="ngModel">
+              <input [readOnly]="pqr.inp_tcli == 'F'" type="text" class="form-control"  placeholder="Nombres" name="inp_nomb" id="inp_nomb" [(ngModel)]="pqr.inp_nomb" required #inp_nomb="ngModel">
             </div>
             <div [hidden]="inp_nomb.valid || inp_nomb.pristine" class="alert alert-danger">
               Nombres son requeridos
@@ -171,7 +186,7 @@
                     <span><i class="fas fa-user-circle"></i></span>
                 </div>
               </div>
-                <input [disabled]="pqr.inp_tcli == 'F'" type="text"  class="form-control" placeholder="Apellidos" name="inp_apel" id="inp_apel" [(ngModel)]="pqr.inp_apel" required #inp_apel="ngModel">
+                <input [readOnly]="pqr.inp_tcli == 'F'" type="text"  class="form-control" placeholder="Apellidos" name="inp_apel" id="inp_apel" [(ngModel)]="pqr.inp_apel" required #inp_apel="ngModel">
             </div>
 
             <div [hidden]="inp_apel.valid || inp_apel.pristine" class="alert alert-danger">
@@ -190,7 +205,7 @@
                     <span><i class="fas fa-chalkboard-teacher"></i></span>
                 </div>
               </div>
-              <select  class="form-control" id="inp_tido" name="inp_tido" [(ngModel)]="pqr.inp_tido" required #inp_tido="ngModel" #inp_tido="ngModel">
+              <select [disabled]="pqr.inp_tcli == 'F'"  class="form-control" id="inp_tido" name="inp_tido" [(ngModel)]="pqr.inp_tido" required #inp_tido="ngModel" #inp_tido="ngModel">
                 <option value="CC">Cédula de Ciudadanía</option>
                 <option value="CE">Cédula de Extranjería</option>
                 <option value="NIT">Identificación Tributaria</option>
@@ -214,7 +229,7 @@
                     <span><i class="fas fa-id-card"></i></span>
                 </div>
               </div>
-            <input type="text" [disabled]="pqr.inp_tcli == 'F'"  class="form-control" placeholder="Número de documento" name="inp_nide" id="inp_nide" [(ngModel)]="pqr.inp_nide" #inp_nide="ngModel">
+            <input type="text" [readOnly]="pqr.inp_tcli == 'F'"  class="form-control" placeholder="Número de documento" name="inp_nide" id="inp_nide" [(ngModel)]="pqr.inp_nide" #inp_nide="ngModel">
           </div>
             <!-- <div [hidden]="inp_nide.valid || inp_nide.pristine" class="alert alert-danger">
               Número de documento es requerido
@@ -233,7 +248,7 @@
                     <span><i class="fas fa-map-marked-alt"></i></span>
                 </div>
               </div>
-            <input type="text"  [disabled]="pqr.inp_tcli == 'F'" class="form-control" placeholder="Dirección" name="inp_dire" id="inp_dire" [(ngModel)]="pqr.inp_dire" required #inp_dire="ngModel">
+            <input type="text"  [readOnly]="pqr.inp_tcli == 'F'" class="form-control" placeholder="Dirección" name="inp_dire" id="inp_dire" [(ngModel)]="pqr.inp_dire" required #inp_dire="ngModel">
           </div>
             <div [hidden]="inp_dire.valid || inp_dire.pristine" class="alert alert-danger">
               Dirección es requerida
@@ -251,7 +266,7 @@
                     <span><i class="fas fa-phone"></i></span>
                 </div>
               </div>
-            <input type="number" [disabled]="pqr.inp_tcli == 'F'" class="form-control" placeholder="Teléfono fijo" name="inp_ntel" id="inp_ntel" [(ngModel)]="pqr.inp_ntel" required #inp_ntel="ngModel">
+            <input type="number" [readOnly]="pqr.inp_tcli == 'F'" class="form-control" placeholder="Teléfono fijo" name="inp_ntel" id="inp_ntel" [(ngModel)]="pqr.inp_ntel" required #inp_ntel="ngModel">
           </div>
             <div [hidden]="inp_ntel.valid || inp_ntel.pristine" class="alert alert-danger">
               Teléfono fijo requerido
@@ -285,7 +300,7 @@
                     <span><i class="fas fa-at"></i></span>
                 </div>
               </div>
-              <input type="email" [disabled]="pqr.inp_tcli == 'F'"  class="form-control" placeholder="Email" name="inp_mail" id="inp_mail" [(ngModel)]="pqr.inp_mail" required #inp_mail="ngModel">
+              <input type="email" [readOnly]="pqr.inp_tcli == 'F'"  class="form-control" placeholder="Email" name="inp_mail" id="inp_mail" [(ngModel)]="pqr.inp_mail" required #inp_mail="ngModel">
 
             </div>
             <div [hidden]="inp_mail.valid || inp_mail.pristine" class="alert alert-danger">
@@ -407,34 +422,8 @@
       </form>
     </div>
   </div>
-
+  <app-alert [message] ="message"></app-alert>
   <app-confirm-dialog leftButton="Anónimo" (buttonClick)="setOptionConfirm($event)"  rightButton="Cliente" modalBody ="¿Como desea realizar el ingreso?" modalTitle = "Confirmación" ></app-confirm-dialog>
- <div class="row">
-  <app-table-search [mySource]="contracts"></app-table-search>
- </div>
+  <app-table-search Title="Contratos" (rowCLick)= "setContract($event)"></app-table-search>
 
-  <!-- Button trigger modal -->
-  <button id="btnModal" hidden type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-    Launch demo modal
-  </button>
-
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Mensaje del sistema</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div [innerHTML]="safeHtml" class="modal-body" >
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+  

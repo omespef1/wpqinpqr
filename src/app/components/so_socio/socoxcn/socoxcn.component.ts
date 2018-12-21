@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import { Title }     from '@angular/platform-browser';
 //components
 import {AlertComponent} from '../../alert/alert.component';
@@ -18,6 +18,7 @@ import {TarjetasPipe} from '../../../pipes/socoxcn/tarjetas.pipe';
   styleUrls: ['./socoxcn.component.css']
 })
 export class SocoxcnComponent implements OnInit {
+  @ViewChild(AlertComponent) _alert : AlertComponent;
       par_busq:any = {
       ter_coda:"",
       ter_noco:"",
@@ -28,7 +29,7 @@ export class SocoxcnComponent implements OnInit {
     cuentasxcobrar : any[]=[];
     misproductos:any[]=[];
     pasarela:string;
-  constructor(private _alert:AlertComponent,private _comu:ComunicationsService,private spinner: NgxSpinnerService, private route: ActivatedRoute,private titleService: Title ) { }
+  constructor(private _comu:ComunicationsService,private spinner: NgxSpinnerService, private route: ActivatedRoute,private titleService: Title ) { }
  message:string;
   ngOnInit() {
     this.setTitle("Mis productos y servicios");
@@ -90,16 +91,15 @@ this.spinner.show();
          this.showMessage("Error conectando con el servidor");
        })
    }
-   else {
-     this.message = "No se ha especificado ningún usuario seven";
-     this._alert.showMessage();
+   else {    
+     this._alert.showMessage("No se ha especificado ningún usuario seven");
    }
  });
   }
 
   showMessage(msg:string){
-  	this.message = msg;
-  	this._alert.showMessage();
+    console.log(msg);
+  	this._alert.showMessage(msg);
   }
 
   getPasarela(){
