@@ -26,6 +26,9 @@ import { EnvServiceProvider } from './env.service.provider';
 import { ConfirmDialogComponent } from './components/dialogs/confirm-dialog/confirm-dialog.component';
 import { TableSearchComponent } from './components/tools/table-search/table-search.component';
 import { AlertDialogComponent } from './components/dialogs/alert-dialog/alert-dialog.component';
+import { WgnfpassComponent } from './pages/gn/wgnfpass/wgnfpass.component';
+
+
 
 export const MY_FORMATS = {
   parse: {
@@ -50,7 +53,8 @@ export const MY_FORMATS = {
     TarjetasPipe,
     ConfirmDialogComponent,
     TableSearchComponent,
-    AlertDialogComponent
+    AlertDialogComponent,
+    WgnfpassComponent
   ],
   imports: [
     FormsModule,                               // <========== Add this line!
