@@ -13,16 +13,19 @@
     <div class="card-header bg-primary text-white">Defina sus nuevas credenciales</div>
     <div class="card-body">
       <form #wgnfpass="ngForm" (ngSubmit)="setPassword(wgnfpass)">
-        <div class="form-group">
-          <label for="usu_idpk">Contraseña</label>
-          <input type="password" required class="form-control"  placeholder="Ingrese su nueva contraseña" name="usu_idpk" [(ngModel)]="user.usu_idpk" #usu_idpk="ngModel">
+        <!-- <label for="usu_idpk">Contraseña</label>  -->
+        <div class="form-group has-feedback">
+            <i class="fas fa-lock form-control-feedback"></i>          
+          <input type="password" required class="form-control" autocomplete="new-password"  placeholder="Contraseña nueva" name="usu_idpk" [(ngModel)]="user.usu_idpk" #usu_idpk="ngModel">
+       
         </div>
         <div [hidden]="usu_idpk.valid || usu_idpk.pristine" class="alert alert-danger">
             Contraseña es requerida
           </div>
-        <div class="form-group">
-          <label for="usu_idpc">Contraseña</label>
-          <input type="password" required class="form-control" name="usu_idpc" #usu_idpc="ngModel" [(ngModel)]="user.usu_idpc" placeholder="Confirme la contraseña">
+        <div class="form-group has-feedback">
+          <!-- <label for="usu_idpc">Confirmar contraseña</label> -->
+          <i class="fas fa-lock form-control-feedback"></i>   
+          <input type="password" required class="form-control" autocomplete="new-password" name="usu_idpc" #usu_idpc="ngModel" [(ngModel)]="user.usu_idpc" placeholder="Confirme la contraseña">
         </div>
         <div [hidden]="usu_idpc.valid || usu_idpc.pristine" class="alert alert-danger">
             Confirmación de contraseña es requerida
@@ -30,16 +33,18 @@
         <div [hidden]="user.usu_idpk == user.usu_idpc" class="alert alert-danger" role="alert">
             Las contraseñas deben coincidir
           </div>
-          <div class="form-group">
+          <div class="form-group text-center">
               <button [disabled]="!wgnfpass.valid || (user.usu_idpc!= user.usu_idpk) || loading" type="submit" class="btn btn-primary">
                   <i [hidden]="loading" class="fas fa-user-check"></i> 
                  <i  [hidden]="!loading" class="fas fa-sync fa-spin"></i> 
-                 &nbsp; {{loading==true?'Guardando':'Guardar'}}
-               </button>
-              
+                 &nbsp; {{loading==true?'Actualizando contraseña...':'Cambiar contraseña'}}
+               </button>              
           </div>
           <div class="alert alert-warning" role="alert" *ngIf="success">
-              Contraseña actualizada!
+              Su Contraseña ha sido actualizada con éxito!
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="error">
+              Error: Su token ya ha caducado o no tiene acceso para realizar esta solicitud
             </div>
        
         
@@ -47,3 +52,5 @@
     </div>
   </div>
 </div>
+
+<app-alert [message] ="message"></app-alert>

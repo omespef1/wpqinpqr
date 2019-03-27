@@ -1,0 +1,10 @@
+.form-control-feedback {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+    color: gray;
+    margin-left: 3px;
+  }
+  .form-control {
+    padding-left: 35px!important;
+  }

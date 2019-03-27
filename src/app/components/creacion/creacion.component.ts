@@ -59,7 +59,7 @@ async ngOnInit(){
   this.setTitle("Creación de PQR");  
   await this.GetParams(); 
   //Si vienen parámetros en url despleiga el modal para preguntar como se quiere acceder 
-  console.log(this.client)  ;
+  console.log(this.client);
   if(this.client)
    this._confirm.show(); 
   if(!this.client)
@@ -144,6 +144,8 @@ async ngOnInit(){
   }
   GetParams(){
     this.route.queryParamMap.subscribe(queryParams => {
+      console.log(queryParams.get("client"));
+      if(queryParams.get("client")!=null)
       this.client = atob(queryParams.get("client")) ;         
       console.log(this.client)  ;
     })

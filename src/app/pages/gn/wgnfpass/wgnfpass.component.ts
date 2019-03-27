@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { AlertComponent } from '../../../components/alert/alert.component';
 
 //services
-import {WgnfpassService} from '../../../../services/gn/wgnfpass.service';
+import { WgnfpassService } from '../../../../services/gn/wgnfpass.service';
+import { ActivatedRoute } from '@angular/router';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-wgnfpass',
@@ -10,20 +14,49 @@ import {WgnfpassService} from '../../../../services/gn/wgnfpass.service';
   styleUrls: ['./wgnfpass.component.css']
 })
 export class WgnfpassComponent implements OnInit {
-  loading=false;
-   user: any = { usu_idpk:'',usu_idpc:''}
-   usu_idpkc:string;
-   success=false;
-  constructor(private _fpass:WgnfpassService) { }
+  @ViewChild(AlertComponent) alert: AlertComponent;
+  loading = false;
+  user: any = { usu_idpk: '', usu_idpc: '' }
+  usu_idpkc: string;
+  success = false;
+  token: string;
+  error=false;
+  message:string;
+  constructor(private _fpass: WgnfpassService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+
+    this.loadParams();
   }
-  setPassword(form:NgForm){
-    this.loading=true;
-    this._fpass.GetUserWithCodeLink().then(()=>{
+
+  loadParams() {
+    try {
+      this.route.queryParamMap.subscribe((queryParams) => {
+        if (queryParams.get("token") == null || queryParams.get("token") == undefined){
+          this.message="Acceso no autorizado";
+          this.alert.showMessage("Acceso no autorizado");
+        }
+         
+        this.token = queryParams.get("token");
+      })
+
+    } catch (error) {
+      console.log('error ejecuta');
+
+    }
+
+  }
+  setPassword(form: NgForm) {
+    this.loading = true;
+    this._fpass.SetPasswordWithToken(btoa(this.user.usu_idpk), this.token).subscribe(() => {
       this.loading = false;
       console.log('resuelto');
-      this.success=true;
+      this.success = true;
+      form.reset();
+    }, (err: HttpErrorResponse) => {
+      this.loading = false;
+      console.log(err);
+      this.error=true;
       form.reset();
     })
   }

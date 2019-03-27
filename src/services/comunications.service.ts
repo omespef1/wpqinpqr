@@ -30,8 +30,22 @@ Post(urlController:string, params:any){
 headers: new HttpHeaders({
   'Access-Control-Allow-Origin':'*'
 })
-  }
+  }  
   let url = `${this.env.apiUrl}${urlController}`;
+console.log(constOptions.headers);
+    return this.http.post(url, params,constOptions);
+}
+
+PostToken(urlController:string, params:any,token:string=""){
+  let constOptions = {
+headers: new HttpHeaders({
+  'Access-Control-Allow-Origin':'*',
+  'authorization':`Bearer ${token}`
+})
+  }
+  
+  let url = `${this.env.apiUrl}${urlController}`;
+console.log(constOptions.headers);
     return this.http.post(url, params,constOptions);
 }
 
