@@ -21,6 +21,7 @@ export class WgnfpassComponent implements OnInit {
   success = false;
   token: string;
   error=false;
+  strError:string;
   message:string;
   constructor(private _fpass: WgnfpassService, private route: ActivatedRoute) { }
 
@@ -47,16 +48,25 @@ export class WgnfpassComponent implements OnInit {
 
   }
   setPassword(form: NgForm) {
+    this.success=false;
+    this.error=false;
     this.loading = true;
-    this._fpass.SetPasswordWithToken(btoa(this.user.usu_idpk), this.token).subscribe(() => {
+    this._fpass.SetPasswordWithToken(btoa(this.user.usu_idpk), this.token).subscribe((resp:any) => {
       this.loading = false;
       console.log('resuelto');
-      this.success = true;
+      if(resp.Retorno == 0)
+       this.success = true;
+       if(resp.Retorno == 1){
+         this.error=true;
+         this.strError= resp.TxtError;
+       }
+       
       form.reset();
     }, (err: HttpErrorResponse) => {
       this.loading = false;
       console.log(err);
       this.error=true;
+      this.strError="Su token ya ha caducado o no tiene acceso para realizar esta solicitud";
       form.reset();
     })
   }

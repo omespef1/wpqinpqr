@@ -41,10 +41,10 @@
                </button>              
           </div>
           <div class="alert alert-warning" role="alert" *ngIf="success">
-              Su Contraseña ha sido actualizada con éxito!
+              Su Contraseña ha sido actualizada con éxito, dirígase nuevamente al Sitio SELFSERVICE e ingrese con su nueva contraseña!
             </div>
             <div class="alert alert-danger" role="alert" *ngIf="error">
-              Error: Su token ya ha caducado o no tiene acceso para realizar esta solicitud
+              Error: {{ strError}} 
             </div>
        
         
