@@ -27,6 +27,7 @@ import { ConfirmDialogComponent } from './components/dialogs/confirm-dialog/conf
 import { TableSearchComponent } from './components/tools/table-search/table-search.component';
 import { AlertDialogComponent } from './components/dialogs/alert-dialog/alert-dialog.component';
 import { WgnfpassComponent } from './pages/gn/wgnfpass/wgnfpass.component';
+import { ModalComponent } from './dialogs/modal/modal.component';
 
 
 
@@ -54,7 +55,8 @@ export const MY_FORMATS = {
     ConfirmDialogComponent,
     TableSearchComponent,
     AlertDialogComponent,
-    WgnfpassComponent
+    WgnfpassComponent,
+    ModalComponent
   ],
   imports: [
     FormsModule,                               // <========== Add this line!

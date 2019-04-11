@@ -46,6 +46,7 @@ export class CreacionComponent implements OnInit {
   loading:string="";
   logo:SafeHtml;
   client :string="";
+  user:string;
   allowedFormats:string[]=[ "PDF","DOC","DOCX","JPG","PNG","XLS","XLSX"];
   pqr_file:any;
   contracts: any[];
@@ -146,7 +147,9 @@ async ngOnInit(){
     this.route.queryParamMap.subscribe(queryParams => {
       console.log(queryParams.get("client"));
       if(queryParams.get("client")!=null)
-      this.client = atob(queryParams.get("client")) ;         
+      this.client = atob(queryParams.get("client")) ;  
+      if(queryParams.get("user")!=null)
+      this.user = atob(queryParams.get("user")) ;         
       console.log(this.client)  ;
     })
   }
