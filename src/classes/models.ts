@@ -35,6 +35,7 @@ export class pqinpqr {
   public arb_nomb:string;
   public con_cont:number;
   public arb_care:number;
+  public usu_codi:string;
 }
 export class ask {
   askText: string;
@@ -74,6 +75,7 @@ export class pqEncue {
   enc_preg :string;
   enc_resp :string;
   enc_fech:Date;
+  emp_codi:number;
   constructor(
     enc_cont:number=0,
     inp_cont:number=0 ,
@@ -92,4 +94,8 @@ export interface ToTransaction{
   Retorno:number;
   TxtError:string,
   ObjTransaction:any
+}
+export interface companies {
+  emp_nomb:string;
+  emp_codi:number;
 }

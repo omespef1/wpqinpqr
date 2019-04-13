@@ -1,10 +1,10 @@
-import { Component, Input,OnInit ,ViewChild,ElementRef } from '@angular/core';
-import { pqinpqr } from '../../../classes/models';
+import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { pqinpqr, companies, ToTransaction } from '../../../classes/models';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgForm } from '@angular/forms';
 import { ComunicationsService } from '../../../services/comunications.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import{ Title }     from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from "@angular/router";
 //Models
 import { gnItem } from '../../../classes/models';
@@ -12,9 +12,10 @@ import { faclien } from 'src/classes/fa/faclien';
 import { gnarbol } from 'src/classes/gn/gnarbol';
 
 //components
-import {ConfirmDialogComponent} from '../dialogs/confirm-dialog/confirm-dialog.component';
-import {TableSearchComponent} from '../tools/table-search/table-search.component';
-import {AlertComponent} from '../alert/alert.component';
+import { ConfirmDialogComponent } from '../dialogs/confirm-dialog/confirm-dialog.component';
+import { ModalComponent } from '../dialogs/modal/modal.component';
+import { TableSearchComponent } from '../tools/table-search/table-search.component';
+import { AlertComponent } from '../alert/alert.component';
 @Component({
   selector: 'app-creacion',
   templateUrl: './creacion.component.html',
@@ -23,8 +24,8 @@ import {AlertComponent} from '../alert/alert.component';
 export class CreacionComponent implements OnInit {
   // @ViewChild('pqr_file');
   // fileAttchment: ElementRef;
-  @ViewChild(TableSearchComponent) _table : TableSearchComponent;
-  @ViewChild(AlertComponent) alert : AlertComponent;
+  @ViewChild(TableSearchComponent) _table: TableSearchComponent;
+  @ViewChild(AlertComponent) alert: AlertComponent;
   pqr: pqinpqr = new pqinpqr();
   @Input() GnItemsItePqr: gnItem[];
   @Input() GnItemsIteTipi: gnItem[];
@@ -34,49 +35,51 @@ export class CreacionComponent implements OnInit {
   gnmunic: any[];
   @Input() gnmunicF: any[];
   @Input() pqdpara: any[];
-  @Input() ctcontr:any ={};
-  @Input() area:any={};
-  @Input() spq000001 : any ={};
-  message:string="";
+  @Input() ctcontr: any = {};
+  @Input() area: any = {};
+  @Input() spq000001: any = {};
+  message: string = "";
   //Var
   gndigfl: any;
   inscription: string = "0";
   safeHtml: SafeHtml;
   submitted: boolean = false;
-  loading:string="";
-  logo:SafeHtml;
-  client :string="";
-  user:string;
-  allowedFormats:string[]=[ "PDF","DOC","DOCX","JPG","PNG","XLS","XLSX"];
-  pqr_file:any;
+  loading: string = "";
+  logo: SafeHtml;
+  client: string = "";
+  allowedFormats: string[] = ["PDF", "DOC", "DOCX", "JPG", "PNG", "XLS", "XLSX"];
+  pqr_file: any;
   contracts: any[];
-  
+  companies: companies[];
 
-  constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer,private titleService: Title,
-  private route: ActivatedRoute,private _confirm:ConfirmDialogComponent) {
+
+
+  constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer, private titleService: Title,
+    private route: ActivatedRoute, private _confirm: ConfirmDialogComponent, private _modal: ModalComponent) {
 
   }
-async ngOnInit(){
-  this.setTitle("Creación de PQR");  
-  await this.GetParams(); 
-  //Si vienen parámetros en url despleiga el modal para preguntar como se quiere acceder 
-  console.log(this.client);
-  if(this.client)
-   this._confirm.show(); 
-  if(!this.client)
-    this.Load();
-}
+  async ngOnInit() {
+    this.setTitle("Creación de PQR");
+    await this.GetParams();
+    //Si vienen parámetros en url despleiga el modal para preguntar como se quiere acceder 
+    console.log(this.client);
+    if (this.client)
+      this._confirm.show();
+    if (!this.client)
+      this.Load();
+  }
 
-   public setTitle( newTitle: string) {
-    this.titleService.setTitle( newTitle );
+  public setTitle(newTitle: string) {
+    this.titleService.setTitle(newTitle);
   }
   //Carga inicial de datos necesarios
-  Load() {   
+  Load() {
     this.spinner.show();
-    let query:string = "api/PqrTransactionLoad?";
+    let query: string = "api/PqrTransactionLoad?";
     console.log(this.client);
-    if(this.client)
-     query+= `cli_coda=${this.client}`;
+    if (this.client)
+      query += `cli_coda=${this.client}&emp_codi= ${this.pqr.emp_codi}`;
+
     this._comu.Get(query).subscribe((resp: any) => {
       console.log(resp);
       if (resp.retorno == 0) {
@@ -93,9 +96,9 @@ async ngOnInit(){
         //Si el valor seleccionado coincide con el del digiflag se muestra el desplegable de area de inscripción
         this.inscription = this.GnItemsItePqr.filter((t) => t.ite_codi == this.gndigfl.dig_valo)[0].ite_cont.toString();
         //Carga los datos del cliente si aplica
-        if(resp.objTransaction.client!= null && resp.objTransaction.client != undefined){
-          let client:faclien = resp.objTransaction.client;
-          if(this.client){          
+        if (resp.objTransaction.client != null && resp.objTransaction.client != undefined) {
+          let client: faclien = resp.objTransaction.client;
+          if (this.client) {
             this.spq000001 = resp.objTransaction.spq000001;
             this.pqr.inp_tcli = "F";
             this.pqr.inp_apel = client.cli_apel;
@@ -108,23 +111,23 @@ async ngOnInit(){
             this.pqr.dep_codi = client.dep_codi;
             console.log(client.tip_abre);
             console.log(client.tip_abre.length);
-            this.pqr.inp_tido = client.tip_abre.replace(/\s/g,"");
-            this.filterCities();                                      
-              this.pqr.arb_sucu  = client.arb_csuc;
-              this.pqr.arb_nomb =  client.arb_nomb;
-              this.pqr.mun_codi = (`${client.mun_codi}-${client.reg_codi}`);
-              console.log(this.pqr.mun_codi);
-              this.contracts = resp.objTransaction.contracts;     
-              this._table.render(this.contracts);                                                            
-            }             
-            else
-            this.pqr.inp_tcli = "O";                        
+            this.pqr.inp_tido = client.tip_abre.replace(/\s/g, "");
+            this.filterCities();
+            this.pqr.arb_sucu = client.arb_csuc;
+            this.pqr.arb_nomb = client.arb_nomb;
+            this.pqr.mun_codi = (`${client.mun_codi}-${client.reg_codi}`);
+            console.log(this.pqr.mun_codi);
+            this.contracts = resp.objTransaction.contracts;
+            this._table.render(this.contracts);
+          }
+          else
+            this.pqr.inp_tcli = "O";
         }
         this.spinner.hide();
       }
       else {
-          this.spinner.hide();
-         this.showAlertMesssage(`Error conectando con el servidor: ${resp.txtRetorno}`)
+        this.spinner.hide();
+        this.showAlertMesssage(`Error conectando con el servidor: ${resp.txtRetorno}`)
       }
     }, err => {
       console.log(err);
@@ -132,35 +135,34 @@ async ngOnInit(){
       this.showAlertMesssage(`Error conectando con el servidor, verfique que el servidor configurado esté escrito correctamente`);
     })
   }
-  setContract(rowSelected:any){
+  setContract(rowSelected: any) {
     console.log(rowSelected);
-      this.ctcontr = rowSelected;
-      this._comu.Get(`api/gnarbol?con_cont=${rowSelected.con_cont}`).subscribe((resp:any)=>{
-        this.area = resp.objTransaction;
-      })
-      
+    this.ctcontr = rowSelected;
+    this._comu.Get(`api/gnarbol?con_cont=${rowSelected.con_cont}`).subscribe((resp: any) => {
+      this.area = resp.objTransaction;
+    })
+
   }
-  openLupa(){
+  openLupa() {
     this._table.show();
   }
-  GetParams(){
+  GetParams() {
     this.route.queryParamMap.subscribe(queryParams => {
       console.log(queryParams.get("client"));
-      if(queryParams.get("client")!=null)
-      this.client = atob(queryParams.get("client")) ;  
-      if(queryParams.get("user")!=null)
-      this.user = atob(queryParams.get("user")) ;         
-      console.log(this.client)  ;
+      if (queryParams.get("client") != null)
+        this.client = atob(queryParams.get("client"));
+      if (queryParams.get("usu_codi") != null)
+        this.pqr.usu_codi = atob(queryParams.get("usu_codi"));
     })
   }
 
   //Manejo de archivos
   handleFileInput(files: FileList) {
 
-    if(files.length>0){
+    if (files.length > 0) {
 
-      let extension =this.GetExtension(files[0].name);
-      if(this.allowedFormats.indexOf(extension.toUpperCase())<0){
+      let extension = this.GetExtension(files[0].name);
+      if (this.allowedFormats.indexOf(extension.toUpperCase()) < 0) {
         this.showAlertMesssage(`El formato de archivo '${extension}' no es válido`);
         return;
       }
@@ -175,33 +177,33 @@ async ngOnInit(){
     this.submitted = true;
     this.pqr.con_cont = this.ctcontr.con_cont;
     this.spinner.show();
-    this.loading ="Enviando PQR...";
+    this.loading = "Enviando PQR...";
     this._comu.Post('api/PqInpqr', this.pqr).subscribe((resp: any) => {
-    this.spinner.hide();
-    console.log(resp);
+      this.spinner.hide();
+      console.log(resp);
       if (resp.retorno != undefined) {
         this.submitted = false;
         if (resp.retorno == 0) {
-          let inp_cont:number = resp.objTransaction.inp_cont;
-          if(this.pqr.adj_file!=null){
+          let inp_cont: number = resp.objTransaction.inp_cont;
+          if (this.pqr.adj_file != null) {
             const fd = new FormData();
-              this.loading ="Subiendo adjunto...";
-            fd.append('file',this.pqr.adj_file,`${inp_cont}.${this.GetExtension(this.pqr.adj_file.name)}`)   ;
-            this._comu.Post('api/upload', fd).subscribe((respAdj:any)=>{
+            this.loading = "Subiendo adjunto...";
+            fd.append('file', this.pqr.adj_file, `${inp_cont}.${this.GetExtension(this.pqr.adj_file.name)}`);
+            this._comu.Post('api/upload', fd).subscribe((respAdj: any) => {
 
-              if(respAdj.retorno==1)
+              if (respAdj.retorno == 1)
                 this.showAlertMesssage(`Se produjo un error subiendo el archivo. Intentelo nuevamente : ${respAdj.txtRetorno}`);
-                else {
-                  this.alert.showHtmlMessage(resp.objTransaction.msg);
-                  form.reset();
-                  // this.fileAttchment.nativeElement.value = "";
-                }
+              else {
+                this.alert.showHtmlMessage(resp.objTransaction.msg);
+                form.reset();
+                // this.fileAttchment.nativeElement.value = "";
+              }
             })
-          }else {          
+          } else {
             this.alert.showHtmlMessage(resp.objTransaction.msg);
             form.reset();
             this.Load();
-              // this.fileAttchment.nativeElement.value = "";
+            // this.fileAttchment.nativeElement.value = "";
           }
 
         }
@@ -210,31 +212,41 @@ async ngOnInit(){
       }
     }, err => { this.showAlertMesssage(err) })
   }
-//Mostrar mensajes
+  //Mostrar mensajes
   showAlertMesssage(msg: string) {
     this.alert.showMessage(msg);
   }
   //Filtrado de ciudades
-   filterCities() {
-     this.gnmunicF =  this.gnmunic.filter((v) => v.dep_codi == this.pqr.dep_codi)
-     console.log('filtro');
+  filterCities() {
+    this.gnmunicF = this.gnmunic.filter((v) => v.dep_codi == this.pqr.dep_codi)
+    console.log('filtro');
   }
-//Obtener extensión de archivo
-GetExtension(fileName:string){
-  return   fileName.split('.').pop();
+  //Obtener extensión de archivo
+  GetExtension(fileName: string) {
+    return fileName.split('.').pop();
 
-}
-setOptionConfirm(option:string){
-  console.log(option);
- switch(option){
-   case "RIGHT":
-      this.Load();
-      break;
+  }
+  setOptionConfirm(option: string) {
+    console.log(option);
+    switch (option) {
+      case "RIGHT":
+        this.loadCompanies();        
+
+        break;
       case "LEFT":
-      this.client = undefined;
-      this.Load();
- }
+        this.client = undefined;
 
-}
+
+    }
+
+  }
+  loadCompanies() {
+    console.log(this.pqr.usu_codi);
+    this._comu.Get(`api/gnempre?usu_codi=${this.pqr.usu_codi}`).subscribe((resp: ToTransaction) => {
+      this.companies = resp.ObjTransaction;
+      this._modal.present();
+
+    })
+  }
 
 }

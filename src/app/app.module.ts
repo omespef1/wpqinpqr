@@ -24,10 +24,11 @@ import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import { TarjetasPipe } from './pipes/socoxcn/tarjetas.pipe';
 import { EnvServiceProvider } from './env.service.provider';
 import { ConfirmDialogComponent } from './components/dialogs/confirm-dialog/confirm-dialog.component';
+import {ModalComponent} from './components/dialogs/modal/modal.component';
 import { TableSearchComponent } from './components/tools/table-search/table-search.component';
 import { AlertDialogComponent } from './components/dialogs/alert-dialog/alert-dialog.component';
 import { WgnfpassComponent } from './pages/gn/wgnfpass/wgnfpass.component';
-import { ModalComponent } from './dialogs/modal/modal.component';
+
 
 
 
@@ -53,6 +54,7 @@ export const MY_FORMATS = {
     SocoxcnComponent,
     TarjetasPipe,
     ConfirmDialogComponent,
+    ModalComponent,
     TableSearchComponent,
     AlertDialogComponent,
     WgnfpassComponent,
@@ -84,6 +86,7 @@ export const MY_FORMATS = {
     Title,
     EnvServiceProvider,
     ConfirmDialogComponent,
+    ModalComponent,
     TableSearchComponent
   ],
   bootstrap: [AppComponent]

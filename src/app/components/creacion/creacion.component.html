@@ -426,5 +426,15 @@
   <app-alert [message] ="message"></app-alert>
   <app-confirm-dialog leftButton="Anónimo" (buttonClick)="setOptionConfirm($event)"  rightButton="Cliente" modalBody ="¿Como desea realizar el ingreso?" modalTitle = "Confirmación" ></app-confirm-dialog>
   <app-table-search Title="Contratos" (rowCLick)= "setContract($event)"></app-table-search>
+  <app-modal title="Seleccione empresa" (ok)="load()" >
+      <form>
+          <div class="form-group">
+            <label for="emp_codi" class="col-form-label"></label>
+            <select class="form-control" id="usu_codi" name="usu_codi" [(ngModel)]="pqr.usu_codi" required #usu_codi="ngModel">
+                <option *ngFor="let companie of companies" [value]="companie.emp_codi">{{companie.emp_nomb | titlecase}}</option>
+              </select>
+          </div>          
+        </form>
+  </app-modal>
 
   

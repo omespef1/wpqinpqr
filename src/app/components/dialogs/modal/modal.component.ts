@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-modal',
@@ -6,10 +6,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./modal.component.css']
 })
 export class ModalComponent implements OnInit {
-
+  @Input() title: string = 'Title';   
+    @Input() subTitle: string = 'subTitle';
+    @Output() accept:EventEmitter<string>
   constructor() { }
 
   ngOnInit() {
   }
+ present(){
+   document.getElementById("btnModalContent").click();
+ }
+ dismiss(){
+  document.getElementById("btnModalContent").click();
+ }
 
+ ok(){
+  this.accept.emit();
+}
 }

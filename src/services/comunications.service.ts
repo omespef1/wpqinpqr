@@ -11,8 +11,9 @@ export class ComunicationsService {
 
   constructor(private http: HttpClient,private env: EnvService) { }
 
-  Get(urlController:string){    
-    let url = `${this.env.apiUrl}${urlController}`;
+  Get(urlController:string,emp_codi:number=0){    
+    let url = `${this.env.apiUrl}${urlController}`;    
+     url += `&emp_codi=${emp_codi}`
     console.log(url);
   return  this.http.get(url);
   }
