@@ -9,15 +9,18 @@ export class ModalComponent implements OnInit {
   @Input() title: string = 'Title';   
     @Input() subTitle: string = 'subTitle';
     @Output() accept:EventEmitter<string>
-  constructor() { }
-
+    
+  constructor() {
+    this.accept = new EventEmitter();
+   }
+  
   ngOnInit() {
   }
  present(){
-   document.getElementById("btnModalContent").click();
+   document.getElementById("btnModalGeneral").click();
  }
  dismiss(){
-  document.getElementById("btnModalContent").click();
+  document.getElementById("btnModalGeneral").click();
  }
 
  ok(){

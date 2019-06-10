@@ -53,7 +53,7 @@ export class WgnfpassComponent implements OnInit {
     this.loading = true;
     this._fpass.SetPasswordWithToken(btoa(this.user.usu_idpk), this.token).subscribe((resp:any) => {
       this.loading = false;
-      console.log('resuelto');
+     
       if(resp.Retorno == 0)
        this.success = true;
        if(resp.Retorno == 1){
@@ -64,7 +64,7 @@ export class WgnfpassComponent implements OnInit {
       form.reset();
     }, (err: HttpErrorResponse) => {
       this.loading = false;
-      console.log(err);
+     
       this.error=true;
       this.strError="Su token ya ha caducado o no tiene acceso para realizar esta solicitud";
       form.reset();

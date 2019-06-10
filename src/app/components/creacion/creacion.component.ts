@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { pqinpqr, companies, ToTransaction } from '../../../classes/models';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormGroup } from '@angular/forms';
 import { ComunicationsService } from '../../../services/comunications.service';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Title } from '@angular/platform-browser';
@@ -26,6 +26,7 @@ export class CreacionComponent implements OnInit {
   // fileAttchment: ElementRef;
   @ViewChild(TableSearchComponent) _table: TableSearchComponent;
   @ViewChild(AlertComponent) alert: AlertComponent;
+  @ViewChild(ModalComponent) modal: ModalComponent;
   pqr: pqinpqr = new pqinpqr();
   @Input() GnItemsItePqr: gnItem[];
   @Input() GnItemsIteTipi: gnItem[];
@@ -51,22 +52,30 @@ export class CreacionComponent implements OnInit {
   pqr_file: any;
   contracts: any[];
   companies: companies[];
+  myFiles:string [] = [];
 
 
 
   constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer, private titleService: Title,
-    private route: ActivatedRoute, private _confirm: ConfirmDialogComponent, private _modal: ModalComponent) {
+    private route: ActivatedRoute, private _confirm: ConfirmDialogComponent) {
 
   }
   async ngOnInit() {
-    this.setTitle("Creación de PQR");
-    await this.GetParams();
-    //Si vienen parámetros en url despleiga el modal para preguntar como se quiere acceder 
-    console.log(this.client);
-    if (this.client)
-      this._confirm.show();
-    if (!this.client)
-      this.Load();
+    try{
+      this.setTitle("Creación de PQR");
+      await this.GetParams();
+      //Si vienen parámetros en url despleiga el modal para preguntar como se quiere acceder 
+      
+      if (this.client)
+        this._confirm.show();
+      if (!this.client)
+        this.Load();
+        console.log('test');
+    }
+    catch(err){
+      this.showAlertMesssage(err);
+    }
+   
   }
 
   public setTitle(newTitle: string) {
@@ -78,9 +87,9 @@ export class CreacionComponent implements OnInit {
     let query: string = "api/PqrTransactionLoad?";
     console.log(this.client);
     if (this.client)
-      query += `cli_coda=${this.client}&emp_codi= ${this.pqr.emp_codi}`;
+      query += `cli_coda=${this.client}`;
 
-    this._comu.Get(query).subscribe((resp: any) => {
+    this._comu.Get(query,this.pqr.emp_codi).subscribe((resp: any) => {
       console.log(resp);
       if (resp.retorno == 0) {
         console.log(resp);
@@ -121,7 +130,13 @@ export class CreacionComponent implements OnInit {
             this._table.render(this.contracts);
           }
           else
-            this.pqr.inp_tcli = "O";
+            this.pqr.inp_tcli = "O";                                        
+        }
+        else{
+          this.pqr.inp_nomb =".";
+          this.pqr.inp_apel =".";
+          this.pqr.inp_ntel="0";
+          this.pqr.inp_ncel="0";   
         }
         this.spinner.hide();
       }
@@ -138,22 +153,32 @@ export class CreacionComponent implements OnInit {
   setContract(rowSelected: any) {
     console.log(rowSelected);
     this.ctcontr = rowSelected;
-    this._comu.Get(`api/gnarbol?con_cont=${rowSelected.con_cont}`).subscribe((resp: any) => {
+    this._comu.Get(`api/gnarbol?con_cont=${rowSelected.con_cont}`,this.pqr.emp_codi).subscribe((resp: any) => {
       this.area = resp.objTransaction;
     })
-
   }
   openLupa() {
     this._table.show();
   }
-  GetParams() {
+  GetParams():boolean {
+    try{
     this.route.queryParamMap.subscribe(queryParams => {
-      console.log(queryParams.get("client"));
-      if (queryParams.get("client") != null)
-        this.client = atob(queryParams.get("client"));
-      if (queryParams.get("usu_codi") != null)
-        this.pqr.usu_codi = atob(queryParams.get("usu_codi"));
+     
+        console.log(queryParams.get("client"));
+        if (queryParams.get("client") != null)
+          this.client = atob(queryParams.get("client"));
+        if (queryParams.get("usu_codi") != null)
+          this.pqr.usu_codi = atob(queryParams.get("usu_codi"));
+          return true;
+    
+     
+    },err=>{
+      return false;
     })
+  }
+  catch(err){
+    return false;
+  }
   }
 
   //Manejo de archivos
@@ -178,7 +203,7 @@ export class CreacionComponent implements OnInit {
     this.pqr.con_cont = this.ctcontr.con_cont;
     this.spinner.show();
     this.loading = "Enviando PQR...";
-    this._comu.Post('api/PqInpqr', this.pqr).subscribe((resp: any) => {
+    this._comu.Post('api/PqInpqr', this.pqr).subscribe((resp: any) => {    
       this.spinner.hide();
       console.log(resp);
       if (resp.retorno != undefined) {
@@ -188,7 +213,11 @@ export class CreacionComponent implements OnInit {
           if (this.pqr.adj_file != null) {
             const fd = new FormData();
             this.loading = "Subiendo adjunto...";
-            fd.append('file', this.pqr.adj_file, `${inp_cont}.${this.GetExtension(this.pqr.adj_file.name)}`);
+            for (var i = 0; i < this.myFiles.length; i++) { 
+              fd.append("fileUpload", this.myFiles[i]);
+             // fd.append('file', this.pqr.adj_file, `${inp_cont}_${this.pqr.emp_codi}.${this.GetExtension(this.pqr.adj_file.name)}`);    
+            }
+                   
             this._comu.Post('api/upload', fd).subscribe((respAdj: any) => {
 
               if (respAdj.retorno == 1)
@@ -198,6 +227,8 @@ export class CreacionComponent implements OnInit {
                 form.reset();
                 // this.fileAttchment.nativeElement.value = "";
               }
+            },err=>{
+              this.showAlertMesssage("Error subiendo documento.")
             })
           } else {
             this.alert.showHtmlMessage(resp.objTransaction.msg);
@@ -214,7 +245,9 @@ export class CreacionComponent implements OnInit {
   }
   //Mostrar mensajes
   showAlertMesssage(msg: string) {
-    this.alert.showMessage(msg);
+   // this.alert.showMessage(msg);
+    this.message = msg;
+    this.alert.show();
   }
   //Filtrado de ciudades
   filterCities() {
@@ -235,6 +268,7 @@ export class CreacionComponent implements OnInit {
         break;
       case "LEFT":
         this.client = undefined;
+        this.Load();
 
 
     }
@@ -242,11 +276,37 @@ export class CreacionComponent implements OnInit {
   }
   loadCompanies() {
     console.log(this.pqr.usu_codi);
-    this._comu.Get(`api/gnempre?usu_codi=${this.pqr.usu_codi}`).subscribe((resp: ToTransaction) => {
-      this.companies = resp.ObjTransaction;
-      this._modal.present();
-
+    this.spinner.show();
+    this._comu.Get(`api/gnempre?usu_codi=${this.pqr.usu_codi}`).subscribe((resp: any) => {
+      this.companies = resp.objTransaction;
+      console.log(resp);
+      this.spinner.hide();
+      this.modal.present();
     })
+  }
+
+  setValuesMandatory(){
+    console.log(this.pqr.inp_mres);
+
+    if(!this.client){
+    if(this.pqr.inp_mres!="D"){
+      this.pqr.inp_dire =".";
+      this.pqr.inp_mail ="";
+    }
+    
+    if(this.pqr.inp_mres!="C"){
+      this.pqr.inp_mail =".";
+      this.pqr.inp_dire ="";
+    }
+    
+    }
+  }
+
+  getFileDetails (e) {
+    //console.log (e.target.files);
+    for (var i = 0; i < e.target.files.length; i++) { 
+      this.myFiles.push(e.target.files[i]);
+    }
   }
 
 }

@@ -39,9 +39,7 @@ message:string;
     this.preguntas.push("¿El servidor brindó una respuesta clara y oportuna?");
   }
   async ngOnInit() {
-    this.setTitle("Consulta de PQR");
-   await this.LoadPqrFormBasicData();
-   await this.GetLogo();
+    this.setTitle("Consulta de PQR");      
      this.route.queryParamMap.subscribe(queryParams => {
       this.queryInp_Cont = queryParams.get("pqr")
       this.queryInp_Pass = queryParams.get("psw")
@@ -49,10 +47,14 @@ message:string;
         this.pqrIn.inp_cont =  Number(this.queryInp_Cont);
         this.pqrIn.inp_pass = this.queryInp_Pass;
         this.postPqr();
+        
       }
+
+      
     })
 
-
+    await this.GetLogo();
+    await this.LoadPqrFormBasicData();
 
   }
      public setTitle( newTitle: string) {
@@ -60,7 +62,6 @@ message:string;
   }
   async postPqr() {
   let pqr = <any> await  this.GetInfoPqr();
-  console.log(pqr);
 if(pqr.retorno==0){
     await this.GetAttchment();
     this.GetInfoEncuesta();
@@ -71,9 +72,9 @@ if(pqr.retorno==0){
   async GetInfoPqr() {
     //Obitiene todos los datos de la qpr
     const info: any = <any>await this._conmu.Get(`api/PqInpqr?inp_cont=${this.pqrIn.inp_cont}&inp_pass=${this.pqrIn.inp_pass}`).toPromise();
-    console.log(info);
+    
     if (info.retorno == 0) {
-      console.log(info.objTransaction);
+    
       this.pqr = info.objTransaction;
     }
     else {    
@@ -87,10 +88,10 @@ if(pqr.retorno==0){
     this.spinner.show();
     await this._conmu.Get(`api/GnItems?tit_cont=327`).subscribe((resp: any) => {
       this.spinner.hide();
-      if (resp.retorno == 0) {
-        console.log(resp);
-        this.GnItemsItePqr = resp.objTransaction;
-      }
+      
+       
+        this.GnItemsItePqr = resp;
+      
     }, err => {
       this.showMessage('Error conectando con el servidor');
       this.spinner.hide();
@@ -104,8 +105,8 @@ if(pqr.retorno==0){
 
   async GetAttchment() {
     //Descarga los adjuntos asociados a la pqr
-    let url = `api/download?consecutivo=${this.pqr.inp_cont}&pro_codi=SPQINPQR&tableName=PQ_INPQR`;
-    console.log(url);
+    let url = `api/download?consecutivo=${this.pqr.cas_cont}&pro_codi=SPQINPQR&tableName=PQ_INPQR&emp_codi=${this.pqr.emp_codi}`;
+
     await this._conmu.Get(url).subscribe((resp: any) => {
       if (resp.retorno == 0) {
         this.gnAdjunt = resp.objTransaction;
@@ -120,7 +121,6 @@ if(pqr.retorno==0){
 
   postEncue() {
     this.submittedEncue = true;
-    debugger;
     //Envía la encuesta se satisfacción
     this.spinner.show();
     for (let i = 0; i < 3; i++) {
@@ -132,6 +132,7 @@ if(pqr.retorno==0){
       pregunta.enc_resp = this.respuestas[i];
       pregunta.tip_codi = Number(this.pqr.inp_tido);
       pregunta.inp_cont = this.pqr.inp_cont;
+      pregunta.emp_codi = this.pqr.emp_codi;
       this.encuesta.push(pregunta);
     }
     this._conmu.Post('api/PqEncue', this.encuesta).toPromise().then((resp: any) => {
@@ -183,7 +184,7 @@ if(pqr.retorno==0){
   }
 
 async  GetLogo(){
-  await  this._conmu.Get('api/GnLogo').subscribe((resp:any)=>{
+  await  this._conmu.Get(`api/GnLogo?${this.pqr.emp_codi}`).subscribe((resp:any)=>{
       if(resp.retorno==0){
          this.logo = resp.objTransaction.emp_logs;
       }

@@ -18,11 +18,14 @@ safeHtml:SafeHtml;
 
   showMessage(msg:string){  
     this.message = msg;
-    console.log(this.message);
+   
     document.getElementById("btnModal").click();
   }
   showHtmlMessage(msg:string){
     this.safeHtml = this.sanitizer.bypassSecurityTrustHtml(msg);
+    document.getElementById("btnModal").click();
+  }
+  show(){
     document.getElementById("btnModal").click();
   }
 }

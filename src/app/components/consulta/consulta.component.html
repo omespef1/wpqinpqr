@@ -44,12 +44,11 @@
                   <span><i class="fas fa-key"></i></span>
                 </div>
               </div>
-              <input type="text" class="form-control" placeholder="Constraseña" name="inp_pass" id="inp_pass" [(ngModel)]="pqrIn.inp_pass" required #inp_pass="ngModel">
+              <input type="text" class="form-control" placeholder="Contraseña" name="inp_pass" id="inp_pass" [(ngModel)]="pqrIn.inp_pass" required #inp_pass="ngModel">
             </div>
             <div [hidden]="inp_pass.valid || inp_pass.pristine" class="alert alert-danger">
-              Constraseña requerida
+              Contraseña es requerida
             </div>
-
           </div>
         </div>
 
@@ -149,7 +148,7 @@
       <div class="row">
         <div class="col-md-12">
           <h3>Descargar documentos adjuntos</h3>
-          <button *ngFor="let adjunto of gnAdjunt" (click)="download(adjunto.adj_nomb)" class="btn btn-primary btn-sm">
+          <button *ngFor="let adjunto of gnAdjunt" (click)="download(adjunto.doc_desc)" class="btn btn-primary btn-sm">
             <span><i class="fas fa-file-download"></i></span> &nbsp; {{adjunto.adj_nomb}}
           </button>
 

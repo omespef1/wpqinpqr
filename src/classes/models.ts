@@ -8,7 +8,7 @@ export interface gnItem {
 export class pqinpqr {
 
 
-  public emp_codi: number;
+  public emp_codi: number=0;
   public inp_cont: number;
   public inp_nide: string = "";
   public inp_nomb: string = "";
@@ -36,6 +36,7 @@ export class pqinpqr {
   public con_cont:number;
   public arb_care:number;
   public usu_codi:string;
+  public cas_cont:number;
 }
 export class ask {
   askText: string;
@@ -65,7 +66,6 @@ export class option {
 }
 
 export class pqEncue {
-
   enc_cont:number;
   inp_cont:number;
   tip_codi:number;
