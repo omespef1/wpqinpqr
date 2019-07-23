@@ -29,6 +29,9 @@ import { TableSearchComponent } from './components/tools/table-search/table-sear
 import { AlertDialogComponent } from './components/dialogs/alert-dialog/alert-dialog.component';
 import { WgnfpassComponent } from './pages/gn/wgnfpass/wgnfpass.component';
 
+//plugins
+import { FileUploadModule } from 'ng2-file-upload';
+
 
 
 
@@ -73,7 +76,8 @@ export const MY_FORMATS = {
       MatFormFieldModule,
       MatInputModule,
       MatTableModule,
-      MatPaginatorModule
+      MatPaginatorModule,
+      FileUploadModule
 
   ],
   providers: [

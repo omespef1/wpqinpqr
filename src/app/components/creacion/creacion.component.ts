@@ -16,6 +16,9 @@ import { ConfirmDialogComponent } from '../dialogs/confirm-dialog/confirm-dialog
 import { ModalComponent } from '../dialogs/modal/modal.component';
 import { TableSearchComponent } from '../tools/table-search/table-search.component';
 import { AlertComponent } from '../alert/alert.component';
+
+import { FileUploader, FileLikeObject } from 'ng2-file-upload';
+import { concat } from 'rxjs';
 @Component({
   selector: 'app-creacion',
   templateUrl: './creacion.component.html',
@@ -52,7 +55,9 @@ export class CreacionComponent implements OnInit {
   pqr_file: any;
   contracts: any[];
   companies: companies[];
-  myFiles:string [] = [];
+  myFiles: File[] = [];
+  uploader: FileUploader = new FileUploader({});
+  hasBaseDropZoneOver: boolean = false;
 
 
 
@@ -61,21 +66,21 @@ export class CreacionComponent implements OnInit {
 
   }
   async ngOnInit() {
-    try{
+    try {
       this.setTitle("Creación de PQR");
       await this.GetParams();
       //Si vienen parámetros en url despleiga el modal para preguntar como se quiere acceder 
-      
+
       if (this.client)
         this._confirm.show();
       if (!this.client)
         this.Load();
-        console.log('test');
+      console.log('test');
     }
-    catch(err){
+    catch (err) {
       this.showAlertMesssage(err);
     }
-   
+
   }
 
   public setTitle(newTitle: string) {
@@ -89,7 +94,7 @@ export class CreacionComponent implements OnInit {
     if (this.client)
       query += `cli_coda=${this.client}`;
 
-    this._comu.Get(query,this.pqr.emp_codi).subscribe((resp: any) => {
+    this._comu.Get(query, this.pqr.emp_codi).subscribe((resp: any) => {
       console.log(resp);
       if (resp.retorno == 0) {
         console.log(resp);
@@ -130,13 +135,13 @@ export class CreacionComponent implements OnInit {
             this._table.render(this.contracts);
           }
           else
-            this.pqr.inp_tcli = "O";                                        
+            this.pqr.inp_tcli = "O";
         }
-        else{
-          this.pqr.inp_nomb =".";
-          this.pqr.inp_apel =".";
-          this.pqr.inp_ntel="0";
-          this.pqr.inp_ncel="0";   
+        else {
+          this.pqr.inp_nomb = ".";
+          this.pqr.inp_apel = ".";
+          this.pqr.inp_ntel = "0";
+          this.pqr.inp_ncel = "0";
         }
         this.spinner.hide();
       }
@@ -153,32 +158,32 @@ export class CreacionComponent implements OnInit {
   setContract(rowSelected: any) {
     console.log(rowSelected);
     this.ctcontr = rowSelected;
-    this._comu.Get(`api/gnarbol?con_cont=${rowSelected.con_cont}`,this.pqr.emp_codi).subscribe((resp: any) => {
+    this._comu.Get(`api/gnarbol?con_cont=${rowSelected.con_cont}`, this.pqr.emp_codi).subscribe((resp: any) => {
       this.area = resp.objTransaction;
     })
   }
   openLupa() {
     this._table.show();
   }
-  GetParams():boolean {
-    try{
-    this.route.queryParamMap.subscribe(queryParams => {
-     
+  GetParams(): boolean {
+    try {
+      this.route.queryParamMap.subscribe(queryParams => {
+
         console.log(queryParams.get("client"));
         if (queryParams.get("client") != null)
           this.client = atob(queryParams.get("client"));
         if (queryParams.get("usu_codi") != null)
           this.pqr.usu_codi = atob(queryParams.get("usu_codi"));
-          return true;
-    
-     
-    },err=>{
+        return true;
+
+
+      }, err => {
+        return false;
+      })
+    }
+    catch (err) {
       return false;
-    })
-  }
-  catch(err){
-    return false;
-  }
+    }
   }
 
   //Manejo de archivos
@@ -203,39 +208,73 @@ export class CreacionComponent implements OnInit {
     this.pqr.con_cont = this.ctcontr.con_cont;
     this.spinner.show();
     this.loading = "Enviando PQR...";
-    this._comu.Post('api/PqInpqr', this.pqr).subscribe((resp: any) => {    
+    this._comu.Post('api/PqInpqr', this.pqr).subscribe((resp: any) => {
+      
       this.spinner.hide();
       console.log(resp);
       if (resp.retorno != undefined) {
-        this.submitted = false;
+     
         if (resp.retorno == 0) {
           let inp_cont: number = resp.objTransaction.inp_cont;
-          if (this.pqr.adj_file != null) {
-            const fd = new FormData();
-            this.loading = "Subiendo adjunto...";
-            for (var i = 0; i < this.myFiles.length; i++) { 
-              fd.append("fileUpload", this.myFiles[i]);
-             // fd.append('file', this.pqr.adj_file, `${inp_cont}_${this.pqr.emp_codi}.${this.GetExtension(this.pqr.adj_file.name)}`);    
-            }
-                   
-            this._comu.Post('api/upload', fd).subscribe((respAdj: any) => {
+          let files = this.getFiles();
+          console.log(files);
+          let requests = [];
+          const formData = new FormData();
+          let filesCount = 1;
 
+          if(files.length>0){
+            files.forEach((file) => {
+              formData.append(`fileUpload${filesCount}`, file.rawFile, file.name);
+              filesCount += 1;
+            });
+            formData.append("INP_CONT", inp_cont.toString());
+            formData.append("EMP_CODI", this.pqr.emp_codi.toString());
+            this._comu.Post('api/upload', formData).subscribe((respAdj: any) => {
+              this.submitted = false;
               if (respAdj.retorno == 1)
                 this.showAlertMesssage(`Se produjo un error subiendo el archivo. Intentelo nuevamente : ${respAdj.txtRetorno}`);
               else {
+                this.message = "";
                 this.alert.showHtmlMessage(resp.objTransaction.msg);
                 form.reset();
                 // this.fileAttchment.nativeElement.value = "";
               }
-            },err=>{
-              this.showAlertMesssage("Error subiendo documento.")
-            })
-          } else {
-            this.alert.showHtmlMessage(resp.objTransaction.msg);
-            form.reset();
-            this.Load();
-            // this.fileAttchment.nativeElement.value = "";
+            }, err => { console.log(err) })
           }
+          else{
+            this.submitted = false;
+            this.message = "";
+            form.reset();
+          }
+    
+          // let inp_cont: number = resp.objTransaction.inp_cont;
+          // if (this.myFiles.length>0) {
+          //   const fd = new FormData();       
+          //   this.loading = "Subiendo adjunto...";
+          //   for (var i = 0; i < this.myFiles.length; i++) { 
+          //     fd.append(`fileUpload${i+1}`, this.myFiles[i],`${this.myFiles[i].name}`);            
+          //   }
+          //     fd.append("INP_CONT",inp_cont.toString());
+          //      fd.append("EMP_CODI",this.pqr.emp_codi.toString());
+          //   this._comu.Post('api/upload', fd).subscribe((respAdj: any) => {
+
+          //     if (respAdj.retorno == 1)
+          //       this.showAlertMesssage(`Se produjo un error subiendo el archivo. Intentelo nuevamente : ${respAdj.txtRetorno}`);
+          //     else {
+          //       this.message ="";
+          //       this.alert.showHtmlMessage(resp.objTransaction.msg);
+          //       form.reset();
+          //       // this.fileAttchment.nativeElement.value = "";
+          //     }
+          //   },err=>{
+          //     this.showAlertMesssage("Error subiendo documento.")
+          //   })
+          // } else {
+          //   this.alert.showHtmlMessage(resp.objTransaction.msg);
+          //   form.reset();
+          //   this.Load();
+
+          // }
 
         }
         if (resp.retorno == 1)
@@ -245,7 +284,7 @@ export class CreacionComponent implements OnInit {
   }
   //Mostrar mensajes
   showAlertMesssage(msg: string) {
-   // this.alert.showMessage(msg);
+    // this.alert.showMessage(msg);
     this.message = msg;
     this.alert.show();
   }
@@ -256,6 +295,7 @@ export class CreacionComponent implements OnInit {
   }
   //Obtener extensión de archivo
   GetExtension(fileName: string) {
+    console.log(fileName);
     return fileName.split('.').pop();
 
   }
@@ -263,7 +303,7 @@ export class CreacionComponent implements OnInit {
     console.log(option);
     switch (option) {
       case "RIGHT":
-        this.loadCompanies();        
+        this.loadCompanies();
 
         break;
       case "LEFT":
@@ -285,28 +325,71 @@ export class CreacionComponent implements OnInit {
     })
   }
 
-  setValuesMandatory(){
+  setValuesMandatory() {
     console.log(this.pqr.inp_mres);
 
-    if(!this.client){
-    if(this.pqr.inp_mres!="D"){
-      this.pqr.inp_dire =".";
-      this.pqr.inp_mail ="";
-    }
-    
-    if(this.pqr.inp_mres!="C"){
-      this.pqr.inp_mail =".";
-      this.pqr.inp_dire ="";
-    }
-    
+    if (!this.client) {
+      if (this.pqr.inp_mres != "D") {
+        this.pqr.inp_dire = ".";
+        this.pqr.inp_mail = "";
+      }
+
+      if (this.pqr.inp_mres != "C") {
+        this.pqr.inp_mail = ".";
+        this.pqr.inp_dire = "";
+      }
+
     }
   }
 
-  getFileDetails (e) {
+  getFileDetails(e) {
     //console.log (e.target.files);
-    for (var i = 0; i < e.target.files.length; i++) { 
+    for (var i = 0; i < e.target.files.length; i++) {
       this.myFiles.push(e.target.files[i]);
     }
   }
+
+  fileOverBase(event): void {
+    this.hasBaseDropZoneOver = event;
+  }
+
+  getFiles(): FileLikeObject[] {
+    return this.uploader.queue.map((fileItem) => {
+      return fileItem.file;
+    });
+  }
+
+
+  // upload() {   
+  //   let files = this.getFiles();
+  //   console.log(files);
+  //   let requests = [];
+  //   files.forEach((file) => {
+  //     let formData = new FormData();
+  //     formData.append('file' , file.rawFile, file.name);
+  //     this._comu.Post('api/upload', formData).subscribe((respAdj: any) => {
+
+  //       if (respAdj.retorno == 1)
+  //         this.showAlertMesssage(`Se produjo un error subiendo el archivo. Intentelo nuevamente : ${respAdj.txtRetorno}`);
+  //       else {
+  //         this.message ="";
+  //         this.alert.showHtmlMessage(resp.objTransaction.msg);
+  //         form.reset();
+  //         // this.fileAttchment.nativeElement.value = "";
+  //       }
+  //     },err=>{
+  //       this.showAlertMesssage("Error subiendo documento.")
+  //     }) 
+  //   });
+
+  //   concat(...requests).subscribe(
+  //     (res) => {
+  //       console.log(res);
+  //     },
+  //     (err) => {  
+  //       console.log(err);
+  //     }
+  //   );
+  // }
 
 }

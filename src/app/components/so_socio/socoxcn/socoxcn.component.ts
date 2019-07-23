@@ -103,7 +103,7 @@ this.spinner.show();
   }
 
   getPasarela(){
-    this._comu.Get("api/papagos").subscribe((resp:string)=>{
+    this._comu.Get("api/papagos?").subscribe((resp:string)=>{
       
      
         this.pasarela = resp;
