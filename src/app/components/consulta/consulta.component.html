@@ -133,7 +133,7 @@
       </div>
       <div class="row">
         <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 pt-3">
-          <h3>Respuestas dadas</h3>
+          <h3 *ngIf="segui">Respuestas dadas</h3>
           <div class="item">
             <ol>
               <li *ngFor="let segui of pqr.seguimientos;let i=index">
@@ -145,7 +145,7 @@
 
         </div>
       </div>
-      <div class="row">
+      <div class="row" *ngIf="gnAdjunt">
         <div class="col-md-12">
           <h3>Descargar documentos adjuntos</h3>
           <button *ngFor="let adjunto of gnAdjunt" (click)="download(adjunto.doc_desc)" class="btn btn-primary btn-sm">
@@ -178,8 +178,8 @@
       </div>
       <div class="funkyradio">
         <div class="funkyradio-default">
-          <input type="radio" name="radio1" id="radio1" (change)="onSelectionChange(1,'No')" />
-          <label for="radio1">No</label>
+          <input type="radio" name="radio1" id="radio2" (change)="onSelectionChange(1,'No')" />
+          <label for="radio2">No</label>
         </div>
       </div>
     </div>
@@ -191,20 +191,20 @@
  </h3>
  <div class="funkyradio">
    <div class="funkyradio-default">
-     <input type="radio" name="radio2" id="radio2"(change)="onSelectionChange(2,'Mala')" />
-     <label for="radio2">Buena</label>
+     <input type="radio" name="radio2" id="radio3"(change)="onSelectionChange(2,'Mala')" />
+     <label for="radio3">Buena</label>
    </div>
  </div>
  <div class="funkyradio">
    <div class="funkyradio-default">
-     <input type="radio" name="radio2" id="radio2" (change)="onSelectionChange(2,'Buena')"/>
-     <label for="radio2">Mala</label>
+     <input type="radio" name="radio2" id="radio4" (change)="onSelectionChange(2,'Buena')"/>
+     <label for="radio4">Mala</label>
    </div>
  </div>
  <div class="funkyradio">
    <div class="funkyradio-default">
-     <input type="radio" name="radio2" id="radio2" (change)="onSelectionChange(3,'Excelente')"/>
-     <label for="radio2">Excelente</label>
+     <input type="radio" name="radio2" id="radio5" (change)="onSelectionChange(3,'Excelente')"/>
+     <label for="radio5">Excelente</label>
    </div>
  </div>
 </div>
@@ -216,14 +216,14 @@
 </h3>
 <div class="funkyradio">
   <div class="funkyradio-default">
-    <input type="radio" name="radio3" id="radio3" (change)="onSelectionChange(3,'Si')" />
-    <label for="radio3">Si</label>
+    <input type="radio" name="radio3" id="radio6" (change)="onSelectionChange(3,'Si')" />
+    <label for="radio6">Si</label>
   </div>
 </div>
 <div class="funkyradio">
   <div class="funkyradio-default">
-    <input type="radio" name="radio3" id="radio3" (change)="onSelectionChange(3,'No')"/>
-    <label for="radio3">No</label>
+    <input type="radio" name="radio3" id="radio7" (change)="onSelectionChange(3,'No')"/>
+    <label for="radio7">No</label>
   </div>
 </div>
 </div>
