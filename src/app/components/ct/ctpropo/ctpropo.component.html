@@ -1,0 +1,1152 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Formulario de Creación de Proponentes.</h1>
+    </div>
+</div>
+
+<ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
+</ngx-spinner>
+
+<div class="container" *ngIf="propo.emp_codi!=0">
+
+    <div class="row">
+        <div class="col-lg-4 col-md-1 col-sm-1">
+            <img src="data:image/jpeg;base64,{{logo}}" class="img-fluid">
+        </div>
+    </div>
+
+    <form #propoForm="ngForm" (ngSubmit)="PostCtPropo(propoForm)">
+        <div class="card">
+            <div class="card-header bg-primary text-white">Nuevo Proponente</div>
+            <div class="card-body">
+
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-basicos-tab" data-toggle="tab" href="#nav-basicos" role="tab" aria-controls="nav-basicos" aria-selected="true">Datos básicos</a>
+                        <a class="nav-item nav-link" id="nav-localizacion-tab" data-toggle="tab" href="#nav-localizacion" role="tab" aria-controls="nav-localizacion" aria-selected="false">Localización</a>
+                        <a class="nav-item nav-link" id="nav-legal-tab" data-toggle="tab" href="#nav-legal" role="tab" aria-controls="nav-legal" aria-selected="false">Información legal</a>
+                        <a class="nav-item nav-link" id="nav-economica-tab" data-toggle="tab" href="#nav-economica" role="tab" aria-controls="nav-economica" aria-selected="false">Información económica</a>
+                        <a class="nav-item nav-link" id="nav-replegal-tab" data-toggle="tab" href="#nav-replegal" role="tab" aria-controls="nav-replegal" aria-selected="false">Representante legal</a>
+                        <a class="nav-item nav-link" id="nav-experiencia-tab" data-toggle="tab" href="#nav-experiencia" role="tab" aria-controls="nav-experiencia" aria-selected="false">Experiencia general</a>
+                        <a class="nav-item nav-link" id="nav-otros-tab" data-toggle="tab" href="#nav-otros" role="tab" aria-controls="nav-otros" aria-selected="false">Otros</a>
+                        <a class="nav-item nav-link" id="nav-geografia-tab" data-toggle="tab" href="#nav-geografia" role="tab" aria-controls="nav-geografia" aria-selected="false">Geografía proponente</a>
+                        <a class="nav-item nav-link" id="nav-constitucion-tab" data-toggle="tab" href="#nav-constitucion" role="tab" aria-controls="nav-constitucion" aria-selected="false">Geografía constitución escritura</a>
+                        <a class="nav-item nav-link" id="nav-tratamiento-tab" data-toggle="tab" href="#nav-tratamiento" role="tab" aria-controls="nav-tratamiento" aria-selected="false">Tratamiento de Datos</a>
+                        <a class="nav-item nav-link" id="nav-infoProveedor-tab" data-toggle="tab" href="#nav-infoProveedor" role="tab" aria-controls="nav-infoProveedor" aria-selected="false" *ngIf="parcrpr == 'S'">Información de Proveedores </a>
+                    </div>
+                </nav>
+
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-basicos" role="tabpanel" aria-labelledby="nav-basicos-tab">
+                        <div class="container mt-3">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="pro_codi">Código</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-qrcode"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Código" name="pro_codi" id="pro_codi" [(ngModel)]="propo.pro_codi" required #pro_codi="ngModel" autocomplete="off">
+                                    </div>
+                                    <div [hidden]="pro_codi.valid || pro_codi.pristine" class="alert alert-danger">
+                                        Código es requerido
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="pro_dive">DV</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-search"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" [maxLength]="1" placeholder="DV" name="pro_dive" id="pro_dive" [(ngModel)]="propo.pro_dive" required #pro_dive="ngModel" autocomplete="off">
+                                    </div>
+                                    <div [hidden]="pro_dive.valid || pro_dive.pristine" class="alert alert-danger">
+                                        Dígito de Verificación es requerido
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-12 col-xs-6 col-sm-12">
+                                    <label for="tip_codi">Tipo de documento</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-chalkboard-teacher"></i></span>
+                                            </div>
+                                        </div>
+                                        <select class="form-control" id="tip_codi" name="tip_codi" [(ngModel)]="propo.tip_codi" required #tip_codi="ngModel">                                            
+                                        <option *ngFor="let tipdo of gntipdo" [value]="tipdo.TIP_CODI">{{tipdo.TIP_NOMB | titlecase}}</option>
+                                      </select>
+                                    </div>
+                                    <div [hidden]="tip_codi.valid || tip_codi.pristine" class="alert alert-danger">
+                                        Tipo de documento es requerido
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-xs-6 col-sm-12">
+                                    <label for="pro_nomb">Nombre</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-user-circle"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Nombre" name="pro_nomb" id="pro_nomb" [(ngModel)]="propo.pro_nomb" required #pro_nomb="ngModel" autocomplete="off">
+                                    </div>
+                                    <div [hidden]="pro_nomb.valid || pro_nomb.pristine" class="alert alert-danger">
+                                        Nombre es requerido
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-xs-6 col-sm-12">
+                                    <label for="pro_apel">Apellido</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-user-circle"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Apellido" name="pro_apel" id="pro_apel" [(ngModel)]="propo.pro_apel" required #pro_apel="ngModel" autocomplete="off">
+                                    </div>
+                                    <div [hidden]="pro_apel.valid || pro_apel.pristine" class="alert alert-danger">
+                                        Apellido es requerido
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="pro_noco">Nombre Comercial</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-user-circle"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Nombre Comercial" name="pro_noco" id="pro_noco" [(ngModel)]="propo.pro_noco" required #pro_noco="ngModel" autocomplete="off">
+                                    </div>
+                                    <div [hidden]="pro_noco.valid || pro_noco.pristine" class="alert alert-danger">
+                                        Nombre Comercial es requerido
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-localizacion" role="tabpanel" aria-labelledby="nav-localizacion-tab">
+                        <div class="container mt-3">
+                            <div class="row">
+                                <div class="col-lg-7 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="pro_dire">Dirección</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-map-marked-alt"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Dirección" name="pro_dire" id="pro_dire" [(ngModel)]="propo.pro_dire" required #pro_dire="ngModel">
+                                    </div>
+                                    <div [hidden]="pro_dire.valid || pro_dire.pristine" class="alert alert-danger">
+                                        Dirección es requerida
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="pro_ntel">Teléfono</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-phone"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Teléfono" name="pro_ntel" id="pro_ntel" [(ngModel)]="propo.pro_ntel" required #pro_ntel="ngModel">
+                                    </div>
+                                    <div [hidden]="pro_ntel.valid || pro_ntel.pristine" class="alert alert-danger">
+                                        Teléfono es requerido
+                                    </div>
+                                </div>
+                                <div class="col-lg-7 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="pro_mail">Email</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-at"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" valida class="form-control" placeholder="Email" name="pro_mail" id="pro_mail" [(ngModel)]="propo.pro_mail" required #pro_mail="ngModel">
+                                    </div>
+                                    <div [hidden]="pro_mail.valid || pro_mail.pristine" class="alert alert-danger">
+                                        Email es requerido
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="pro_nfax">Fax</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-fax"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Fax" name="pro_nfax" id="pro_nfax" [(ngModel)]="propo.pro_nfax" required #pro_nfax="ngModel">
+                                    </div>
+                                    <div [hidden]="pro_nfax.valid || pro_nfax.pristine" class="alert alert-danger">
+                                        Fax es requerido
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                    <label for="pro_naci">Nacionalidad</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-flag"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Nacionalidad" name="pro_naci" id="pro_naci" [(ngModel)]="propo.pro_naci" required #pro_naci="ngModel">
+                                    </div>
+                                    <div [hidden]="pro_naci.valid || pro_naci.pristine" class="alert alert-danger">
+                                        Nacionalidad es requerida
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-legal" role="tabpanel" aria-labelledby="nav-legal-tab">
+                        <div class="container mt-3">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Escritura pública
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                                    <label for="pro_nroe">Número</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-hashtag"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Número" name="pro_nroe" id="pro_nroe" [(ngModel)]="propo.pro_nroe">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                                    <label for="pro_note">Notaría</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-building"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Notaría" name="pro_note" id="pro_note" [(ngModel)]="propo.pro_note">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                                    <label for="pro_feci">Fecha inscripción</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-calendar"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input type="date" class="form-control" placeholder="Fecha inscripción" name="pro_feci" id="pro_feci" [(ngModel)]="propo.pro_feci">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-2">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Cámara de Comercio
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                                    <label for="pro_nroc">Número</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-hashtag"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Número" name="pro_nroc" id="pro_nroc" [(ngModel)]="propo.pro_nroc">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                                    <label for="pro_fesc">Fecha</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-calendar"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input type="date" class="form-control" placeholder="Fecha" name="pro_fesc" id="pro_fesc" [(ngModel)]="propo.pro_fesc">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-2">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            Información Mercantil
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                                    <label for="pro_rmer">Registro Mercantil</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-hashtag"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Registro Mercantil" name="pro_rmer" id="pro_rmer" [(ngModel)]="propo.pro_rmer">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                                    <label for="pro_nmer">Matricula Mercantil</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-address-card"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Matricula Mercantil" name="pro_nmer" id="pro_nmer" [(ngModel)]="propo.pro_nmer">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-economica" role="tabpanel" aria-labelledby="nav-economica-tab">
+                        <div class="container mt-3">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="inp_vlrc">Capital</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-hand-holding-usd"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Capital" name="inp_vlrc" id="inp_vlrc" [(ngModel)]="propo.pro_vlrc">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="inp_vlrp">Pasivos</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-file-invoice-dollar"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Pasivos" name="inp_vlrp" id="inp_vlrp" [(ngModel)]="propo.pro_vlrp">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="inp_vlra">Activos</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-money-check-alt"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Activos" name="inp_vlra" id="inp_vlra" [(ngModel)]="propo.pro_vlra">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="inp_actc">Activo Corriente</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-credit-card"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Activo Corriente" name="inp_actc" id="inp_actc" [(ngModel)]="propo.pro_actc">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="inp_vlri">Valor Inventarios</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-coins"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Valor Inventarios" name="inp_vlri" id="inp_vlri" [(ngModel)]="propo.pro_vlri">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="inp_pasc">Pasivo Corriente</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-funnel-dollar"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Activos" name="inp_pasc" id="inp_pasc" [(ngModel)]="propo.pro_pasc">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="inp_ingr">Ingresos</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-money-bill"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Ingresos" name="inp_ingr" id="inp_ingr" [(ngModel)]="propo.pro_ingr">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="inp_gast">Gastos</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-comment-dollar"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Gastos" name="inp_gast" id="inp_gast" [(ngModel)]="propo.pro_gast">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="inp_util">Utilidad</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-search-dollar"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Utilidad" name="inp_util" id="inp_util" [(ngModel)]="propo.pro_util">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="inp_perc">Periodo Contable</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="date" class="form-control" placeholder="Periodo Contable" name="inp_perc" id="inp_perc" [(ngModel)]="propo.pro_perc">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="card mt-2">
+                                <div class="card-header">
+                                    Capital
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                            <label for="inp_vrlk">De Contratación</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <span><i class="fas fa-money-bill-wave"></i></span>
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Valor de Contratación" name="inp_vrlk" id="inp_vrlk" [(ngModel)]="propo.pro_vlrk">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                            <label for="inp_vrld">Disponible</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <span><i class="fas fa-money-bill-alt"></i></span>
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Valor Disponible" name="inp_vrld" id="inp_vrld" [(ngModel)]="propo.pro_vlrd">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-replegal" role="tabpanel" aria-labelledby="nav-replegal-tab">
+                        <div class="container mt-3">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="inp_tipr">Tipo de documento</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-chalkboard-teacher"></i></span>
+                                            </div>
+                                        </div>
+                                        <select class="form-control" id="pro_tipr" name="pro_tipr" [(ngModel)]="propo.pro_tipr" required #pro_tipr="ngModel">                                            
+                                            <option *ngFor="let tipdo of gntipdo" [value]="tipdo.TIP_CODI">{{tipdo.TIP_NOMB | titlecase}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="pro_nror">Identificación</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-id-card"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Identificación" name="pro_nror" id="pro_nror" [(ngModel)]="propo.pro_nror" required #pro_nror="ngModel">
+                                    </div>
+                                    <div [hidden]="pro_nror.valid || pro_nror.pristine" class="alert alert-danger">
+                                        Identificación es requerida
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
+                                    <label for="pro_expe">Ciudad donde fue expedida la identificación</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-city"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Ciudad Expedición" name="pro_expe" id="pro_expe" [(ngModel)]="propo.pro_expe" required #pro_expe="ngModel">
+                                    </div>
+                                    <div [hidden]="pro_expe.valid || pro_expe.pristine" class="alert alert-danger">
+                                        Ciudad donde fue expedida la identificación es requerida
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                    <label for="pro_nomr">Nombre</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-user-circle"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Nombre" name="pro_nomr" id="pro_nomr" [(ngModel)]="propo.pro_nomr" required #pro_nomr="ngModel">
+                                    </div>
+                                    <div [hidden]="pro_nomr.valid || pro_nomr.pristine" class="alert alert-danger">
+                                        Nombre es requerido
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-experiencia" role="tabpanel" aria-labelledby="nav-experiencia-tab">
+                        <div class="container mt-3">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                    <div class="input-group h-50">
+                                        <textarea type="text" class="form-control" multiple placeholder="Descripción" placeholder="Experiencia General" name="pro_exgr" id="pro_exgr" [(ngModel)]="propo.pro_exgr" required #pro_exgr="ngModel"></textarea>
+                                    </div>
+                                    <div [hidden]="pro_exgr.valid || pro_exgr.pristine" class="alert alert-danger">
+                                        Experiencia es requerida
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-otros" role="tabpanel" aria-labelledby="nav-otros-tab">
+                        <div class="container mt-3">
+                            <div class="row">
+                                <div class="col-lg-8 col-md-7 col-xs-12 col-sm-12">
+                                    <label for="cam_cont">Cámara de Comercio donde Reporta</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-address-card"></i></span>
+                                            </div>
+                                        </div>
+                                        <select class="form-control" id="cam_cont" name="cam_cont" [(ngModel)]="propo.cam_cont" required #cam_cont="ngModel">                                                
+                                                <option *ngFor="let camar of ctcamar" [value]="camar.cam_cont">{{camar.cam_nomb | titlecase}}</option>
+                                            </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-5 col-xs-12 col-sm-12">
+                                    <label for="pro_niva">Número de Iva</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-hashtag"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Número de Iva" name="pro_niva" id="pro_niva" [(ngModel)]="propo.pro_niva">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-8 col-md-7 col-xs-12 col-sm-12">
+                                    <label for="ite_cont">Tipo de Contratista</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-chalkboard-teacher"></i></span>
+                                            </div>
+                                        </div>
+                                        <select class="form-control" id="ite_cont" name="ite_cont" [(ngModel)]="propo.ite_cont" required #ite_cont="ngModel">                                                
+                                                <option *ngFor="let contr of ctcontr" [value]="contr.ite_cont">{{contr.ite_nomb | titlecase}}</option>
+                                            </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-5 col-xs-12 col-sm-12">
+                                    <label for="pro_clap">Clase Proveedor</label>
+                                    <div class="input-group mt-2">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" checked class="custom-control-input" id="pro_clan" name="groupclap" value="N" [(ngModel)]="propo.pro_clap" required>
+                                            <label class="custom-control-label" for="pro_clan">Nacional</label>
+                                        </div>
+                                        <div class="custom-control custom-radio ml-3">
+                                            <input type="radio" class="custom-control-input" id="pro_clae" name="groupclap" value="E" [(ngModel)]="propo.pro_clap" required>
+                                            <label class="custom-control-label" for="pro_clae">Extranjero</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                    <label for="pro_dirn">Dirección de Notificación</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-map-marker-alt"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Dirección de Notificación" name="pro_dirn" id="pro_dirn" [(ngModel)]="propo.pro_dirn" required #pro_dirn="ngModel">
+                                    </div>
+                                    <div [hidden]="pro_dirn.valid || pro_dirn.pristine" class="alert alert-danger">
+                                        Dirección de Notificación es requerida
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                    <label for="pro_pweb">Página Web</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fab fa-internet-explorer"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Página Web" name="pro_pweb" id="pro_pweb" [(ngModel)]="propo.pro_pweb" required #pro_pweb="ngModel">
+                                    </div>
+                                    <div [hidden]="pro_pweb.valid || pro_pweb.pristine" class="alert alert-danger">
+                                        Página Web es requerida
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-geografia" role="tabpanel" aria-labelledby="nav-geografia-tab">
+                        <div class="container mt-3">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12 col-xs-6 col-sm-12">
+                                    <label for="pro_pais">País</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-globe-americas"></i></span>
+                                            </div>
+                                        </div>
+                                        <select class="form-control" id="pro_pais" name="pro_pais" [(ngModel)]="propo.pro_pais" (change)="filtrarRegiones('',propo.pro_pais)" required #pro_pais="ngModel">                                            
+                                        <option *ngFor="let pais of gnpaise" [value]="pais.pai_codi">{{pais.pai_nomb | titlecase}}</option>
+                                      </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-xs-6 col-sm-12">
+                                    <label for="inp_regi">Región</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-flag"></i></span>
+                                            </div>
+                                        </div>
+                                        <select [disabled]="gnregio==undefined" class="form-control" id="pro_regi" name="pro_regi" [(ngModel)]="propo.pro_regi" (change)="filtrarDeptos('',propo.pro_pais,propo.pro_regi)" required #pro_regi="ngModel">
+                                            <option *ngFor="let region of gnregio" [value]="region.reg_codi">{{region.reg_nomb | titlecase}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-xs-6 col-sm-12">
+                                    <label for="inp_depa">Departamento</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="far fa-flag"></i></span>
+                                            </div>
+                                        </div>
+                                        <select [disabled]="gndepar==undefined" class="form-control" id="pro_depa" name="pro_depa" [(ngModel)]="propo.pro_depa" (change)="filtrarMunic('',propo.pro_pais,propo.pro_regi,propo.pro_depa)" required #pro_depa="ngModel">                                                
+                                                <option *ngFor="let depto of gndepar" [value]="depto.dep_codi">{{depto.dep_nomb | titlecase}}</option>
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-xs-6 col-sm-12">
+                                    <label for="inp_muni">Municipio</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-city"></i></span>
+                                            </div>
+                                        </div>
+                                        <select [disabled]="gnmunic==undefined" class="form-control" id="pro_muni" name="pro_muni" [(ngModel)]="propo.pro_muni" (change)="filtrarLocal('',propo.pro_pais,propo.pro_regi,propo.pro_depa,propo.pro_muni)" required #pro_muni="ngModel">                                       
+                                        <option *ngFor="let munic of gnmunic" [value]="munic.mun_codi">{{munic.mun_nomb | titlecase}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-xs-6 col-sm-12">
+                                    <label for="inp_loca">Localidad</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-map-pin"></i></span>
+                                            </div>
+                                        </div>
+                                        <select [disabled]="gnlocal==undefined" class="form-control" id="pro_loca" name="pro_loca" [(ngModel)]="propo.pro_loca" required #pro_loca="ngModel">                                                
+                                                <option *ngFor="let local of gnlocal" [value]="local.loc_codi">{{local.loc_nomb | titlecase}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-constitucion" role="tabpanel" aria-labelledby="nav-constitucion-tab">
+                        <div class="container mt-3">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-12 col-xs-6 col-sm-12">
+                                    <label for="pro_pair">País</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-globe-americas"></i></span>
+                                            </div>
+                                        </div>
+                                        <select class="form-control" id="pro_pair" name="pro_pair" [(ngModel)]="propo.pro_pair" (change)="filtrarRegiones('R',propo.pro_pair)" required #pro_pair="ngModel">                                            
+                                            <option *ngFor="let pais of gnpaisr" [value]="pais.pai_codi">{{pais.pai_nomb | titlecase}}</option>
+                                          </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-xs-6 col-sm-12">
+                                    <label for="pro_regr">Región</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-flag"></i></span>
+                                            </div>
+                                        </div>
+                                        <select [disabled]="gnregir==undefined" class="form-control" id="pro_regr" name="pro_regr" [(ngModel)]="propo.pro_regr" (change)="filtrarDeptos('R',propo.pro_pair,propo.pro_regr)" required #pro_regr="ngModel">
+                                            <option *ngFor="let region of gnregir" [value]="region.reg_codi">{{region.reg_nomb | titlecase}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-xs-6 col-sm-12">
+                                    <label for="pro_depr">Departamento</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="far fa-flag"></i></span>
+                                            </div>
+                                        </div>
+                                        <select [disabled]="gndeprr==undefined" class="form-control" id="pro_depr" name="pro_depr" [(ngModel)]="propo.pro_depr" (change)="filtrarMunic('R',propo.pro_pair,propo.pro_regr,propo.pro_depr)" required #pro_depr="ngModel">                                                
+                                            <option *ngFor="let depto of gndeprr" [value]="depto.dep_codi">{{depto.dep_nomb | titlecase}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-xs-6 col-sm-12">
+                                    <label for="pro_munr">Municipio</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-city"></i></span>
+                                            </div>
+                                        </div>
+                                        <select [disabled]="gnmunir==undefined" class="form-control" id="pro_munr" name="pro_munr" [(ngModel)]="propo.pro_munr" (change)="filtrarLocal('R',propo.pro_pair,propo.pro_regr,propo.pro_depr,propo.pro_munr)" required #pro_munr="ngModel">                                       
+                                            <option *ngFor="let munic of gnmunir" [value]="munic.mun_codi">{{munic.mun_nomb | titlecase}}</option>
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-12 col-xs-6 col-sm-12">
+                                    <label for="pro_locr">Localidad</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-map-pin"></i></span>
+                                            </div>
+                                        </div>
+                                        <select [disabled]="gnlocar==undefined" class="form-control" id="pro_locr" name="pro_locr" [(ngModel)]="propo.pro_locr" required #pro_locr="ngModel">                                                
+                                            <option *ngFor="let local of gnlocar" [value]="local.loc_codi">{{local.loc_nomb | titlecase}}</option>
+                                    </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-tratamiento" role="tabpanel" aria-labelledby="nav-tratamiento-tab">
+                        <div class="container mt-3">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                    <div class="input-group">
+                                        <textarea type="text" class="form-control" disabled style="height: 300px;" multiple name="par_ptda" id="par_ptda" [innerHTML]="parptda"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-2">
+                                    <div class="input-group mt-2">
+                                        <span class="switch">
+                                            <input type="checkbox" name="chkAutoriza" [(ngModel)]="atdatos" class="switch switch-sm disabled" id="switch-id">
+                                            <label for="switch-id">Autoriza Protección de Datos</label>    
+                                        </span>
+                                    </div>
+                                    <div *ngIf="atdatos" class="table table-hover table-striped table-bordered mt-2">
+                                        <table class="table table-hover table-striped table-bordered mt-4">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th scope="col">Información a Recibir</th>
+                                                    <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let dtr of CtDtrda;let index=index; trackBy:trackByIdx()">
+                                                    <td>{{dtr.ite_nomb}}</td>
+                                                    <td class="text-center">
+                                                        <span class="switch mt-2">
+                                                            <input type="checkbox" name="chk" [(checked)]="dtr.ite_chkd"  (change)= "dtr.ite_chkd=!dtr.ite_chkd"  class="switch switch-sm" id="{{dtr.ite_cont}}" >
+                                                            <label for="{{dtr.ite_cont}}"></label>                                                           
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-infoProveedor" role="tabpanel" aria-labelledby="nav-infoProveedor-tab">
+                        <div class="container mt-3">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                    <div class="card mt-2">
+                                        <div class="card-header">
+                                            Clasificación de Proveedor
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupClaProv" value="J" [(ngModel)]="propo.pro_claf">
+                                                <label class="custom-control-label" for="defaultGroupExample1">Juridico</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupClaProv" value="N" [(ngModel)]="propo.pro_claf">
+                                                <label class="custom-control-label" for="defaultGroupExample2">Natural</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample3" name="groupClaProv" value="C" [(ngModel)]="propo.pro_claf">
+                                                <label class="custom-control-label" for="defaultGroupExample3">Consorcio</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample5" name="groupClaProv" value="U" [(ngModel)]="propo.pro_claf">
+                                                <label class="custom-control-label" for="defaultGroupExample5">Unión Temporal</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample4" name="groupClaProv" value="A" [(ngModel)]="propo.pro_claf">
+                                                <label class="custom-control-label" for="defaultGroupExample4">No Aplica</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card mt-2">
+                                        <div class="card-header">
+                                            Clasificación D.I.A.N
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample5" name="groupClaDIAN" value="G" [(ngModel)]="propo.pro_clad">
+                                                <label class="custom-control-label" for="defaultGroupExample5">Gran Contribuyente</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample6" name="groupClaDIAN" value="J" [(ngModel)]="propo.pro_clad">
+                                                <label class="custom-control-label" for="defaultGroupExample6">Juridico</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample7" name="groupClaDIAN" value="N" [(ngModel)]="propo.pro_clad">
+                                                <label class="custom-control-label" for="defaultGroupExample7">No Aplica</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card mt-2">
+                                        <div class="card-header">
+                                            Régimen de IVA
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample8" name="groupRegiva" value="C" [(ngModel)]="propo.pro_riva">
+                                                <label class="custom-control-label" for="defaultGroupExample8">Común</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample9" name="groupRegiva" value="S" [(ngModel)]="propo.pro_riva">
+                                                <label class="custom-control-label" for="defaultGroupExample9">Simplificado</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample10" name="groupRegiva" value="N" [(ngModel)]="propo.pro_riva">
+                                                <label class="custom-control-label" for="defaultGroupExample10">No Aplica</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <form>
+            <div class="card">
+                <div class="card-header bg-primary text-white">Información adicional</div>
+                <div class="card-body">
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <a class="nav-item nav-link active" id="nav-Actividades-tab" data-toggle="tab" href="#nav-Actividades" role="tab" aria-controls="nav-Actividades" aria-selected="true">Actividades</a>
+                            <a class="nav-item nav-link" id="nav-Documentos-tab" data-toggle="tab" href="#nav-Documentos" role="tab" aria-controls="nav-Documentos" aria-selected="false">Vigencia de Documentos</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="nav-Actividades" role="tabpanel" aria-labelledby="nav-Actividades-tab">
+                            <div class="container mt-3">
+                                <div class="row">
+                                    <div class="col-lg-8 col-md-10 col-xs-12 col-sm-12">
+                                        <div *ngIf="!viewConsul">
+                                            <label for="pro_locr">Actividad</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <span><i class="far fa-handshake"></i></span>
+                                                    </div>
+                                                </div>
+                                                <select class="form-control" id="arb_cont" name="arb_cont" [(ngModel)]="selectedArbo">                                                 
+                                                    <option *ngFor="let arbol of gnarbol" [value]="arbol.arb_codi"  >{{arbol.arb_codi + ' - ' + arbol.arb_nomb | titlecase}}</option>
+                                                </select>
+                                                <button type="button" class="btn btn-secondary btn-md ml-2" (click)="addActivity()">Agregar</button>
+                                            </div>
+                                        </div>
+
+                                        <div class="table-responsive mt-3" *ngIf="ctacxpr?.length">
+                                            <table class="table table-hover table-striped table-bordered">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Código Actividad</th>
+                                                        <th scope="col">Nombre Actividad</th>
+                                                        <th *ngIf="!viewConsul" scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let act of ctacxpr">
+                                                        <td>{{act.arb_codi}}</td>
+                                                        <td>{{act.arb_nomb}}</td>
+                                                        <td *ngIf="!viewConsul"><button type="button" class="btn btn-primary btn-sm text-center" (click)="delActivity()">Eliminar</button></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="nav-Documentos" role="tabpanel" aria-labelledby="nav-Documentos">
+                            <div class="container mt-3">
+                                <div class="row" *ngIf="!viewConsul">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-3">
+                                        <div class="btn-group">
+                                            <label class="btn btn-primary label-button">                                          
+                                                  <input type="file" required class="btn btn-primary" ng2FileSelect [uploader]="uploader" placeholder="Subir archivo"  
+                                                  style="display:none" accept=".pdf,.doc,.docx,.jpg,.png,.xls,.xlsx"  (change)="onFileChange($event)"/>
+                                                  <i class="fas fa-file-upload"></i> &nbsp;Agregar adjunto
+                                                  </label>
+                                            <button type="button" [class]="!uploader.queue.length?'btn btn-outline-danger':'btn btn-danger'" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                                                  <span><i class="fas fa-trash"></i></span>
+                                                </button>
+                                            <ul>
+                                                <li *ngFor="let item of uploader.queue" class="mt-1">
+                                                    {{ item?.file?.name }}
+                                                </li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                        <label for="pro_ddoc">Descripción del Documento</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <span><i class="fas fa-vector-square"></i></span>
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control" required placeholder="Descripción" name="pro_ddoc" id="pro_ddoc" [(ngModel)]="docpr.pro_ddoc">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                        <label for="pro_fent">Fecha Entrega</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <span><i class="fas fa-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                            <input type="date" class="form-control" required placeholder="Fecha Entrega" name="pro_fent" id="pro_fent" [(ngModel)]="docpr.pro_fent">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                        <label for="pro_fven">Fecha Vencimiento</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <span><i class="fas fa-calendar"></i></span>
+                                                </div>
+                                            </div>
+                                            <input type="date" class="form-control" required placeholder="Fecha Vencimiento" name="pro_fven" id="pro_fven" [(ngModel)]="docpr.pro_fven">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                        <label for="pro_obse">Observaciones</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">
+                                                    <span><i class="fas fa-prescription-bottle"></i></span>
+                                                </div>
+                                            </div>
+                                            <input type="text" class="form-control" required placeholder="Observaciones" name="pro_obse" id="pro_obse" [(ngModel)]="docpr.pro_obse">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-4">
+                                        <button [disabled]="docpr.pro_ddoc == '' || docpr.pro_obse == '' || docpr.pro_fent == null || docpr.pro_fven == null" type="button" class="btn btn-secondary btn-md btn-block" (click)="addVigencia()">Agregar</button>
+                                        <div class="table-responsive mt-3" *ngIf="ctdocpr?.length">
+                                            <table id="docTable" class="table table-hover table-striped table-bordered">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Registro</th>
+                                                        <th scope="col">Descripción Documento</th>
+                                                        <th scope="col">Fecha Entrega</th>
+                                                        <th scope="col">Fecha Vencimiento</th>
+                                                        <th scope="col">Observaciones</th>
+                                                        <th scope="col"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let doc of ctdocpr; let i = index">
+                                                        <td>{{i+1}}</td>
+                                                        <td>{{doc.pro_ddoc}}</td>
+                                                        <td>{{doc.pro_fent}}</td>
+                                                        <td>{{doc.pro_fven}}</td>
+                                                        <td>{{doc.pro_obse}}</td>
+                                                        <td><button type="button" class="btn btn-primary btn-sm" (click)="delVigencia()">Eliminar</button></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" *ngIf="viewConsul">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-4">
+                                        <div class="table-responsive mt-3" *ngIf="ctrevdo?.length">
+                                            <table id="docTable" class="table table-hover table-striped table-bordered">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th scope="col">Registro</th>
+                                                        <th scope="col">Descripción Documento</th>
+                                                        <th scope="col">Fecha Entrega</th>
+                                                        <th scope="col">Fecha Vencimiento</th>
+                                                        <th scope="col">Observaciones</th>
+                                                        <th scope="col">Adjunto</th>
+                                                        <th scope="col">Aprobado</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let doc of ctrevdo; let i = index">
+                                                        <td>{{doc.pro_nreg}}</td>
+                                                        <td>{{doc.pro_ddoc}}</td>
+                                                        <td>{{doc.pro_fent | date:'dd-MMM-yyyy' }}</td>
+                                                        <td>{{doc.pro_fven | date:'dd-MMM-yyyy' }}</td>
+                                                        <td>{{doc.pro_obse}}</td>
+                                                        <td>
+                                                            <button (click)="open(fileUrl + 'download/' + doc.adj_nomb)" type="button" class="btn btn-link btn-sm btn-block">
+                                                                <span><i class="fas fa-eye"></i>                                                                                                                                                                                                         
+                                                                </span>
+                                                             </button>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span class="switch mt-2">
+                                                                <input type="checkbox" name="chkApro" [(checked)]="doc.ite_chkd"  (change)= "doc.ite_chkd=!doc.ite_chkd; ActualizarApro(doc.ite_chkd, doc.doc_cont);"  class="switch switch-sm" id="{{doc.doc_cont}}" >
+                                                                <label for="{{doc.doc_cont}}"></label>                                                           
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+        <div class="row" *ngIf="!viewConsul">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+                <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!propoForm.form.valid || submitted ">Guardar Proponente</button>
+            </div>
+        </div>
+
+        <!-- <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Guardar Proponente</button>
+            </div>
+        </div> -->
+
+        <div class="row" *ngIf="viewConsul">
+            <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+                <button [disabled]="NoAprobacion() || aprobado" type="button" class="btn btn-success btn-md btn-block" (click)="Aprobar()">
+                        <span><i class="fas fa-check-circle"></i> &nbsp;Aprobar</span>
+                </button>
+            </div>
+            <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+                <button type="button" class="btn btn-danger btn-md btn-block" (click)="Rechazar()" [disabled]="aprobado">
+                        <span><i class="fas fa-ban"></i> &nbsp;Rechazar</span>
+                </button>
+            </div>
+            <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+                <button type="button" class="btn btn-primary btn-md btn-block" [routerLink]="['/ctconsu/']">
+                    <span><i class="fas fa-search"></i> &nbsp;Volver</span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<app-alert [message]="msg"></app-alert>
+<app-modal title="Seleccione empresa" (accept)="modal.dismiss();Load()">
+
+    <div class="form-group">
+        <label for="emp_codi" class="col-form-label"></label>
+        <select class="form-control" id="usu_codi" name="usu_codi" [(ngModel)]="propo.emp_codi" required #usu_codi="ngModel">
+          <option value="0">Seleccione</option>
+          <option *ngFor="let companie of companies" [value]="companie.emp_codi">{{companie.emp_nomb | titlecase}}
+          </option>
+        </select>
+    </div>
+</app-modal>

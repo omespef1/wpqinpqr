@@ -1,0 +1,99 @@
+<!-- <p text-center style="font-size: 15px; color: gray">{{loading}}</p> -->
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Formulario de Aprobación de Proponentes.</h1>
+
+    </div>
+</div>
+<div class="container">
+
+    <!-- <div class="row">
+        <div class="col-lg-4 col-md-1 col-sm-1">
+            <img src="data:image/jpeg;base64,{{logo}}" class="img-fluid" alt="Responsive image">
+        </div>
+    </div> -->
+
+    <div class="card card-gray" *ngIf="!submitted">
+        <div class="card-header bg-primary text-white">Consultar proponente</div>
+        <div class="card-body">
+            <form #consuForm="ngForm" (ngSubmit)="postConsu()">
+                <div class="row">
+                    <div class="col-lg-4 col-md-12 col-xs-12 col-sm-12">
+                        <label for="pro_codi">Identificación Proponente</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span> <span><i class="fas fa-id-card"></i></span></span>
+                                </div>
+                            </div>
+                            <input type="number" class="form-control" placeholder="Identificación" name="pro_codi" id="pro_codi" [(ngModel)]="propo.pro_codi">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-12 col-xs-12 col-sm-12">
+                        <label for="pro_nomb">Nombre del Proponente</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-user"></i></span>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Nombre" name="pro_nomb" id="pro_nomb" [(ngModel)]="propo.pro_nomb">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-12 col-xs-12 col-sm-12">
+                        <label for="rev_esta">Estado Inscripción</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-stream"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" id="rev_esta" name="rev_esta" [(ngModel)]="propo.rev_esta">                                            
+                                    <option value="0">Seleccione</option>
+                                    <option value="E">En Revisión</option>
+                                    <option value="R">Rechazado</option>
+                                  </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Boton enviar -->
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-3">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block btn-lg" [disabled]="propo.rev_esta == '0'">
+                  <span><i class="fas fa-search"></i> &nbsp;Consultar</span>
+                </button>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-3">
+                        <div class="table-responsive mt-3" *ngIf="ctrevpr?.length">
+                            <table class="table table-hover table-striped table-bordered">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Nombre Proveedor</th>
+                                        <th scope="col">Número Documento</th>
+                                        <th scope="col">Correo Electrónico</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let con of ctrevpr">
+                                        <td>{{con.pro_nomb}}</td>
+                                        <td>{{con.pro_codi}}</td>
+                                        <td>{{con.pro_mail}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary btn-sm btn-block" [routerLink]="['/ctpropo']" [queryParams]="{ rev_cont: revEncode(con.rev_cont) }">Ver</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<app-alert [message]="message"></app-alert>

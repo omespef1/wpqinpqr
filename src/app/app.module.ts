@@ -17,6 +17,8 @@ import { AlertComponent } from './components/alert/alert.component';
 import { SocoxcnComponent } from './components/so_socio/socoxcn/socoxcn.component';
 import { EstadosPipe } from './pipes/estados.pipe';
 import { EccotizComponent } from './components/ec/eccotiz/eccotiz.component';
+import { CtpropoComponent } from './components/ct/ctpropo/ctpropo.component';
+import { CtconsuComponent } from './components/ct/ctconsu/ctconsu.component';
 //Angular material
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule,MatFormFieldModule,MatInputModule,MatTableModule,MatPaginatorModule} from '@angular/material';
@@ -31,8 +33,7 @@ import { WgnfpassComponent } from './pages/gn/wgnfpass/wgnfpass.component';
 
 //plugins
 import { FileUploadModule } from 'ng2-file-upload';
-
-
+import { ComponentsComponent } from './components/components.component';
 
 
 export const MY_FORMATS = {
@@ -61,7 +62,10 @@ export const MY_FORMATS = {
     TableSearchComponent,
     AlertDialogComponent,
     WgnfpassComponent,
-    ModalComponent
+    ModalComponent,
+    CtpropoComponent,
+    CtconsuComponent,
+    ComponentsComponent
   ],
   imports: [
     FormsModule,                               // <========== Add this line!

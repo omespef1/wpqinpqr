@@ -3,6 +3,8 @@ import {ConsultaComponent} from './components/consulta/consulta.component';
 import {CreacionComponent} from './components/creacion/creacion.component';
 import {EccotizComponent} from './components/ec/eccotiz/eccotiz.component';
 import {SocoxcnComponent} from './components/so_socio/socoxcn/socoxcn.component';
+import {CtpropoComponent} from './components/ct/ctpropo/ctpropo.component';
+import {CtconsuComponent} from './components/ct/ctconsu/ctconsu.component';
 import {WgnfpassComponent} from './pages/gn/wgnfpass/wgnfpass.component';
 const app_routes: Routes = [
   { path: 'consulta', component: ConsultaComponent },
@@ -10,6 +12,8 @@ const app_routes: Routes = [
   { path: 'eccotiz', component: EccotizComponent },
    { path: 'socoxcn', component: SocoxcnComponent },
    { path: 'wgnfpass', component: WgnfpassComponent },
+   { path: 'ctpropo', component: CtpropoComponent },
+   { path: 'ctconsu', component: CtconsuComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'creacion' }
 ];
 

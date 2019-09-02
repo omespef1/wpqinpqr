@@ -1,242 +1,254 @@
-
-  <!-- <p text-center style="font-size: 15px; color: gray">{{loading}}</p> -->
+<!-- <p text-center style="font-size: 15px; color: gray">{{loading}}</p> -->
 
 <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Formulario de consulta de peticiones quejas y reclamos.</h1>
+    <div class="container">
+        <h1 class="display-4">Formulario de consulta de peticiones quejas y reclamos.</h1>
 
-  </div>
+    </div>
 </div>
 <div class="container">
 
     <div class="row">
-      <div class="col-lg-4 col-md-1 col-sm-1">
-        <img src="data:image/jpeg;base64,{{logo}}" class="img-fluid" alt="Responsive image">
-      </div>
+        <div class="col-lg-4 col-md-1 col-sm-1">
+            <img src="data:image/jpeg;base64,{{logo}}" class="img-fluid" alt="Responsive image">
+        </div>
     </div>
 
 
-  <div class="card card-gray" *ngIf="!submitted">
-    <div class="card-header bg-primary text-white">Consultar el estado de una Solicitud</div>
-    <div class="card-body">
-      <form #pqrForm="ngForm" (ngSubmit)="postPqr()">
+    <div class="card card-gray" *ngIf="!submitted">
+        <div class="card-header bg-primary text-white">Consultar el estado de una Solicitud</div>
+        <div class="card-body">
+            <form #pqrForm="ngForm" (ngSubmit)="postPqr()">
 
-        <div class="row">
-          <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-            <label for="inp_cont">N.Radicado</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span> <span><i class="fas fa-hashtag"></i></span></span>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="inp_cont">N.Radicado</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span> <span><i class="fas fa-hashtag"></i></span></span>
+                                </div>
+                            </div>
+                            <input type="number" class="form-control" placeholder="Número de radicado" name="inp_cont" id="inp_cont" [(ngModel)]="pqrIn.inp_cont" required #inp_cont="ngModel">
+                        </div>
+                        <div [hidden]="inp_cont.valid || inp_cont.pristine" class="alert alert-danger">
+                            Número de radicado es requerido
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="inp_pass">Contraseña</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-key"></i></span>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Contraseña" name="inp_pass" id="inp_pass" [(ngModel)]="pqrIn.inp_pass" required #inp_pass="ngModel">
+                        </div>
+                        <div [hidden]="inp_pass.valid || inp_pass.pristine" class="alert alert-danger">
+                            Contraseña es requerida
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <input type="number" class="form-control" placeholder="Número de radicado" name="inp_cont" id="inp_cont" [(ngModel)]="pqrIn.inp_cont" required #inp_cont="ngModel">
-            </div>
-            <div [hidden]="inp_cont.valid || inp_cont.pristine" class="alert alert-danger">
-              Número de radicado es requerido
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-            <label for="inp_pass">Contraseña</label>
-            <div class="input-group text-center">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-key"></i></span>
-                </div>
-              </div>
-              <input type="text" class="form-control" placeholder="Contraseña" name="inp_pass" id="inp_pass" [(ngModel)]="pqrIn.inp_pass" required #inp_pass="ngModel">
-            </div>
-            <div [hidden]="inp_pass.valid || inp_pass.pristine" class="alert alert-danger">
-              Contraseña es requerida
-            </div>
-          </div>
-        </div>
 
-        <div class="row">
-          <!-- Boton enviar -->
-          <div class="col-lg-12 col-md-6 col-xs-12 col-sm-12 text-center pt-5">
-            <button type="submit" class="btn btn-primary btn-lg btn-block btn-lg" [disabled]="!pqrForm.form.valid || submitted ">
+                <div class="row">
+                    <!-- Boton enviar -->
+                    <div class="col-lg-12 col-md-6 col-xs-12 col-sm-12 text-center pt-5">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block btn-lg" [disabled]="!pqrForm.form.valid || submitted ">
               <span><i class="fas fa-search"></i> &nbsp;Consultar PQR</span>
             </button>
-          </div>
+                    </div>
+                </div>
+
+
+
+            </form>
         </div>
-
-
-
-      </form>
     </div>
-  </div>
 
 
-  <div class="card-gray" *ngIf="submitted">
-    <div class="card-header bg-primary text-white">
-      Datos de la solicitud
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-          <label for="inp_cont">Consecutivo</label>
-          <div class="input-group text-center">
-            <div class="input-group-prepend">
-              <div class="input-group-text">
-                <span><i class="fas fa-hashtag"></i></span>
-              </div>
-            </div>
-            <input type="text" class="form-control" disabled=true name="inp_cont" id="inp_cont" [(ngModel)]="pqr.inp_cont">
-          </div>
+    <div class="card-gray" *ngIf="submitted">
+        <div class="card-header bg-primary text-white">
+            Datos de la solicitud
         </div>
-        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-          <label for="inp_fech">Fecha de creación</label>
-          <div class="input-group text-center">
-            <div class="input-group-prepend">
-              <div class="input-group-text">
-                <span><i class="far fa-calendar-alt"></i></span>
-              </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                    <label for="inp_cont">Consecutivo</label>
+                    <div class="input-group text-center">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span><i class="fas fa-hashtag"></i></span>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" disabled=true name="inp_cont" id="inp_cont" [(ngModel)]="pqr.inp_cont">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                    <label for="inp_fech">Fecha de creación</label>
+                    <div class="input-group text-center">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span><i class="far fa-calendar-alt"></i></span>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" [value]="pqr.inp_fech | date:'dd/MM/yyyy hh:mm'" disabled=true name="inp_fech" id="inp_fech">
+                    </div>
+                </div>
             </div>
-            <input type="text" class="form-control" [value]="pqr.inp_fech | date:'dd/MM/yyyy hh:mm'" disabled=true name="inp_fech" id="inp_fech">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-          <label for="inp_mpqr">Solicitud</label>
-          <div class="input-group">
-            <textarea multiple type="text" class="form-control" disabled=true name="inp_mpqr" id="inp_mpqr" [(ngModel)]="pqr.inp_mpqr"></textarea>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-          <label for="inp_esta">Estado actual</label>
-          <div class="input-group text-center">
-            <div class="input-group-prepend">
-              <div class="input-group-text">
-                <span><i class="fas fa-thermometer-quarter"></i></span>
-              </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                    <label for="inp_mpqr">Solicitud</label>
+                    <div class="input-group">
+                        <textarea multiple type="text" class="form-control" disabled=true name="inp_mpqr" id="inp_mpqr" [(ngModel)]="pqr.inp_mpqr"></textarea>
+                    </div>
+                </div>
             </div>
-            <input type="text" class="form-control" disabled=true name="inp_esta" id="inp_esta" [value]="pqr.inp_esta | estados">
-          </div>
-        </div>
-        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-          <label for="ite_tpqr">Tipo de solicitud</label>
-          <div class="input-group text-center">
-            <div class="input-group-prepend">
-              <div class="input-group-text">
-                <span><i class="far fa-keyboard"></i></span>
-              </div>
-            </div>
-            <select disabled class="form-control" id="ite_tpqr" name="ite_tpqr" [(ngModel)]="pqr.ite_tpqr">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                    <label for="inp_esta">Estado actual</label>
+                    <div class="input-group text-center">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span><i class="fas fa-thermometer-quarter"></i></span>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" disabled=true name="inp_esta" id="inp_esta" [value]="pqr.inp_esta | estados">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                    <label for="ite_tpqr">Tipo de solicitud</label>
+                    <div class="input-group text-center">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span><i class="far fa-keyboard"></i></span>
+                            </div>
+                        </div>
+                        <select disabled class="form-control" id="ite_tpqr" name="ite_tpqr" [(ngModel)]="pqr.ite_tpqr">
               <option *ngFor="let type of GnItemsItePqr" (change)="lookForInscription()" [value]="type.ite_cont">{{type.ite_nomb | titlecase}}</option>
             </select>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 pt-3">
-          <h3 *ngIf="segui">Respuestas dadas</h3>
-          <div class="item">
-            <ol>
-              <li *ngFor="let segui of pqr.seguimientos;let i=index">
-                <p> {{segui.din_segt}}</p>
-              </li>
-            </ol>
-          </div>
-
-
-        </div>
-      </div>
-      <div class="row" *ngIf="gnAdjunt">
-        <div class="col-md-12">
-          <h3>Descargar documentos adjuntos</h3>
-          <button *ngFor="let adjunto of gnAdjunt" (click)="download(adjunto.doc_desc)" class="btn btn-primary btn-sm">
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="gnAdjunt">
+                <div class="col-md-12">
+                    <h3>Descargar documentos adjuntos</h3>
+                    <button *ngFor="let adjunto of gnAdjunt" (click)="download(adjunto.doc_desc)" class="btn btn-primary btn-sm">
             <span><i class="fas fa-file-download"></i></span> &nbsp; {{adjunto.adj_nomb}}
           </button>
 
+                </div>
+            </div>
         </div>
-      </div>
+
     </div>
 
-</div>
-
-  <div class="card-gray" *ngIf="showEncuesta">
-    <ngx-spinner   bdColor="rgba(51,51,51,0.3)" size="large" >
-      </ngx-spinner>
-    <div class="card-header bg-primary text-white">
-      Encuesta
-    </div>
-    <div class="card-body">
-
-      <div>
-      <h3>
-        <h3> {{preguntas[0]}}</h3>
-      </h3>
-      <div class="funkyradio">
-        <div class="funkyradio-default">
-          <input type="radio" name="radio1" id="radio1" (change)="onSelectionChange(1,'Si')" />
-          <label for="radio1">Si</label>
+    <div class="card-gray" *ngIf="pqr.seguimientos?.length">
+        <div class="card-header bg-primary text-white">
+            Seguimientos
         </div>
-      </div>
-      <div class="funkyradio">
-        <div class="funkyradio-default">
-          <input type="radio" name="radio1" id="radio2" (change)="onSelectionChange(1,'No')" />
-          <label for="radio2">No</label>
+        <div class="card-body">
+            <div class="container">
+                <div class="table table-hover table-striped table-bordered mt-2">
+                    <table class="table table-hover table-striped table-bordered mt-4">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Item</th>
+                                <th scope="col">Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let segui of pqr.seguimientos; let i=index">
+                                <td>{{ i }}</td>
+                                <td>segui.din_segt</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
- <!-- Segunda pregunta -->
-
- <div>
- <h3>
-   <h3> {{preguntas[1]}}</h3>
- </h3>
- <div class="funkyradio">
-   <div class="funkyradio-default">
-     <input type="radio" name="radio2" id="radio3"(change)="onSelectionChange(2,'Mala')" />
-     <label for="radio3">Buena</label>
-   </div>
- </div>
- <div class="funkyradio">
-   <div class="funkyradio-default">
-     <input type="radio" name="radio2" id="radio4" (change)="onSelectionChange(2,'Buena')"/>
-     <label for="radio4">Mala</label>
-   </div>
- </div>
- <div class="funkyradio">
-   <div class="funkyradio-default">
-     <input type="radio" name="radio2" id="radio5" (change)="onSelectionChange(3,'Excelente')"/>
-     <label for="radio5">Excelente</label>
-   </div>
- </div>
-</div>
-<!-- Tercera preguntas -->
-
-<div>
-<h3>
-  <h3> {{preguntas[2]}}</h3>
-</h3>
-<div class="funkyradio">
-  <div class="funkyradio-default">
-    <input type="radio" name="radio3" id="radio6" (change)="onSelectionChange(3,'Si')" />
-    <label for="radio6">Si</label>
-  </div>
-</div>
-<div class="funkyradio">
-  <div class="funkyradio-default">
-    <input type="radio" name="radio3" id="radio7" (change)="onSelectionChange(3,'No')"/>
-    <label for="radio7">No</label>
-  </div>
-</div>
-</div>
 
 
+    <div class="card-gray" *ngIf="showEncuesta">
+        <ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
+        </ngx-spinner>
+        <div class="card-header bg-primary text-white">
+            Encuesta
+        </div>
+        <div class="card-body">
 
-  <div class="row">
-    <div class="col-md-12">
-      <button type="button" [disabled]="respuestas.length<3 || submittedEncue" class="btn btn-success btn-block" (click)="postEncue()">Enviar encuesta</button>
+            <div>
+                <h3>
+                    <h3> {{preguntas[0]}}</h3>
+                </h3>
+                <div class="funkyradio">
+                    <div class="funkyradio-default">
+                        <input type="radio" name="radio1" id="radio1" (change)="onSelectionChange(1,'Si')" />
+                        <label for="radio1">Si</label>
+                    </div>
+                </div>
+                <div class="funkyradio">
+                    <div class="funkyradio-default">
+                        <input type="radio" name="radio1" id="radio2" (change)="onSelectionChange(1,'No')" />
+                        <label for="radio2">No</label>
+                    </div>
+                </div>
+            </div>
+            <!-- Segunda pregunta -->
+
+            <div>
+                <h3>
+                    <h3> {{preguntas[1]}}</h3>
+                </h3>
+                <div class="funkyradio">
+                    <div class="funkyradio-default">
+                        <input type="radio" name="radio2" id="radio3" (change)="onSelectionChange(2,'Mala')" />
+                        <label for="radio3">Buena</label>
+                    </div>
+                </div>
+                <div class="funkyradio">
+                    <div class="funkyradio-default">
+                        <input type="radio" name="radio2" id="radio4" (change)="onSelectionChange(2,'Buena')" />
+                        <label for="radio4">Mala</label>
+                    </div>
+                </div>
+                <div class="funkyradio">
+                    <div class="funkyradio-default">
+                        <input type="radio" name="radio2" id="radio5" (change)="onSelectionChange(3,'Excelente')" />
+                        <label for="radio5">Excelente</label>
+                    </div>
+                </div>
+            </div>
+            <!-- Tercera preguntas -->
+
+            <div>
+                <h3>
+                    <h3> {{preguntas[2]}}</h3>
+                </h3>
+                <div class="funkyradio">
+                    <div class="funkyradio-default">
+                        <input type="radio" name="radio3" id="radio6" (change)="onSelectionChange(3,'Si')" />
+                        <label for="radio6">Si</label>
+                    </div>
+                </div>
+                <div class="funkyradio">
+                    <div class="funkyradio-default">
+                        <input type="radio" name="radio3" id="radio7" (change)="onSelectionChange(3,'No')" />
+                        <label for="radio7">No</label>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" [disabled]="respuestas.length<3 || submittedEncue" class="btn btn-success btn-block" (click)="postEncue()">Enviar encuesta</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
-</div>
 
 </div>
 <app-alert [message]="message">

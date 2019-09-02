@@ -1,232 +1,213 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
 <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Formulario de creación de peticiones quejas y reclamos.</h1>
-    <p class="lead">Por favor complete todos los campos marcados en rojo para poder generar una nueva PQR.</p>
-  </div>
+    <div class="container">
+        <h1 class="display-4">Formulario de creación de peticiones quejas y reclamos.</h1>
+        <p class="lead">Por favor complete todos los campos marcados en rojo para poder generar una nueva PQR.</p>
+    </div>
 </div>
 
 
 <div class="container">
-  <div class="row">
-    <div class="col-lg-4 col-md-1 col-sm-1">
-      <img src="data:image/jpeg;base64,{{logo}}" class="img-fluid" alt="Responsive image">
+    <div class="row">
+        <div class="col-lg-4 col-md-1 col-sm-1">
+            <img src="data:image/jpeg;base64,{{logo}}" class="img-fluid" alt="Responsive image">
+        </div>
     </div>
-  </div>
 
-  <div class="card card-gray">
-    <ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
-      <!-- <p text-center style="font-size: 15px; color: gray">{{loading}}</p> -->
-    </ngx-spinner>
-    <div class="card-header bg-primary text-white">Nueva PQR</div>
-    <div class="card-body">
-      <form #pqrForm="ngForm" (ngSubmit)="PostPqr(pqrForm)">
-        <div class="row" *ngIf="client">
-          <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
-            <label for="inp_tcli">Tipo de cliente</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-book-reader"></i></span>
-                </div>
-              </div>
-              <select disabled="true" class="form-control" id="inp_tcli" name="inp_tcli" [(ngModel)]="pqr.inp_tcli"
-                required #inp_tcli="ngModel">
+    <div class="card card-gray">
+        <ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
+        </ngx-spinner>
+        <div class="card-header bg-primary text-white">Nueva PQR</div>
+        <div class="card-body">
+            <form #pqrForm="ngForm" (ngSubmit)="PostPqr(pqrForm)">
+                <div class="row" *ngIf="client">
+                    <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+                        <label for="inp_tcli">Tipo de cliente</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-book-reader"></i></span>
+                                </div>
+                            </div>
+                            <select disabled="true" class="form-control" id="inp_tcli" name="inp_tcli" [(ngModel)]="pqr.inp_tcli" required #inp_tcli="ngModel">
                 <option value="F">Funcionario/Cliente</option>
                 <option value="O">Otro</option>
               </select>
-            </div>
-          </div>
-          <!-- Seccional -->
-          <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12" *ngIf="spq000001.dig_valo=='S'">
-            <label for="arb_csuc">Seccional</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-building"></i></span>
-                </div>
-              </div>
-              <input type="text" [readOnly]="pqr.inp_tcli == 'F'" class="form-control" placeholder="Código"
-                name="arb_sucu" id="arb_sucu" [(ngModel)]="pqr.arb_sucu" required #arb_sucu="ngModel">
-              <input type="text" [disabled]="pqr.inp_tcli == 'F'" class="form-control" placeholder="Descripción"
-                name="arb_nomb" id="arb_nomb" [(ngModel)]="pqr.arb_nomb" required #arb_nomb="ngModel">
-            </div>
-            <div [hidden]="arb_sucu.valid || arb_sucu.pristine" class="alert alert-danger">
-              seccional es requerido
-            </div>
-          </div>
-          <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12" *ngIf="spq000001.dig_valo=='S'">
-            <label for="con_cont">No.Contrato</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-hashtag"></i></span>
-                </div>
-              </div>
-              <input type="text" data-toggle="tooltip" data-placement="bottom" [title]="ctcontr.con_ncon"
-                [readOnly]="pqr.inp_tcli == 'F'" class="form-control" name="con_ncon" id="con_ncon"
-                [(ngModel)]="ctcontr.con_ncon" required #con_ncon="ngModel">
-              <input type="text" data-toggle="tooltip" data-placement="bottom" [title]="ctcontr.con_desc"
-                disabled="true" class="form-control" name="con_desc" id="con_desc" [(ngModel)]="ctcontr.con_desc"
-                required #con_desc="ngModel">
-              <button type="button" class="btn btn-primary" (click)="openLupa()">
+                        </div>
+                    </div>
+                    <!-- Seccional -->
+                    <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12" *ngIf="spq000001.dig_valo=='S'">
+                        <label for="arb_csuc">Seccional</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-building"></i></span>
+                                </div>
+                            </div>
+                            <input type="text" [readOnly]="pqr.inp_tcli == 'F'" class="form-control" placeholder="Código" name="arb_sucu" id="arb_sucu" [(ngModel)]="pqr.arb_sucu" required #arb_sucu="ngModel">
+                            <input type="text" [disabled]="pqr.inp_tcli == 'F'" class="form-control" placeholder="Descripción" name="arb_nomb" id="arb_nomb" [(ngModel)]="pqr.arb_nomb" required #arb_nomb="ngModel">
+                        </div>
+                        <div [hidden]="arb_sucu.valid || arb_sucu.pristine" class="alert alert-danger">
+                            seccional es requerido
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12" *ngIf="spq000001.dig_valo=='S'">
+                        <label for="con_cont">No.Contrato</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-hashtag"></i></span>
+                                </div>
+                            </div>
+                            <input type="text" data-toggle="tooltip" data-placement="bottom" [title]="ctcontr.con_ncon" [readOnly]="pqr.inp_tcli == 'F'" class="form-control" name="con_ncon" id="con_ncon" [(ngModel)]="ctcontr.con_ncon" required #con_ncon="ngModel">
+                            <input type="text" data-toggle="tooltip" data-placement="bottom" [title]="ctcontr.con_desc" disabled="true" class="form-control" name="con_desc" id="con_desc" [(ngModel)]="ctcontr.con_desc" required #con_desc="ngModel">
+                            <button type="button" class="btn btn-primary" (click)="openLupa()">
                 <span><i class="fas fa-search"></i></span>
               </button>
-            </div>
-            <div [hidden]="con_ncon.valid || con_ncon.pristine" class="alert alert-danger">
-              No Contrato es requerido
-            </div>
+                        </div>
+                        <div [hidden]="con_ncon.valid || con_ncon.pristine" class="alert alert-danger">
+                            No Contrato es requerido
+                        </div>
 
-          </div>
-          <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12" *ngIf="area && spq000001.dig_valo=='S'">
-            <label for="con_cont">Línea de negocio</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-external-link-square-alt"></i></span>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12" *ngIf="area && spq000001.dig_valo=='S'">
+                        <label for="con_cont">Línea de negocio</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-external-link-square-alt"></i></span>
+                                </div>
+                            </div>
+                            <input data-toggle="tooltip" data-placement="top" [title]="area.arb_codi" type="text" [readOnly]="pqr.inp_tcli == 'F'" class="form-control" name="arb_codia" id="arb_codia" [(ngModel)]="area.arb_codi" required #arb_codia="ngModel">
+                            <input type="text" data-toggle="tooltip" data-placement="bottom" [title]="area.arb_nomb" disabled="true" class="form-control" name="arb_nomba" id="arb_nomba" [(ngModel)]="area.arb_nomb" required #arb_nomba="ngModel">
+                        </div>
+                        <div [hidden]="arb_codia.valid || arb_codia.pristine" class="alert alert-danger">
+                            Línea de negocio es requerida
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <input data-toggle="tooltip" data-placement="top" [title]="area.arb_codi" type="text"
-                [readOnly]="pqr.inp_tcli == 'F'" class="form-control" name="arb_codia" id="arb_codia"
-                [(ngModel)]="area.arb_codi" required #arb_codia="ngModel">
-              <input type="text" data-toggle="tooltip" data-placement="bottom" [title]="area.arb_nomb" disabled="true"
-                class="form-control" name="arb_nomba" id="arb_nomba" [(ngModel)]="area.arb_nomb" required
-                #arb_nomba="ngModel">
-            </div>
-            <div [hidden]="arb_codia.valid || arb_codia.pristine" class="alert alert-danger">
-              Línea de negocio es requerida
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <!-- Tipo de solicitid -->
-          <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
-            <label for="ite_tpqr">Tipo de solicitud</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="far fa-keyboard"></i></span>
-                </div>
-              </div>
-              <select class="form-control" id="ite_tpqr" name="ite_tpqr" [(ngModel)]="pqr.ite_tpqr" required
-                #ite_tpqr="ngModel">
+                <div class="row">
+                    <!-- Tipo de solicitid -->
+                    <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+                        <label for="ite_tpqr">Tipo de solicitud</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="far fa-keyboard"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" id="ite_tpqr" name="ite_tpqr" [(ngModel)]="pqr.ite_tpqr" required #ite_tpqr="ngModel">
                 <option *ngFor="let type of GnItemsItePqr" (change)="lookForInscription()" [value]="type.ite_cont">
                   {{type.ite_nomb | titlecase}}</option>
               </select>
-            </div>
-            <div [hidden]="ite_tpqr.valid || ite_tpqr.pristine" class="alert alert-danger">
-              Tipo de solicitud es requerido
-            </div>
-          </div>
-          <!-- Area de inscripción -->
-          <div *ngIf="pqr.ite_tpqr == inscription" class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
-            <label for="ite_stip">Area de inscripción</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-book-reader"></i></span>
-                </div>
-              </div>
-              <select class="form-control" id="ite_stip" name="ite_stip" [(ngModel)]="pqr.ite_stip" required
-                #ite_stip="ngModel">
+                        </div>
+                        <div [hidden]="ite_tpqr.valid || ite_tpqr.pristine" class="alert alert-danger">
+                            Tipo de solicitud es requerido
+                        </div>
+                    </div>
+                    <!-- Area de inscripción -->
+                    <div *ngIf="pqr.ite_tpqr == inscription" class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+                        <label for="ite_stip">Area de inscripción</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-book-reader"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" id="ite_stip" name="ite_stip" [(ngModel)]="pqr.ite_stip" required #ite_stip="ngModel">
                 <option *ngFor="let type of GnItemsIte_stip" [value]="type.ite_cont">{{type.ite_nomb}}</option>
               </select>
-            </div>
-            <div [hidden]="ite_stip.valid || ite_stip.pristine" class="alert alert-danger">
-              Area de inscripción requerida
-            </div>
-          </div>
-          <!-- Asunto -->
-          <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
-            <label for="ite_tipi">Asunto</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-comment"></i></span>
-                </div>
-              </div>
-              <select class="form-control" id="ite_tipi" name="ite_tipi" [(ngModel)]="pqr.ite_tipi" required
-                #ite_tipi="ngModel">
+                        </div>
+                        <div [hidden]="ite_stip.valid || ite_stip.pristine" class="alert alert-danger">
+                            Area de inscripción requerida
+                        </div>
+                    </div>
+                    <!-- Asunto -->
+                    <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+                        <label for="ite_tipi">Asunto</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-comment"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" id="ite_tipi" name="ite_tipi" [(ngModel)]="pqr.ite_tipi" required #ite_tipi="ngModel">
                 <option *ngFor="let type of GnItemsIteTipi" [value]="type.ite_cont">{{type.ite_nomb | titlecase}}
                 </option>
               </select>
-            </div>
-            <div [hidden]="ite_tipi.valid || ite_tipi.pristine" class="alert alert-danger">
-              Asunto es requerido
-            </div>
-          </div>
-          <!-- Medio de respuesta -->
-          <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
-            <label for="inp_mres">Medio de respuesta</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="far fa-envelope-open"></i></span>
-                </div>
-              </div>
-              <select class="form-control" id="inp_mres" name="inp_mres" (change)="setValuesMandatory()"
-                [(ngModel)]="pqr.inp_mres" required #inp_mres="ngModel">
+                        </div>
+                        <div [hidden]="ite_tipi.valid || ite_tipi.pristine" class="alert alert-danger">
+                            Asunto es requerido
+                        </div>
+                    </div>
+                    <!-- Medio de respuesta -->
+                    <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+                        <label for="inp_mres">Medio de respuesta</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="far fa-envelope-open"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" id="inp_mres" name="inp_mres" (change)="setValuesMandatory()" [(ngModel)]="pqr.inp_mres" required #inp_mres="ngModel">
                 <option value="C">Correo electrónico</option>
                 <option value="D">Dirección</option>
                 <option value="O">Otro</option>
               </select>
-            </div>
-            <div [hidden]="inp_mres.valid || inp_mres.pristine" class="alert alert-danger">
-              Medio de respuesta es requerido
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <!-- nombres -->
-          <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-            <label for="inp_nomb">Nombres</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-user-circle"></i></span>
+                        </div>
+                        <div [hidden]="inp_mres.valid || inp_mres.pristine" class="alert alert-danger">
+                            Medio de respuesta es requerido
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <input [readOnly]="pqr.inp_tcli == 'F'" type="text" class="form-control" placeholder="Nombres"
-                name="inp_nomb" id="inp_nomb" [(ngModel)]="pqr.inp_nomb" required #inp_nomb="ngModel">
-            </div>
-            <div [hidden]="inp_nomb.valid || inp_nomb.pristine" class="alert alert-danger">
-              Nombres son requeridos
-            </div>
+                <div class="row">
+                    <!-- nombres -->
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="inp_nomb">Nombres</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-user-circle"></i></span>
+                                </div>
+                            </div>
+                            <input [readOnly]="pqr.inp_tcli == 'F'" type="text" class="form-control" placeholder="Nombres" name="inp_nomb" id="inp_nomb" [(ngModel)]="pqr.inp_nomb" required #inp_nomb="ngModel">
+                        </div>
+                        <div [hidden]="inp_nomb.valid || inp_nomb.pristine" class="alert alert-danger">
+                            Nombres son requeridos
+                        </div>
 
-          </div>
-          <!-- Apellidos -->
-          <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-            <label for="inp_apel">Apellidos</label>
+                    </div>
+                    <!-- Apellidos -->
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="inp_apel">Apellidos</label>
 
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-user-circle"></i></span>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-user-circle"></i></span>
+                                </div>
+                            </div>
+                            <input [readOnly]="pqr.inp_tcli == 'F'" type="text" class="form-control" placeholder="Apellidos" name="inp_apel" id="inp_apel" [(ngModel)]="pqr.inp_apel" required #inp_apel="ngModel">
+                        </div>
+
+                        <div [hidden]="inp_apel.valid || inp_apel.pristine" class="alert alert-danger">
+                            Apellidos son requeridos
+
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <input [readOnly]="pqr.inp_tcli == 'F'" type="text" class="form-control" placeholder="Apellidos"
-                name="inp_apel" id="inp_apel" [(ngModel)]="pqr.inp_apel" required #inp_apel="ngModel">
-            </div>
-
-            <div [hidden]="inp_apel.valid || inp_apel.pristine" class="alert alert-danger">
-              Apellidos son requeridos
-
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <!-- Tipo de documento -->
-          <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-            <label for="inp_tido">Tipo de documento</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-chalkboard-teacher"></i></span>
-                </div>
-              </div>
-              <select [disabled]="pqr.inp_tcli == 'F'" class="form-control" id="inp_tido" name="inp_tido"
-                [(ngModel)]="pqr.inp_tido" required #inp_tido="ngModel" #inp_tido="ngModel">
+                <div class="row">
+                    <!-- Tipo de documento -->
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="inp_tido">Tipo de documento</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-chalkboard-teacher"></i></span>
+                                </div>
+                            </div>
+                            <select [disabled]="pqr.inp_tcli == 'F'" class="form-control" id="inp_tido" name="inp_tido" [(ngModel)]="pqr.inp_tido" required #inp_tido="ngModel" #inp_tido="ngModel">
                 <option value="CC">Cédula de Ciudadanía</option>
                 <option value="CE">Cédula de Extranjería</option>
                 <option value="NIT">Identificación Tributaria</option>
@@ -234,243 +215,231 @@
                 <option value="TI">Tarjeta de Identidad</option>
                 <option value="O">Otro></option>
               </select>
-            </div>
+                        </div>
 
-            <div [hidden]="inp_tido.valid || inp_tido.pristine" class="alert alert-danger">
-              Tipo de documento es requerido
-            </div>
-          </div>
-          <!-- Número de documento -->
-          <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-            <label for="inp_nide">Número de documento</label>
+                        <div [hidden]="inp_tido.valid || inp_tido.pristine" class="alert alert-danger">
+                            Tipo de documento es requerido
+                        </div>
+                    </div>
+                    <!-- Número de documento -->
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="inp_nide">Número de documento</label>
 
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-id-card"></i></span>
-                </div>
-              </div>
-              <input type="text" [readOnly]="pqr.inp_tcli == 'F'" class="form-control" placeholder="Número de documento"
-                name="inp_nide" id="inp_nide" [(ngModel)]="pqr.inp_nide" #inp_nide="ngModel">
-            </div>
-            <!-- <div [hidden]="inp_nide.valid || inp_nide.pristine" class="alert alert-danger">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-id-card"></i></span>
+                                </div>
+                            </div>
+                            <input type="text" [readOnly]="pqr.inp_tcli == 'F'" class="form-control" placeholder="Número de documento" name="inp_nide" id="inp_nide" [(ngModel)]="pqr.inp_nide" #inp_nide="ngModel">
+                        </div>
+                        <!-- <div [hidden]="inp_nide.valid || inp_nide.pristine" class="alert alert-danger">
               Número de documento es requerido
             </div> -->
-          </div>
+                    </div>
 
-        </div>
-        <div class="row">
-          <!-- Dirección -->
-          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-            <label for="inp_dire">Dirección</label>
-
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-map-marked-alt"></i></span>
                 </div>
-              </div>
-              <input type="text" required class="form-control" placeholder="Dirección" name="inp_dire" id="inp_dire"
-                [(ngModel)]="pqr.inp_dire" #inp_dire="ngModel">
-            </div>
-            <div [hidden]="inp_dire.valid || inp_dire.pristine" class="alert alert-danger">
-              Dirección es requerida
-            </div>
+                <div class="row">
+                    <!-- Dirección -->
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        <label for="inp_dire">Dirección</label>
 
-          </div>
-        </div>
-        <div class="row">
-          <!-- Fijo -->
-          <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-            <label for="inp_ntel">Teléfono fijo</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-phone"></i></span>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-map-marked-alt"></i></span>
+                                </div>
+                            </div>
+                            <input type="text" required class="form-control" placeholder="Dirección" name="inp_dire" id="inp_dire" [(ngModel)]="pqr.inp_dire" #inp_dire="ngModel">
+                        </div>
+                        <div [hidden]="inp_dire.valid || inp_dire.pristine" class="alert alert-danger">
+                            Dirección es requerida
+                        </div>
+
+                    </div>
                 </div>
-              </div>
-              <input type="number" [readOnly]="pqr.inp_tcli == 'F'" class="form-control" placeholder="Teléfono fijo"
-                name="inp_ntel" id="inp_ntel" [(ngModel)]="pqr.inp_ntel" required #inp_ntel="ngModel">
-            </div>
-            <div [hidden]="inp_ntel.valid || inp_ntel.pristine" class="alert alert-danger">
-              Teléfono fijo requerido
-            </div>
+                <div class="row">
+                    <!-- Fijo -->
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="inp_ntel">Teléfono fijo</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-phone"></i></span>
+                                </div>
+                            </div>
+                            <input type="number" [readOnly]="pqr.inp_tcli == 'F'" class="form-control" placeholder="Teléfono fijo" name="inp_ntel" id="inp_ntel" [(ngModel)]="pqr.inp_ntel" required #inp_ntel="ngModel">
+                        </div>
+                        <div [hidden]="inp_ntel.valid || inp_ntel.pristine" class="alert alert-danger">
+                            Teléfono fijo requerido
+                        </div>
 
-          </div>
-          <!-- Celular -->
-          <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-            <label for="inp_ncel">Teléfono Celular</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-mobile-alt"></i></span>
+                    </div>
+                    <!-- Celular -->
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="inp_ncel">Teléfono Celular</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-mobile-alt"></i></span>
+                                </div>
+                            </div>
+                            <input type="number" class="form-control" placeholder="Teléfono Celular" name="inp_ncel" id="inp_ncel" [(ngModel)]="pqr.inp_ncel" required #inp_ncel="ngModel">
+                        </div>
+                        <div [hidden]="inp_ncel.valid || inp_ncel.pristine" class="alert alert-danger">
+                            Teléfono celular requerido
+                        </div>
+
+                    </div>
                 </div>
-              </div>
-              <input type="number" class="form-control" placeholder="Teléfono Celular" name="inp_ncel" id="inp_ncel"
-                [(ngModel)]="pqr.inp_ncel" required #inp_ncel="ngModel">
-            </div>
-            <div [hidden]="inp_ncel.valid || inp_ncel.pristine" class="alert alert-danger">
-              Teléfono celular requerido
-            </div>
+                <div class="row">
+                    <!-- Email -->
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="inp_mail">Email</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-at"></i></span>
+                                </div>
+                            </div>
+                            <input type="email" class="form-control" placeholder="Email" name="inp_mail" id="inp_mail" [(ngModel)]="pqr.inp_mail" required #inp_mail="ngModel">
 
-          </div>
-        </div>
-        <div class="row">
-          <!-- Email -->
-          <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-            <label for="inp_mail">Email</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-at"></i></span>
-                </div>
-              </div>
-              <input type="email" class="form-control" placeholder="Email" name="inp_mail" id="inp_mail"
-                [(ngModel)]="pqr.inp_mail" required #inp_mail="ngModel">
-
-            </div>
-            <div [hidden]="inp_mail.valid || inp_mail.pristine" class="alert alert-danger">
-              Email requerido
-            </div>
+                        </div>
+                        <div [hidden]="inp_mail.valid || inp_mail.pristine" class="alert alert-danger">
+                            Email requerido
+                        </div>
 
 
-          </div>
-          <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-            <label for="inp_gper">Grupo al que pertenece</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-synagogue"></i></span>
-                </div>
-              </div>
-              <select class="form-control" id="inp_gper" name="inp_gper" [(ngModel)]="pqr.inp_gper" required
-                #inp_gper="ngModel" #inp_gper="ngModel">
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="inp_gper">Grupo al que pertenece</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-synagogue"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" id="inp_gper" name="inp_gper" [(ngModel)]="pqr.inp_gper" required #inp_gper="ngModel" #inp_gper="ngModel">
                 <option *ngFor="let dpara of pqdpara" [value]="dpara.dpa_codi">{{dpara.dpa_grup | titlecase}}</option>
               </select>
-            </div>
-            <div [hidden]="inp_gper.valid || inp_gper.pristine" class="alert alert-danger">
-              Grupo es requerido
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <!-- País -->
-          <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12">
-            <label for="pai_codi">País</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-globe-americas"></i></span>
+                        </div>
+                        <div [hidden]="inp_gper.valid || inp_gper.pristine" class="alert alert-danger">
+                            Grupo es requerido
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <select [disabled]="pqr.inp_tcli == 'F'" class="form-control" id="pai_codi" name="pai_codi"
-                [(ngModel)]="pqr.pai_codi" required #pai_codi="ngModel" #pai_codi="ngModel">
+                <div class="row">
+                    <!-- País -->
+                    <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12">
+                        <label for="pai_codi">País</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-globe-americas"></i></span>
+                                </div>
+                            </div>
+                            <select [disabled]="pqr.inp_tcli == 'F'" class="form-control" id="pai_codi" name="pai_codi" [(ngModel)]="pqr.pai_codi" required #pai_codi="ngModel" #pai_codi="ngModel">
                 <option *ngFor="let paise of gnpaise" [value]="paise.pai_codi">{{paise.pai_nomb | titlecase}}</option>
               </select>
-            </div>
-            <div [hidden]="pai_codi.valid || pai_codi.pristine" class="alert alert-danger">
-              País requerido
-            </div>
-          </div>
-          <!-- Departamento -->
-          <div *ngIf="pqr.pai_codi==169" class="col-lg-4 col-md-6 col-xs-12 col-sm-12">
-            <label for="dep_codi">Departamento</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-map-marked-alt"></i></span>
-                </div>
-              </div>
-              <select [disabled]="pqr.inp_tcli == 'F'" class="form-control" id="dep_codi" (change)="filterCities()"
-                name="dep_codi" [(ngModel)]="pqr.dep_codi" required #dep_codi="ngModel">
+                        </div>
+                        <div [hidden]="pai_codi.valid || pai_codi.pristine" class="alert alert-danger">
+                            País requerido
+                        </div>
+                    </div>
+                    <!-- Departamento -->
+                    <div *ngIf="pqr.pai_codi==169" class="col-lg-4 col-md-6 col-xs-12 col-sm-12">
+                        <label for="dep_codi">Departamento</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-map-marked-alt"></i></span>
+                                </div>
+                            </div>
+                            <select [disabled]="pqr.inp_tcli == 'F'" class="form-control" id="dep_codi" (change)="filterCities()" name="dep_codi" [(ngModel)]="pqr.dep_codi" required #dep_codi="ngModel">
                 <option *ngFor="let depar of gndepar" [value]="depar.dep_codi">{{depar.dep_nomb | titlecase}}</option>
               </select>
-            </div>
-            <div [hidden]="dep_codi.valid || dep_codi.pristine" class="alert alert-danger">
-              Departamento es requerido
-            </div>
-          </div>
-          <!-- Ciudad -->
-          <div *ngIf="pqr.dep_codi && pqr.pai_codi==169" class="col-lg-4 col-md-6 col-xs-12 col-sm-12">
-            <label for="mun_codi">Ciudad</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <span><i class="fas fa-city"></i></span>
-                </div>
-              </div>
-              <select [disabled]="pqr.inp_tcli == 'F'" class="form-control" id="mun_codi" name="mun_codi"
-                [(ngModel)]="pqr.mun_codi" required #mun_codi="ngModel">
+                        </div>
+                        <div [hidden]="dep_codi.valid || dep_codi.pristine" class="alert alert-danger">
+                            Departamento es requerido
+                        </div>
+                    </div>
+                    <!-- Ciudad -->
+                    <div *ngIf="pqr.dep_codi && pqr.pai_codi==169" class="col-lg-4 col-md-6 col-xs-12 col-sm-12">
+                        <label for="mun_codi">Ciudad</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-city"></i></span>
+                                </div>
+                            </div>
+                            <select [disabled]="pqr.inp_tcli == 'F'" class="form-control" id="mun_codi" name="mun_codi" [(ngModel)]="pqr.mun_codi" required #mun_codi="ngModel">
                 <option *ngFor="let munic of gnmunicF" [value]="munic.mun_codi">{{munic.mun_nomb}}</option>
               </select>
-            </div>
-            <div [hidden]="mun_codi.valid || mun_codi.pristine" class="alert alert-danger">
-              Ciudad es requerida
-            </div>
-          </div>
-          <!-- Grupo -->
+                        </div>
+                        <div [hidden]="mun_codi.valid || mun_codi.pristine" class="alert alert-danger">
+                            Ciudad es requerida
+                        </div>
+                    </div>
+                    <!-- Grupo -->
 
-        </div>
-        <div class="row">
-          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-            <label for="inp_mpqr">Descripción</label>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        <label for="inp_mpqr">Descripción</label>
 
-            <div class="input-group">
-              <textarea type="text" class="form-control" multiple placeholder="Descripción" name="inp_mpqr"
-                id="inp_mpqr" [(ngModel)]="pqr.inp_mpqr" required #inp_mpqr="ngModel"></textarea>
-            </div>
-            <div [hidden]="inp_mpqr.valid || inp_mpqr.pristine" class="alert alert-danger">
-              Debe ingresar una descripción para la PQR
-            </div>
-          </div>
-        </div>
-        <div class="row">
-            <div ng2FileDrop [ngClass]="{'drop-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
-            [uploader]="uploader" class="area">
-            <div id="dropZone">Arrastra tus adjuntos aquí</div>
-           
-          </div>
-         
-          <!-- Archivo -->
-          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-            <div class="btn-group">
-                <label class="btn btn-primary label-button">
+                        <div class="input-group">
+                            <textarea type="text" class="form-control" multiple placeholder="Descripción" name="inp_mpqr" id="inp_mpqr" [(ngModel)]="pqr.inp_mpqr" required #inp_mpqr="ngModel"></textarea>
+                        </div>
+                        <div [hidden]="inp_mpqr.valid || inp_mpqr.pristine" class="alert alert-danger">
+                            Debe ingresar una descripción para la PQR
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div ng2FileDrop [ngClass]="{'drop-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader" class="area">
+                        <div id="dropZone">Arrastra tus adjuntos aquí</div>
+
+                    </div>
+
+                    <!-- Archivo -->
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        <div class="btn-group">
+                            <label class="btn btn-primary label-button">
               <!-- <input type="file" class="btn btn-primary" multiple  (change)="getFileDetails($event)"  placeholder="Adjunta un archivo" name="adj_file" #pqr_file id="adj_file" > -->
               <input type="file" class="btn btn-primary" ng2FileSelect [uploader]="uploader" multiple placeholder="Subir archivos"  style="display:none" accept=".pdf,.doc,.docx,.jpg,.png,.xls,.xlsx"  />
               <i class="fas fa-file-upload"></i> &nbsp;Agregar adjuntos
               </label>
-              <button type="button" [class]="!uploader.queue.length?'btn btn-outline-danger':'btn btn-danger'"
-              (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                            <button type="button" [class]="!uploader.queue.length?'btn btn-outline-danger':'btn btn-danger'" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
               <span><i class="fas fa-trash"></i></span>
               </button>
-            </div>
-
-           
-          </div>
-
-          
+                        </div>
 
 
-        </div>
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                <div class="input-group">
-                    <h2>Sus archivos: {{ uploader?.queue?.length }}</h2>
-                    <ul>
-                    <li *ngFor="let item of uploader.queue">
-                        {{ item?.file?.name }}
-                    </li>
-                    </ul>
-                  
+                    </div>
+
+
+
+
                 </div>
-                
-              </div>
-            
-        </div>
-        <div class="row">
-          <!-- Texto archivo -->
-          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 pt-3">
-            <strong>
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        <div class="input-group">
+                            <h2>Sus archivos: {{ uploader?.queue?.length }}</h2>
+                            <ul>
+                                <li *ngFor="let item of uploader.queue">
+                                    {{ item?.file?.name }}
+                                </li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <!-- Texto archivo -->
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 pt-3">
+                        <strong>
               Cuando requiera o sea de su interés presentar algún documento que soporte su petición puede adjuntarlo en
               esta sección.
               Lo anterior sin perjuicio a que dichos documentos de conformidad con la Ley, deba allegarse de forma
@@ -478,32 +447,29 @@
               Nota: Los documentos permitidos deben ser de tipo .PDF .DOC .DOCX .JPG .PNG .XLS .XLSX.
               Tamaño máximo permitido de archivo 2MB.
             </strong>
-          </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- Boton enviar -->
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-5">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!pqrForm.form.valid || submitted ">Generar nueva PQR</button>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="row">
-          <!-- Boton enviar -->
-          <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-5">
-            <button type="submit" class="btn btn-primary btn-lg btn-block"
-              [disabled]="!pqrForm.form.valid || submitted ">Generar nueva PQR</button>
-          </div>
-        </div>
-      </form>
     </div>
-  </div>
-  <app-alert [message]="message"></app-alert>
-  <app-confirm-dialog leftButton="Anónimo/Ciudadanía General" (buttonClick)="setOptionConfirm($event)"
-    rightButton="Cliente" modalBody="¿Como desea realizar el ingreso?" modalTitle="Confirmación"></app-confirm-dialog>
-  <app-table-search Title="Contratos" (rowCLick)="setContract($event)"></app-table-search>
-  <app-modal title="Seleccione empresa" (accept)="modal.dismiss();Load()">
-    <form>
-      <div class="form-group">
-        <label for="emp_codi" class="col-form-label"></label>
-        <select class="form-control" id="usu_codi" name="usu_codi" [(ngModel)]="pqr.emp_codi" required
-          #usu_codi="ngModel">
+    <app-alert [message]="message"></app-alert>
+    <app-confirm-dialog leftButton="Anónimo/Ciudadanía General" (buttonClick)="setOptionConfirm($event)" rightButton="Cliente" modalBody="¿Como desea realizar el ingreso?" modalTitle="Confirmación"></app-confirm-dialog>
+    <app-table-search Title="Contratos" (rowCLick)="setContract($event)"></app-table-search>
+    <app-modal title="Seleccione empresa" (accept)="modal.dismiss();Load()">
+        <form>
+            <div class="form-group">
+                <label for="emp_codi" class="col-form-label"></label>
+                <select class="form-control" id="usu_codi" name="usu_codi" [(ngModel)]="pqr.emp_codi" required #usu_codi="ngModel">
           <option value="0">Seleccione</option>
           <option *ngFor="let companie of companies" [value]="companie.emp_codi">{{companie.emp_nomb | titlecase}}
           </option>
         </select>
-      </div>
-    </form>
-  </app-modal>
+            </div>
+        </form>
+    </app-modal>

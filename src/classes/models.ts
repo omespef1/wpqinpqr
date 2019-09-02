@@ -37,6 +37,7 @@ export class pqinpqr {
   public arb_care:number;
   public usu_codi:string;
   public cas_cont:number;
+  seguimientos: any[];
 }
 export class ask {
   askText: string;
@@ -95,6 +96,7 @@ export interface ToTransaction{
   TxtError:string,
   ObjTransaction:any
 }
+
 export interface companies {
   emp_nomb:string;
   emp_codi:number;
