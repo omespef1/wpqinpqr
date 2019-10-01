@@ -30,10 +30,12 @@ import {ModalComponent} from './components/dialogs/modal/modal.component';
 import { TableSearchComponent } from './components/tools/table-search/table-search.component';
 import { AlertDialogComponent } from './components/dialogs/alert-dialog/alert-dialog.component';
 import { WgnfpassComponent } from './pages/gn/wgnfpass/wgnfpass.component';
-
+import { EerelesComponent } from './components/ee/eereles/eereles.component';
+import { RnradicComponent } from './components/rn/rnradic/rnradic.component';
 //plugins
 import { FileUploadModule } from 'ng2-file-upload';
 import { ComponentsComponent } from './components/components.component';
+import { TableSearchGenericComponent } from './components/tools/table-search-generic/table-search-generic.component';
 
 
 export const MY_FORMATS = {
@@ -65,7 +67,10 @@ export const MY_FORMATS = {
     ModalComponent,
     CtpropoComponent,
     CtconsuComponent,
-    ComponentsComponent
+    ComponentsComponent,
+    EerelesComponent,
+    RnradicComponent,
+    TableSearchGenericComponent
   ],
   imports: [
     FormsModule,                               // <========== Add this line!

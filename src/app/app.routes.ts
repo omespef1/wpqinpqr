@@ -5,7 +5,10 @@ import {EccotizComponent} from './components/ec/eccotiz/eccotiz.component';
 import {SocoxcnComponent} from './components/so_socio/socoxcn/socoxcn.component';
 import {CtpropoComponent} from './components/ct/ctpropo/ctpropo.component';
 import {CtconsuComponent} from './components/ct/ctconsu/ctconsu.component';
+import {EerelesComponent} from './components/ee/eereles/eereles.component';
 import {WgnfpassComponent} from './pages/gn/wgnfpass/wgnfpass.component';
+import { RnradicComponent } from './components/rn/rnradic/rnradic.component';
+
 const app_routes: Routes = [
   { path: 'consulta', component: ConsultaComponent },
   { path: 'creacion', component: CreacionComponent },
@@ -14,6 +17,8 @@ const app_routes: Routes = [
    { path: 'wgnfpass', component: WgnfpassComponent },
    { path: 'ctpropo', component: CtpropoComponent },
    { path: 'ctconsu', component: CtconsuComponent },
+   { path: 'eereles', component: EerelesComponent },
+   { path: 'rnradic', component: RnradicComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'creacion' }
 ];
 

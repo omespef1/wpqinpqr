@@ -30,13 +30,14 @@ export class pqinpqr {
   public ite_frec: string = "";
   public inp_gper: number;
   public adj_file: File = null;
-  public inp_tcli:string;
-  public arb_sucu:string;
-  public arb_nomb:string;
-  public con_cont:number;
-  public arb_care:number;
-  public usu_codi:string;
-  public cas_cont:number;
+  public inp_tcli: string;
+  public arb_sucu: string;
+  public arb_nomb: string;
+  public con_cont: number;
+  public arb_care: number;
+  public usu_codi: string;
+  public cas_cont: number;
+  public inp_fech: Date;
   seguimientos: any[];
 }
 export class ask {

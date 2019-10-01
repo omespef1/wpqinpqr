@@ -4,4 +4,5 @@ export class Ctconsu {
     public pro_nomb: string;
     public pro_apel: string;
     public pro_mail: string;
+    public emp_codi: string;
 }

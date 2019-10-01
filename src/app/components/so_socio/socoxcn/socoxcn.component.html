@@ -1,157 +1,157 @@
 <div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Mis productos y servicios</h1>
-  </div>
+    <div class="container">
+        <h1 class="display-4">Mis productos y servicios</h1>
+    </div>
 </div>
 <div class="container">
-  <div class="p-2">
-    <div class="card">
-      <div class="card-header bg-primary text-white">Parámetros de búsqueda</div>
-      <div class="card-body">
-        <form #socoxcnForm="ngForm"  (ngSubmit)="consultarcartera()">
-          <ngx-spinner  bdColor="rgba(51,51,51,0.3)" size="large" >
-          <!-- <p text-center style="font-size: 15px; color: gray">{{loading}}</p> -->
-          </ngx-spinner>
-          <div class="row">
-            <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-              <label for="ter_coda">Identificación</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <div class="input-group-text">
-                    <span><i class="fas fa-id-card-alt"></i></span>
-                  </div>
-                </div>
-                <input  type="text" class="form-control" placeholder="Identificación" name="ter_coda" id="ter_coda" [(ngModel)]="par_busq.ter_coda" required #ter_coda="ngModel" readonly>
-              </div>
-              <div [hidden]="ter_coda.valid || ter_coda.pristine" class="alert alert-danger">
-                Identificación es requerida
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-              <label for="ter_nomb">Nombres</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <div class="input-group-text">
-                    <span><i class="fas fa-user-circle"></i></span>
-                  </div>
-                </div>
-                <input type="text"  class="form-control" placeholder="Nombre" name="ter_noco" id="ter_noco" [(ngModel)]="par_busq.ter_noco" required #ter_noco="ngModel" readonly>
-              </div>
-              <div [hidden]="ter_noco.valid || ter_noco.pristine" class="alert alert-danger">
-                Nombre es requerido
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-              <label for="fec_fini">Fecha de vigencia</label>
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <div class="input-group-text">
-                    <span><i class="fas fa-calendar-alt"></i></span>
-                  </div>
-                </div>
-                <input matInput placeholder="Fecha de vigencia" [matDatepicker]="fec_ffinP" type="text" class="form-control" name="fec_ffin" id="fec_ffin" [(ngModel)]="par_busq.fec_ffin" required #fec_ffin="ngModel" readonly>
-                <mat-datepicker-toggle [for]="fec_ffinP"></mat-datepicker-toggle>
-                <mat-datepicker disabled #fec_ffinP touchUi></mat-datepicker>
-              </div>
-              <div [hidden]="fec_ffin.valid || fec_ffin.pristine" class="alert alert-danger">
-                Fecha de vigencia es requerida
-              </div>
-            </div>
-            
-            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 pt-3">
-              <button type="submit" [disabled]="!socoxcnForm.form.valid" class="btn btn-success btn-lg">
+    <div class="p-2">
+        <div class="card">
+            <div class="card-header bg-primary text-white">Parámetros de búsqueda</div>
+            <div class="card-body">
+                <form #socoxcnForm="ngForm" (ngSubmit)="consultarcartera()">
+                    <ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
+                        <!-- <p text-center style="font-size: 15px; color: gray">{{loading}}</p> -->
+                    </ngx-spinner>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                            <label for="ter_coda">Identificación</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-id-card-alt"></i></span>
+                                    </div>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Identificación" name="ter_coda" id="ter_coda" [(ngModel)]="par_busq.ter_coda" required #ter_coda="ngModel" readonly>
+                            </div>
+                            <div [hidden]="ter_coda.valid || ter_coda.pristine" class="alert alert-danger">
+                                Identificación es requerida
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                            <label for="ter_nomb">Nombres</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user-circle"></i></span>
+                                    </div>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Nombre" name="ter_noco" id="ter_noco" [(ngModel)]="par_busq.ter_noco" required #ter_noco="ngModel" readonly>
+                            </div>
+                            <div [hidden]="ter_noco.valid || ter_noco.pristine" class="alert alert-danger">
+                                Nombre es requerido
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                            <label for="fec_fini">Fecha de vigencia</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-calendar-alt"></i></span>
+                                    </div>
+                                </div>
+                                <input matInput placeholder="Fecha de vigencia" [matDatepicker]="fec_ffinP" type="text" class="form-control" name="fec_ffin" id="fec_ffin" [(ngModel)]="par_busq.fec_ffin" required #fec_ffin="ngModel" readonly>
+                                <mat-datepicker-toggle [for]="fec_ffinP"></mat-datepicker-toggle>
+                                <mat-datepicker disabled #fec_ffinP touchUi></mat-datepicker>
+                            </div>
+                            <div [hidden]="fec_ffin.valid || fec_ffin.pristine" class="alert alert-danger">
+                                Fecha de vigencia es requerida
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 pt-3">
+                            <button type="submit" [disabled]="!socoxcnForm.form.valid" class="btn btn-success btn-lg">
               <span><i class="fas fa-search"></i></span> &nbsp;Buscar
               </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-  <div class="p-2">
-    <div class="card" *ngIf="submitted">
-      <div class="card-header bg-primary text-white">Información</div>
-      <div class="card-body">
-        <div class="alert alert-primary    " role="alert">
-          El Valor del Producto no incluye impuestos y descuentos.
         </div>
-        <ul class="nav nav-tabs">
-          <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#cuentasxcobrar">Cartera pendiente</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#misproductos">Mis productos</a>
-          </li>
-        </ul>
-        <div class="tab-content">
-          <div class="tab-pane fade show active p-2" id="cuentasxcobrar" role="tabpanel" aria-labelledby="cuentasxcobrar-tab" *ngIf="cuentasxcobrar.length>0" >
-            <div class="table-responsive" >
-              <table class="table table-hover table-striped table-bordered">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">TIPO PRODUCTO</th>
-               <!--      <th scope="col">VALOR TOTAL</th> -->
-                    <th scope="col">SALDO PENDIENTE</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let cuenta of cuentasxcobrar;let i=index">
-                    <th scope="row">
-                      {{i+1}}
-                    </th>
-                    <td>{{cuenta.tip_nomb}}</td>
-                  <!--   <td>{{cuenta.cxc_tota | currency}}</td> -->
-                    <td>{{cuenta.cxc_sald | currency }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="form-group">
-              <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-                <button type="button" class="btn btn-success btn-lg" (click)="pagar()">
+    </div>
+    <div class="p-2">
+        <div class="card" *ngIf="submitted">
+            <div class="card-header bg-primary text-white">Información</div>
+            <div class="card-body">
+                <div class="alert alert-primary    " role="alert">
+                    El Valor del Producto no incluye impuestos y descuentos.
+                </div>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#cuentasxcobrar">Cartera pendiente</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#misproductos">Mis productos</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active p-2" id="cuentasxcobrar" role="tabpanel" aria-labelledby="cuentasxcobrar-tab" *ngIf="cuentasxcobrar.length>0">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped table-bordered">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">TIPO PRODUCTO</th>
+                                        <!--      <th scope="col">VALOR TOTAL</th> -->
+                                        <th scope="col">SALDO PENDIENTE</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let cuenta of cuentasxcobrar;let i=index">
+                                        <th scope="row">
+                                            {{i+1}}
+                                        </th>
+                                        <td>{{cuenta.tip_nomb}}</td>
+                                        <!--   <td>{{cuenta.cxc_tota | currency}}</td> -->
+                                        <td>{{cuenta.cxc_sald | currency }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                <button type="button" class="btn btn-success btn-lg" (click)="pagar()">
                 <span> <i class="fas fa-money-bill-alt"></i></span> &nbsp; Pagar
                 </button>
-              </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show p-2" id="misproductos" role="tabpanel" aria-labelledby="misproductos-tab">
+                        <div class="table-responsive" *ngIf="misproductos.length>0">
+                            <table class="table table-hover table-striped table-bordered">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">PRODUCTO</th>
+                                        <th scope="col">VIGENCIA DESDE</th>
+                                        <th scope="col">VIGENCIA HASTA</th>
+                                        <th scope="col">VALOR PRODUCTO</th>
+                                        <th scope="col">BENEFICIARIO</th>
+                                        <th scope="col">MEDIO DE PAGO</th>
+                                        <th scope="col">DESCRIPCIÓN</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let producto of misproductos;let i=index">
+                                        <th scope="row">
+                                            {{i+1}}
+                                        </th>
+                                        <td>{{producto.pro_codi}} - {{producto.pro_nomb}}</td>
+                                        <td>{{producto.cox_aini}}/ {{producto.cox_mini}}</td>
+                                        <td>{{producto.cox_afin}}/ {{producto.cox_mfin}}</td>
+                                        <td>{{producto.pro_valo | currency}}</td>
+                                        <td>{{producto.sbe_nomb}}</td>
+                                        <td>{{producto.pro_fpag | tarjetas}} </td>
+                                        <td>{{producto.dco_plac}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="tab-pane fade show p-2" id="misproductos" role="tabpanel" aria-labelledby="misproductos-tab">
-            <div class="table-responsive" *ngIf="misproductos.length>0">
-              <table class="table table-hover table-striped table-bordered">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">PRODUCTO</th>
-                    <th scope="col">VIGENCIA DESDE</th>
-                    <th scope="col">VIGENCIA HASTA</th>
-                    <th scope="col">VALOR PRODUCTO</th>
-                    <th scope="col">BENEFICIARIO</th>
-                    <th scope="col">MEDIO DE PAGO</th>
-                    <th scope="col">DESCRIPCIÓN</th>
-                    
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let producto of misproductos;let i=index">
-                    <th scope="row">
-                      {{i+1}}
-                    </th>
-                    <td>{{producto.pro_codi}} - {{producto.pro_nomb}}</td>
-                    <td>{{producto.cox_aini}}/ {{producto.cox_mini}}</td>
-                    <td>{{producto.cox_afin}}/ {{producto.cox_mfin}}</td>
-                    <td>{{producto.pro_valo | currency}}</td>
-                    <td>{{producto.sbe_nomb}}</td>
-                    <td>{{producto.pro_fpag | tarjetas}} </td>
-                    <td>{{producto.dco_plac}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
 <app-alert [message]="message">
 </app-alert>

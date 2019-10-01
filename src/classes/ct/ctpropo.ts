@@ -9,7 +9,7 @@ export class Ctpropo {
     // Datos Básicos
     public pro_codi = '';
     public pro_dive: number;
-    public tip_codi: number;
+    public tip_codi = '';
     public pro_nomb = '';
     public pro_apel: string;
     public pro_noco: string;
@@ -48,7 +48,7 @@ export class Ctpropo {
     // Representante Legal
     public pro_nomr: string;
     public pro_nror: string;
-    public pro_tipr: number;
+    public pro_tipr = '';
     public pro_expe: string;
 
     // Experiencia General
@@ -56,26 +56,26 @@ export class Ctpropo {
 
     // Otros
 
-    public cam_cont: number;
+    public cam_cont = '';
     public pro_niva = '';
-    public ite_cont: number;
+    public ite_cont = '';
     public pro_pweb: string;
     public pro_dirn: string;
     public pro_clap: string;
 
     // Geografía
-    public pro_pais: number;
-    public pro_regi: number;
-    public pro_depa: number;
-    public pro_muni: number;
-    public pro_loca: number;
+    public pro_pais = '';
+    public pro_regi = '';
+    public pro_depa = '';
+    public pro_muni = '';
+    public pro_loca = '';
 
      // Constitución Escritura
-     public pro_pair: number;
-     public pro_regr: number;
-     public pro_depr: number;
-     public pro_munr: number;
-     public pro_locr: number;
+     public pro_pair = '';
+     public pro_regr = '';
+     public pro_depr = '';
+     public pro_munr = '';
+     public pro_locr = '';
 
      // Actividades
      public arb_cont: number;

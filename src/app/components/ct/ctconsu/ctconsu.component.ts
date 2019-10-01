@@ -6,7 +6,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { Ctconsu } from 'src/classes/ct/ctconsu';
-import { Router } from '@angular/router';
+import { ModalComponent } from '../../dialogs/modal/modal.component';
+import { companies } from 'src/classes/models';
 
 @Component({
   selector: 'app-ctconsu',
@@ -15,42 +16,74 @@ import { Router } from '@angular/router';
 })
 export class CtconsuComponent implements OnInit {
 
-  @ViewChild(AlertComponent) _alert: AlertComponent;
+  @ViewChild(AlertComponent) alert: AlertComponent;
+  @ViewChild(ModalComponent) modal: ModalComponent;
 
   consu: Ctconsu = new Ctconsu();
   propo: Ctpropo = new Ctpropo();
   submitted = false;
   message: string;
   ctrevpr: Ctconsu[] = [];
+  companies: companies[];
+  msg = '';
 
   // tslint:disable-next-line:max-line-length
   constructor(private _conmu: ComunicationsService, private spinner: NgxSpinnerService, private route: ActivatedRoute, private titleService: Title) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.GetParams();
+  }
+
+  GetParams(): boolean {
+    try {
+      this.route.queryParamMap.subscribe(queryParams => {
+      if (queryParams.get('usu_codi') != null) {
+        this.propo.usu_codi = atob(queryParams.get('usu_codi'));
+        this.loadCompanies();
+      }
+      return true;
+    }, err => {
+      return false;
+    });
+    } catch ( err ) {
+      return false;
+    }
   }
 
    postConsu() {
       this.GetInfoCtRevpr();
-      this.propo = new Ctpropo();
     }
 
     async GetInfoCtRevpr() {
-      const info: any = <any>await this._conmu.Get(`api/CtConsu/CtConsuLoad?emp_codi=${this.propo.emp_codi}
-      &rev_esta=${this.propo.rev_esta}&pro_codi=${this.propo.pro_codi}&pro_nomb=${this.propo.pro_nomb}`).toPromise();
-      if (info.retorno === 0) {
-        this.ctrevpr = info.objTransaction;
-      } else {
-        this.ctrevpr = null;
-        this._alert.showMessage(info.txtRetorno);
-      }
-      this.propo.pro_codi = '';
-      this.propo.pro_nomb = '';
-      this.propo.rev_esta = '0';
-      return info;
+
+      this.spinner.show();
+      this._conmu.Get(`api/CtConsu/CtConsuLoad?rev_esta=${this.propo.rev_esta}&pro_codi=${this.propo.pro_codi}
+      &pro_nomb=${this.propo.pro_nomb}`, this.propo.emp_codi).subscribe((resp: any) => {
+        this.ctrevpr = resp.objTransaction;
+        this.spinner.hide();
+        if (this.ctrevpr == null) {
+          this.showAlertMesssage('No se encontraron datos con los parámetros enviados.');
+        }
+
+      });
+    }
+
+    showAlertMesssage(msg: string) {
+      this.msg = msg;
+      this.alert.show();
     }
 
     revEncode(rev_cont: string) {
       return btoa(rev_cont);
+    }
+
+    loadCompanies() {
+      this.spinner.show();
+      this._conmu.Get(`api/gnempre?usu_codi=${this.propo.usu_codi}`, this.propo.emp_codi).subscribe((resp: any) => {
+        this.companies = resp.objTransaction;
+        this.spinner.hide();
+        this.modal.present();
+      });
     }
 }

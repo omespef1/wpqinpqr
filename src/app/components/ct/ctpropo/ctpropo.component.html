@@ -80,6 +80,7 @@
                                         </div>
                                         <select class="form-control" id="tip_codi" name="tip_codi" [(ngModel)]="propo.tip_codi" required #tip_codi="ngModel">                                            
                                         <option *ngFor="let tipdo of gntipdo" [value]="tipdo.TIP_CODI">{{tipdo.TIP_NOMB | titlecase}}</option>
+                                        <option value="">Seleccione</option>
                                       </select>
                                     </div>
                                     <div [hidden]="tip_codi.valid || tip_codi.pristine" class="alert alert-danger">
@@ -241,15 +242,14 @@
                                                         <input type="text" class="form-control" placeholder="Notaría" name="pro_note" id="pro_note" [(ngModel)]="propo.pro_note">
                                                     </div>
                                                 </div>
+
                                                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                                                    <label for="pro_feci">Fecha inscripción</label>
+                                                    <label for="fec_fini">Fecha de inscripción</label>
                                                     <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <span><i class="fas fa-calendar"></i></span>
-                                                            </div>
-                                                        </div>
-                                                        <input type="date" class="form-control" placeholder="Fecha inscripción" name="pro_feci" id="pro_feci" [(ngModel)]="propo.pro_feci">
+
+                                                        <input matInput placeholder="Fecha de inscripción" readonly [matDatepicker]="fec_insc" type="text" class="form-control" name="fec_ffin" id="fec_ffin" [(ngModel)]="propo.pro_feci">
+                                                        <mat-datepicker-toggle [for]="fec_insc"></mat-datepicker-toggle>
+                                                        <mat-datepicker #fec_insc touchUi></mat-datepicker>
                                                     </div>
                                                 </div>
                                             </div>
@@ -274,15 +274,14 @@
                                                         <input type="text" class="form-control" placeholder="Número" name="pro_nroc" id="pro_nroc" [(ngModel)]="propo.pro_nroc">
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-                                                    <label for="pro_fesc">Fecha</label>
+
+                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                                    <label for="fec_fini">Fecha de inscripción</label>
                                                     <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <span><i class="fas fa-calendar"></i></span>
-                                                            </div>
-                                                        </div>
-                                                        <input type="date" class="form-control" placeholder="Fecha" name="pro_fesc" id="pro_fesc" [(ngModel)]="propo.pro_fesc">
+
+                                                        <input matInput placeholder="Fecha" readonly [matDatepicker]="fec_fesc" type="text" class="form-control" name="pro_fesc" id="pro_fesc" [(ngModel)]="propo.pro_fesc">
+                                                        <mat-datepicker-toggle [for]="fec_fesc"></mat-datepicker-toggle>
+                                                        <mat-datepicker #fec_fesc touchUi></mat-datepicker>
                                                     </div>
                                                 </div>
                                             </div>
@@ -338,7 +337,7 @@
                                                 <span><i class="fas fa-hand-holding-usd"></i></span>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Capital" name="inp_vlrc" id="inp_vlrc" [(ngModel)]="propo.pro_vlrc">
+                                        <input type="number" onkeydown="return event.keyCode !== 69" class="form-control" placeholder="Capital" name="inp_vlrc" id="inp_vlrc" [(ngModel)]="propo.pro_vlrc">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -349,7 +348,7 @@
                                                 <span><i class="fas fa-file-invoice-dollar"></i></span>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Pasivos" name="inp_vlrp" id="inp_vlrp" [(ngModel)]="propo.pro_vlrp">
+                                        <input type="number" onkeydown="return event.keyCode !== 69" class="form-control" placeholder="Pasivos" name="inp_vlrp" id="inp_vlrp" [(ngModel)]="propo.pro_vlrp">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -360,7 +359,7 @@
                                                 <span><i class="fas fa-money-check-alt"></i></span>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Activos" name="inp_vlra" id="inp_vlra" [(ngModel)]="propo.pro_vlra">
+                                        <input type="number" onkeydown="return event.keyCode !== 69" class="form-control" placeholder="Activos" name="inp_vlra" id="inp_vlra" [(ngModel)]="propo.pro_vlra">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -371,7 +370,7 @@
                                                 <span><i class="fas fa-credit-card"></i></span>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Activo Corriente" name="inp_actc" id="inp_actc" [(ngModel)]="propo.pro_actc">
+                                        <input type="number" onkeydown="return event.keyCode !== 69" class="form-control" placeholder="Activo Corriente" name="inp_actc" id="inp_actc" [(ngModel)]="propo.pro_actc">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -382,7 +381,7 @@
                                                 <span><i class="fas fa-coins"></i></span>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Valor Inventarios" name="inp_vlri" id="inp_vlri" [(ngModel)]="propo.pro_vlri">
+                                        <input type="number" onkeydown="return event.keyCode !== 69" class="form-control" placeholder="Valor Inventarios" name="inp_vlri" id="inp_vlri" [(ngModel)]="propo.pro_vlri">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -393,7 +392,7 @@
                                                 <span><i class="fas fa-funnel-dollar"></i></span>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Activos" name="inp_pasc" id="inp_pasc" [(ngModel)]="propo.pro_pasc">
+                                        <input type="number" onkeydown="return event.keyCode !== 69" class="form-control" placeholder="Activos" name="inp_pasc" id="inp_pasc" [(ngModel)]="propo.pro_pasc">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -404,7 +403,7 @@
                                                 <span><i class="fas fa-money-bill"></i></span>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Ingresos" name="inp_ingr" id="inp_ingr" [(ngModel)]="propo.pro_ingr">
+                                        <input type="number" onkeydown="return event.keyCode !== 69" class="form-control" placeholder="Ingresos" name="inp_ingr" id="inp_ingr" [(ngModel)]="propo.pro_ingr">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -415,7 +414,7 @@
                                                 <span><i class="fas fa-comment-dollar"></i></span>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Gastos" name="inp_gast" id="inp_gast" [(ngModel)]="propo.pro_gast">
+                                        <input type="number" onkeydown="return event.keyCode !== 69" class="form-control" placeholder="Gastos" name="inp_gast" id="inp_gast" [(ngModel)]="propo.pro_gast">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -426,21 +425,19 @@
                                                 <span><i class="fas fa-search-dollar"></i></span>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Utilidad" name="inp_util" id="inp_util" [(ngModel)]="propo.pro_util">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-                                    <label for="inp_perc">Periodo Contable</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <span><i class="fas fa-calendar"></i></span>
-                                            </div>
-                                        </div>
-                                        <input type="date" class="form-control" placeholder="Periodo Contable" name="inp_perc" id="inp_perc" [(ngModel)]="propo.pro_perc">
+                                        <input type="number" onkeydown="return event.keyCode !== 69" class="form-control" placeholder="Utilidad" name="inp_util" id="inp_util" [(ngModel)]="propo.pro_util">
                                     </div>
                                 </div>
 
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="fec_fini">Periodo contable</label>
+                                    <div class="input-group">
+
+                                        <input matInput placeholder="Periodo contable" readonly [matDatepicker]="pro_perc" type="text" class="form-control" name="pro_perc" id="pro_perc" [(ngModel)]="propo.pro_perc">
+                                        <mat-datepicker-toggle [for]="pro_perc"></mat-datepicker-toggle>
+                                        <mat-datepicker #pro_perc touchUi></mat-datepicker>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="card mt-2">
@@ -457,7 +454,7 @@
                                                         <span><i class="fas fa-money-bill-wave"></i></span>
                                                     </div>
                                                 </div>
-                                                <input type="text" class="form-control" placeholder="Valor de Contratación" name="inp_vrlk" id="inp_vrlk" [(ngModel)]="propo.pro_vlrk">
+                                                <input type="number" onkeydown="return event.keyCode !== 69" class="form-control" placeholder="Valor de Contratación" name="inp_vrlk" id="inp_vrlk" [(ngModel)]="propo.pro_vlrk">
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -468,7 +465,7 @@
                                                         <span><i class="fas fa-money-bill-alt"></i></span>
                                                     </div>
                                                 </div>
-                                                <input type="text" class="form-control" placeholder="Valor Disponible" name="inp_vrld" id="inp_vrld" [(ngModel)]="propo.pro_vlrd">
+                                                <input type="number" onkeydown="return event.keyCode !== 69" class="form-control" placeholder="Valor Disponible" name="inp_vrld" id="inp_vrld" [(ngModel)]="propo.pro_vlrd">
                                             </div>
                                         </div>
                                     </div>
@@ -490,6 +487,7 @@
                                         </div>
                                         <select class="form-control" id="pro_tipr" name="pro_tipr" [(ngModel)]="propo.pro_tipr" required #pro_tipr="ngModel">                                            
                                             <option *ngFor="let tipdo of gntipdo" [value]="tipdo.TIP_CODI">{{tipdo.TIP_NOMB | titlecase}}</option>
+                                            <option value="">Seleccione</option>
                                         </select>
                                     </div>
                                 </div>
@@ -570,7 +568,8 @@
                                         </div>
                                         <select class="form-control" id="cam_cont" name="cam_cont" [(ngModel)]="propo.cam_cont" required #cam_cont="ngModel">                                                
                                                 <option *ngFor="let camar of ctcamar" [value]="camar.cam_cont">{{camar.cam_nomb | titlecase}}</option>
-                                            </select>
+                                                <option value="">Seleccione</option>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -596,6 +595,7 @@
                                         </div>
                                         <select class="form-control" id="ite_cont" name="ite_cont" [(ngModel)]="propo.ite_cont" required #ite_cont="ngModel">                                                
                                                 <option *ngFor="let contr of ctcontr" [value]="contr.ite_cont">{{contr.ite_nomb | titlecase}}</option>
+                                                <option value="">Seleccione</option>
                                             </select>
                                     </div>
                                 </div>
@@ -659,8 +659,9 @@
                                                 <span><i class="fas fa-globe-americas"></i></span>
                                             </div>
                                         </div>
-                                        <select class="form-control" id="pro_pais" name="pro_pais" [(ngModel)]="propo.pro_pais" (change)="filtrarRegiones('',propo.pro_pais)" required #pro_pais="ngModel">                                            
+                                        <select class="form-control" id="pro_pais" [value]="" name="pro_pais" [(ngModel)]="propo.pro_pais" (change)="filtrarRegiones('',propo.pro_pais)" required="0" #pro_pais="ngModel">                                            
                                         <option *ngFor="let pais of gnpaise" [value]="pais.pai_codi">{{pais.pai_nomb | titlecase}}</option>
+                                        <option value="">Seleccione</option>
                                       </select>
                                     </div>
                                 </div>
@@ -672,8 +673,9 @@
                                                 <span><i class="fas fa-flag"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnregio==undefined" class="form-control" id="pro_regi" name="pro_regi" [(ngModel)]="propo.pro_regi" (change)="filtrarDeptos('',propo.pro_pais,propo.pro_regi)" required #pro_regi="ngModel">
+                                        <select [disabled]="gnregio==undefined" [value]="" class="form-control" id="pro_regi" name="pro_regi" [(ngModel)]="propo.pro_regi" (change)="filtrarDeptos('',propo.pro_pais,propo.pro_regi)" required #pro_regi="ngModel">
                                             <option *ngFor="let region of gnregio" [value]="region.reg_codi">{{region.reg_nomb | titlecase}}</option>
+                                            <option value="">Seleccione</option>
                                         </select>
                                     </div>
                                 </div>
@@ -685,9 +687,10 @@
                                                 <span><i class="far fa-flag"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gndepar==undefined" class="form-control" id="pro_depa" name="pro_depa" [(ngModel)]="propo.pro_depa" (change)="filtrarMunic('',propo.pro_pais,propo.pro_regi,propo.pro_depa)" required #pro_depa="ngModel">                                                
+                                        <select [disabled]="gndepar==undefined" [value]="" class="form-control" id="pro_depa" name="pro_depa" [(ngModel)]="propo.pro_depa" (change)="filtrarMunic('',propo.pro_pais,propo.pro_regi,propo.pro_depa)" required #pro_depa="ngModel">                                                
                                                 <option *ngFor="let depto of gndepar" [value]="depto.dep_codi">{{depto.dep_nomb | titlecase}}</option>
-                                            </select>
+                                                <option value="">Seleccione</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12 col-xs-6 col-sm-12">
@@ -698,8 +701,9 @@
                                                 <span><i class="fas fa-city"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnmunic==undefined" class="form-control" id="pro_muni" name="pro_muni" [(ngModel)]="propo.pro_muni" (change)="filtrarLocal('',propo.pro_pais,propo.pro_regi,propo.pro_depa,propo.pro_muni)" required #pro_muni="ngModel">                                       
-                                        <option *ngFor="let munic of gnmunic" [value]="munic.mun_codi">{{munic.mun_nomb | titlecase}}</option>
+                                        <select [disabled]="gnmunic==undefined" [value]="" class="form-control" id="pro_muni" name="pro_muni" [(ngModel)]="propo.pro_muni" (change)="filtrarLocal('',propo.pro_pais,propo.pro_regi,propo.pro_depa,propo.pro_muni)" required #pro_muni="ngModel">                                       
+                                            <option *ngFor="let munic of gnmunic" [value]="munic.mun_codi">{{munic.mun_nomb | titlecase}}</option>
+                                            <option value="">Seleccione</option>
                                         </select>
                                     </div>
                                 </div>
@@ -711,8 +715,9 @@
                                                 <span><i class="fas fa-map-pin"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnlocal==undefined" class="form-control" id="pro_loca" name="pro_loca" [(ngModel)]="propo.pro_loca" required #pro_loca="ngModel">                                                
+                                        <select [disabled]="gnlocal==undefined" [value]="" class="form-control" id="pro_loca" name="pro_loca" [(ngModel)]="propo.pro_loca" required #pro_loca="ngModel">                                                
                                                 <option *ngFor="let local of gnlocal" [value]="local.loc_codi">{{local.loc_nomb | titlecase}}</option>
+                                                <option value="">Seleccione</option>
                                         </select>
                                     </div>
                                 </div>
@@ -731,8 +736,9 @@
                                                 <span><i class="fas fa-globe-americas"></i></span>
                                             </div>
                                         </div>
-                                        <select class="form-control" id="pro_pair" name="pro_pair" [(ngModel)]="propo.pro_pair" (change)="filtrarRegiones('R',propo.pro_pair)" required #pro_pair="ngModel">                                            
+                                        <select class="form-control" id="pro_pair" [value]="" name="pro_pair" [(ngModel)]="propo.pro_pair" (change)="filtrarRegiones('R',propo.pro_pair)" required #pro_pair="ngModel">                                            
                                             <option *ngFor="let pais of gnpaisr" [value]="pais.pai_codi">{{pais.pai_nomb | titlecase}}</option>
+                                            <option value="">Seleccione</option>
                                           </select>
                                     </div>
                                 </div>
@@ -744,8 +750,9 @@
                                                 <span><i class="fas fa-flag"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnregir==undefined" class="form-control" id="pro_regr" name="pro_regr" [(ngModel)]="propo.pro_regr" (change)="filtrarDeptos('R',propo.pro_pair,propo.pro_regr)" required #pro_regr="ngModel">
+                                        <select [disabled]="gnregir==undefined" [value]="" class="form-control" id="pro_regr" name="pro_regr" [(ngModel)]="propo.pro_regr" (change)="filtrarDeptos('R',propo.pro_pair,propo.pro_regr)" required #pro_regr="ngModel">
                                             <option *ngFor="let region of gnregir" [value]="region.reg_codi">{{region.reg_nomb | titlecase}}</option>
+                                            <option value="">Seleccione</option>
                                         </select>
                                     </div>
                                 </div>
@@ -757,8 +764,9 @@
                                                 <span><i class="far fa-flag"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gndeprr==undefined" class="form-control" id="pro_depr" name="pro_depr" [(ngModel)]="propo.pro_depr" (change)="filtrarMunic('R',propo.pro_pair,propo.pro_regr,propo.pro_depr)" required #pro_depr="ngModel">                                                
+                                        <select [disabled]="gndeprr==undefined" [value]="" class="form-control" id="pro_depr" name="pro_depr" [(ngModel)]="propo.pro_depr" (change)="filtrarMunic('R',propo.pro_pair,propo.pro_regr,propo.pro_depr)" required #pro_depr="ngModel">                                                
                                             <option *ngFor="let depto of gndeprr" [value]="depto.dep_codi">{{depto.dep_nomb | titlecase}}</option>
+                                            <option value="">Seleccione</option>
                                         </select>
                                     </div>
                                 </div>
@@ -770,9 +778,10 @@
                                                 <span><i class="fas fa-city"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnmunir==undefined" class="form-control" id="pro_munr" name="pro_munr" [(ngModel)]="propo.pro_munr" (change)="filtrarLocal('R',propo.pro_pair,propo.pro_regr,propo.pro_depr,propo.pro_munr)" required #pro_munr="ngModel">                                       
+                                        <select [disabled]="gnmunir==undefined" [value]="" class="form-control" id="pro_munr" name="pro_munr" [(ngModel)]="propo.pro_munr" (change)="filtrarLocal('R',propo.pro_pair,propo.pro_regr,propo.pro_depr,propo.pro_munr)" required #pro_munr="ngModel">                                       
                                             <option *ngFor="let munic of gnmunir" [value]="munic.mun_codi">{{munic.mun_nomb | titlecase}}</option>
-                                            </select>
+                                            <option value="">Seleccione</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12 col-xs-6 col-sm-12">
@@ -783,9 +792,10 @@
                                                 <span><i class="fas fa-map-pin"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnlocar==undefined" class="form-control" id="pro_locr" name="pro_locr" [(ngModel)]="propo.pro_locr" required #pro_locr="ngModel">                                                
+                                        <select [disabled]="gnlocar==undefined" [value]="" class="form-control" id="pro_locr" name="pro_locr" [(ngModel)]="propo.pro_locr" required #pro_locr="ngModel">                                                
                                             <option *ngFor="let local of gnlocar" [value]="local.loc_codi">{{local.loc_nomb | titlecase}}</option>
-                                    </select>
+                                            <option value="">Seleccione</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -855,12 +865,12 @@
                                                 <label class="custom-control-label" for="defaultGroupExample3">Consorcio</label>
                                             </div>
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" id="defaultGroupExample5" name="groupClaProv" value="U" [(ngModel)]="propo.pro_claf">
-                                                <label class="custom-control-label" for="defaultGroupExample5">Unión Temporal</label>
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample4" name="groupClaProv" value="U" [(ngModel)]="propo.pro_claf">
+                                                <label class="custom-control-label" for="defaultGroupExample4">Unión Temporal</label>
                                             </div>
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" id="defaultGroupExample4" name="groupClaProv" value="A" [(ngModel)]="propo.pro_claf">
-                                                <label class="custom-control-label" for="defaultGroupExample4">No Aplica</label>
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample5" name="groupClaProv" value="A" [(ngModel)]="propo.pro_claf">
+                                                <label class="custom-control-label" for="defaultGroupExample5">No Aplica</label>
                                             </div>
                                         </div>
                                     </div>
@@ -870,16 +880,16 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" id="defaultGroupExample5" name="groupClaDIAN" value="G" [(ngModel)]="propo.pro_clad">
-                                                <label class="custom-control-label" for="defaultGroupExample5">Gran Contribuyente</label>
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample6" name="groupClaDIAN" value="G" [(ngModel)]="propo.pro_clad">
+                                                <label class="custom-control-label" for="defaultGroupExample6">Gran Contribuyente</label>
                                             </div>
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" id="defaultGroupExample6" name="groupClaDIAN" value="J" [(ngModel)]="propo.pro_clad">
-                                                <label class="custom-control-label" for="defaultGroupExample6">Juridico</label>
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample7" name="groupClaDIAN" value="J" [(ngModel)]="propo.pro_clad">
+                                                <label class="custom-control-label" for="defaultGroupExample7">Juridico</label>
                                             </div>
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" id="defaultGroupExample7" name="groupClaDIAN" value="N" [(ngModel)]="propo.pro_clad">
-                                                <label class="custom-control-label" for="defaultGroupExample7">No Aplica</label>
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample8" name="groupClaDIAN" value="N" [(ngModel)]="propo.pro_clad">
+                                                <label class="custom-control-label" for="defaultGroupExample8">No Aplica</label>
                                             </div>
                                         </div>
                                     </div>
@@ -889,16 +899,16 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" id="defaultGroupExample8" name="groupRegiva" value="C" [(ngModel)]="propo.pro_riva">
-                                                <label class="custom-control-label" for="defaultGroupExample8">Común</label>
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample9" name="groupRegiva" value="C" [(ngModel)]="propo.pro_riva">
+                                                <label class="custom-control-label" for="defaultGroupExample9">Común</label>
                                             </div>
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" id="defaultGroupExample9" name="groupRegiva" value="S" [(ngModel)]="propo.pro_riva">
-                                                <label class="custom-control-label" for="defaultGroupExample9">Simplificado</label>
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample10" name="groupRegiva" value="S" [(ngModel)]="propo.pro_riva">
+                                                <label class="custom-control-label" for="defaultGroupExample10">Simplificado</label>
                                             </div>
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" class="custom-control-input" id="defaultGroupExample10" name="groupRegiva" value="N" [(ngModel)]="propo.pro_riva">
-                                                <label class="custom-control-label" for="defaultGroupExample10">No Aplica</label>
+                                                <input type="radio" class="custom-control-input" id="defaultGroupExample11" name="groupRegiva" value="N" [(ngModel)]="propo.pro_riva">
+                                                <label class="custom-control-label" for="defaultGroupExample11">No Aplica</label>
                                             </div>
                                         </div>
                                     </div>
@@ -936,6 +946,7 @@
                                                 </div>
                                                 <select class="form-control" id="arb_cont" name="arb_cont" [(ngModel)]="selectedArbo">                                                 
                                                     <option *ngFor="let arbol of gnarbol" [value]="arbol.arb_codi"  >{{arbol.arb_codi + ' - ' + arbol.arb_nomb | titlecase}}</option>
+                                                    <option value="">Seleccione</option>
                                                 </select>
                                                 <button type="button" class="btn btn-secondary btn-md ml-2" (click)="addActivity()">Agregar</button>
                                             </div>
@@ -974,7 +985,7 @@
                                                   style="display:none" accept=".pdf,.doc,.docx,.jpg,.png,.xls,.xlsx"  (change)="onFileChange($event)"/>
                                                   <i class="fas fa-file-upload"></i> &nbsp;Agregar adjunto
                                                   </label>
-                                            <button type="button" [class]="!uploader.queue.length?'btn btn-outline-danger':'btn btn-danger'" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                                            <button type="button" [class]="!uploader.queue.length?'btn btn-outline-danger':'btn btn-danger'" (click)="uploader.clearQueue(); clearUpload()" [disabled]="!uploader.queue.length">
                                                   <span><i class="fas fa-trash"></i></span>
                                                 </button>
                                             <ul>
@@ -996,28 +1007,27 @@
                                             <input type="text" class="form-control" required placeholder="Descripción" name="pro_ddoc" id="pro_ddoc" [(ngModel)]="docpr.pro_ddoc">
                                         </div>
                                     </div>
+
                                     <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
-                                        <label for="pro_fent">Fecha Entrega</label>
+                                        <label for="fec_fini">Fecha Entrega</label>
                                         <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">
-                                                    <span><i class="fas fa-calendar"></i></span>
-                                                </div>
-                                            </div>
-                                            <input type="date" class="form-control" required placeholder="Fecha Entrega" name="pro_fent" id="pro_fent" [(ngModel)]="docpr.pro_fent">
+
+                                            <input matInput placeholder="Fecha Entrega" required readonly [matDatepicker]="pro_fent" type="text" class="form-control" name="pro_fent" id="pro_fent" [(ngModel)]="docpr.pro_fent">
+                                            <mat-datepicker-toggle [for]="pro_fent"></mat-datepicker-toggle>
+                                            <mat-datepicker #pro_fent touchUi></mat-datepicker>
                                         </div>
                                     </div>
+
                                     <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
                                         <label for="pro_fven">Fecha Vencimiento</label>
                                         <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">
-                                                    <span><i class="fas fa-calendar"></i></span>
-                                                </div>
-                                            </div>
-                                            <input type="date" class="form-control" required placeholder="Fecha Vencimiento" name="pro_fven" id="pro_fven" [(ngModel)]="docpr.pro_fven">
+
+                                            <input matInput placeholder="Fecha Vencimiento" required readonly [matDatepicker]="pro_fven" type="text" class="form-control" name="pro_fven" id="pro_fven" [(ngModel)]="docpr.pro_fven">
+                                            <mat-datepicker-toggle [for]="pro_fven"></mat-datepicker-toggle>
+                                            <mat-datepicker #pro_fven touchUi></mat-datepicker>
                                         </div>
                                     </div>
+
                                     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                                         <label for="pro_obse">Observaciones</label>
                                         <div class="input-group">
@@ -1030,7 +1040,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-4">
-                                        <button [disabled]="docpr.pro_ddoc == '' || docpr.pro_obse == '' || docpr.pro_fent == null || docpr.pro_fven == null" type="button" class="btn btn-secondary btn-md btn-block" (click)="addVigencia()">Agregar</button>
+                                        <button [disabled]="docpr.pro_ddoc == '' || docpr.pro_obse == '' || docpr.pro_fent == null || docpr.pro_fven == null || docpr.fil_name == ''" type="button" class="btn btn-secondary btn-md btn-block" (click)="addVigencia()">Agregar</button>
                                         <div class="table-responsive mt-3" *ngIf="ctdocpr?.length">
                                             <table id="docTable" class="table table-hover table-striped table-bordered">
                                                 <thead class="thead-light">
@@ -1047,8 +1057,8 @@
                                                     <tr *ngFor="let doc of ctdocpr; let i = index">
                                                         <td>{{i+1}}</td>
                                                         <td>{{doc.pro_ddoc}}</td>
-                                                        <td>{{doc.pro_fent}}</td>
-                                                        <td>{{doc.pro_fven}}</td>
+                                                        <td>{{doc.pro_fent | date:'dd-MM-yyyy'}}</td>
+                                                        <td>{{doc.pro_fven | date:'dd-MM-yyyy'}}</td>
                                                         <td>{{doc.pro_obse}}</td>
                                                         <td><button type="button" class="btn btn-primary btn-sm" (click)="delVigencia()">Eliminar</button></td>
                                                     </tr>
@@ -1108,11 +1118,11 @@
         </form>
         <div class="row" *ngIf="!viewConsul">
             <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-4 pb-3">
-                <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!propoForm.form.valid || submitted ">Guardar Proponente</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!propoForm.form.valid || ctdocpr?.length==0">Guardar Proponente</button>
             </div>
         </div>
-
-        <!-- <div class="row">
+        <!-- 
+        <div class="row">
             <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-4 pb-3">
                 <button type="submit" class="btn btn-primary btn-lg btn-block">Guardar Proponente</button>
             </div>
@@ -1130,7 +1140,7 @@
                 </button>
             </div>
             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12 text-center pt-4 pb-3">
-                <button type="button" class="btn btn-primary btn-md btn-block" [routerLink]="['/ctconsu/']">
+                <button type="button" class="btn btn-primary btn-md btn-block" [routerLink]="['/ctconsu/']" [queryParams]="{ usu_codi: Encode(usu_codi) }">
                     <span><i class="fas fa-search"></i> &nbsp;Volver</span>
                 </button>
             </div>
@@ -1143,7 +1153,7 @@
 
     <div class="form-group">
         <label for="emp_codi" class="col-form-label"></label>
-        <select class="form-control" id="usu_codi" name="usu_codi" [(ngModel)]="propo.emp_codi" required #usu_codi="ngModel">
+        <select class="form-control" id="usu_coda" name="usu_coda" [(ngModel)]="propo.emp_codi" required #usu_coda="ngModel">
           <option value="0">Seleccione</option>
           <option *ngFor="let companie of companies" [value]="companie.emp_codi">{{companie.emp_nomb | titlecase}}
           </option>

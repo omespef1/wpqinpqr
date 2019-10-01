@@ -244,6 +244,7 @@ export class CreacionComponent implements OnInit {
           else{
             this.submitted = false;
             this.message = "";
+            this.alert.showHtmlMessage(resp.objTransaction.msg);
             form.reset();
           }
     

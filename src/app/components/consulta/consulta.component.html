@@ -155,12 +155,14 @@
                             <tr>
                                 <th scope="col">Item</th>
                                 <th scope="col">Descripción</th>
+                                <th scope="col">Fecha Seguimiento</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let segui of pqr.seguimientos; let i=index">
-                                <td>{{ i }}</td>
-                                <td>segui.din_segt</td>
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ segui.din_segt }}</td>
+                                <td>{{ segui.din_fese | date : "dd/MM/yyyy h:mm:ss" }}</td>
                             </tr>
                         </tbody>
                     </table>

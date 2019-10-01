@@ -1,3 +1,4 @@
+
 import { Component, OnInit, ViewChild, Input, ChangeDetectorRef } from '@angular/core';
 import { Title, DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AlertComponent } from '../../alert/alert.component';
@@ -69,6 +70,9 @@ export class CtpropoComponent implements OnInit {
   form: FormGroup;
   aprobado = false;
   fileUrl;
+  public usu_codi: String = '';
+  mailTo: String = '';
+  saveOK = false;
 
   constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer,
    private titleService: Title, private route: ActivatedRoute, private _confirm: ConfirmDialogComponent, private env: EnvService) {
@@ -77,31 +81,42 @@ export class CtpropoComponent implements OnInit {
 
   async ngOnInit() {
     try {
+
+      this.viewConsul = false;
+
       this.setTitle('Creación de Proponentes');
       await this.GetParams();
 
-      if (this.client) {
-        this.setOptionConfirm('RIGHT');
+      if ( this.client) {
+        this.loadCompanies();
       }
 
-      if (!this.client) {
-        this.Load();
+      this.Load();
+
+      if (this.propo.rev_cont !== '') {
+        this.spinner.show();
+        this.viewConsul = true;
+        this.LoadProponente();
+        this.LoadActividades();
+        this.LoadTratamiento();
+        this.LoadVigencias();
+        this.spinner.hide();
       }
+
     } catch ( err ) {
       this.showAlertMesssage(err);
     }
   }
 
   PostCtPropo(form: NgForm) {
-    this.submitted = true;
-    this.spinner.show();
-    this.loading = 'Enviando a Revisión...';
     this.guardarInfoProponete(form);
-    this.submitted = false;
-    this.spinner.hide();
   }
 
  async guardarInfoProponete(form: NgForm) {
+
+  this.submitted = true;
+  this.topFunction();
+  this.spinner.show();
 
     if (this.atdatos) {
       this.propo.rev_apda = 'S';
@@ -109,15 +124,13 @@ export class CtpropoComponent implements OnInit {
       this.propo.rev_apda = 'N';
     }
 
+    this.mailTo = this.propo.pro_mail;
+
     this._comu.Post('api/CtPropo/InsertPropo', this.propo).subscribe((resp: ToTransaction) => {
       if (resp.retorno !== undefined) {
         if (resp.retorno === 0) {
           this.propo.rev_cont = resp.objTransaction.rev_cont;
           this.guardarTratamientoDatos();
-          this.guardarActividades();
-          this.guardarRevisionDocumentos();
-          this.Load();
-          this.showAlertMesssage(`La transacción ha sido enviada de manera satisfactoria.`);
           form.reset();
         } else {
           this.showAlertMesssage(resp.txtRetorno);
@@ -128,16 +141,47 @@ export class CtpropoComponent implements OnInit {
     });
   }
 
+  cleanForm() {
+
+    this.ctacxpr = [];
+    this.ctrevdo = [];
+    this.ctdocpr = [];
+    this.Load();
+    this.propo.pro_pais = '';
+    this.propo.pro_pair = '';
+    this.propo.pro_regi = '';
+    this.propo.pro_regr = '';
+    this.propo.pro_depa = '';
+    this.propo.pro_depr = '';
+    this.propo.pro_muni = '';
+    this.propo.pro_munr = '';
+    this.propo.pro_loca = '';
+    this.propo.pro_locr = '';
+    this.gnregir = undefined;
+    this.gndeprr = undefined;
+    this.gnmunir = undefined;
+    this.gnlocar = undefined;
+    this.gnregio = undefined;
+    this.gndepar = undefined;
+    this.gnmunic = undefined;
+    this.gnlocal = undefined;
+    this.submitted = false;
+    this.docpr = new Ctdocpr(0, '', null, null, '', null , '');
+    this.spinner.hide();
+  }
+
   guardarTratamientoDatos() {
 
     const TratData: ObjTratamiento =  {  rev_cont : Number(this.propo.rev_cont), emp_codi : this.propo.emp_codi, detail: this.CtDtrda };
     return this._comu.Post('api/CtPropo/InsertTraDa', TratData).subscribe((resp: any) => {
       if (resp.retorno !== undefined) {
         if (resp.retorno === 0) {
-          this.CtDtrda = null;
+          this.guardarActividades();
         } else {
-          this.showAlertMesssage(resp.txtRetorno);
+          this.showAlertMesssage(`Se produjo un error al guardar tratamiento de datos.`);
+          this.rollBackPropo();
         }
+        return resp.retorno;
       }
     }, err => {
       this.showAlertMesssage(err);
@@ -153,9 +197,10 @@ export class CtpropoComponent implements OnInit {
     this._comu.Post(query, this.ctacxpr).subscribe((resp: ToTransaction) => {
       if (resp.retorno !== undefined) {
         if (resp.retorno === 0) {
-          this.ctacxpr = null;
+          this.guardarRevisionDocumentos();
         } else {
-          this.showAlertMesssage(resp.txtRetorno);
+          this.rollBackPropo();
+          this.showAlertMesssage(`Se produjo un error al guardar las actividades.`);
         }
       }
     }, err => {
@@ -165,8 +210,6 @@ export class CtpropoComponent implements OnInit {
 
   guardarRevisionDocumentos() {
 
-    console.log(this.ctdocpr);
-
     let query = 'api/CtPropo/InsertDoctos?';
     query +=  `emp_codi=${this.propo.emp_codi}`;
     query +=  `&rev_cont=${this.propo.rev_cont}`;
@@ -174,10 +217,45 @@ export class CtpropoComponent implements OnInit {
     this._comu.Post(query, this.ctdocpr).subscribe((resp: ToTransaction) => {
       if (resp.retorno !== undefined) {
         if (resp.retorno === 0) {
-          this.ctdocpr = null;
+          this.sendMail();
         } else {
-          this.showAlertMesssage(resp.txtRetorno);
+          this.showAlertMesssage(`Se produjo un error al guardar la vigencia de documentos.`);
+          this.rollBackPropo();
         }
+      }
+    }, err => {
+      this.showAlertMesssage(err);
+    });
+  }
+
+  rollBackPropo() {
+
+    let query = 'api/CtPropo/RollBackPropo?';
+    query +=  `emp_codi=${this.propo.emp_codi}`;
+    query +=  `&rev_cont=${this.propo.rev_cont}`;
+
+    this._comu.Post(query, this.ctdocpr).subscribe((resp: ToTransaction) => {
+    this.cleanForm();
+    }, err => {
+      this.showAlertMesssage(err);
+    });
+
+  }
+
+  async sendMail() {
+    this._comu.Get(`api/CtPropo/sendMail?mailPropo=${this.mailTo}`, this.propo.emp_codi).subscribe((resp: ToTransaction) => {
+      if (resp.retorno !== undefined) {
+        if (resp.retorno === 0) {
+          this.submitted = false;
+          this.spinner.hide();
+          this.saveOK = true;
+          this.showAlertMesssage(`Transacción guardada correctamente.`);
+        } else {
+          this.showAlertMesssage(`Se produjo un error al enviar el correo.`);
+          this.rollBackPropo();
+        }
+        this.cleanForm();
+        return resp.retorno;
       }
     }, err => {
       this.showAlertMesssage(err);
@@ -198,14 +276,9 @@ export class CtpropoComponent implements OnInit {
         }
 
         if (queryParams.get('rev_cont') != null) {
-          this.spinner.show();
           this.propo.rev_cont = atob(queryParams.get('rev_cont'));
-          this.viewConsul = true;
-          this.LoadProponente();
-          this.LoadActividades();
-          this.LoadTratamiento();
-          this.LoadVigencias();
-          this.spinner.hide();
+          this.propo.emp_codi = Number(atob(queryParams.get('emp_codi')));
+          this.usu_codi = atob(queryParams.get('usu_codi'));
         }
 
         return true;
@@ -268,13 +341,13 @@ export class CtpropoComponent implements OnInit {
         this.filtrarRegiones('R', this.propo.pro_pair);
 
         this.filtrarDeptos('', this.propo.pro_pais, this.propo.pro_regi);
-        this.filtrarDeptos('R', this.propo.pro_pais, this.propo.pro_regr);
+        this.filtrarDeptos('R', this.propo.pro_pair, this.propo.pro_regr);
 
         this.filtrarMunic('', this.propo.pro_pais, this.propo.pro_regi, this.propo.pro_depa);
-        this.filtrarMunic('R', this.propo.pro_pais, this.propo.pro_regi, this.propo.pro_depr);
+        this.filtrarMunic('R', this.propo.pro_pair, this.propo.pro_regr, this.propo.pro_depr);
 
         this.filtrarLocal('', this.propo.pro_pais, this.propo.pro_regi, this.propo.pro_depa, this.propo.pro_muni);
-        this.filtrarLocal('R', this.propo.pro_pais, this.propo.pro_regi, this.propo.pro_depa, this.propo.pro_munr);
+        this.filtrarLocal('R', this.propo.pro_pair, this.propo.pro_regr, this.propo.pro_depr, this.propo.pro_munr);
 
       } else {
         this.alert.showMessage(info.txtRetorno());
@@ -287,8 +360,6 @@ export class CtpropoComponent implements OnInit {
     const info: any = <any>await this._comu.Get(`api/CtConsu/CtPropoActividades?emp_codi=${this.propo.emp_codi}&rev_cont=${this.propo.rev_cont}`).toPromise();
     if (info.retorno === 0) {
       this.ctacxpr = info.objTransaction;
-    } else {
-      this.alert.showMessage(info.txtRetorno());
     }
   }
 
@@ -298,8 +369,6 @@ export class CtpropoComponent implements OnInit {
     const info: any = <any>await this._comu.Get(`api/CtConsu/CtPropoTratamiento?emp_codi=${this.propo.emp_codi}&rev_cont=${this.propo.rev_cont}`).toPromise();
     if (info.retorno === 0) {
       this.CtDtrda = info.objTransaction;
-    } else {
-      this.alert.showMessage(info.txtRetorno());
     }
   }
 
@@ -309,37 +378,44 @@ export class CtpropoComponent implements OnInit {
     const info: any = <any>await this._comu.Get(`api/CtConsu/CtPropoVigencia?emp_codi=${this.propo.emp_codi}&rev_cont=${this.propo.rev_cont}`).toPromise();
     if (info.retorno === 0) {
       this.ctrevdo = info.objTransaction;
-    } else {
-      this.alert.showMessage(info.txtRetorno());
     }
   }
 
-  filtrarRegiones(type: string, _pai_codi: number) {
+  filtrarRegiones(type: string, _pai_codi: string) {
 
     let query = 'api/CtPropo/LoadRegiones?';
     query += `pai_codi=${_pai_codi}`;
 
     this._comu.Get(query, this.propo.emp_codi).subscribe((resp: any) => {
+
+      if (!this.viewConsul) {
+        if (type === 'R') {
+          this.gnregir = undefined;
+          this.gndeprr = undefined;
+          this.gnmunir = undefined;
+          this.gnlocar = undefined;
+        } else {
+          this.gnregio = undefined;
+          this.gndepar = undefined;
+          this.gnmunic = undefined;
+          this.gnlocal = undefined;
+        }
+      }
+
       if (resp.retorno === 0) {
         if (type === 'R') {
           this.gnregir = resp.objTransaction.GnRegio;
+          if (!this.viewConsul) {
+            this.propo.pro_regr = '';
+          }
         } else {
           this.gnregio = resp.objTransaction.GnRegio;
+          if (!this.viewConsul) {
+            this.propo.pro_regi = '';
+          }
         }
-      this.spinner.hide();
+
       } else {
-        this.spinner.hide();
-        if (type === 'R') {
-          this.gnregir = null;
-          this.gndeprr = null;
-          this.gnmunir = null;
-          this.gnlocar = null;
-        } else {
-          this.gnregio = null;
-          this.gndepar = null;
-          this.gnmunic = null;
-          this.gnlocal = null;
-        }
         this.showAlertMesssage(`${resp.txtRetorno}`);
       }
     }, err => {
@@ -349,29 +425,39 @@ export class CtpropoComponent implements OnInit {
     });
   }
 
-  filtrarDeptos(type: string, _pai_codi: number, _reg_codi: number) {
+  filtrarDeptos(type: string, _pai_codi: string, _reg_codi: string) {
 
     let query = 'api/CtPropo/LoadDeptos?';
     query += `pai_codi=${_pai_codi}`;
     query += `&reg_codi=${_reg_codi}`;
 
     this._comu.Get(query, this.propo.emp_codi).subscribe((resp: any) => {
+
+      if (!this.viewConsul) {
+        if (type === 'R') {
+          this.gndeprr = undefined;
+          this.gnmunir = undefined;
+          this.gnlocar = undefined;
+        } else {
+          this.gndepar = undefined;
+          this.gnmunic = undefined;
+          this.gnlocal = undefined;
+        }
+      }
+
       if (resp.retorno === 0) {
         if (type === 'R') {
           this.gndeprr = resp.objTransaction.GnDepar;
+          if (!this.viewConsul) {
+            this.propo.pro_depr = '';
+          }
         } else {
           this.gndepar = resp.objTransaction.GnDepar;
+          if (!this.viewConsul) {
+            this.propo.pro_depa = '';
+          }
         }
-        this.spinner.hide();
       } else {
-        this.spinner.hide();
-        if (type === 'R') {
-          this.gnregir = null;
-          this.gndeprr = null;
-        } else {
-          this.gnregio = null;
-          this.gndepar = null;
-        }
         this.showAlertMesssage(`${resp.txtRetorno}`);
       }
     }, err => {
@@ -381,7 +467,7 @@ export class CtpropoComponent implements OnInit {
     });
   }
 
-  filtrarMunic(type: string, _pai_codi: number, _reg_codi: number, _dep_codi: number) {
+  filtrarMunic(type: string, _pai_codi: string, _reg_codi: string, _dep_codi: string) {
 
     let query = 'api/CtPropo/LoadMunic?';
     query += `pai_codi=${_pai_codi}`;
@@ -389,11 +475,28 @@ export class CtpropoComponent implements OnInit {
     query += `&dep_codi=${_dep_codi}`;
 
     this._comu.Get(query, this.propo.emp_codi).subscribe((resp: any) => {
+
+      if (!this.viewConsul) {
+        if (type === 'R') {
+          this.gnmunir = undefined;
+          this.gnlocar = undefined;
+        } else {
+          this.gnmunic = undefined;
+          this.gnlocal = undefined;
+        }
+      }
+
       if (resp.retorno === 0) {
         if (type === 'R') {
           this.gnmunir = resp.objTransaction.GnMunic;
+          if (!this.viewConsul) {
+            this.propo.pro_munr = '';
+          }
         } else {
           this.gnmunic = resp.objTransaction.GnMunic;
+          if (!this.viewConsul) {
+            this.propo.pro_muni = '';
+          }
         }
         this.spinner.hide();
       } else {
@@ -407,7 +510,7 @@ export class CtpropoComponent implements OnInit {
     });
   }
 
-  filtrarLocal(type: string, _pai_codi: number, _reg_codi: number, _dep_codi: number, _mun_codi: number) {
+  filtrarLocal(type: string, _pai_codi: string, _reg_codi: string, _dep_codi: string, _mun_codi: string) {
 
     let query = 'api/CtPropo/LoadLocal?';
     query += `pai_codi=${_pai_codi}`;
@@ -416,11 +519,29 @@ export class CtpropoComponent implements OnInit {
     query += `&mun_codi=${_mun_codi}`;
 
     this._comu.Get(query, this.propo.emp_codi).subscribe((resp: any) => {
+
+      if (!this.viewConsul) {
+        if (type === 'R') {
+          this.gnlocar = undefined;
+        } else {
+          this.gnlocal = undefined;
+        }
+      }
+
       if (resp.retorno === 0) {
         if (type === 'R') {
           this.gnlocar = resp.objTransaction.GnLocal;
+
+          if (!this.viewConsul) {
+            this.propo.pro_locr = '';
+          }
+
         } else {
           this.gnlocal = resp.objTransaction.GnLocal;
+
+          if (!this.viewConsul) {
+            this.propo.pro_loca = '';
+          }
         }
         this.spinner.hide();
       } else {
@@ -472,14 +593,12 @@ export class CtpropoComponent implements OnInit {
       reader.onload = () => {
         this.docpr.pro_adju = reader.result;
         this.docpr.fil_name = f.name;
-        console.log(this.docpr);
       };
     }
   }
 
   addVigencia() {
     this.ctdocpr.push(this.docpr);
-    console.log(this.ctdocpr);
     this.docpr = new Ctdocpr(0, '', null, null, '', null, '');
     this.uploader.clearQueue();
   }
@@ -493,17 +612,6 @@ export class CtpropoComponent implements OnInit {
     return this.uploader.queue.map((fileItem) => {
       return fileItem.file;
     });
-  }
-
-  setOptionConfirm(option: string) {
-    switch (option) {
-      case 'RIGHT':
-        this.loadCompanies();
-        break;
-      case 'LEFT':
-        this.client = undefined;
-        this.Load();
-    }
   }
 
   loadCompanies() {
@@ -524,6 +632,9 @@ Aprobar() {
   query +=  `emp_codi=${this.propo.emp_codi}`;
   query +=  `&rev_cont=${this.propo.rev_cont}`;
 
+  this.topFunction();
+  this.spinner.show();
+
   this._comu.Post(query, this.ctrevdo).subscribe((resp: ToTransaction) => {
     if (resp.retorno !== undefined) {
       if (resp.retorno === 0) {
@@ -534,16 +645,19 @@ Aprobar() {
         this.showAlertMesssage(resp.txtRetorno);
       }
     }
+    this.spinner.hide();
   }, err => {
     this.showAlertMesssage(err);
   });
 }
 
   Rechazar() {
+
+    this.topFunction();
+    this.spinner.show();
     let query = 'api/CtConsu/RechazarPropo?';
     query +=  `emp_codi=${this.propo.emp_codi}`;
     query +=  `&rev_cont=${this.propo.rev_cont}`;
-
     this._comu.Post(query, this.ctrevdo).subscribe((resp: ToTransaction) => {
       if (resp.retorno !== undefined) {
         if (resp.retorno === 0) {
@@ -552,6 +666,7 @@ Aprobar() {
         } else {
           this.showAlertMesssage(resp.txtRetorno);
         }
+        this.spinner.hide();
       }
     }, err => {
       this.showAlertMesssage(err);
@@ -590,5 +705,23 @@ Aprobar() {
 
   open(url: string) {
     window.open(url, '_blank');
+  }
+
+  topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
+  clearUpload() {
+    this.docpr.fil_name = '';
+    this.docpr.pro_adju = null;
+  }
+
+  Encode(Mytext: string) {
+    return btoa(Mytext);
+  }
+
+  reloadPage() {
+    location.reload();
   }
 }

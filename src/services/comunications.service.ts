@@ -14,7 +14,6 @@ export class ComunicationsService {
   Get(urlController: string, emp_codi: number = 0) {
     let url = `${this.env.apiUrl}${urlController}`;
     url += `&emp_codi=${emp_codi}`
-    console.log(url);
     return this.http.get(url);
   }
   async getAsync(urlController: string) {
