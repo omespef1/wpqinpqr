@@ -7,78 +7,75 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
 </ngx-spinner>
 
-
-
 <div class="container">
-    <form #radicForm="ngForm" (ngSubmit)="PostRnRadic()">
+    <form #radicForm="ngForm" (ngSubmit)="PostRnRadic(radicForm)">
         <div class="card">
-            <div class="card-header bg-primary text-white">Datos de la Empresa</div>
+            <div class="card-header bg-primary text-white">Datos Básicos</div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
-                        <label for="con_cont">Tipo Aportante</label>
+                        <label for="con_cont">Grupo Radicación</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
-                                    <span><i class="fas fa-bullseye"></i></span>
+                                    <span><i class="fas fa-align-justify"></i></span>
                                 </div>
                             </div>
-                            <input type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" id="tia_codi" name="tia_codi" [(ngModel)]="radic.tia_codi" required #tia_codi="ngModel" readonly>
-                            <input type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" id="tia_nomb" name="tia_nomb" [(ngModel)]="radic.tia_nomb" #tia_nomb="ngModel" readonly class="form-control">
-                            <button type="button" class="btn btn-primary" (click)="lupaTipoAportante()">
+                            <input id="gru_cont" name="gru_cont" [(ngModel)]="radic.gru_cont" readonly required #gru_cont="ngModel" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
+                            <input id="gru_nomb" name="gru_nomb" [(ngModel)]="radic.gru_nomb" readonly #gru_nomb="ngModel" type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                            <button type="button" class="btn btn-primary" (click)="lupaGrupoRadicacion()">
                                 <span><i class="fas fa-search"></i></span>
                             </button>
                         </div>
                     </div>
+                    <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
+                        <label for="con_cont">Clasificación</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-chalkboard-teacher"></i></span>
+                                </div>
+                            </div>
+                            <input id="cra_codi" name="cra_codi" [(ngModel)]="radic.cra_codi" readonly required #cra_codi="ngModel" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
+                            <input id="cra_nomb" name="cra_nomb" [(ngModel)]="radic.cra_nomb" readonly #cra_nomb="ngModel" type="text" style="width: 63%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                            <button type="button" class="btn btn-primary" [disabled]="radic.gru_cont === undefined" (click)="LoadClasificacion()">
+                                    <span><i class="fas fa-search"></i></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="con_cont">Dependencia</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-user-times"></i></span>
+                                </div>
+                            </div>
+                            <input id="ite_nomb" name="ite_nomb" value="{{ ite_depe }}" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf="SRN000001 === 'S'">
+                        <label for="con_cont">Autoriza tratamiento de datos personales</label>
+                        <div class="input-group mt-2">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" checked class="custom-control-input" id="rad_tdat" name="grouptdat" value="S" [(ngModel)]="radic.rad_tdat" (change)="LoadTratamiento();">
+                                <label class="custom-control-label" for="rad_tdat">Si</label>
+                            </div>
+                            <div class="custom-control custom-radio ml-3">
+                                <input type="radio" class="custom-control-input" id="rad_tdad" name="grouptdat" value="N" [(ngModel)]="radic.rad_tdat">
+                                <label class="custom-control-label" for="rad_tdad">No</label>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-                        <label for="con_cont">Tipo Documento</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <span><i class="fas fa-address-card"></i></span>
-                                </div>
-                            </div>
-                            <input id="tip_coda" name="tip_coda" [(ngModel)]="radic.tip_coda" required #tip_coda="ngModel" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                            <input id="tip_nomb" name="tip_nomb" [(ngModel)]="radic.tip_nomb" readonly type="text" style="width: 73%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-                        <label for="con_cont">Número Documento</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <span><i class="fas fa-hashtag"></i></span>
-                                </div>
-                            </div>
-                            <input id="apo_coda" name="apo_coda" [(ngModel)]="radic.apo_coda" readonly required #apo_coda="ngModel" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                            <button type="button" class="btn btn-primary" (click)="lupaDocumento()">
-                              <span><i class="fas fa-search"></i></span>
-                          </button>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-                        <label for="rad_nomr">Razón social</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <span><i class="fas fa-user-circle"></i></span>
-                                </div>
-                            </div>
-                            <input id="apo_razs" name="apo_razs" [(ngModel)]="radic.apo_razs" readonly required #apo_razs="ngModel" type="text" class="form-control" placeholder="Razón social">
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-                        <label for="rad_nomr">Teléfono</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <span><i class="fas fa-phone"></i></span>
-                                </div>
-                            </div>
-                            <input id="apo_tele" name="apo_tele" [(ngModel)]="radic.apo_tele" required #apo_tele="ngModel" type="text" class="form-control" placeholder="Teléfono">
-                        </div>
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        <label for="con_cont">Observaciones</label>
+                        <textarea type="text" class="form-control" id="rad_obse" name="rad_obse" [(ngModel)]="radic.rad_obse"></textarea>
                     </div>
                 </div>
             </div>
@@ -86,10 +83,12 @@
             <div class="container mt-3 mb-3">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-basicos-tab" data-toggle="tab" href="#nav-basicos" role="tab" aria-controls="nav-basicos" aria-selected="true">Datos Básicos</a>
+                        <a class="nav-item nav-link active" id="nav-basicos-tab" data-toggle="tab" href="#nav-basicos" role="tab" aria-controls="nav-basicos" aria-selected="true">Datos Empresa</a>
                         <a class="nav-item nav-link" id="nav-solicitud-tab" data-toggle="tab" href="#nav-solicitud" role="tab" aria-controls="nav-solicitud" aria-selected="false">Datos Solicitud</a>
+                        <a class="nav-item nav-link" id="nav-contacto-tab" data-toggle="tab" href="#nav-contacto" role="tab" aria-controls="nav-contacto" aria-selected="false">Datos de Contacto</a>
                         <a class="nav-item nav-link" id="nav-nucleo-tab" data-toggle="tab" href="#nav-nucleo" role="tab" aria-controls="nav-nucleo" aria-selected="false">Núcleo Familiar</a>
                         <a class="nav-item nav-link" id="nav-ubicacion-tab" data-toggle="tab" href="#nav-ubicacion" role="tab" aria-controls="nav-ubicacion" aria-selected="false">Ubicación Geográfica</a>
+                        <a *ngIf="radic.rad_tdat === 'S'" class="nav-item nav-link" id="nav-tratamiento-tab" data-toggle="tab" href="#nav-tratamiento" role="tab" aria-controls="nav-tratamiento" aria-selected="false">Tratamiento de Datos</a>
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
@@ -97,58 +96,73 @@
                         <div class="container mt-3">
                             <div class="row">
                                 <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
-                                    <label for="con_cont">Grupo Radicación</label>
+                                    <label for="con_cont">Tipo Aportante</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <div class="input-group-text">
-                                                <span><i class="fas fa-align-justify"></i></span>
+                                                <span><i class="fas fa-bullseye"></i></span>
                                             </div>
                                         </div>
-                                        <input id="gru_cont" name="gru_cont" [(ngModel)]="radic.gru_cont" readonly required #gru_cont="ngModel" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
-                                        <input id="gru_nomb" name="gru_nomb" [(ngModel)]="radic.gru_nomb" readonly #gru_nomb="ngModel" type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
-                                        <button type="button" class="btn btn-primary" (click)="lupaGrupoRadicacion()">
+                                        <input type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" id="tia_codi" name="tia_codi" [(ngModel)]="radic.tia_codi" required #tia_codi="ngModel" readonly>
+                                        <input type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" id="tia_nomb" name="tia_nomb" [(ngModel)]="radic.tia_nomb" #tia_nomb="ngModel" readonly class="form-control">
+                                        <button type="button" class="btn btn-primary" (click)="lupaTipoAportante()" *ngIf="cra_clar!=='T'">
                                             <span><i class="fas fa-search"></i></span>
                                         </button>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
-                                    <label for="con_cont">Clasificación</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <span><i class="fas fa-chalkboard-teacher"></i></span>
-                                            </div>
-                                        </div>
-                                        <input id="cra_codi" name="cra_codi" [(ngModel)]="radic.cra_codi" readonly required #cra_codi="ngModel" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
-                                        <input id="cra_nomb" name="cra_nomb" [(ngModel)]="radic.cra_nomb" readonly #cra_nomb="ngModel" type="text" style="width: 63%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
-                                        <button type="button" class="btn btn-primary" [disabled]="radic.gru_cont === undefined" (click)="LoadClasificacion()">
-                                                <span><i class="fas fa-search"></i></span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                    <label for="con_cont">Dependencia</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <span><i class="fas fa-user-times"></i></span>
-                                            </div>
-                                        </div>
-                                        <input id="ite_nomb" name="ite_nomb" value="{{ ite_depe }}" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
-                                    </div>
-                                </div>
                             </div>
-
                             <div class="row">
-                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                    <label for="con_cont">Observaciones</label>
-                                    <textarea type="text" class="form-control"></textarea>
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="con_cont">Tipo Documento</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-address-card"></i></span>
+                                            </div>
+                                        </div>
+                                        <input id="tip_coda" name="tip_coda" [(ngModel)]="radic.tip_coda" required #tip_coda="ngModel" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                        <input id="tip_noma" name="tip_noma" [(ngModel)]="radic.tip_noma" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="con_cont">Número Documento</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-hashtag"></i></span>
+                                            </div>
+                                        </div>
+                                        <input id="apo_coda" name="apo_coda" [(ngModel)]="radic.apo_coda" readonly required #apo_coda="ngModel" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                        <button type="button" class="btn btn-primary" (click)="lupaDocumento()" *ngIf="cra_clar !== 'T'">
+                                          <span><i class="fas fa-search"></i></span>
+                                      </button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="rad_nomr">Razón social</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-user-circle"></i></span>
+                                            </div>
+                                        </div>
+                                        <input id="apo_razs" name="apo_razs" [(ngModel)]="radic.apo_razs" readonly required #apo_razs="ngModel" type="text" class="form-control" placeholder="Razón social">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="rad_nomr">Teléfono</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-phone"></i></span>
+                                            </div>
+                                        </div>
+                                        <input id="dsu_tele" name="dsu_tele" [(ngModel)]="radic.dsu_tele" [disabled]="cra_clar === 'T'" required #dsu_tele="ngModel" type="text" class="form-control" placeholder="Teléfono">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <div class="tab-pane fade" id="nav-solicitud" role="tabpanel" aria-labelledby="nav-solicitud-tab">
                         <div class="container mt-3">
                             <div class="row">
@@ -161,7 +175,7 @@
                                             </div>
                                         </div>
                                         <input id="tip_codi" name="tip_codi" [(ngModel)]="radic.tip_codi" required #tip_codi="ngModel" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                        <input id="tip_noma" name="tip_noma" [(ngModel)]="radic.tip_noma" #tip_noma="ngModel" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                        <input id="tip_noma" name="tip_nomb" [(ngModel)]="radic.tip_nomb" #tip_nomb="ngModel" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
                                         <button type="button" class="btn btn-primary" (click)="lupaTipoDocumento()" *ngIf="cra_prim === 'S'">
                                             <span><i class="fas fa-search"></i></span>
                                         </button>
@@ -251,8 +265,34 @@
                             </div>
                         </div>
                     </div>
-
-
+                    <div class="tab-pane fade" id="nav-contacto" role="tabpanel" aria-labelledby="nav-contacto-tab">
+                        <div class="container mt-3">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="rad_nomr">Dirección</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-hashtag"></i></span>
+                                            </div>
+                                        </div>
+                                        <input id="rad_dire" name="rad_dire" [(ngModel)]="radic.rad_dire" type="text" class="form-control" placeholder="Dirección">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="rad_nomr">Correo Electrónico</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-mail-bulk"></i></span>
+                                            </div>
+                                        </div>
+                                        <input id="rad_emai" name="rad_emai" [(ngModel)]="radic.rad_emai" type="text" class="form-control" placeholder="Correo Electrónico">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="tab-pane fade" id="nav-nucleo" role="tabpanel" aria-labelledby="nav-nucleo-tab">
                         <div class="container mt-3">
                             <div class="row">
@@ -265,7 +305,7 @@
                                                 <span><i class="fas fa-users"></i></span>
                                             </div>
                                         </div>
-                                        <input id="dpe_nom1" name="dpe_nom1" [(ngModel)]="dperc.dpe_nom1" required #dpe_nom1="ngModel" type="text" class="form-control" placeholder="Primer Nombre">
+                                        <input id="dpe_nom1" name="dpe_nom1" [(ngModel)]="dperc.dpe_nom1" type="text" class="form-control" placeholder="Primer Nombre">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -287,7 +327,7 @@
                                                 <span><i class="fas fa-users"></i></span>
                                             </div>
                                         </div>
-                                        <input id="dpe_ape1" name="dpe_ape1" [(ngModel)]="dperc.dpe_ape1" required #dpe_ape1="ngModel" type="text" class="form-control" placeholder="Primer Apellido">
+                                        <input id="dpe_ape1" name="dpe_ape1" [(ngModel)]="dperc.dpe_ape1" type="text" class="form-control" placeholder="Primer Apellido">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -310,7 +350,7 @@
                                                 <span><i class="fas fa-users"></i></span>
                                             </div>
                                         </div>
-                                        <input id="dpe_docu" name="dpe_docu" [(ngModel)]="dperc.dpe_docu" required #dpe_docu="ngModel" type="text" class="form-control" placeholder="Documento">
+                                        <input id="dpe_docu" name="dpe_docu" [(ngModel)]="dperc.dpe_docu" type="text" class="form-control" placeholder="Documento">
                                     </div>
                                 </div>
 
@@ -322,7 +362,7 @@
                                                 <span><i class="fas fa-users"></i></span>
                                             </div>
                                         </div>
-                                        <select class="form-control" id="mpa_cont" name="mpa_cont" [(ngModel)]="dperc.mpa_nomb" required #mpa_cont="ngModel">
+                                        <select class="form-control" id="mpa_cont" name="mpa_cont" [(ngModel)]="dperc.mpa_nomb">
                                             <option *ngFor="let mpare of sumpare" [ngValue]="mpare">{{mpare.mpa_nomb | titlecase}}</option>                                                                                      
                                         </select>
                                     </div>
@@ -364,8 +404,6 @@
 
                         </div>
                     </div>
-
-
                     <div class="tab-pane fade" id="nav-ubicacion" role="tabpanel" aria-labelledby="nav-ubicacion-tab">
                         <div class="container mt-3">
                             <div class="row">
@@ -456,15 +494,55 @@
                             </div>
                         </div>
                     </div>
+                    <div *ngIf="radic.rad_tdat === 'S'" class="tab-pane fade" id="nav-tratamiento" role="tabpanel" aria-labelledby="nav-tratamiento-tab">
+                        <div class="container mt-3">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                    <div class="input-group">
+                                        <textarea type="text" class="form-control" disabled style="height: 300px;" multiple name="par_ptda" id="par_ptda"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-2">
+                                    <div class="input-group mt-2">
+                                        <span class="switch">
+                                                <input type="checkbox" name="chkAutoriza"  class="switch switch-sm disabled" id="switch-id">
+                                                <label for="switch-id">Autoriza Protección de Datos</label>    
+                                            </span>
+                                    </div>
+                                    <div class="table table-hover table-striped table-bordered mt-2">
+                                        <table class="table table-hover table-striped table-bordered mt-4">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th scope="col">Información a Recibir</th>
+                                                    <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- <tr *ngFor="let dtr of CtDtrda;let index=index; trackBy:trackByIdx()">
+                                                    <td>{{dtr.ite_nomb}}</td>
+                                                    <td class="text-center">
+                                                        <span class="switch mt-2">
+                                                                <input type="checkbox" name="chk" [(checked)]="dtr.ite_chkd"  (change)= "dtr.ite_chkd=!dtr.ite_chkd"  class="switch switch-sm" id="{{dtr.ite_cont}}" >
+                                                                <label for="{{dtr.ite_cont}}"></label>                                                           
+                                                            </span>
+                                                    </td>
+                                                </tr> -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </form>
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-4 pb-3">
-            <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!radicForm.form.valid || rndperc?.length==0">Guardar</button>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+                <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!radicForm.form.valid">Guardar</button>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
 
 <app-table-search-generic Title="Tipo Aportante" [displayedColumns]="['TIA_CODI', 'TIA_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setAportant($event)" btnModalQb="btnAportant" ModalQb="modalAportant" #modalAportant></app-table-search-generic>

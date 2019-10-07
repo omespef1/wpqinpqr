@@ -13,6 +13,7 @@ import { RnRadic } from 'src/classes/rn/rnradic';
 import { RnDperc } from 'src/classes/rn/rndperc';
 import { SumPare } from 'src/classes/rn/sumpare';
 import { RnCraco } from 'src/classes/rn/rncraco';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-rnradic',
@@ -50,14 +51,13 @@ export class RnradicComponent implements OnInit {
   parentesco: SumPare;
 
   msg = '';
-  Emp_Codi = 102;
-  Client = '';
-  usu_codi = '';
   ite_depe = '';
   cra_prim = '';
   cra_clar = '';
   radic: RnRadic = new RnRadic();
   i: number;
+  SRN000001: string;
+  SRN000002: string;
 
   constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer,
     private titleService: Title, private route: ActivatedRoute, private _confirm: ConfirmDialogComponent, private env: EnvService) {
@@ -67,13 +67,33 @@ export class RnradicComponent implements OnInit {
 
     await this.GetParams();
 
-    if ( this.Client) {
+    if (this.radic.emp_codi) {
       this.Load();
-    }     
+    }
    }
 
-   PostRnRadic() {
+   PostRnRadic(form: NgForm) {
+    this.topFunction();
+    this.spinner.show();
+    this.saveRadic();
+    form.reset();
+    this.ngOnInit();
+    this.spinner.hide();
+   }
 
+   async saveRadic() {
+    await this._comu.Post('api/RnRadic/InserRnRadic', this.radic).subscribe((resp: ToTransaction) => {
+      if (resp.retorno !== undefined) {
+        if (resp.retorno === 0) {
+          this.showAlertMesssage('Documento guardado correctamente.');
+        } else {
+          this.showAlertMesssage(resp.txtRetorno);
+          this.spinner.hide();
+        }
+      }
+    }, err => {
+      this.showAlertMesssage(err);
+    });
    }
 
    GetParams(): boolean {
@@ -81,14 +101,14 @@ export class RnradicComponent implements OnInit {
 
         this.route.queryParamMap.subscribe(queryParams => {
 
-          if (queryParams.get('client') != null) {
-            this.Client = atob(queryParams.get('client'));
+          if (queryParams.get('emp_codi') != null) {
+            this.radic.emp_codi = Number(atob(queryParams.get('emp_codi')));
           } else {
-            this.showAlertMesssage('Parámetro Cliente no enviado');
+            this.showAlertMesssage('Parámetro código de empresa no enviado');
             return;
           }
           if (queryParams.get('usu_codi') != null) {
-            this.usu_codi = atob(queryParams.get('usu_codi'));
+            this.radic.usu_codi = atob(queryParams.get('usu_codi'));
           } else {
             this.showAlertMesssage('Parámetro usuario no enviado');
             return;
@@ -104,9 +124,10 @@ export class RnradicComponent implements OnInit {
 
   Load() {
     this.spinner.show();
-    const query = 'api/RnRadic/RnRadicLoad?';
+    let query = 'api/RnRadic/RnRadicLoad?';
+    query += `usu_codi=${this.radic.usu_codi}`;
 
-    this._comu.Get(query, this.Emp_Codi).subscribe((resp: ToTransaction) => {
+    this._comu.Get(query, this.radic.emp_codi).subscribe((resp: ToTransaction) => {
       if (resp.retorno === 0) {
         this.artiapo = resp.objTransaction.artiapo;
         this.gnpaise = resp.objTransaction.GnPaise;
@@ -115,6 +136,10 @@ export class RnradicComponent implements OnInit {
         this.rngrura = resp.objTransaction.rngrura;
         this.sumpare = resp.objTransaction.SuMpare;
         this.suafili = resp.objTransaction.SuAfili;
+        this.SRN000001 = resp.objTransaction.SRN000001;
+        this.SRN000002 = resp.objTransaction.SRN000002;
+        this.radic.cen_codi = resp.objTransaction.cen_codi;
+
       } else {
         this.showAlertMesssage(`${resp.txtRetorno}`);
       }
@@ -128,7 +153,7 @@ export class RnradicComponent implements OnInit {
 
  async LoadClasificacion() {
     // tslint:disable-next-line:max-line-length
-    const info: any = <any>await this._comu.Get(`api/RnRadic/RnCracoLoad?emp_codi=${this.Emp_Codi}&gru_cont=${this.radic.gru_cont}`).toPromise();
+    const info: any = <any>await this._comu.Get(`api/RnRadic/RnCracoLoad?emp_codi=${this.radic.emp_codi}&gru_cont=${this.radic.gru_cont}`).toPromise();
 
     if (info.retorno === 0) {
       this.rncraco = info.objTransaction;
@@ -214,7 +239,7 @@ export class RnradicComponent implements OnInit {
     this.cra_prim =  rowSelected.CRA_PRIM;
     this.cra_clar =  rowSelected.CRA_CLAR;
     this.radic.tip_codi = undefined;
-    this.radic.tip_noma = undefined;
+    this.radic.tip_nomb = undefined;
     this.radic.afi_docu = undefined;
     this.radic.afi_nom1 = undefined;
     this.radic.afi_nom2 = undefined;
@@ -222,11 +247,18 @@ export class RnradicComponent implements OnInit {
     this.radic.afi_ape2 = undefined;
     this.radic.afi_fecn = undefined;
     this.radic.afi_tele = undefined;
+    this.radic.tip_coda = undefined;
+    this.radic.tip_noma = undefined;
+    this.radic.tia_codi = undefined;
+    this.radic.tia_nomb = undefined;
+    this.radic.apo_coda = undefined;
+    this.radic.apo_razs = undefined;
+    this.radic.dsu_tele = undefined;
   }
 
   setDocumento(rowSelected: any) {
     this.radic.tip_codi = rowSelected.TIP_CODI;
-    this.radic.tip_noma = rowSelected.TIP_NOMB;
+    this.radic.tip_nomb = rowSelected.TIP_NOMB;
     this.radic.afi_docu = rowSelected.AFI_DOCU;
     this.radic.afi_nom1 = rowSelected.AFI_NOM1;
     this.radic.afi_nom2 = rowSelected.AFI_NOM2;
@@ -234,6 +266,13 @@ export class RnradicComponent implements OnInit {
     this.radic.afi_ape2 = rowSelected.AFI_APE2;
     this.radic.afi_fecn = rowSelected.AFI_FECN;
     this.radic.afi_tele = rowSelected.AFI_TELE;
+    this.radic.tip_coda = rowSelected.TIP_CODA;
+    this.radic.tip_noma = rowSelected.TIP_NOMA;
+    this.radic.tia_codi = rowSelected.TIA_CODI;
+    this.radic.tia_nomb = rowSelected.TIA_NOMB;
+    this.radic.apo_coda = rowSelected.APO_CODA;
+    this.radic.apo_razs = rowSelected.APO_RAZS;
+    this.radic.dsu_tele = rowSelected.DSU_TELE;
   }
 
   showAlertMesssage(msg: string) {
@@ -246,7 +285,7 @@ export class RnradicComponent implements OnInit {
     let query = 'api/CtPropo/LoadRegiones?';
     query += `pai_codi=${_pai_codi}`;
 
-    this._comu.Get(query, this.Emp_Codi).subscribe((resp: any) => {
+    this._comu.Get(query, this.radic.emp_codi).subscribe((resp: any) => {
 
       this.gnregio = undefined;
       this.gndepar = undefined;
@@ -274,7 +313,7 @@ export class RnradicComponent implements OnInit {
     query += `pai_codi=${_pai_codi}`;
     query += `&reg_codi=${_reg_codi}`;
 
-    this._comu.Get(query, this.Emp_Codi).subscribe((resp: any) => {
+    this._comu.Get(query, this.radic.emp_codi).subscribe((resp: any) => {
 
       this.gndepar = undefined;
       this.gnmunic = undefined;
@@ -302,7 +341,7 @@ export class RnradicComponent implements OnInit {
     query += `&reg_codi=${_reg_codi}`;
     query += `&dep_codi=${_dep_codi}`;
 
-    this._comu.Get(query, this.Emp_Codi).subscribe((resp: any) => {
+    this._comu.Get(query, this.radic.emp_codi).subscribe((resp: any) => {
 
       this.gnmunic = undefined;
       this.gnlocal = undefined;
@@ -331,7 +370,7 @@ export class RnradicComponent implements OnInit {
     query += `&dep_codi=${_dep_codi}`;
     query += `&mun_codi=${_mun_codi}`;
 
-    this._comu.Get(query, this.Emp_Codi).subscribe((resp: any) => {
+    this._comu.Get(query, this.radic.emp_codi).subscribe((resp: any) => {
 
       this.gnlocal = undefined;
       this.gnbarri = undefined;
@@ -359,7 +398,7 @@ export class RnradicComponent implements OnInit {
     query += `&mun_codi=${_mun_codi}`;
     query += `&loc_codi=${_loc_codi}`;
 
-    this._comu.Get(query, this.Emp_Codi).subscribe((resp: any) => {
+    this._comu.Get(query, this.radic.emp_codi).subscribe((resp: any) => {
 
       this.gnbarri = undefined;
       this.radic.rad_barr = '';
@@ -385,5 +424,14 @@ export class RnradicComponent implements OnInit {
   delGrupoFamiliar () {
     this.i = this.rndperc.indexOf(this.dperc);
     this.rndperc.splice( this.i, 1 );
+  }
+
+  topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
+  LoadTratamiento() {
+    
   }
 }

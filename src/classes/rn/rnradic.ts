@@ -2,6 +2,7 @@ export class RnRadic {
 
     public emp_codi: number;
     public usu_codi: string;
+    public cen_codi: string;
     public tia_cont: number;
     public tia_codi: number;
     public tia_nomb: string;
@@ -16,6 +17,9 @@ export class RnRadic {
     public cra_cont: number;
     public cra_codi: number;
     public cra_nomb: string;
+    public dsu_tele: string;
+    public rad_tdat = 'N';
+    public rad_obse: string;
 
     public tip_codi: number;
     public tip_noma: string;
@@ -26,6 +30,8 @@ export class RnRadic {
     public afi_ape2: string;
     public afi_fecn: Date;
     public afi_tele: string;
+    public rad_dire: string;
+    public rad_emai: string;
 
     // Geografía
     public rad_pais = '';
