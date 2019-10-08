@@ -497,36 +497,33 @@
                     <div *ngIf="radic.rad_tdat === 'S'" class="tab-pane fade" id="nav-tratamiento" role="tabpanel" aria-labelledby="nav-tratamiento-tab">
                         <div class="container mt-3">
                             <div class="row">
-                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                    <div class="input-group">
-                                        <textarea type="text" class="form-control" disabled style="height: 300px;" multiple name="par_ptda" id="par_ptda"></textarea>
-                                    </div>
-                                </div>
+
                                 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-2">
-                                    <div class="input-group mt-2">
-                                        <span class="switch">
-                                                <input type="checkbox" name="chkAutoriza"  class="switch switch-sm disabled" id="switch-id">
-                                                <label for="switch-id">Autoriza Protección de Datos</label>    
-                                            </span>
-                                    </div>
+
                                     <div class="table table-hover table-striped table-bordered mt-2">
                                         <table class="table table-hover table-striped table-bordered mt-4">
                                             <thead class="thead-light">
                                                 <tr>
-                                                    <th scope="col">Información a Recibir</th>
-                                                    <th scope="col"></th>
+                                                    <th scope="col">Código</th>
+                                                    <th scope="col">Descripción</th>
+                                                    <th scope="col" class="text-center">Aceptación</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- <tr *ngFor="let dtr of CtDtrda;let index=index; trackBy:trackByIdx()">
-                                                    <td>{{dtr.ite_nomb}}</td>
+                                                <tr *ngFor="let tdat of radtdat" style="font-size: 1rem">
+                                                    <td>
+                                                        <span>
+                                                            {{tdat.ite_codi}}
+                                                    </span>
+                                                    </td>
+                                                    <td>{{tdat.ite_nomb}}</td>
                                                     <td class="text-center">
                                                         <span class="switch mt-2">
-                                                                <input type="checkbox" name="chk" [(checked)]="dtr.ite_chkd"  (change)= "dtr.ite_chkd=!dtr.ite_chkd"  class="switch switch-sm" id="{{dtr.ite_cont}}" >
-                                                                <label for="{{dtr.ite_cont}}"></label>                                                           
-                                                            </span>
+                                                                <input type="checkbox" name="chk" [(checked)]="tdat.ite_chkd" class="switch switch-sm" id="{{tdat.ite_cont}}" >
+                                                                <label for="{{tdat.ite_cont}}"></label>                                                           
+                                                        </span>
                                                     </td>
-                                                </tr> -->
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>

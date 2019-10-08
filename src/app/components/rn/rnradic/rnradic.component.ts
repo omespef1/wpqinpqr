@@ -14,6 +14,7 @@ import { RnDperc } from 'src/classes/rn/rndperc';
 import { SumPare } from 'src/classes/rn/sumpare';
 import { RnCraco } from 'src/classes/rn/rncraco';
 import { NgForm } from '@angular/forms';
+import { Rnradtd } from 'src/classes/rn/rnradtd';
 
 @Component({
   selector: 'app-rnradic',
@@ -44,6 +45,7 @@ export class RnradicComponent implements OnInit {
   @Input() gnmunic: any[];
   @Input() gnlocal: any[];
   @Input() gnbarri: any[];
+  @Input() radtdat: Rnradtd[] = [];
   @Input() sumpare: SumPare[];
 
   rndperc: RnDperc[] = [];
@@ -432,6 +434,19 @@ export class RnradicComponent implements OnInit {
   }
 
   LoadTratamiento() {
-    
+    this.spinner.show();
+    const query = 'api/RnRadic/RnRadicTrat?';
+    this._comu.Get(query, this.radic.emp_codi).subscribe((resp: ToTransaction) => {
+
+      if (resp.retorno === 0) {
+        this.radtdat = resp.objTransaction;
+      } else {
+        this.showAlertMesssage(`${resp.txtRetorno}`);
+      }
+      this.spinner.hide();
+    }, err => {
+      console.log(err);
+      this.showAlertMesssage(`Error conectando con el servidor, verfique que el servidor configurado esté escrito correctamente`);
+    });
   }
 }
