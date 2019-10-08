@@ -37,7 +37,6 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { ComponentsComponent } from './components/components.component';
 import { TableSearchGenericComponent } from './components/tools/table-search-generic/table-search-generic.component';
 
-
 export const MY_FORMATS = {
   parse: {
     dateInput: 'DD/MM/YYYY',

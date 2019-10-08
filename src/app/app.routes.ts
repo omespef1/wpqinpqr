@@ -19,6 +19,7 @@ const app_routes: Routes = [
    { path: 'ctconsu', component: CtconsuComponent },
    { path: 'eereles', component: EerelesComponent },
    { path: 'rnradic', component: RnradicComponent },
+    {path:'xbauliq' , loadChildren : './components/xb/xbauliq/xbauliq.module#XbauliqModule'  },
   { path: '**', pathMatch: 'full', redirectTo: 'creacion' }
 ];
 

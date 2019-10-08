@@ -1,0 +1,60 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Generación de autoliquidación</h1>
+  
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-1 col-sm-1">
+        <img src="data:image/jpeg;base64,{{logo}}" class="img-fluid" alt="Responsive image">
+      </div>
+    </div>
+  
+    <div class="card card-gray">
+      <div class="card-header bg-primary text-white">Autoliquidación</div>
+      <div class="card-body">
+        <form #xbauliq="ngForm" (ngSubmit)="PostPqr(pqrForm)">
+  
+          <div class="row">
+              <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                  <label for="pro_codi">Nit</label>
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                          <div class="input-group-text">
+                              <span> <span><i class="fas fa-id-card"></i></span></span>
+                          </div>
+                      </div>
+                      <input type="text" readonly=true class="form-control" placeholder="Nit">
+                  </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                  <label for="pro_codi">Nombre Entidad</label>
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                          <div class="input-group-text">
+                              <span> <span><i class="fas fa-id-card"></i></span></span>
+                          </div>
+                      </div>
+                      <input type="text" readonly=true class="form-control" placeholder="Nombre de entidad">
+                  </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                  <label for="pro_codi">Fecha en la que se realizará el pago</label>
+                  <div class="input-group">
+                      <div class="input-group-prepend">
+                          <div class="input-group-text">
+                              <span> <span><i class="fas fa-id-card"></i></span></span>
+                          </div>
+                      </div>
+                      <input type="text" readonly=true class="form-control" placeholder="Fecha en la que se realizará el pago">
+                  </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                  <button type="button" class="btn btn-primary">Primary</button>
+              </div>
+          </div>
+        </form>
+      </div>
+    </div>
