@@ -1,3 +1,6 @@
+import { RnDperc } from "./rndperc";
+import { Rnradtd } from "./rnradtd";
+
 export class RnRadic {
 
     public emp_codi: number;
@@ -20,6 +23,7 @@ export class RnRadic {
     public dsu_tele: string;
     public rad_tdat = 'N';
     public rad_obse: string;
+    public ite_depe: string;
 
     public tip_codi: number;
     public tip_noma: string;
@@ -34,10 +38,22 @@ export class RnRadic {
     public rad_emai: string;
 
     // Geografía
-    public rad_pais = '';
-    public rad_regi = '';
-    public rad_depa = '';
-    public rad_muni = '';
-    public rad_loca = '';
-    public rad_barr = '';
+    public rad_pais: number;
+    public pai_nomb = '';
+    public rad_regi: number;
+    public reg_nomb = '';
+    public rad_depa: number;
+    public dep_nomb = '';
+    public rad_muni: number;
+    public mun_nomb = '';
+    public rad_loca: number;
+    public loc_nomb = '';
+    public rad_barr: number;
+    public bar_nomb = '';
+
+    // Núcleo familiar
+    public rndperc: RnDperc[] = [];
+
+    // Tratamiento de Datos
+    public radtdat: Rnradtd[] = [];
 }

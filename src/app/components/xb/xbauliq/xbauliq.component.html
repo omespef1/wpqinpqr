@@ -15,13 +15,12 @@
     <div class="card card-gray">
         <div class="card-header bg-primary text-white">Generación de Autoliquidación</div>
         <div class="card-body">
-            <form #xbauliq="ngForm" (ngSubmit)="PostPqr(pqrForm)">
+            <form #xbauliq="ngForm">
                 <div class="row">
-                        <div class="alert alert-info" role="alert">
-                                * Mediante esta opción podrá generar la autoliquidación correspondiente a las cuentas por pagar a la SuperIntendencia de Vigilancia y Seguridad Privada, para cada uno de los conceptos pendientes y por cada una de las vigencias. Para ello, debe pulsar sobre el botón "CONSULTAR Y/O LIQUIDAR".
-                                * Las cuentas e intereses se presentan con corte a la fecha en la que se realiza la consulta.   
-                                * Solo se presentan las cuentas que tienen saldos pendientes de pago.                                
-                              </div>
+                    <div class="alert alert-info" role="alert">
+                        * Mediante esta opción podrá generar la autoliquidación correspondiente a las cuentas por pagar a la SuperIntendencia de Vigilancia y Seguridad Privada, para cada uno de los conceptos pendientes y por cada una de las vigencias. Para ello, debe pulsar
+                        sobre el botón "CONSULTAR Y/O LIQUIDAR". * Las cuentas e intereses se presentan con corte a la fecha en la que se realiza la consulta. * Solo se presentan las cuentas que tienen saldos pendientes de pago.
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-2 col-md-3 col-xs-12 col-sm-12">
@@ -49,15 +48,15 @@
                     <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
                         <label for="pro_codi">Fecha de pago</label>
                         <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <div class="input-group-text">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
                                     <span><i class="fas fa-calendar-alt"></i></span>
-                                  </div>
                                 </div>
-                                <input matInput placeholder="Fecha de pago" [min]="today" [matDatepicker]="fec_pago" type="text" class="form-control" name="fec_pago" id="fec_pago" [(ngModel)]="today" required #fec_pago="ngModel" readonly>
-                                <mat-datepicker-toggle [for]="fec_pago"></mat-datepicker-toggle>
-                                <mat-datepicker disabled="false" #fec_pago touchUi></mat-datepicker>
-                              </div>
+                            </div>
+                            <input matInput placeholder="Fecha de pago" [min]="today" [matDatepicker]="fec_pago" type="text" class="form-control" name="fec_pago" id="fec_pago" [(ngModel)]="today" required #fec_pago="ngModel" readonly>
+                            <mat-datepicker-toggle [for]="fec_pago"></mat-datepicker-toggle>
+                            <mat-datepicker disabled="false" #fec_pago touchUi></mat-datepicker>
+                        </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
                         <br>
@@ -67,13 +66,14 @@
                         </button>
                     </div>
                     <div class="col-lg-1 col-md-3 col-xs-12 col-sm-12">
-                            <br>
-                            <button type="button" class="btn btn-danger">
+                        <br>
+                        <button type="button" class="btn btn-danger">
                                 <i class="fa fa-trash">
                                 </i> Limpiar
                             </button>
-                        </div>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
+</div>

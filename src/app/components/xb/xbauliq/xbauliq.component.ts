@@ -10,6 +10,8 @@ import { NgForm } from '@angular/forms';
 export class XbauliqComponent implements OnInit {
    today:Date = new Date();
    loading=false;
+   logo:string;
+
   constructor() { }
 
   ngOnInit() {

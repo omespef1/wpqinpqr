@@ -5,7 +5,7 @@ export class RnDperc {
         public dpe_nom2: String,
         public dpe_ape1: String,
         public dpe_ape2: String,
-        public mpa_cont: number,
+        public mpa_codi: number,
         public mpa_nomb: String
     ) {}
 }

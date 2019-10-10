@@ -52,7 +52,7 @@
                                     <span><i class="fas fa-user-times"></i></span>
                                 </div>
                             </div>
-                            <input id="ite_nomb" name="ite_nomb" value="{{ ite_depe }}" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
+                            <input id="ite_nomb" name="ite_nomb" value="{{ ite_depe }}" [(ngModel)]="radic.ite_depe" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
                         </div>
                     </div>
 
@@ -175,7 +175,7 @@
                                             </div>
                                         </div>
                                         <input id="tip_codi" name="tip_codi" [(ngModel)]="radic.tip_codi" required #tip_codi="ngModel" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                        <input id="tip_noma" name="tip_nomb" [(ngModel)]="radic.tip_nomb" #tip_nomb="ngModel" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                        <input id="tip_nomb" name="tip_nomb" [(ngModel)]="radic.tip_nomb" #tip_nomb="ngModel" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
                                         <button type="button" class="btn btn-primary" (click)="lupaTipoDocumento()" *ngIf="cra_prim === 'S'">
                                             <span><i class="fas fa-search"></i></span>
                                         </button>
@@ -305,7 +305,7 @@
                                                 <span><i class="fas fa-users"></i></span>
                                             </div>
                                         </div>
-                                        <input id="dpe_nom1" name="dpe_nom1" [(ngModel)]="dperc.dpe_nom1" type="text" class="form-control" placeholder="Primer Nombre">
+                                        <input id="dpe_nom1" name="dpe_nom1" [(ngModel)]="dperc.dpe_nom1" type="text" class="form-control" placeholder="Primer Nombre" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -316,7 +316,7 @@
                                                 <span><i class="fas fa-users"></i></span>
                                             </div>
                                         </div>
-                                        <input id="dpe_nom2" name="dpe_nom2" [(ngModel)]="dperc.dpe_nom2" type="text" class="form-control" placeholder="Segundo Nombre">
+                                        <input id="dpe_nom2" name="dpe_nom2" [(ngModel)]="dperc.dpe_nom2" type="text" class="form-control" placeholder="Segundo Nombre" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -327,7 +327,7 @@
                                                 <span><i class="fas fa-users"></i></span>
                                             </div>
                                         </div>
-                                        <input id="dpe_ape1" name="dpe_ape1" [(ngModel)]="dperc.dpe_ape1" type="text" class="form-control" placeholder="Primer Apellido">
+                                        <input id="dpe_ape1" name="dpe_ape1" [(ngModel)]="dperc.dpe_ape1" type="text" class="form-control" placeholder="Primer Apellido" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -338,7 +338,7 @@
                                                 <span><i class="fas fa-users"></i></span>
                                             </div>
                                         </div>
-                                        <input id="dpe_ape2" name="dpe_ape2" [(ngModel)]="dperc.dpe_ape2" type="text" class="form-control" placeholder="Segundo Apellido">
+                                        <input id="dpe_ape2" name="dpe_ape2" [(ngModel)]="dperc.dpe_ape2" type="text" class="form-control" placeholder="Segundo Apellido" autocomplete="off">
                                     </div>
                                 </div>
 
@@ -350,7 +350,7 @@
                                                 <span><i class="fas fa-users"></i></span>
                                             </div>
                                         </div>
-                                        <input id="dpe_docu" name="dpe_docu" [(ngModel)]="dperc.dpe_docu" type="text" class="form-control" placeholder="Documento">
+                                        <input id="dpe_docu" name="dpe_docu" [(ngModel)]="dperc.dpe_docu" type="text" class="form-control" placeholder="Documento" autocomplete="off">
                                     </div>
                                 </div>
 
@@ -362,8 +362,8 @@
                                                 <span><i class="fas fa-users"></i></span>
                                             </div>
                                         </div>
-                                        <select class="form-control" id="mpa_cont" name="mpa_cont" [(ngModel)]="dperc.mpa_nomb">
-                                            <option *ngFor="let mpare of sumpare" [ngValue]="mpare">{{mpare.mpa_nomb | titlecase}}</option>                                                                                      
+                                        <select class="form-control" id="mpa_nomb" name="mpa_nomb" [(ngModel)]="selectedPare">
+                                            <option *ngFor="let mpare of sumpare" [ngValue]="mpare">{{mpare.mpa_nomb | titlecase}}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -371,11 +371,11 @@
 
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-4 pb-3">
-                                    <button [disabled]="dperc.dpe_docu == '' || dperc.dpe_nom1 == '' || dperc.dpe_ape1 == '' || dperc.mpa_nomb == ''" type="button" class="btn btn-success btn-lg btn-block" (click)="addGrupoFamiliar()">Agregar</button>
+                                    <button [disabled]="dperc.dpe_docu == '' || dperc.dpe_nom1 == '' || dperc.dpe_ape1 == '' || selectedPare.mpa_nomb == undefined" type="button" class="btn btn-success btn-lg btn-block" (click)="addGrupoFamiliar()">Agregar</button>
                                 </div>
                             </div>
 
-                            <div class="table-responsive mt-3" *ngIf="rndperc?.length">
+                            <div class="table-responsive mt-3" *ngIf="radic.rndperc?.length">
                                 <table class="table table-hover table-striped table-bordered">
                                     <thead class="thead-light">
                                         <tr>
@@ -389,7 +389,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let rnd of rndperc">
+                                        <tr *ngFor="let rnd of radic.rndperc">
                                             <td>{{rnd.dpe_docu}}</td>
                                             <td>{{rnd.dpe_nom1}}</td>
                                             <td>{{rnd.dpe_nom2}}</td>
@@ -415,7 +415,7 @@
                                                 <span><i class="fas fa-globe-americas"></i></span>
                                             </div>
                                         </div>
-                                        <select class="form-control" id="rad_pais" [value]="" name="rad_pais" [(ngModel)]="radic.rad_pais" (change)="filtrarRegiones('',radic.rad_pais)" required="0" #rad_pais="ngModel">                                            
+                                        <select [disabled]="cra_prim !== 'S'" class="form-control" id="rad_pais" [value]="" name="rad_pais" [(ngModel)]="radic.rad_pais" (change)="filtrarRegiones('',radic.rad_pais)" required="0" #rad_pais="ngModel">                                            
                                             <option *ngFor="let pais of gnpaise" [value]="pais.pai_codi">{{pais.pai_nomb | titlecase}}</option>
                                             <option value="">Seleccione</option>
                                           </select>
@@ -429,7 +429,7 @@
                                                 <span><i class="fas fa-flag"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnregio==undefined" [value]="" class="form-control" id="rad_regi" name="rad_regi" [(ngModel)]="radic.rad_regi" (change)="filtrarDeptos('',radic.rad_pais,radic.rad_regi)" required #rad_regi="ngModel">
+                                        <select [disabled]="gnregio==undefined || cra_prim !== 'S'" [value]="" class="form-control" id="rad_regi" name="rad_regi" [(ngModel)]="radic.rad_regi" (change)="filtrarDeptos('',radic.rad_pais,radic.rad_regi)" required #rad_regi="ngModel">
                                             <option *ngFor="let region of gnregio" [value]="region.reg_codi">{{region.reg_nomb | titlecase}}</option>
                                             <option value="">Seleccione</option>
                                         </select>
@@ -443,7 +443,7 @@
                                                 <span><i class="far fa-flag"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gndepar==undefined" [value]="" class="form-control" id="rad_depa" name="rad_depa" [(ngModel)]="radic.rad_depa" (change)="filtrarMunic('',radic.rad_pais,radic.rad_regi,radic.rad_depa)" required #rad_depa="ngModel">                                                
+                                        <select [disabled]="gndepar==undefined || cra_prim !== 'S'" [value]="" class="form-control" id="rad_depa" name="rad_depa" [(ngModel)]="radic.rad_depa" (change)="filtrarMunic('',radic.rad_pais,radic.rad_regi,radic.rad_depa)" required #rad_depa="ngModel">                                                
                                                 <option *ngFor="let depto of gndepar" [value]="depto.dep_codi">{{depto.dep_nomb | titlecase}}</option>
                                                 <option value="">Seleccione</option>
                                         </select>
@@ -457,7 +457,7 @@
                                                 <span><i class="fas fa-city"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnmunic==undefined" [value]="" class="form-control" id="rad_muni" name="rad_muni" [(ngModel)]="radic.rad_muni" (change)="filtrarLocal('',radic.rad_pais,radic.rad_regi,radic.rad_depa,radic.rad_muni)" required #rad_muni="ngModel">                                       
+                                        <select [disabled]="gnmunic==undefined || cra_prim !== 'S'" [value]="" class="form-control" id="rad_muni" name="rad_muni" [(ngModel)]="radic.rad_muni" (change)="filtrarLocal('',radic.rad_pais,radic.rad_regi,radic.rad_depa,radic.rad_muni)" required #rad_muni="ngModel">                                       
                                             <option *ngFor="let munic of gnmunic" [value]="munic.mun_codi">{{munic.mun_nomb | titlecase}}</option>
                                             <option value="">Seleccione</option>
                                         </select>
@@ -471,7 +471,8 @@
                                                 <span><i class="fas fa-map-pin"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnlocal==undefined" [value]="" class="form-control" id="rad_loca" name="rad_loca" [(ngModel)]="radic.rad_loca" (change)="filtrarBarri('',radic.rad_pais,radic.rad_regi,radic.rad_depa,radic.rad_muni,radic.rad_loca)" required #rad_loca="ngModel">
+                                        <select [disabled]="gnlocal==undefined || cra_prim !== 'S'" [value]="" class="form-control" id="rad_loca" name="rad_loca" [(ngModel)]="radic.rad_loca" (change)="filtrarBarri('',radic.rad_pais,radic.rad_regi,radic.rad_depa,radic.rad_muni,radic.rad_loca)"
+                                            required #rad_loca="ngModel">
                                                 <option *ngFor="let local of gnlocal" [value]="local.loc_codi">{{local.loc_nomb | titlecase}}</option>
                                                 <option value="">Seleccione</option>
                                         </select>
@@ -485,7 +486,7 @@
                                                 <span><i class="fas fa-map-signs"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnbarri==undefined" [value]="" class="form-control" id="rad_barr" name="rad_barr" [(ngModel)]="radic.rad_barr" required #rad_loca="ngModel">                                                
+                                        <select [disabled]="gnbarri==undefined || cra_prim !== 'S'" [value]="" class="form-control" id="rad_barr" name="rad_barr" [(ngModel)]="radic.rad_barr" required #rad_loca="ngModel">                                                
                                                 <option *ngFor="let barri of gnbarri" [value]="barri.bar_codi">{{barri.bar_nomb | titlecase}}</option>
                                                 <option value="">Seleccione</option>
                                         </select>
@@ -499,7 +500,6 @@
                             <div class="row">
 
                                 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-2">
-
                                     <div class="table table-hover table-striped table-bordered mt-2">
                                         <table class="table table-hover table-striped table-bordered mt-4">
                                             <thead class="thead-light">
@@ -510,7 +510,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let tdat of radtdat" style="font-size: 1rem">
+                                                <tr *ngFor="let tdat of radic.radtdat" style="font-size: 1rem">
                                                     <td>
                                                         <span>
                                                             {{tdat.ite_codi}}
@@ -519,8 +519,8 @@
                                                     <td>{{tdat.ite_nomb}}</td>
                                                     <td class="text-center">
                                                         <span class="switch mt-2">
-                                                                <input type="checkbox" name="chk" [(checked)]="tdat.ite_chkd" class="switch switch-sm" id="{{tdat.ite_cont}}" >
-                                                                <label for="{{tdat.ite_cont}}"></label>                                                           
+                                                                <input type="checkbox" name="chk" [(checked)]="tdat.ite_chkd"  (change)= "tdat.ite_chkd=!tdat.ite_chkd" class="switch switch-sm" id="{{tdat.ite_cont}}" >
+                                                                <label for="{{tdat.ite_cont}}"></label>
                                                         </span>
                                                     </td>
                                                 </tr>

@@ -97,10 +97,10 @@
                                     <span><i class="far fa-keyboard"></i></span>
                                 </div>
                             </div>
-                            <select class="form-control" id="ite_tpqr" name="ite_tpqr" [(ngModel)]="pqr.ite_tpqr" required #ite_tpqr="ngModel">
-                <option *ngFor="let type of GnItemsItePqr" (change)="lookForInscription()" [value]="type.ite_cont">
-                  {{type.ite_nomb | titlecase}}</option>
-              </select>
+                            <select class="form-control" id="ite_tpqr" (change)="loadTipiFromFlag(pqr.ite_tpqr)" name="ite_tpqr" [(ngModel)]="pqr.ite_tpqr" required #ite_tpqr="ngModel">
+                                <option *ngFor="let type of GnItemsItePqr"  [value]="type.ite_cont">
+                                {{type.ite_nomb | titlecase}}</option>
+                            </select>
                         </div>
                         <div [hidden]="ite_tpqr.valid || ite_tpqr.pristine" class="alert alert-danger">
                             Tipo de solicitud es requerido
@@ -133,9 +133,9 @@
                                 </div>
                             </div>
                             <select class="form-control" id="ite_tipi" name="ite_tipi" [(ngModel)]="pqr.ite_tipi" required #ite_tipi="ngModel">
-                <option *ngFor="let type of GnItemsIteTipi" [value]="type.ite_cont">{{type.ite_nomb | titlecase}}
-                </option>
-              </select>
+                                <option *ngFor="let type of GnItemsIteTipi" [value]="type.ite_cont">{{type.ite_nomb | titlecase}}
+                                </option>
+                            </select>
                         </div>
                         <div [hidden]="ite_tipi.valid || ite_tipi.pristine" class="alert alert-danger">
                             Asunto es requerido
