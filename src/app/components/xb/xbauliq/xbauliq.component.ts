@@ -8,7 +8,8 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./xbauliq.component.css']
 })
 export class XbauliqComponent implements OnInit {
-
+   today:Date = new Date();
+   loading=false;
   constructor() { }
 
   ngOnInit() {

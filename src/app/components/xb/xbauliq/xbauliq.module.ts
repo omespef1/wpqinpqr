@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { XbauliqComponent } from './xbauliq.component';
 import { FormsModule } from '@angular/forms';
 
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
 const routes: Routes = [
   {
     path: '',
@@ -16,6 +18,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule ,
     RouterModule.forChild(routes),
+    MatDatepickerModule
   ],
   declarations: [
     XbauliqComponent
