@@ -13,13 +13,17 @@
     </div>
 
     <div class="card card-gray">
-        <div class="card-header bg-primary text-white">Generación de Autoliquidación</div>
+        <div class="card-header bg-primary text-white">Parámetros</div>
         <div class="card-body">
             <form #xbauliq="ngForm">
                 <div class="row">
                     <div class="alert alert-info" role="alert">
-                        * Mediante esta opción podrá generar la autoliquidación correspondiente a las cuentas por pagar a la SuperIntendencia de Vigilancia y Seguridad Privada, para cada uno de los conceptos pendientes y por cada una de las vigencias. Para ello, debe pulsar
-                        sobre el botón "CONSULTAR Y/O LIQUIDAR". * Las cuentas e intereses se presentan con corte a la fecha en la que se realiza la consulta. * Solo se presentan las cuentas que tienen saldos pendientes de pago.
+                        * Mediante esta opción podrá generar la autoliquidación correspondiente a las cuentas por pagar
+                        a la SuperIntendencia de Vigilancia y Seguridad Privada, para cada uno de los conceptos
+                        pendientes y por cada una de las vigencias. Para ello, debe pulsar
+                        sobre el botón "CONSULTAR Y/O LIQUIDAR". * Las cuentas e intereses se presentan con corte a la
+                        fecha en la que se realiza la consulta. * Solo se presentan las cuentas que tienen saldos
+                        pendientes de pago.
                     </div>
                 </div>
                 <div class="row">
@@ -53,14 +57,16 @@
                                     <span><i class="fas fa-calendar-alt"></i></span>
                                 </div>
                             </div>
-                            <input matInput placeholder="Fecha de pago" [min]="today" [matDatepicker]="fec_pago" type="text" class="form-control" name="fec_pago" id="fec_pago" [(ngModel)]="today" required #fec_pago="ngModel" readonly>
+                            <input matInput placeholder="Fecha de pago" [min]="today" [matDatepicker]="fec_pago"
+                                type="text" class="form-control" name="fec_pago" id="fec_pago" [(ngModel)]="today"
+                                required #fec_pago="ngModel" readonly>
                             <mat-datepicker-toggle [for]="fec_pago"></mat-datepicker-toggle>
                             <mat-datepicker disabled="false" #fec_pago touchUi></mat-datepicker>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
                         <br>
-                        <button type="button" class="btn btn-success btn-block" (click)="loading=!loading">
+                        <button type="button" class="btn btn-success btn-block" (click)="GetAutliq()">
                             <i [class]="!loading?'fa fa-check':'fa fa-circle-o-notch fa-spin'">
                             </i> Consultar y/o Liquidar
                         </button>
@@ -68,12 +74,79 @@
                     <div class="col-lg-1 col-md-3 col-xs-12 col-sm-12">
                         <br>
                         <button type="button" class="btn btn-danger">
-                                <i class="fa fa-trash">
-                                </i> Limpiar
-                            </button>
+                            <i class="fa fa-trash">
+                            </i> Limpiar
+                        </button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+    <div class="card card-gray">
+        <div class="card-header bg-primary text-white">Autoliquidación</div>
+        <div class="card-body">
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">TIPO DE SERVICIO</th>
+                        <th scope="col">VIGENCIA</th>
+                        <th scope="col">CONCEPTO</th>
+                        <th scope="col">DESCRIPCIÓN</th>
+                        <th scope="col">BASE GRAVABLE</th>
+                        <th scope="col">TARIFA</th>
+                        <th scope="col">VALOR INICIAL</th>
+                        <th scope="col">SALDO</th>
+                        <th scope="col">SALDO INTERESES</th>
+                        <th scope="col">INTERESES DE MORA</th>
+                        <th scope="col">VALOR TOTAL A PAGAR</th>
+                        <th scope="col">AUTOLIQUIDAR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of cacxcob;let i = index">
+                        <th scope="row">
+                            {{ i }}
+                        </th>
+                        <th scope="row">
+                            {{ item.cts_nomb }}
+                        </th>
+                        <th scope="row">
+                            {{ item.ddi_vige }}
+                        </th>
+                        <th scope="row">
+                            {{ item.top_nomb }}
+                        </th>
+                        <th scope="row">
+                            {{ item.cxc_desc }}
+                        </th>
+                        <th scope="row">
+                            {{ item.cxc_tota }}
+                        </th>
+                        <th scope="row">
+                            {{ item.cxc_sald }}
+                        </th>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
 </div>
+
+<app-gnempre title="Seleccione empresa" (accept)="_EmpreModal.dismiss();GetAutliq()">
+    <form>
+        <div class="form-group">
+            <label for="emp_codi" class="col-form-label"></label>
+            <select class="form-control" id="usu_codi" name="usu_codi" [(ngModel)]="emp_codi" required
+                #usu_codi="ngModel">
+                <option value="0">Seleccione</option>
+                <option *ngFor="let companie of companies" [value]="companie.emp_codi">{{companie.emp_nomb | titlecase}}
+                </option>
+            </select>
+        </div>
+    </form>
+</app-gnempre>

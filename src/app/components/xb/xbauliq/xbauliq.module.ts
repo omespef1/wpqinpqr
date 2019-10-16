@@ -5,6 +5,7 @@ import { XbauliqComponent } from './xbauliq.component';
 import { FormsModule } from '@angular/forms';
 
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
   {
@@ -18,10 +19,11 @@ const routes: Routes = [
     CommonModule,
     FormsModule ,
     RouterModule.forChild(routes),
-    MatDatepickerModule
+    MatDatepickerModule,
+    SharedModule
   ],
   declarations: [
     XbauliqComponent
-  ]
+  ],
 })
 export class XbauliqModule { }
