@@ -1,5 +1,5 @@
-import { RnDperc } from "./rndperc";
-import { Rnradtd } from "./rnradtd";
+import { RnDperc } from './rndperc';
+import { Rnradtd } from './rnradtd';
 
 export class RnRadic {
 
@@ -18,7 +18,7 @@ export class RnRadic {
     public gru_codi: string;
     public gru_nomb: string;
     public cra_cont: number;
-    public cra_codi: number;
+    public cra_codi = undefined;
     public cra_nomb: string;
     public dsu_tele: string;
     public rad_tdat = 'N';

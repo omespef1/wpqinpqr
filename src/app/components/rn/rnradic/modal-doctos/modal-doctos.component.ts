@@ -1,31 +1,31 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.css']
+  selector: 'app-modal-doctos',
+  templateUrl: './modal-doctos.component.html',
+  styleUrls: ['./modal-doctos.component.css']
 })
-export class ModalComponent implements OnInit {
+export class ModalDoctosComponent implements OnInit {
 
   @Input() title = 'Title';
   @Input() subTitle = 'subTitle';
   @Output() accept: EventEmitter<string>;
   @Input() tamano: string;
+  @Input() selectorName: string;
 
   constructor() {
     this.accept = new EventEmitter();
    }
 
   ngOnInit() {
-
   }
 
   present() {
-    document.getElementById('btnModalGeneral').click();
+   document.getElementById('btnModalDoctos').click();
   }
 
    dismiss() {
-    document.getElementById('btnModalGeneral').click();
+    document.getElementById('btnModalDoctos').click();
    }
 
    ok() {

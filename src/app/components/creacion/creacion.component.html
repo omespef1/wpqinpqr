@@ -18,11 +18,12 @@
     <div class="card card-gray">
         <ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
         </ngx-spinner>
+
         <div class="card-header bg-primary text-white">Nueva PQR</div>
         <div class="card-body">
             <form #pqrForm="ngForm" (ngSubmit)="PostPqr(pqrForm)">
                 <div class="row" *ngIf="client">
-                    <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                         <label for="inp_tcli">Tipo de cliente</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -37,7 +38,7 @@
                         </div>
                     </div>
                     <!-- Seccional -->
-                    <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12" *ngIf="spq000001.dig_valo=='S'">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf="spq000001.dig_valo=='S'">
                         <label for="arb_csuc">Seccional</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -46,13 +47,13 @@
                                 </div>
                             </div>
                             <input type="text" [readOnly]="pqr.inp_tcli == 'F'" class="form-control" placeholder="Código" name="arb_sucu" id="arb_sucu" [(ngModel)]="pqr.arb_sucu" required #arb_sucu="ngModel">
-                            <input type="text" [disabled]="pqr.inp_tcli == 'F'" class="form-control" placeholder="Descripción" name="arb_nomb" id="arb_nomb" [(ngModel)]="pqr.arb_nomb" required #arb_nomb="ngModel">
+                            <input type="text" style="width: 70%;" [disabled]="pqr.inp_tcli == 'F'" class="form-control" placeholder="Descripción" name="arb_nomb" id="arb_nomb" [(ngModel)]="pqr.arb_nomb" required #arb_nomb="ngModel">
                         </div>
                         <div [hidden]="arb_sucu.valid || arb_sucu.pristine" class="alert alert-danger">
                             seccional es requerido
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12" *ngIf="spq000001.dig_valo=='S'">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf="spq000001.dig_valo=='S'">
                         <label for="con_cont">No.Contrato</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -61,7 +62,7 @@
                                 </div>
                             </div>
                             <input type="text" data-toggle="tooltip" data-placement="bottom" [title]="ctcontr.con_ncon" [readOnly]="pqr.inp_tcli == 'F'" class="form-control" name="con_ncon" id="con_ncon" [(ngModel)]="ctcontr.con_ncon" required #con_ncon="ngModel">
-                            <input type="text" data-toggle="tooltip" data-placement="bottom" [title]="ctcontr.con_desc" disabled="true" class="form-control" name="con_desc" id="con_desc" [(ngModel)]="ctcontr.con_desc" required #con_desc="ngModel">
+                            <input type="text" style="width: 50%;" data-toggle="tooltip" data-placement="bottom" [title]="ctcontr.con_desc" disabled="true" class="form-control" name="con_desc" id="con_desc" [(ngModel)]="ctcontr.con_desc" required #con_desc="ngModel">
                             <button type="button" class="btn btn-primary" (click)="openLupa()">
                 <span><i class="fas fa-search"></i></span>
               </button>
@@ -71,7 +72,7 @@
                         </div>
 
                     </div>
-                    <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12" *ngIf="area && spq000001.dig_valo=='S'">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf="area && spq000001.dig_valo=='S'">
                         <label for="con_cont">Línea de negocio</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -80,7 +81,7 @@
                                 </div>
                             </div>
                             <input data-toggle="tooltip" data-placement="top" [title]="area.arb_codi" type="text" [readOnly]="pqr.inp_tcli == 'F'" class="form-control" name="arb_codia" id="arb_codia" [(ngModel)]="area.arb_codi" required #arb_codia="ngModel">
-                            <input type="text" data-toggle="tooltip" data-placement="bottom" [title]="area.arb_nomb" disabled="true" class="form-control" name="arb_nomba" id="arb_nomba" [(ngModel)]="area.arb_nomb" required #arb_nomba="ngModel">
+                            <input type="text" style="width: 70%;" data-toggle="tooltip" data-placement="bottom" [title]="area.arb_nomb" disabled="true" class="form-control" name="arb_nomba" id="arb_nomba" [(ngModel)]="area.arb_nomb" required #arb_nomba="ngModel">
                         </div>
                         <div [hidden]="arb_codia.valid || arb_codia.pristine" class="alert alert-danger">
                             Línea de negocio es requerida
@@ -133,6 +134,7 @@
                                 </div>
                             </div>
                             <select class="form-control" id="ite_tipi" name="ite_tipi" [(ngModel)]="pqr.ite_tipi" required #ite_tipi="ngModel">
+                                    <option value="0">Seleccione</option>
                                 <option *ngFor="let type of GnItemsIteTipi" [value]="type.ite_cont">{{type.ite_nomb | titlecase}}
                                 </option>
                             </select>

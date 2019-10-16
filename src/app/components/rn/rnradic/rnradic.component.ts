@@ -14,13 +14,15 @@ import { RnDperc } from 'src/classes/rn/rndperc';
 import { SumPare } from 'src/classes/rn/sumpare';
 import { RnCraco } from 'src/classes/rn/rncraco';
 import { NgForm } from '@angular/forms';
-import { Rnradtd } from 'src/classes/rn/rnradtd';
 import { GnPais } from 'src/classes/gn/gnpaise';
 import { GnRegio } from 'src/classes/gn/gnregio';
 import { GnDepar } from 'src/classes/gn/gndepar';
 import { GnMunic } from 'src/classes/gn/gnmunic';
 import { GnLocal } from 'src/classes/gn/gnlocal';
 import { GnBarri } from 'src/classes/gn/gnbarri';
+import { RnDdocu } from 'src/classes/rn/rnddocu';
+import { companies } from 'src/classes/models';
+import { ModalDoctosComponent } from './modal-doctos/modal-doctos.component';
 
 @Component({
   selector: 'app-rnradic',
@@ -38,26 +40,31 @@ export class RnradicComponent implements OnInit {
   @ViewChild('modalDocumento') _tableDocumento: TableSearchGenericComponent;
 
   @ViewChild(AlertComponent) alert: AlertComponent;
+
   @ViewChild(ModalComponent) modal: ModalComponent;
+  @ViewChild(ModalDoctosComponent) modalDoctos: ModalDoctosComponent;
+
   @Input() gntipdo: any[];
   @Input() artiapo: any[];
   @Input() arapovo: any[];
   @Input() rngrura: any[];
   @Input() suafili: any[];
-  @Input() rncraco = new RnCraco(0, 0, '', 0, '', '', '', '');
+  @Input() rncraco = new RnCraco();
   @Input() gnpaise: GnPais[] = [];
   @Input() gnregio: GnRegio[] = [];
   @Input() gndepar: GnDepar[] = [];
   @Input() gnmunic: GnMunic[] = [];
   @Input() gnlocal: GnLocal[] = [];
   @Input() gnbarri: GnBarri[] = [];
-  @Input() sumpare: SumPare[] = [];
+  @Input() sumpare: SumPare[] = new Array();
+  @Input() rnddocu: RnDdocu[] = [];
 
-  dperc: RnDperc = new RnDperc('', '', '', '', '', 0, '');
+  dperc: RnDperc = new RnDperc();
   msg = '';
   ite_depe = '';
   cra_prim = '';
   cra_clar = '';
+  client = '';
   radic: RnRadic = new RnRadic();
   SRN000001: string;
   SRN000002: string;
@@ -68,6 +75,7 @@ export class RnradicComponent implements OnInit {
   munic = new GnMunic();
   barri = new GnBarri();
   local = new GnLocal();
+  companies: companies[];
 
   constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer,
     private titleService: Title, private route: ActivatedRoute, private _confirm: ConfirmDialogComponent, private env: EnvService) {
@@ -77,10 +85,23 @@ export class RnradicComponent implements OnInit {
 
     await this.GetParams();
 
+    if ( this.client) {
+      this.loadCompanies();
+    }
+
     if (this.radic.emp_codi) {
       this.Load();
     }
    }
+
+   loadCompanies() {
+    this.spinner.show();
+    this._comu.Get(`api/gnempre?usu_codi=${this.radic.usu_codi}`).subscribe((resp: any) => {
+      this.companies = resp.objTransaction;
+      this.spinner.hide();
+      this.modal.present();
+    });
+  }
 
    PostRnRadic(form: NgForm) {
     this.topFunction();
@@ -101,17 +122,19 @@ export class RnradicComponent implements OnInit {
     this.gnlocal = undefined;
     this.gnbarri = undefined;
     this.radic.rad_tdat = 'N';
-    this.spinner.hide();
+    this.sumpare = [];
+    this.selectedPare = new SumPare();
    }
 
    async saveRadic(form: NgForm) {
     await this._comu.Post('api/RnRadic/InserRnRadic', this.radic).subscribe((resp: ToTransaction) => {
       if (resp.retorno !== undefined) {
         if (resp.retorno === 0) {
+          this.spinner.hide();
           this.showAlertMesssage('Documento guardado correctamente.');
-          form.reset();
-          this.ngOnInit();
-          this.clear();
+            this.ngOnInit();
+            this.clear();
+            form.reset();
         } else {
           this.showAlertMesssage(resp.txtRetorno);
           this.spinner.hide();
@@ -126,11 +149,10 @@ export class RnradicComponent implements OnInit {
     try {
 
         this.route.queryParamMap.subscribe(queryParams => {
-
-          if (queryParams.get('emp_codi') != null) {
-            this.radic.emp_codi = Number(atob(queryParams.get('emp_codi')));
+          if (queryParams.get('client') != null) {
+            this.client = atob(queryParams.get('client'));
           } else {
-            this.showAlertMesssage('Parámetro código de empresa no enviado');
+            this.showAlertMesssage('Parámetro cliente no enviado');
             return;
           }
           if (queryParams.get('usu_codi') != null) {
@@ -492,11 +514,11 @@ export class RnradicComponent implements OnInit {
       this.dperc.mpa_codi = this.selectedPare.mpa_codi;
       if ( this.radic.rndperc.length === 0) {
         this.radic.rndperc.push(this.dperc);
-        this.dperc = new RnDperc('', '', '', '', '', 0, '');
+        this.dperc = new RnDperc();
       } else {
         if ( this.radic.rndperc.indexOf(this.radic.rndperc.filter(t => t.dpe_docu === this.dperc.dpe_docu )[0]) === -1) {
           this.radic.rndperc.push(this.dperc);
-          this.dperc = new RnDperc('', '', '', '', '', 0, '');
+          this.dperc = new RnDperc();
         }
       }
     }
@@ -527,5 +549,24 @@ export class RnradicComponent implements OnInit {
       console.log(err);
       this.showAlertMesssage(`Error conectando con el servidor, verfique que el servidor configurado esté escrito correctamente`);
     });
+  }
+
+  showModal() {
+    this.spinner.show();
+    this._comu.Get(`api/RnRadic/RnRadicDocu?cra_codi=${this.radic.cra_codi}`).subscribe((resp: any) => {
+      this.rnddocu = resp.objTransaction;
+      this.spinner.hide();
+      this.modalDoctos.present();
+    });
+  }
+
+  selDocumento(ddo: RnDdocu) {
+    this.modalDoctos.dismiss();
+    this.dperc.ddo_ndoc = ddo.ite_nomb;
+    this.dperc.ddo_cont = ddo.ite_cont;
+    this.dperc.ddo_obse = ddo.ddo_obse;
+    this.dperc.ddo_recb = ddo.ddo_recb;
+    this.dperc.ddo_esis = ddo.ddo_esis;
+    this.dperc.ite_codi = ddo.ite_codi;
   }
 }

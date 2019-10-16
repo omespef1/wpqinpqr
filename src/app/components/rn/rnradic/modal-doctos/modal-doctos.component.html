@@ -1,14 +1,14 @@
 <!-- Button trigger modal -->
-<button id="btnModalGeneral" hidden type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalGeneral">
-    </button>
-
+<button type="button" class="btn btn-primary d-none" id="btnModalDoctos" data-toggle="modalDoctos" data-target="#modalDoctos">
+    Launch demo modal
+  </button>
 <!-- Modal -->
-<div id="modalGeneral" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static">
+<div class="modal fade" id="modalDoctos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static">
     <div [class]="tamano === 'xlg' ? 'modal-dialog modal-dialog-centered modal-lg modal-xlg' : 'modal-dialog modal-dialog-centered'" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalCenterTitle">{{title}}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modalDoctos" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

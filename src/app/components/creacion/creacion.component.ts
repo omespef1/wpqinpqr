@@ -8,7 +8,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 // Models
 import { gnItem } from '../../../classes/models';
-import { faclien } from 'src/classes/fa/faclien';
+import { Faclien } from 'src/classes/fa/faclien';
 // components
 import { ConfirmDialogComponent } from '../dialogs/confirm-dialog/confirm-dialog.component';
 import { ModalComponent } from '../dialogs/modal/modal.component';
@@ -27,6 +27,7 @@ export class CreacionComponent implements OnInit {
   @ViewChild(AlertComponent) alert: AlertComponent;
   @ViewChild(ModalComponent) modal: ModalComponent;
   pqr: pqinpqr = new pqinpqr();
+  clienInfo: Faclien;
   @Input() GnItemsItePqr: gnItem[];
   @Input() GnItemsIteTipi: gnItem[];
   @Input() GnItemsIte_stip: gnItem[];
@@ -84,11 +85,7 @@ export class CreacionComponent implements OnInit {
   Load() {
     this.spinner.show();
     let query = 'api/PqrTransactionLoad?';
-
-    if (this.client) {
-      query += `cli_coda=${this.client}`;
-    }
-
+    query += `cli_coda=${this.client}`;
     this._comu.Get(query, this.pqr.emp_codi).subscribe((resp: any) => {
       if (resp.retorno === 0) {
         this.GnItemsItePqr = resp.objTransaction.pqrType;
@@ -104,7 +101,7 @@ export class CreacionComponent implements OnInit {
         this.inscription = this.GnItemsItePqr.filter((t) => t.ite_codi === this.gndigfl.dig_valo)[0].ite_cont.toString();
         // Carga los datos del cliente si aplica
         if (resp.objTransaction.client != null && resp.objTransaction.client !== undefined) {
-          const client: faclien = resp.objTransaction.client;
+          const client: Faclien = resp.objTransaction.client;
           if (this.client) {
             this.spq000001 = resp.objTransaction.spq000001;
             this.pqr.inp_tcli = 'F';
@@ -147,7 +144,7 @@ export class CreacionComponent implements OnInit {
     this.ctcontr = rowSelected;
     this._comu.Get(`api/gnarbol?con_cont=${rowSelected.con_cont}`, this.pqr.emp_codi).subscribe((resp: any) => {
       this.area = resp.objTransaction;
-    })
+    });
   }
   openLupa() {
     this._table.show();
@@ -311,7 +308,7 @@ export class CreacionComponent implements OnInit {
     }
   }
 
-  getFileDetails(e) {    
+  getFileDetails(e) {
     for (var i = 0; i < e.target.files.length; i++) {
       this.myFiles.push(e.target.files[i]);
     }
@@ -328,8 +325,7 @@ export class CreacionComponent implements OnInit {
   }
 
   loadTipiFromFlag(ite_cont: string) {
-
-      const query = 'api/PqrTransactionLoad';
+      const query = 'api/PqrTransactionLoad?';
       this._comu.Get(query).subscribe((resp: any) => {
        if (resp.retorno === 0) {
          this.spq000003 = resp.objTransaction;

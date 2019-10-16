@@ -167,3 +167,8 @@ body {
 .label-button {
     margin-bottom: 0px;
 }
+
+.modal-xlg .custom-control-label {
+    position: relative;
+    margin-bottom: 13px;
+}

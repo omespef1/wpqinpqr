@@ -362,16 +362,31 @@
                                                 <span><i class="fas fa-users"></i></span>
                                             </div>
                                         </div>
-                                        <select class="form-control" id="mpa_nomb" name="mpa_nomb" [(ngModel)]="selectedPare">
-                                            <option *ngFor="let mpare of sumpare" [ngValue]="mpare">{{mpare.mpa_nomb | titlecase}}</option>
+                                        <select class="form-control" [(ngModel)]="selectedPare" name="mpa_nomb">
+                                            <option *ngFor="let mpare of sumpare" [ngValue]="mpare">{{mpare?.mpa_nomb | titlecase}}</option>
                                         </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="rad_nomr">Nombre documento</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-users"></i></span>
+                                            </div>
+                                        </div>
+                                        <input id="ddo_ndoc" name="ddo_ndoc" readonly [(ngModel)]="dperc.ddo_ndoc" type="text" class="form-control" placeholder="Nombre documento" autocomplete="off">
+                                        <button type="button" class="btn btn-primary" (click)="showModal()" *ngIf="radic.cra_codi !== undefined">
+                                            <span><i class="fas fa-search"></i></span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-4 pb-3">
-                                    <button [disabled]="dperc.dpe_docu == '' || dperc.dpe_nom1 == '' || dperc.dpe_ape1 == '' || selectedPare.mpa_nomb == undefined" type="button" class="btn btn-success btn-lg btn-block" (click)="addGrupoFamiliar()">Agregar</button>
+                                    <button [disabled]="dperc.ddo_ndoc == '' || dperc.dpe_docu == '' || dperc.dpe_nom1 == '' || dperc.dpe_ape1 == '' || selectedPare?.mpa_nomb === ''" type="button" class="btn btn-success btn-lg btn-block" (click)="addGrupoFamiliar()">Agregar</button>
                                 </div>
                             </div>
 
@@ -395,7 +410,7 @@
                                             <td>{{rnd.dpe_nom2}}</td>
                                             <td>{{rnd.dpe_ape1}}</td>
                                             <td>{{rnd.dpe_ape2}}</td>
-                                            <td>{{rnd.mpa_nomb}}</td>
+                                            <td>{{rnd?.mpa_nomb}}</td>
                                             <td><button type="button" class="btn btn-primary btn-sm text-center" (click)="delGrupoFamiliar()">Eliminar</button></td>
                                         </tr>
                                     </tbody>
@@ -539,6 +554,7 @@
                 <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!radicForm.form.valid">Guardar</button>
             </div>
         </div>
+
     </form>
 </div>
 
@@ -553,3 +569,60 @@
     (rowCLick)="setDocumento($event)" btnModalQb="btnDocumento" ModalQb="modalDocumento" #modalDocumento></app-table-search-generic>
 
 <app-alert [message]="msg"></app-alert>
+
+<app-modal title="Seleccione empresa" (accept)="modal.dismiss();Load()">
+    <div class="form-group">
+        <label for="emp_codi" class="col-form-label"></label>
+        <select class="form-control" id="usu_coda" name="usu_coda" [(ngModel)]="radic.emp_codi" required #usu_coda="ngModel">
+              <option value="0">Seleccione</option>
+              <option *ngFor="let companie of companies" [value]="companie.emp_codi">{{companie.emp_nomb | titlecase}}
+              </option>
+            </select>
+    </div>
+</app-modal>
+
+<app-modal-doctos tamano="xlg" title="Documentos" (accept)="modalDoctos.dismiss();">
+    <div class="table table-hover table-striped table-bordered mt-2">
+        <table class="table table-hover table-striped table-bordered mt-4">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Nombre Documento</th>
+                    <th scope="col">No Recibido</th>
+                    <th scope="col">Presentado</th>
+                    <th scope="col">Observación</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let ddo of rnddocu;let index=index;">
+                    <td>{{ddo.ite_nomb}}</td>
+                    <td style="width: 11%" class="text-center">
+                        <div class="col-auto my-1 text-center">
+                            <div class="form-group custom-checkbox mr-sm-2 text-center">
+                                <input type="checkbox" class="custom-control-input" id="{{'ddo_esis' + index.toString()}}" [(checked)]="ddo.ddo_esis" (change)="ddo.ddo_esis=!ddo.ddo_esis">
+                                <label class="custom-control-label" for="{{'ddo_esis' + index.toString()}}"></label>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="width: 10%" class="text-center">
+                        <div class="col-auto my-1 text-center">
+                            <div class="form-group custom-checkbox mr-sm-2 text-center">
+                                <input type="checkbox" class="custom-control-input" id="{{'ddo_recb' + index.toString()}}" [(checked)]="ddo.ddo_recb" (change)="ddo.ddo_recb=!ddo.ddo_recb">
+                                <label class="custom-control-label" for="{{'ddo_recb' + index.toString()}}"></label>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <input id="ddo_obse" name="ddo_obse" type="text" class="form-control" autocomplete="off" [(ngModel)]="ddo.ddo_obse">
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-link btn-sm btn-block" (click)="selDocumento(ddo)">
+                            <span><i class="far fa-check-circle"></i>                                                                                                                                                                                                         
+                            </span>
+                         </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</app-modal-doctos>

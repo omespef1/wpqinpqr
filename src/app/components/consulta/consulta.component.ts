@@ -176,8 +176,8 @@ export class ConsultaComponent implements OnInit {
     });
   }
 
-async  GetLogo(){
-  await  this._conmu.Get(`api/GnLogo?${this.pqr.emp_codi}`).subscribe((resp: any) => {
+async  GetLogo() {
+  await  this._conmu.Get(`api/GnLogo?emp_codi=${this.pqr.emp_codi}`).subscribe((resp: any) => {
       if (resp.retorno === 0) {
          this.logo = resp.objTransaction.emp_logs;
       }

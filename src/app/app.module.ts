@@ -36,6 +36,7 @@ import { RnradicComponent } from './components/rn/rnradic/rnradic.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ComponentsComponent } from './components/components.component';
 import { TableSearchGenericComponent } from './components/tools/table-search-generic/table-search-generic.component';
+import { ModalDoctosComponent } from './components/rn/rnradic/modal-doctos/modal-doctos.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -69,7 +70,8 @@ export const MY_FORMATS = {
     ComponentsComponent,
     EerelesComponent,
     RnradicComponent,
-    TableSearchGenericComponent
+    TableSearchGenericComponent,
+    ModalDoctosComponent
   ],
   imports: [
     FormsModule,                               // <========== Add this line!
@@ -99,7 +101,8 @@ export const MY_FORMATS = {
     EnvServiceProvider,
     ConfirmDialogComponent,
     ModalComponent,
-    TableSearchComponent
+    TableSearchComponent,
+    ModalDoctosComponent
   ],
   bootstrap: [AppComponent]
 })
