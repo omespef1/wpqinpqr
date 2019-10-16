@@ -16,6 +16,13 @@ export class ComunicationsService {
     url += `&emp_codi=${emp_codi}`;    
     return this.http.get(url);
   }
+  GetTransaction<T>(urlController: string, emp_codi: number = 0) {
+    let url = `${this.env.apiUrl}${urlController}`;
+    if (emp_codi !== 0)  {
+      url += `&emp_codi=${emp_codi}`;
+    }
+    return this.http.get<T>(url);
+  }
   
   async getAsync(urlController: string) {
     await this.http.get<ToTransaction>(`${this.env.apiUrl}${urlController}`).subscribe((resp: ToTransaction) => {
