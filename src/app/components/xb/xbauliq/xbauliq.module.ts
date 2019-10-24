@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 const routes: Routes = [
   {
@@ -20,7 +21,8 @@ const routes: Routes = [
     FormsModule ,
     RouterModule.forChild(routes),
     MatDatepickerModule,
-    SharedModule
+    SharedModule,
+    NgxSpinnerModule
   ],
   declarations: [
     XbauliqComponent

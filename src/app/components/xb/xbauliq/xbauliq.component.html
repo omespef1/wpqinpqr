@@ -1,3 +1,7 @@
+
+ <ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
+    <!-- <p text-center style="font-size: 15px; color: gray">{{loading}}</p> -->
+</ngx-spinner>
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
         <h1 class="display-4">Generación de autoliquidación</h1>
@@ -27,6 +31,14 @@
                     </div>
                 </div>
                 <div class="row">
+                     <div class="alert alert-danger">
+                      <p>  Si tiene informes financieros por reportar, esta autoliquidación no desplegará información asociada con ello.
+                        Verifique si ha presentado toda la información financiera que le ha sido requerida. En caso de tener reportes pendientes, por favor repórtelos.
+                        Los valores indicados solamente aplican para para la fecha de generación de la autoliquidación: {{today | date:'dd/MM/yyyy'}}. Si no realiza el pago en esta fecha por favor genere nuevamente la autoliquidación
+                        </p>
+                     </div>
+                </div>
+                <div class="row">
                     <div class="col-lg-2 col-md-3 col-xs-12 col-sm-12">
                         <label for="pro_codi">Nit</label>
                         <div class="input-group">
@@ -35,7 +47,7 @@
                                     <span> <span><i class="fas fa-id-card"></i></span></span>
                                 </div>
                             </div>
-                            <input type="text" readonly=true class="form-control" placeholder="Nit">
+                            <input type="text" [(ngModel)]="client" name="cli_coda" readonly=true class="form-control" placeholder="Nit">
                         </div>
                     </div>
                     <div class="col-lg-2 col-md-3 col-xs-12 col-sm-12">
@@ -46,7 +58,7 @@
                                     <span> <span><i class="fas fa-id-card"></i></span></span>
                                 </div>
                             </div>
-                            <input type="text" readonly=true class="form-control" placeholder="Nombre de entidad">
+                            <input type="text" name="ter_noco" readonly=true class="form-control" [(ngModel)]="ter_noco" placeholder="Nombre de entidad">
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
@@ -58,7 +70,7 @@
                                 </div>
                             </div>
                             <input matInput placeholder="Fecha de pago" [min]="today" [matDatepicker]="fec_pago"
-                                type="text" class="form-control" name="fec_pago" id="fec_pago" [(ngModel)]="today"
+                                type="text" class="form-control" name="fec_pago" id="fec_pago" [(ngModel)]="par_fech"
                                 required #fec_pago="ngModel" readonly>
                             <mat-datepicker-toggle [for]="fec_pago"></mat-datepicker-toggle>
                             <mat-datepicker disabled="false" #fec_pago touchUi></mat-datepicker>
@@ -67,7 +79,7 @@
                     <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
                         <br>
                         <button type="button" class="btn btn-success btn-block" (click)="GetAutliq()">
-                            <i [class]="!loading?'fa fa-check':'fa fa-circle-o-notch fa-spin'">
+                            <i [class]="!loading?'fa fa-check':'fa fa-cog fa-spin'">
                             </i> Consultar y/o Liquidar
                         </button>
                     </div>
@@ -82,54 +94,76 @@
             </form>
         </div>
     </div>
-    <div class="card card-gray">
+    <div class="card card-gray" *ngIf="cacxcob.length>0">
         <div class="card-header bg-primary text-white">Autoliquidación</div>
         <div class="card-body">
-            <table class="table table-dark">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">TIPO DE SERVICIO</th>
-                        <th scope="col">VIGENCIA</th>
-                        <th scope="col">CONCEPTO</th>
-                        <th scope="col">DESCRIPCIÓN</th>
-                        <th scope="col">BASE GRAVABLE</th>
-                        <th scope="col">TARIFA</th>
-                        <th scope="col">VALOR INICIAL</th>
-                        <th scope="col">SALDO</th>
-                        <th scope="col">SALDO INTERESES</th>
-                        <th scope="col">INTERESES DE MORA</th>
-                        <th scope="col">VALOR TOTAL A PAGAR</th>
-                        <th scope="col">AUTOLIQUIDAR</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of cacxcob;let i = index">
-                        <th scope="row">
-                            {{ i }}
-                        </th>
-                        <th scope="row">
-                            {{ item.cts_nomb }}
-                        </th>
-                        <th scope="row">
-                            {{ item.ddi_vige }}
-                        </th>
-                        <th scope="row">
-                            {{ item.top_nomb }}
-                        </th>
-                        <th scope="row">
-                            {{ item.cxc_desc }}
-                        </th>
-                        <th scope="row">
-                            {{ item.cxc_tota }}
-                        </th>
-                        <th scope="row">
-                            {{ item.cxc_sald }}
-                        </th>
-                    </tr>
-                    
-                </tbody>
-            </table>
+
+            <div class="row">
+                    <table class="table table-striped table-hover table-bordered">
+                            <thead class="thead-light table-info text-center">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Tipo Servicio</th>
+                                    <th scope="col">Vigencia</th>
+                                    <th scope="col">Concepto</th>
+                                    <th scope="col">Descripción</th>
+                                    <th scope="col">Base Gravable</th>
+                                    <th scope="col">Tarifa</th>
+                                    <th scope="col">Valor Inicial</th>
+                                    <th scope="col">Saldo</th>
+                                    <th scope="col">Saldo Intereses</th>
+                                    <th scope="col">InteresesMora</th>
+                                    <th scope="col">Total a Pagar</th>
+                                    <th scope="col">Sel</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of cacxcob;let i = index">
+                                    <td scope="row">
+                                        {{ i }}
+                                    </td>
+                                    <td>
+                                        {{ item.cts_nomb  }}
+                                    </td>
+                                    <td>
+                                        {{ item.ddi_vige }}
+                                    </td>
+                                    <td>
+                                        {{ item.top_nomb | titlecase }}
+                                    </td>
+                                    <td>
+                                        {{ item.cxc_desc }}
+                                    </td>
+                                    <td>
+                                        {{ item.cxc_tota }}
+                                    </td>
+                                    <td>
+                                        Tarifa
+                                    </td>
+                                    <td>
+                                        {{ item.cxc_tota }}
+                                    </td>
+                                    <td>
+                                        {{ item.cxc_sald }}
+                                    </td>                                    
+                                    <td>
+                                       Saldo intereses
+                                    </td>
+                                    <td>
+                                    Intereses Mora
+                                    </td>
+                                    <td>
+                                       Total
+                                    </td>
+                                    <td>
+                                    <input type="checkbox" [disabled]="item.liq_apro" checked="true">
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+            </div>
+            
         </div>
 
     </div>
@@ -137,7 +171,7 @@
 
 </div>
 
-<app-gnempre title="Seleccione empresa" (accept)="_EmpreModal.dismiss();GetAutliq()">
+<app-gnempre title="Seleccione empresa" (accept)="_EmpreModal.dismiss()">
     <form>
         <div class="form-group">
             <label for="emp_codi" class="col-form-label"></label>

@@ -4,3 +4,9 @@ export interface ToTransaction{
     txtRetorno:string,
     objTransaction:any
   }
+
+  export interface Transaction {
+    Retorno:number;
+    TxtRetorno:string,
+    ObjTransaction:any
+  }
