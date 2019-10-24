@@ -4,7 +4,7 @@
 
 <!-- Modal -->
 <div id="modalGeneral" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-backdrop="static">
-    <div [class]="tamano === 'xlg' ? 'modal-dialog modal-dialog-centered modal-lg modal-xlg' : 'modal-dialog modal-dialog-centered'" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalCenterTitle">{{title}}</h5>
@@ -16,7 +16,7 @@
                 <ng-content>
                 </ng-content>
             </div>
-            <div class="modal-footer" *ngIf="tamano !== 'xlg'">
+            <div class="modal-footer">
                 <button type="button" class="btn btn-primary" (click)="ok()">OK</button>
             </div>
         </div>

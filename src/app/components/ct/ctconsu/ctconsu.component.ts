@@ -38,9 +38,14 @@ export class CtconsuComponent implements OnInit {
   GetParams(): boolean {
     try {
       this.route.queryParamMap.subscribe(queryParams => {
-      if (queryParams.get('usu_codi') != null) {
+        if (queryParams.get('usu_codi') != null) {
         this.propo.usu_codi = atob(queryParams.get('usu_codi'));
-        this.loadCompanies();
+
+        if (this.propo.usu_codi !== '') {
+          this.loadCompanies();
+        }
+      } else {
+        this.showAlertMesssage('Acceso denegado.');
       }
       return true;
     }, err => {

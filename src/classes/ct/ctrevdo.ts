@@ -8,5 +8,5 @@ export class Ctrevdo {
     public adj_nomb: string;
     public rev_apro: string;
     public ite_chkd: boolean;
-
+    public rad_cont: number;
 }

@@ -7,7 +7,7 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
 </ngx-spinner>
 
-<div class="container" *ngIf="propo.emp_codi!=0">
+<div class="container">
 
     <div class="row">
         <div class="col-lg-4 col-md-1 col-sm-1">
@@ -63,7 +63,7 @@
                                                 <span><i class="fas fa-search"></i></span>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" [maxLength]="1" placeholder="DV" name="pro_dive" id="pro_dive" [(ngModel)]="propo.pro_dive" required #pro_dive="ngModel" autocomplete="off">
+                                        <input type="text" maxlength="1" (keypress)="numberOnly($event)" class="form-control" placeholder="DV" name="pro_dive" id="pro_dive" [(ngModel)]="propo.pro_dive" required #pro_dive="ngModel" autocomplete="off">
                                     </div>
                                     <div [hidden]="pro_dive.valid || pro_dive.pristine" class="alert alert-danger">
                                         Dígito de Verificación es requerido
@@ -981,7 +981,7 @@
                                     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-3">
                                         <div class="btn-group">
                                             <label class="btn btn-primary label-button">                                          
-                                                  <input type="file" required class="btn btn-primary" ng2FileSelect [uploader]="uploader" placeholder="Subir archivo"  
+                                                  <input type="file" [disabled]="uploader.queue.length" required class="btn btn-primary" ng2FileSelect [uploader]="uploader" placeholder="Subir archivo"  
                                                   style="display:none" accept=".pdf,.doc,.docx,.jpg,.png,.xls,.xlsx"  (change)="onFileChange($event)"/>
                                                   <i class="fas fa-file-upload"></i> &nbsp;Agregar adjunto
                                                   </label>
@@ -1039,6 +1039,7 @@
                                             <input type="text" class="form-control" required placeholder="Observaciones" name="pro_obse" id="pro_obse" [(ngModel)]="docpr.pro_obse">
                                         </div>
                                     </div>
+
                                     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-4">
                                         <button [disabled]="docpr.pro_ddoc == '' || docpr.pro_obse == '' || docpr.pro_fent == null || docpr.pro_fven == null || docpr.fil_name == ''" type="button" class="btn btn-secondary btn-md btn-block" (click)="addVigencia()">Agregar</button>
                                         <div class="table-responsive mt-3" *ngIf="ctdocpr?.length">

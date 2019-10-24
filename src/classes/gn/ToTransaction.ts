@@ -1,6 +1,6 @@
 
-export interface ToTransaction{
-    retorno:number;
-    txtRetorno:string,
-    objTransaction:any
+export interface ToTransaction {
+    retorno: number;
+    txtRetorno: string;
+    objTransaction: any;
   }

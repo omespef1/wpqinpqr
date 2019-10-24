@@ -1,4 +1,4 @@
-import { Component, Input, OnInit ,ViewChild} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Title } from '@angular/platform-browser';
@@ -43,28 +43,28 @@ export class ConsultaComponent implements OnInit {
   async ngOnInit() {
 
     this.setTitle('Consulta de PQR');
-     this.route.queryParamMap.subscribe(queryParams => {
+    this.route.queryParamMap.subscribe(queryParams => {
       this.queryInp_Cont = queryParams.get('pqr');
       this.queryInp_Pass = queryParams.get('psw');
 
-      if (this.queryInp_Cont != null &&  this.queryInp_Pass != null) {
-        this.pqrIn.inp_cont =  Number(this.queryInp_Cont);
+      if (this.queryInp_Cont != null && this.queryInp_Pass != null) {
+        this.pqrIn.inp_cont = Number(this.queryInp_Cont);
         this.pqrIn.inp_pass = this.queryInp_Pass;
         this.postPqr();
       }
     });
 
     await this.GetLogo();
-    await this.LoadPqrFormBasicData();
+    this.LoadPqrFormBasicData();
   }
-     public setTitle( newTitle: string) {
-    this.titleService.setTitle( newTitle );
+  public setTitle(newTitle: string) {
+    this.titleService.setTitle(newTitle);
   }
   async postPqr() {
-  let pqr = <any> await  this.GetInfoPqr();
-
+    this.spinner.show();
+    const pqr = <any>await this.GetInfoPqr();
     if (pqr.retorno === 0) {
-      await this.GetAttchment();
+      this.GetAttchment();
       this.GetInfoEncuesta();
       this.submitted = true;
     }
@@ -86,13 +86,11 @@ export class ConsultaComponent implements OnInit {
     // Carga el desplegable de tipo de solicitud
     this.spinner.show();
     await this._conmu.Get(`api/GnItems?tit_cont=327`).subscribe((resp: any) => {
-      this.spinner.hide();
       this.GnItemsItePqr = resp;
     }, err => {
       this.showMessage('Error conectando con el servidor');
-      this.spinner.hide();
-      // this.showAlertMesssage(`Error conectado con el servidor, verfique que la dirección ${ServiceUrl} sea correcta`);
     });
+    this.spinner.hide();
   }
 
   showMessage(msg: string) {
@@ -101,6 +99,7 @@ export class ConsultaComponent implements OnInit {
 
   async GetAttchment() {
     // Descarga los adjuntos asociados a la pqr
+    this.spinner.show();
     let url = `api/download?consecutivo=${this.pqr.cas_cont}&pro_codi=SPQINPQR&tableName=PQ_INPQR&emp_codi=${this.pqr.emp_codi}`;
 
     await this._conmu.Get(url).subscribe((resp: any) => {
@@ -131,7 +130,7 @@ export class ConsultaComponent implements OnInit {
       this.encuesta.push(pregunta);
     }
     this._conmu.Post('api/PqEncue', this.encuesta).toPromise().then((resp: any) => {
-      this.spinner.hide();
+      this.spinner.show();
       if (resp.retorno === 0) {
         this.showEncuesta = false;
         this.showMessage('Encuesta enviada!');
@@ -149,7 +148,6 @@ export class ConsultaComponent implements OnInit {
     switch (pregunta) {
       case 1:
         this.respuestas[0] = respuesta;
-        console.log(this.respuestas[0]);
         break;
       case 2:
         this.respuestas[1] = respuesta;
@@ -157,9 +155,7 @@ export class ConsultaComponent implements OnInit {
       case 3:
         this.respuestas[2] = respuesta;
         break;
-
     }
-    console.log(this.respuestas.length);
   }
 
   GetInfoEncuesta() {
@@ -176,10 +172,10 @@ export class ConsultaComponent implements OnInit {
     });
   }
 
-async  GetLogo() {
-  await  this._conmu.Get(`api/GnLogo?emp_codi=${this.pqr.emp_codi}`).subscribe((resp: any) => {
+  async  GetLogo() {
+    await this._conmu.Get(`api/GnLogo?emp_codi=${this.pqr.emp_codi}`).subscribe((resp: any) => {
       if (resp.retorno === 0) {
-         this.logo = resp.objTransaction.emp_logs;
+        this.logo = resp.objTransaction.emp_logs;
       }
     }, err => {
       this.showMessage('Error conectando con el servidor');

@@ -34,6 +34,7 @@ export class RnradicComponent implements OnInit {
 
   @ViewChild('modalAportant') _tableAportant: TableSearchGenericComponent;
   @ViewChild('modalTipDocto') _tableTipDocto: TableSearchGenericComponent;
+  @ViewChild('modalTipDoctoEmpre') _tableTipDoctoEmpre: TableSearchGenericComponent;
   @ViewChild('modalDocument') _tableDocument: TableSearchGenericComponent;
   @ViewChild('modalGruRadic') _tableGruRadic: TableSearchGenericComponent;
   @ViewChild('modalClasific') _tableClasific: TableSearchGenericComponent;
@@ -45,12 +46,13 @@ export class RnradicComponent implements OnInit {
   @ViewChild(ModalDoctosComponent) modalDoctos: ModalDoctosComponent;
 
   @Input() gntipdo: any[];
+  @Input() gntipdE: any[];
   @Input() artiapo: any[];
   @Input() arapovo: any[];
   @Input() rngrura: any[];
   @Input() suafili: any[];
   @Input() rncraco = new RnCraco();
-  @Input() gnpaise: GnPais[] = [];
+  @Input() gnpaise: GnPais[];
   @Input() gnregio: GnRegio[] = [];
   @Input() gndepar: GnDepar[] = [];
   @Input() gnmunic: GnMunic[] = [];
@@ -64,6 +66,7 @@ export class RnradicComponent implements OnInit {
   ite_depe = '';
   cra_prim = '';
   cra_clar = '';
+  cra_dest = '';
   client = '';
   radic: RnRadic = new RnRadic();
   SRN000001: string;
@@ -77,6 +80,14 @@ export class RnradicComponent implements OnInit {
   local = new GnLocal();
   companies: companies[];
 
+  datTrabajador = false;
+  nucleoFamilia = false;
+  tipoAportante = false;
+  tipoDocumento = false;
+  numeDocumento = false;
+  tipDocTrabaja = false;
+  numDocTrabaja = false;
+
   constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer,
     private titleService: Title, private route: ActivatedRoute, private _confirm: ConfirmDialogComponent, private env: EnvService) {
    }
@@ -85,7 +96,7 @@ export class RnradicComponent implements OnInit {
 
     await this.GetParams();
 
-    if ( this.client) {
+    if (this.radic.emp_codi === undefined) {
       this.loadCompanies();
     }
 
@@ -116,11 +127,11 @@ export class RnradicComponent implements OnInit {
     this.radic.rad_muni = 0;
     this.radic.rad_loca = 0;
     this.radic.rad_barr = 0;
-    this.gnregio = undefined;
-    this.gndepar = undefined;
-    this.gnmunic = undefined;
-    this.gnlocal = undefined;
-    this.gnbarri = undefined;
+    this.gnregio = [];
+    this.gndepar = [];
+    this.gnmunic = [];
+    this.gnlocal = [];
+    this.gnbarri = [];
     this.radic.rad_tdat = 'N';
     this.sumpare = [];
     this.selectedPare = new SumPare();
@@ -180,6 +191,7 @@ export class RnradicComponent implements OnInit {
         this.artiapo = resp.objTransaction.artiapo;
         this.gnpaise = resp.objTransaction.GnPaise;
         this.gntipdo = resp.objTransaction.GnTipdo;
+        this.gntipdE = resp.objTransaction.GnTipdo;
         this.arapovo = resp.objTransaction.arapovo;
         this.rngrura = resp.objTransaction.rngrura;
         this.sumpare = resp.objTransaction.SuMpare;
@@ -223,6 +235,13 @@ export class RnradicComponent implements OnInit {
     this._tableTipDocto.show();
   }
 
+  lupaTipoDocumentoEmpresa() {
+    this._tableTipDoctoEmpre.btnModalQb = 'btnTipDoctoEmpre';
+    this._tableTipDoctoEmpre.ModalQb = 'modalTipDoctoEmpre';
+    this._tableTipDoctoEmpre.render(this.gntipdE);
+    this._tableTipDoctoEmpre.show();
+  }
+
   lupaDocumento() {
     this._tableDocument.btnModalQb = 'btnDocument';
     this._tableDocument.ModalQb = 'modalDocument';
@@ -238,6 +257,7 @@ export class RnradicComponent implements OnInit {
   }
 
   lupaGrupoRadicacion() {
+    this.hideControls();
     this._tableGruRadic.btnModalQb = 'btnGruRadic';
     this._tableGruRadic.ModalQb = 'modalGruRadic';
     this._tableGruRadic.render(this.rngrura);
@@ -265,9 +285,18 @@ export class RnradicComponent implements OnInit {
 
   setTipDoctoEmpre(rowSelected: any) {
     this.radic.tip_coda = rowSelected.TIP_CODI;
+    this.radic.tip_noma = rowSelected.TIP_NOMB;
+  }
+
+  setDoctoEmpre(rowSelected: any) {
+    this.radic.tia_cont = rowSelected.TIA_CONT;
+    this.radic.tia_codi = rowSelected.TIA_CODI;
+    this.radic.tia_nomb = rowSelected.TIA_NOMB;
+    this.radic.tip_coda = rowSelected.TIP_CODI;
     this.radic.tip_nomb = rowSelected.TIP_NOMB;
     this.radic.apo_coda = rowSelected.APO_CODA;
     this.radic.apo_razs = rowSelected.APO_RAZS;
+    this.radic.afi_tele = rowSelected.AFI_TELE;
   }
 
   setGruRadic(rowSelected: any) {
@@ -280,35 +309,16 @@ export class RnradicComponent implements OnInit {
   }
 
   setClasificacion(rowSelected: any) {
+
+    this.cleanDataForm();
     this.radic.cra_cont = rowSelected.CRA_CONT;
     this.radic.cra_codi = rowSelected.CRA_CODI;
     this.radic.cra_nomb = rowSelected.CRA_NOMB;
     this.ite_depe =  rowSelected.ITE_NOMB;
     this.cra_prim =  rowSelected.CRA_PRIM;
-    this.cra_clar =  rowSelected.CRA_CLAR;
-    this.radic.tip_codi = undefined;
-    this.radic.tip_nomb = undefined;
-    this.radic.afi_docu = undefined;
-    this.radic.afi_nom1 = undefined;
-    this.radic.afi_nom2 = undefined;
-    this.radic.afi_ape1 = undefined;
-    this.radic.afi_ape2 = undefined;
-    this.radic.afi_fecn = undefined;
-    this.radic.afi_tele = undefined;
-    this.radic.tip_coda = undefined;
-    this.radic.tip_noma = undefined;
-    this.radic.tia_codi = undefined;
-    this.radic.tia_nomb = undefined;
-    this.radic.apo_coda = undefined;
-    this.radic.apo_razs = undefined;
-    this.radic.dsu_tele = undefined;
-    this.radic.rad_dire = undefined;
-    this.radic.rad_emai = undefined;
-    this.gnregio = [];
-    this.gndepar = [];
-    this.gnmunic = [];
-    this.gnlocal = [];
-    this.gnbarri = [];
+    this.cra_clar =   rowSelected.CRA_CLAR;
+    this.cra_dest =  rowSelected.CRA_DEST;
+    this.hideShowControls();
   }
 
   setDocumento(rowSelected: any) {
@@ -369,6 +379,32 @@ export class RnradicComponent implements OnInit {
     this.gnbarri.push(this.barri);
   }
 
+cleanDataForm() {
+  this.radic.tip_codi = undefined;
+  this.radic.tip_nomb = '';
+  this.radic.afi_docu = '';
+  this.radic.afi_nom1 = '';
+  this.radic.afi_nom2 = '';
+  this.radic.afi_ape1 = '';
+  this.radic.afi_ape2 = '';
+  this.radic.afi_fecn = undefined;
+  this.radic.afi_tele = '';
+  this.radic.tip_coda = undefined;
+  this.radic.tip_noma = '';
+  this.radic.tia_codi = undefined;
+  this.radic.tia_nomb = '';
+  this.radic.apo_coda = '';
+  this.radic.apo_razs = '';
+  this.radic.dsu_tele = '';
+  this.radic.rad_dire = '';
+  this.radic.rad_emai = '';
+  this.gnregio = [];
+  this.gndepar = [];
+  this.gnmunic = [];
+  this.gnlocal = [];
+  this.gnbarri = [];
+}
+
   showAlertMesssage(msg: string) {
     this.msg = msg;
     this.alert.show();
@@ -381,12 +417,11 @@ export class RnradicComponent implements OnInit {
 
     this._comu.Get(query, this.radic.emp_codi).subscribe((resp: any) => {
 
-      this.gnregio = undefined;
-      this.gndepar = undefined;
-      this.gnmunic = undefined;
-      this.gnlocal = undefined;
-      this.gnbarri = undefined;
-      this.radic.rad_regi = 0;
+      this.gnregio = [];
+      this.gndepar = [];
+      this.gnmunic = [];
+      this.gnlocal = [];
+      this.gnbarri = [];
 
       if (resp.retorno === 0) {
         this.gnregio = resp.objTransaction.GnRegio;
@@ -408,11 +443,10 @@ export class RnradicComponent implements OnInit {
 
     this._comu.Get(query, this.radic.emp_codi).subscribe((resp: any) => {
 
-      this.gndepar = undefined;
-      this.gnmunic = undefined;
-      this.gnlocal = undefined;
-      this.gnbarri = undefined;
-      this.radic.rad_depa = 0;
+      this.gndepar = [];
+      this.gnmunic = [];
+      this.gnlocal = [];
+      this.gnbarri = [];
 
       if (resp.retorno === 0) {
         this.gndepar = resp.objTransaction.GnDepar;
@@ -435,11 +469,9 @@ export class RnradicComponent implements OnInit {
 
     this._comu.Get(query, this.radic.emp_codi).subscribe((resp: any) => {
 
-      this.gnmunic = undefined;
-      this.gnlocal = undefined;
-      this.gnbarri = undefined;
-
-      this.radic.rad_muni = 0;
+      this.gnmunic = [];
+      this.gnlocal = [];
+      this.gnbarri = [];
 
       if (resp.retorno === 0) {
         this.gnmunic = resp.objTransaction.GnMunic;
@@ -464,9 +496,8 @@ export class RnradicComponent implements OnInit {
 
     this._comu.Get(query, this.radic.emp_codi).subscribe((resp: any) => {
 
-      this.gnlocal = undefined;
-      this.gnbarri = undefined;
-      this.radic.rad_loca = 0;
+      this.gnlocal = [];
+      this.gnbarri = [];
 
       if (resp.retorno === 0) {
         this.gnlocal = resp.objTransaction.GnLocal;
@@ -492,8 +523,7 @@ export class RnradicComponent implements OnInit {
 
     this._comu.Get(query, this.radic.emp_codi).subscribe((resp: any) => {
 
-      this.gnbarri = undefined;
-      this.radic.rad_barr = 0;
+      this.gnbarri = [];
 
       if (resp.retorno === 0) {
         this.gnbarri = resp.objTransaction.GnBarri;
@@ -560,6 +590,16 @@ export class RnradicComponent implements OnInit {
     });
   }
 
+  hideControls() {
+    this.datTrabajador = false;
+    this.nucleoFamilia = false;
+    this.tipoAportante = false;
+    this.tipoDocumento = false;
+    this.numeDocumento = false;
+    this.tipDocTrabaja = false;
+    this.numDocTrabaja = false;
+  }
+
   selDocumento(ddo: RnDdocu) {
     this.modalDoctos.dismiss();
     this.dperc.ddo_ndoc = ddo.ite_nomb;
@@ -568,5 +608,66 @@ export class RnradicComponent implements OnInit {
     this.dperc.ddo_recb = ddo.ddo_recb;
     this.dperc.ddo_esis = ddo.ddo_esis;
     this.dperc.ite_codi = ddo.ite_codi;
+  }
+
+  hideShowControls() {
+    this.hideControls();
+    if (this.cra_clar === 'A' && this.cra_prim === 'N' && this.cra_dest === 'F') {
+      this.datTrabajador = true;
+      this.nucleoFamilia = true;
+      this.numeDocumento = true;
+      this.numDocTrabaja = true;
+    } else if (this.cra_clar === 'A' && this.cra_prim === 'N' && this.cra_dest === 'S') {
+      this.datTrabajador = true;
+      this.nucleoFamilia = true;
+      this.numeDocumento = true;
+      this.numDocTrabaja = true;
+    } else if (this.cra_clar === 'A' && this.cra_prim === 'S' && this.cra_dest === 'F') {
+      this.datTrabajador = true;
+      this.nucleoFamilia = true;
+      this.numeDocumento = true;
+      this.tipDocTrabaja = true;
+    } else if (this.cra_clar === 'A' && this.cra_prim === 'S' && this.cra_dest === 'S') {
+      this.datTrabajador = true;
+      this.nucleoFamilia = true;
+      this.numeDocumento = true;
+      this.tipDocTrabaja = true;
+    } else if (this.cra_clar === 'N' && this.cra_prim === 'N' && this.cra_dest === 'N') {
+      this.datTrabajador = true;
+      this.nucleoFamilia = true;
+      this.numeDocumento = true;
+      this.numDocTrabaja = true;
+    } else if (this.cra_clar === 'P' && this.cra_prim === 'N' && this.cra_dest === 'A') {
+      this.numeDocumento = true;
+    } else if (this.cra_clar === 'P' && this.cra_prim === 'N' && this.cra_dest === 'S') {
+      this.numeDocumento = true;
+    } else if (this.cra_clar === 'P' && this.cra_prim === 'S' && this.cra_dest === 'A') {
+      this.tipoAportante = true;
+      this.tipoDocumento = true;
+    } else if (this.cra_clar === 'T' && this.cra_prim === 'N' && this.cra_dest === 'F') {
+      this.datTrabajador = true;
+      this.nucleoFamilia = true;
+      this.numDocTrabaja = true;
+    } else if (this.cra_clar === 'T' && this.cra_prim === 'N' && this.cra_dest === 'S') {
+      this.datTrabajador = true;
+      this.nucleoFamilia = true;
+      this.numDocTrabaja = true;
+    } else if (this.cra_clar === 'T' && this.cra_prim === 'S' && this.cra_dest === 'F') {
+      this.datTrabajador = true;
+      this.nucleoFamilia = true;
+      this.tipDocTrabaja = true;
+    } else if (this.cra_clar === 'T' && this.cra_prim === 'S' && this.cra_dest === 'M') {
+      this.datTrabajador = true;
+      this.nucleoFamilia = true;
+      this.numDocTrabaja = true;
+    } else {
+      this.datTrabajador = true;
+      this.nucleoFamilia = true;
+      this.tipoAportante = true;
+      this.tipoDocumento = true;
+      this.numeDocumento = true;
+      this.tipDocTrabaja = true;
+      this.numDocTrabaja = true;
+    }
   }
 }

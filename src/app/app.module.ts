@@ -7,11 +7,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-//Services
+// Services
 import {ComunicationsService} from '../services/comunications.service';
 import { ConsultaComponent } from './components/consulta/consulta.component';
 import { CreacionComponent } from './components/creacion/creacion.component';
-//RUTAS
+// RUTAS
 import {app_routing} from './app.routes';
 import { AlertComponent } from './components/alert/alert.component';
 import { SocoxcnComponent } from './components/so_socio/socoxcn/socoxcn.component';
@@ -19,9 +19,9 @@ import { EstadosPipe } from './pipes/estados.pipe';
 import { EccotizComponent } from './components/ec/eccotiz/eccotiz.component';
 import { CtpropoComponent } from './components/ct/ctpropo/ctpropo.component';
 import { CtconsuComponent } from './components/ct/ctconsu/ctconsu.component';
-//Angular material
+// Angular material
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule,MatFormFieldModule,MatInputModule,MatTableModule,MatPaginatorModule} from '@angular/material';
+import {MatNativeDateModule, MatFormFieldModule, MatInputModule, MatTableModule, MatPaginatorModule} from '@angular/material';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import { TarjetasPipe } from './pipes/socoxcn/tarjetas.pipe';
 import { EnvServiceProvider } from './env.service.provider';
@@ -32,7 +32,7 @@ import { AlertDialogComponent } from './components/dialogs/alert-dialog/alert-di
 import { WgnfpassComponent } from './pages/gn/wgnfpass/wgnfpass.component';
 import { EerelesComponent } from './components/ee/eereles/eereles.component';
 import { RnradicComponent } from './components/rn/rnradic/rnradic.component';
-//plugins
+// plugins
 import { FileUploadModule } from 'ng2-file-upload';
 import { TableSearchGenericComponent } from './components/tools/table-search-generic/table-search-generic.component';
 import { ModalDoctosComponent } from './components/rn/rnradic/modal-doctos/modal-doctos.component';
@@ -70,6 +70,7 @@ export const MY_FORMATS = {
     RnradicComponent,
     TableSearchGenericComponent,
     ModalDoctosComponent
+    
   ],
   imports: [
     FormsModule,                               // <========== Add this line!
@@ -85,8 +86,8 @@ export const MY_FORMATS = {
       MatInputModule,
       MatTableModule,
       MatPaginatorModule,
-      FileUploadModule
-
+      FileUploadModule,
+      BrowserModule
   ],
   providers: [
      {provide: MAT_DATE_LOCALE, useValue: 'es-ES'},

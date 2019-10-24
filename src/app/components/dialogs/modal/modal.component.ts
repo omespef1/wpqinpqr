@@ -10,8 +10,7 @@ export class ModalComponent implements OnInit {
   @Input() title = 'Title';
   @Input() subTitle = 'subTitle';
   @Output() accept: EventEmitter<string>;
-  @Input() tamano: string;
-
+  
   constructor() {
     this.accept = new EventEmitter();
    }

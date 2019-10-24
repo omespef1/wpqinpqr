@@ -8,6 +8,9 @@
 </div>
 <div class="container">
 
+    <ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
+    </ngx-spinner>
+
     <div class="row">
         <div class="col-lg-4 col-md-1 col-sm-1">
             <img src="data:image/jpeg;base64,{{logo}}" class="img-fluid" alt="Responsive image">
@@ -55,17 +58,13 @@
                     <!-- Boton enviar -->
                     <div class="col-lg-12 col-md-6 col-xs-12 col-sm-12 text-center pt-5">
                         <button type="submit" class="btn btn-primary btn-lg btn-block btn-lg" [disabled]="!pqrForm.form.valid || submitted ">
-              <span><i class="fas fa-search"></i> &nbsp;Consultar PQR</span>
-            </button>
+                            <span><i class="fas fa-search"></i> &nbsp;Consultar PQR</span>
+                        </button>
                     </div>
                 </div>
-
-
-
             </form>
         </div>
     </div>
-
 
     <div class="card-gray" *ngIf="submitted">
         <div class="card-header bg-primary text-white">
@@ -130,17 +129,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" *ngIf="gnAdjunt">
-                <div class="col-md-12">
-                    <h3>Descargar documentos adjuntos</h3>
-                    <button *ngFor="let adjunto of gnAdjunt" (click)="download(adjunto.doc_desc)" class="btn btn-primary btn-sm">
-            <span><i class="fas fa-file-download"></i></span> &nbsp; {{adjunto.adj_nomb}}
-          </button>
-
-                </div>
-            </div>
         </div>
-
     </div>
 
     <div class="card-gray" *ngIf="pqr.seguimientos?.length">
@@ -148,29 +137,53 @@
             Seguimientos
         </div>
         <div class="card-body">
-            <div class="container">
-                <div class="table table-hover table-striped table-bordered mt-2">
-                    <table class="table table-hover table-striped table-bordered mt-4">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col">Item</th>
-                                <th scope="col">Descripción</th>
-                                <th scope="col">Fecha Seguimiento</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let segui of pqr.seguimientos; let i=index">
-                                <td>{{ i + 1 }}</td>
-                                <td>{{ segui.din_segt }}</td>
-                                <td>{{ segui.din_fese | date : "dd/MM/yyyy h:mm:ss" }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <table class="table table-hover table-striped table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">Descripción</th>
+                        <th scope="col">Fecha Seguimiento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let segui of pqr.seguimientos; let i=index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ segui.din_segt }}</td>
+                        <td>{{ segui.din_fese | date : "dd/MM/yyyy h:mm:ss" }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
+    <div class="card-gray" *ngIf="gnAdjunt">
+        <div class="card-header bg-primary text-white">
+            Documentos adjuntos
+        </div>
+        <div class="card-body">
+            <table class="table table-hover table-striped table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">Archivo</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let adjunto of gnAdjunt; let i=index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{adjunto.doc_desc}}</td>
+                        <td>
+                            <button (click)="download(adjunto.doc_desc)" type="button" class="btn btn-link btn-sm btn-block">
+                                <span><i class="fas fa-download"></i>                                                                                                                                                                                                         
+                                </span>
+                             </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
     <div class="card-gray" *ngIf="showEncuesta">
         <ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">

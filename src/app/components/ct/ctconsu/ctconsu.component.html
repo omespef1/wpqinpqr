@@ -27,7 +27,7 @@
                                     <span> <span><i class="fas fa-id-card"></i></span></span>
                                 </div>
                             </div>
-                            <input type="number" class="form-control" placeholder="Identificación" name="pro_codi" id="pro_codi" [(ngModel)]="propo.pro_codi">
+                            <input type="text" class="form-control" placeholder="Identificación" name="pro_codi" id="pro_codi" [(ngModel)]="propo.pro_codi">
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-12 col-xs-12 col-sm-12">
@@ -60,11 +60,10 @@
                 </div>
 
                 <div class="row">
-                    <!-- Boton enviar -->
-                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-3">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block btn-lg" [disabled]="propo.rev_esta === '0'">
-                  <span><i class="fas fa-search"></i> &nbsp;Consultar</span>
-                </button>
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-3" *ngIf="propo.emp_codi">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block btn-lg" [disabled]="propo.rev_esta === '0'"> 
+                            <span><i class="fas fa-search"></i> &nbsp;Consultar</span>
+                        </button>
                     </div>
 
                     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-3">

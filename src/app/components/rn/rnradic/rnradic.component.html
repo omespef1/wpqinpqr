@@ -75,7 +75,7 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                         <label for="con_cont">Observaciones</label>
-                        <textarea type="text" class="form-control" id="rad_obse" name="rad_obse" [(ngModel)]="radic.rad_obse"></textarea>
+                        <textarea type="text" class="form-control" id="rad_obse" name="rad_obse" [(ngModel)]="radic.rad_obse" required #rad_obse="ngModel"></textarea>
                     </div>
                 </div>
             </div>
@@ -84,9 +84,9 @@
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active" id="nav-basicos-tab" data-toggle="tab" href="#nav-basicos" role="tab" aria-controls="nav-basicos" aria-selected="true">Datos Empresa</a>
-                        <a class="nav-item nav-link" id="nav-solicitud-tab" data-toggle="tab" href="#nav-solicitud" role="tab" aria-controls="nav-solicitud" aria-selected="false">Datos Solicitud</a>
+                        <a *ngIf="datTrabajador" class="nav-item nav-link" id="nav-solicitud-tab" data-toggle="tab" href="#nav-solicitud" role="tab" aria-controls="nav-solicitud" aria-selected="false">Datos Trabajador</a>
                         <a class="nav-item nav-link" id="nav-contacto-tab" data-toggle="tab" href="#nav-contacto" role="tab" aria-controls="nav-contacto" aria-selected="false">Datos de Contacto</a>
-                        <a class="nav-item nav-link" id="nav-nucleo-tab" data-toggle="tab" href="#nav-nucleo" role="tab" aria-controls="nav-nucleo" aria-selected="false">Núcleo Familiar</a>
+                        <a *ngIf="nucleoFamilia" class="nav-item nav-link" id="nav-nucleo-tab" data-toggle="tab" href="#nav-nucleo" role="tab" aria-controls="nav-nucleo" aria-selected="false">Núcleo Familiar</a>
                         <a class="nav-item nav-link" id="nav-ubicacion-tab" data-toggle="tab" href="#nav-ubicacion" role="tab" aria-controls="nav-ubicacion" aria-selected="false">Ubicación Geográfica</a>
                         <a *ngIf="radic.rad_tdat === 'S'" class="nav-item nav-link" id="nav-tratamiento-tab" data-toggle="tab" href="#nav-tratamiento" role="tab" aria-controls="nav-tratamiento" aria-selected="false">Tratamiento de Datos</a>
                     </div>
@@ -105,7 +105,7 @@
                                         </div>
                                         <input type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" id="tia_codi" name="tia_codi" [(ngModel)]="radic.tia_codi" required #tia_codi="ngModel" readonly>
                                         <input type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" id="tia_nomb" name="tia_nomb" [(ngModel)]="radic.tia_nomb" #tia_nomb="ngModel" readonly class="form-control">
-                                        <button type="button" class="btn btn-primary" (click)="lupaTipoAportante()" *ngIf="cra_clar!=='T'">
+                                        <button *ngIf="tipoAportante" type="button" class="btn btn-primary" (click)="lupaTipoAportante()">
                                             <span><i class="fas fa-search"></i></span>
                                         </button>
                                     </div>
@@ -122,6 +122,11 @@
                                         </div>
                                         <input id="tip_coda" name="tip_coda" [(ngModel)]="radic.tip_coda" required #tip_coda="ngModel" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
                                         <input id="tip_noma" name="tip_noma" [(ngModel)]="radic.tip_noma" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+
+                                        <button *ngIf="tipoDocumento" type="button" class="btn btn-primary" (click)="lupaTipoDocumentoEmpresa()">
+                                                <span><i class="fas fa-search"></i></span>
+                                        </button>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -132,8 +137,8 @@
                                                 <span><i class="fas fa-hashtag"></i></span>
                                             </div>
                                         </div>
-                                        <input id="apo_coda" name="apo_coda" [(ngModel)]="radic.apo_coda" readonly required #apo_coda="ngModel" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                        <button type="button" class="btn btn-primary" (click)="lupaDocumento()" *ngIf="cra_clar !== 'T'">
+                                        <input id="apo_coda" name="apo_coda" [(ngModel)]="radic.apo_coda" [readonly]="cra_prim !== 'S'" required #apo_coda="ngModel" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                        <button *ngIf="numeDocumento" type="button" class="btn btn-primary" (click)="lupaDocumento()">
                                           <span><i class="fas fa-search"></i></span>
                                       </button>
                                     </div>
@@ -146,7 +151,7 @@
                                                 <span><i class="fas fa-user-circle"></i></span>
                                             </div>
                                         </div>
-                                        <input id="apo_razs" name="apo_razs" [(ngModel)]="radic.apo_razs" readonly required #apo_razs="ngModel" type="text" class="form-control" placeholder="Razón social">
+                                        <input id="apo_razs" name="apo_razs" [(ngModel)]="radic.apo_razs" [readonly]="cra_prim !== 'S'" required #apo_razs="ngModel" type="text" class="form-control" placeholder="Razón social">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -157,13 +162,13 @@
                                                 <span><i class="fas fa-phone"></i></span>
                                             </div>
                                         </div>
-                                        <input id="dsu_tele" name="dsu_tele" [(ngModel)]="radic.dsu_tele" [disabled]="cra_clar === 'T'" required #dsu_tele="ngModel" type="text" class="form-control" placeholder="Teléfono">
+                                        <input id="dsu_tele" name="dsu_tele" [(ngModel)]="radic.dsu_tele" required #dsu_tele="ngModel" type="text" class="form-control" placeholder="Teléfono">
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="nav-solicitud" role="tabpanel" aria-labelledby="nav-solicitud-tab">
+                    <div *ngIf="datTrabajador" class="tab-pane fade" id="nav-solicitud" role="tabpanel" aria-labelledby="nav-solicitud-tab">
                         <div class="container mt-3">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -176,7 +181,7 @@
                                         </div>
                                         <input id="tip_codi" name="tip_codi" [(ngModel)]="radic.tip_codi" required #tip_codi="ngModel" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
                                         <input id="tip_nomb" name="tip_nomb" [(ngModel)]="radic.tip_nomb" #tip_nomb="ngModel" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                        <button type="button" class="btn btn-primary" (click)="lupaTipoDocumento()" *ngIf="cra_prim === 'S'">
+                                        <button *ngIf="tipDocTrabaja" type="button" class="btn btn-primary" (click)="lupaTipoDocumento()">
                                             <span><i class="fas fa-search"></i></span>
                                         </button>
                                     </div>
@@ -190,7 +195,7 @@
                                             </div>
                                         </div>
                                         <input id="afi_docu" name="afi_docu" [(ngModel)]="radic.afi_docu" required #afi_docu="ngModel" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Número Documento">
-                                        <button type="button" class="btn btn-primary" (click)="lupaDocumentoTrabajador()" *ngIf="cra_prim === 'N'">
+                                        <button *ngIf="numDocTrabaja" type="button" class="btn btn-primary" (click)="lupaDocumentoTrabajador()">
                                                 <span><i class="fas fa-search"></i></span>
                                             </button>
                                     </div>
@@ -276,7 +281,7 @@
                                                 <span><i class="fas fa-hashtag"></i></span>
                                             </div>
                                         </div>
-                                        <input id="rad_dire" name="rad_dire" [(ngModel)]="radic.rad_dire" type="text" class="form-control" placeholder="Dirección">
+                                        <input id="rad_dire" name="rad_dire" [(ngModel)]="radic.rad_dire" required #rad_dire="ngModel" type="text" class="form-control" placeholder="Dirección">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -293,7 +298,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="nav-nucleo" role="tabpanel" aria-labelledby="nav-nucleo-tab">
+                    <div *ngIf="nucleoFamilia" class="tab-pane fade" id="nav-nucleo" role="tabpanel" aria-labelledby="nav-nucleo-tab">
                         <div class="container mt-3">
                             <div class="row">
 
@@ -444,9 +449,9 @@
                                                 <span><i class="fas fa-flag"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnregio==undefined || cra_prim !== 'S'" [value]="" class="form-control" id="rad_regi" name="rad_regi" [(ngModel)]="radic.rad_regi" (change)="filtrarDeptos('',radic.rad_pais,radic.rad_regi)" required #rad_regi="ngModel">
-                                            <option *ngFor="let region of gnregio" [value]="region.reg_codi">{{region.reg_nomb | titlecase}}</option>
-                                            <option value="">Seleccione</option>
+                                        <select [disabled]="gnregio.length == 0 || cra_prim !== 'S'" [value]="" class="form-control" id="rad_regi" name="rad_regi" [(ngModel)]="radic.rad_regi" (change)="filtrarDeptos('',radic.rad_pais,radic.rad_regi)" required #rad_regi="ngModel">
+                                            <option [value]="">Seleccione</option>
+                                            <option *ngFor="let region of gnregio" [value]="region.reg_codi">{{region.reg_nomb | titlecase}}</option>                                           
                                         </select>
                                     </div>
                                 </div>
@@ -458,7 +463,7 @@
                                                 <span><i class="far fa-flag"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gndepar==undefined || cra_prim !== 'S'" [value]="" class="form-control" id="rad_depa" name="rad_depa" [(ngModel)]="radic.rad_depa" (change)="filtrarMunic('',radic.rad_pais,radic.rad_regi,radic.rad_depa)" required #rad_depa="ngModel">                                                
+                                        <select [disabled]="gndepar.length == 0 || cra_prim !== 'S'" [value]="" class="form-control" id="rad_depa" name="rad_depa" [(ngModel)]="radic.rad_depa" (change)="filtrarMunic('',radic.rad_pais,radic.rad_regi,radic.rad_depa)" required #rad_depa="ngModel">                                                
                                                 <option *ngFor="let depto of gndepar" [value]="depto.dep_codi">{{depto.dep_nomb | titlecase}}</option>
                                                 <option value="">Seleccione</option>
                                         </select>
@@ -472,7 +477,7 @@
                                                 <span><i class="fas fa-city"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnmunic==undefined || cra_prim !== 'S'" [value]="" class="form-control" id="rad_muni" name="rad_muni" [(ngModel)]="radic.rad_muni" (change)="filtrarLocal('',radic.rad_pais,radic.rad_regi,radic.rad_depa,radic.rad_muni)" required #rad_muni="ngModel">                                       
+                                        <select [disabled]="gnmunic.length == 0 || cra_prim !== 'S'" [value]="" class="form-control" id="rad_muni" name="rad_muni" [(ngModel)]="radic.rad_muni" (change)="filtrarLocal('',radic.rad_pais,radic.rad_regi,radic.rad_depa,radic.rad_muni)" required #rad_muni="ngModel">                                       
                                             <option *ngFor="let munic of gnmunic" [value]="munic.mun_codi">{{munic.mun_nomb | titlecase}}</option>
                                             <option value="">Seleccione</option>
                                         </select>
@@ -486,7 +491,7 @@
                                                 <span><i class="fas fa-map-pin"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnlocal==undefined || cra_prim !== 'S'" [value]="" class="form-control" id="rad_loca" name="rad_loca" [(ngModel)]="radic.rad_loca" (change)="filtrarBarri('',radic.rad_pais,radic.rad_regi,radic.rad_depa,radic.rad_muni,radic.rad_loca)"
+                                        <select [disabled]="gnlocal.length == 0 || cra_prim !== 'S'" [value]="" class="form-control" id="rad_loca" name="rad_loca" [(ngModel)]="radic.rad_loca" (change)="filtrarBarri('',radic.rad_pais,radic.rad_regi,radic.rad_depa,radic.rad_muni,radic.rad_loca)"
                                             required #rad_loca="ngModel">
                                                 <option *ngFor="let local of gnlocal" [value]="local.loc_codi">{{local.loc_nomb | titlecase}}</option>
                                                 <option value="">Seleccione</option>
@@ -501,7 +506,7 @@
                                                 <span><i class="fas fa-map-signs"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnbarri==undefined || cra_prim !== 'S'" [value]="" class="form-control" id="rad_barr" name="rad_barr" [(ngModel)]="radic.rad_barr" required #rad_loca="ngModel">                                                
+                                        <select [disabled]="gnbarri.length == 0 || cra_prim !== 'S'" [value]="" class="form-control" id="rad_barr" name="rad_barr" [(ngModel)]="radic.rad_barr" required #rad_loca="ngModel">                                                
                                                 <option *ngFor="let barri of gnbarri" [value]="barri.bar_codi">{{barri.bar_nomb | titlecase}}</option>
                                                 <option value="">Seleccione</option>
                                         </select>
@@ -510,7 +515,7 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="radic.rad_tdat === 'S'" class="tab-pane fade" id="nav-tratamiento" role="tabpanel" aria-labelledby="nav-tratamiento-tab">
+                    <div class="tab-pane fade" id="nav-tratamiento" role="tabpanel" aria-labelledby="nav-tratamiento-tab">
                         <div class="container mt-3">
                             <div class="row">
 
@@ -554,13 +559,13 @@
                 <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!radicForm.form.valid">Guardar</button>
             </div>
         </div>
-
     </form>
 </div>
 
+<app-table-search-generic Title="Tipo Documento" [displayedColumns]="['TIP_CODI', 'TIP_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setTipDoctoEmpre($event)" btnModalQb="btnTipDoctoEmpre" ModalQb="modalTipDoctoEmpre" #modalTipDoctoEmpre></app-table-search-generic>
 <app-table-search-generic Title="Tipo Aportante" [displayedColumns]="['TIA_CODI', 'TIA_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setAportant($event)" btnModalQb="btnAportant" ModalQb="modalAportant" #modalAportant></app-table-search-generic>
 <app-table-search-generic Title="Tipo Documento" [displayedColumns]="['TIP_CODI', 'TIP_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setTipDocto($event)" btnModalQb="btnTipDocto" ModalQb="modalTipDocto" #modalTipDocto></app-table-search-generic>
-<app-table-search-generic Title="Número de Documento" [displayedColumns]="['TIA_NOMB', 'TIP_NOMB', 'APO_CODA' , 'APO_RAZS']" [showColumns]="['Tipo Aportante', 'Tipo Documento', 'Documento', 'Razón Social']" (rowCLick)="setTipDoctoEmpre($event)" btnModalQb="btnDocument"
+<app-table-search-generic Title="Número de Documento" [displayedColumns]="['TIA_NOMB', 'TIP_NOMB', 'APO_CODA' , 'APO_RAZS']" [showColumns]="['Tipo Aportante', 'Tipo Documento', 'Documento', 'Razón Social']" (rowCLick)="setDoctoEmpre($event)" btnModalQb="btnDocument"
     ModalQb="modalDocument" #modalDocument></app-table-search-generic>
 <app-table-search-generic Title="Grupo de Radicación" [displayedColumns]="['GRU_CODI', 'GRU_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setGruRadic($event)" btnModalQb="btnGruRadic" ModalQb="modalGruRadic" #modalGruRadic></app-table-search-generic>
 <app-table-search-generic Title="Clasificación" [displayedColumns]="['CRA_CODI', 'CRA_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setClasificacion($event)" btnModalQb="btnClasific" ModalQb="modalClasific" #modalClasific></app-table-search-generic>
@@ -581,48 +586,44 @@
     </div>
 </app-modal>
 
-<app-modal-doctos tamano="xlg" title="Documentos" (accept)="modalDoctos.dismiss();">
-    <div class="table table-hover table-striped table-bordered mt-2">
-        <table class="table table-hover table-striped table-bordered mt-4">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Nombre Documento</th>
-                    <th scope="col">No Recibido</th>
-                    <th scope="col">Presentado</th>
-                    <th scope="col">Observación</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let ddo of rnddocu;let index=index;">
-                    <td>{{ddo.ite_nomb}}</td>
-                    <td style="width: 11%" class="text-center">
-                        <div class="col-auto my-1 text-center">
-                            <div class="form-group custom-checkbox mr-sm-2 text-center">
-                                <input type="checkbox" class="custom-control-input" id="{{'ddo_esis' + index.toString()}}" [(checked)]="ddo.ddo_esis" (change)="ddo.ddo_esis=!ddo.ddo_esis">
-                                <label class="custom-control-label" for="{{'ddo_esis' + index.toString()}}"></label>
-                            </div>
-                        </div>
-                    </td>
-                    <td style="width: 10%" class="text-center">
-                        <div class="col-auto my-1 text-center">
-                            <div class="form-group custom-checkbox mr-sm-2 text-center">
-                                <input type="checkbox" class="custom-control-input" id="{{'ddo_recb' + index.toString()}}" [(checked)]="ddo.ddo_recb" (change)="ddo.ddo_recb=!ddo.ddo_recb">
-                                <label class="custom-control-label" for="{{'ddo_recb' + index.toString()}}"></label>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <input id="ddo_obse" name="ddo_obse" type="text" class="form-control" autocomplete="off" [(ngModel)]="ddo.ddo_obse">
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-link btn-sm btn-block" (click)="selDocumento(ddo)">
-                            <span><i class="far fa-check-circle"></i>                                                                                                                                                                                                         
-                            </span>
-                         </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+<app-modal-doctos tamano="xlg" title="Documentos" (accept)="modalDoctos.dismiss();" class="mw-100">
+
+    <table class="table table-hover table-striped table-bordered mt-4">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Nombre Documento</th>
+                <th scope="col">No Recibido</th>
+                <th scope="col">Presentado</th>
+                <th scope="col">Observación</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let ddo of rnddocu;let index=index;">
+                <td>{{ddo.ite_nomb}}</td>
+                <td>
+                    <div class="form-group custom-checkbox  text-center">
+                        <input type="checkbox" class="custom-control-input" id="{{'ddo_esis' + index.toString()}}" [(checked)]="ddo.ddo_esis" (change)="ddo.ddo_esis=!ddo.ddo_esis">
+                        <label class="custom-control-label mb-2 ml-3" for="{{'ddo_esis' + index.toString()}}"></label>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group custom-checkbox mr-sm-2 text-center">
+                        <input type="checkbox" class="custom-control-input" id="{{'ddo_recb' + index.toString()}}" [(checked)]="ddo.ddo_recb" (change)="ddo.ddo_recb=!ddo.ddo_recb">
+                        <label class="custom-control-label mb-2 ml-3" for="{{'ddo_recb' + index.toString()}}"></label>
+                    </div>
+                </td>
+                <td>
+                    <input id="ddo_obse" name="ddo_obse" type="text" class="form-control" autocomplete="off" [(ngModel)]="ddo.ddo_obse">
+                </td>
+                <td>
+                    <button type="button" class="btn btn-link btn-sm btn-block" (click)="selDocumento(ddo)">
+                        <span><i class="far fa-check-circle"></i>                                                                                                                                                                                                         
+                        </span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
 </app-modal-doctos>

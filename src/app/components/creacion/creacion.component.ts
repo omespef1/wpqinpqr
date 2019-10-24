@@ -26,6 +26,7 @@ export class CreacionComponent implements OnInit {
   @ViewChild(TableSearchComponent) _table: TableSearchComponent;
   @ViewChild(AlertComponent) alert: AlertComponent;
   @ViewChild(ModalComponent) modal: ModalComponent;
+
   pqr: pqinpqr = new pqinpqr();
   clienInfo: Faclien;
   @Input() GnItemsItePqr: gnItem[];
@@ -132,7 +133,7 @@ export class CreacionComponent implements OnInit {
         this.spinner.hide();
       } else {
         this.spinner.hide();
-        this.showAlertMesssage(`Error conectando con el servidor: ${resp.txtRetorno}`)
+        this.showAlertMesssage(`Error conectando con el servidor: ${resp.txtRetorno}`);
       }
     }, err => {
       console.log(err);
@@ -179,56 +180,66 @@ export class CreacionComponent implements OnInit {
     }
 
   }
+
   // Envío de pqr
   PostPqr(form: NgForm) {
+
+    if (this.ctcontr.con_ncon === undefined && this.pqr.inp_tcli === 'F') {
+      document.getElementById('dialogConfirm').click();
+    } else {
+      this.savePqr(form);
+    }
+  }
+
+  savePqr(form: NgForm) {
     this.submitted = true;
     this.pqr.con_cont = this.ctcontr.con_cont;
     this.spinner.show();
     this.loading = 'Enviando PQR...';
     this._comu.Post('api/PqInpqr', this.pqr).subscribe((resp: any) => {
-      
+
       this.spinner.hide();
       if (resp.retorno !== undefined) {
 
         if (resp.retorno === 0) {
-          let inp_cont: number = resp.objTransaction.inp_cont;
-          let files = this.getFiles();          
-          let requests = [];
+          const inp_cont: number = resp.objTransaction.inp_cont;
+          const files = this.getFiles();
+          const requests = [];
           const formData = new FormData();
           let filesCount = 1;
 
-          if(files.length>0){
+          if (files.length > 0) {
             files.forEach((file) => {
               formData.append(`fileUpload${filesCount}`, file.rawFile, file.name);
               filesCount += 1;
             });
-            formData.append("INP_CONT", inp_cont.toString());
-            formData.append("EMP_CODI", this.pqr.emp_codi.toString());
+            formData.append('INP_CONT', inp_cont.toString());
+            formData.append('EMP_CODI', this.pqr.emp_codi.toString());
+
             this._comu.Post('api/upload', formData).subscribe((respAdj: any) => {
               this.submitted = false;
-              if (respAdj.retorno == 1)
+              if (respAdj.retorno === 1) {
                 this.showAlertMesssage(`Se produjo un error subiendo el archivo. Intentelo nuevamente : ${respAdj.txtRetorno}`);
-              else {
-                this.message = "";
+              } else {
+                this.message = '';
                 this.alert.showHtmlMessage(resp.objTransaction.msg);
                 form.reset();
                 // this.fileAttchment.nativeElement.value = "";
               }
-            }, err => { console.log(err) })
-          }
-          else{
+            }, err => { console.log(err) } );
+          } else {
             this.submitted = false;
-            this.message = "";
+            this.message = '';
             this.alert.showHtmlMessage(resp.objTransaction.msg);
             form.reset();
           }
-    
+
           // let inp_cont: number = resp.objTransaction.inp_cont;
           // if (this.myFiles.length>0) {
-          //   const fd = new FormData();       
+          //   const fd = new FormData();
           //   this.loading = "Subiendo adjunto...";
           //   for (var i = 0; i < this.myFiles.length; i++) { 
-          //     fd.append(`fileUpload${i+1}`, this.myFiles[i],`${this.myFiles[i].name}`);            
+          //     fd.append(`fileUpload${i+1}`, this.myFiles[i],`${this.myFiles[i].name}`);
           //   }
           //     fd.append("INP_CONT",inp_cont.toString());
           //      fd.append("EMP_CODI",this.pqr.emp_codi.toString());
@@ -253,63 +264,76 @@ export class CreacionComponent implements OnInit {
           // }
 
         }
-        if (resp.retorno == 1)
+        if (resp.retorno === 1) {
+          this.submitted = false;
           this.showAlertMesssage(resp.txtRetorno);
+        }
       }
-    }, err => { this.showAlertMesssage(err) })
+    }, err => { this.showAlertMesssage(err)});
   }
-  //Mostrar mensajes
+
+  executeAction(option: string, form: NgForm) {
+    if ( option === 'SI' ) {
+      this.savePqr(form);
+    } else {
+      this.openLupa();
+    }
+ }
+
+  // Mostrar mensajes
   showAlertMesssage(msg: string) {
     // this.alert.showMessage(msg);
     this.message = msg;
     this.alert.show();
   }
-  //Filtrado de ciudades
+  // Filtrado de ciudades
   filterCities() {
-    this.gnmunicF = this.gnmunic.filter((v) => v.dep_codi == this.pqr.dep_codi)    
+    this.gnmunicF = this.gnmunic.filter((v) => v.dep_codi == this.pqr.dep_codi);
   }
-  //Obtener extensión de archivo
-  GetExtension(fileName: string) {    
+
+  // Obtener extensión de archivo
+  GetExtension(fileName: string) {
     return fileName.split('.').pop();
 
   }
-  setOptionConfirm(option: string) {    
+
+  setOptionConfirm(option: string) {
     switch (option) {
-      case "RIGHT":
+      case 'RIGHT':
         this.loadCompanies();
 
         break;
-      case "LEFT":
+      case 'LEFT':
         this.client = undefined;
         this.Load();
     }
-
   }
-  loadCompanies() {    
+
+  loadCompanies() {
     this.spinner.show();
     this._comu.Get(`api/gnempre?usu_codi=${this.pqr.usu_codi}`).subscribe((resp: any) => {
-      this.companies = resp.objTransaction;      
+      this.companies = resp.objTransaction;
       this.spinner.hide();
       this.modal.present();
-    })
+    });
   }
 
-  setValuesMandatory() {    
+  setValuesMandatory() {
     if (!this.client) {
-      if (this.pqr.inp_mres != "D") {
-        this.pqr.inp_dire = ".";
-        this.pqr.inp_mail = "";
+      if (this.pqr.inp_mres !== 'D') {
+        this.pqr.inp_dire = '.';
+        this.pqr.inp_mail = '';
       }
 
-      if (this.pqr.inp_mres != "C") {
-        this.pqr.inp_mail = ".";
-        this.pqr.inp_dire = "";
+      if (this.pqr.inp_mres !== 'C') {
+        this.pqr.inp_mail = '.';
+        this.pqr.inp_dire = '';
       }
     }
   }
 
   getFileDetails(e) {
-    for (var i = 0; i < e.target.files.length; i++) {
+    for (let i = 0; i < e.target.files.length; i++) {
       this.myFiles.push(e.target.files[i]);
     }
   }
@@ -384,7 +408,7 @@ export class CreacionComponent implements OnInit {
   //     (res) => {
   //       console.log(res);
   //     },
-  //     (err) => {  
+  //     (err) => {
   //       console.log(err);
   //     }
   //   );

@@ -39,17 +39,17 @@ export class RnRadic {
 
     // Geografía
     public rad_pais: number;
-    public pai_nomb = '';
+    public pai_nomb: string;
     public rad_regi: number;
-    public reg_nomb = '';
+    public reg_nomb: string;
     public rad_depa: number;
-    public dep_nomb = '';
+    public dep_nomb: string;
     public rad_muni: number;
-    public mun_nomb = '';
+    public mun_nomb: string;
     public rad_loca: number;
-    public loc_nomb = '';
+    public loc_nomb: string;
     public rad_barr: number;
-    public bar_nomb = '';
+    public bar_nomb: string;
 
     // Núcleo familiar
     public rndperc: RnDperc[] = [];

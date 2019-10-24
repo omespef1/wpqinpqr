@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { XbauliqComponent } from './xbauliq.component';
+import { PqestadComponent } from './pqestad.component';
 import { FormsModule } from '@angular/forms';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ChartsModule } from 'ng2-charts';
 
 const routes: Routes = [
   {
     path: '',
-    component: XbauliqComponent
+    component: PqestadComponent
   }
 ];
 
@@ -19,10 +20,11 @@ const routes: Routes = [
     FormsModule ,
     RouterModule.forChild(routes),
     MatDatepickerModule,
-    SharedModule
+    SharedModule,
+    ChartsModule
   ],
   declarations: [
-    XbauliqComponent
+    PqestadComponent
   ],
 })
-export class XbauliqModule { }
+export class PqestadModule { }

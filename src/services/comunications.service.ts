@@ -8,7 +8,6 @@ import { ToTransaction } from '../classes/models';
 })
 export class ComunicationsService {
 
-
   constructor(private http: HttpClient, private env: EnvService) { }
 
   Get(urlController: string, emp_codi = 0) {
@@ -39,8 +38,7 @@ export class ComunicationsService {
         'Access-Control-Allow-Origin': '*'
       })
     }
-    let url = `${this.env.apiUrl}${urlController}`;
-    console.log(constOptions.headers);
+    let url = `${this.env.apiUrl}${urlController}`;    
     return this.http.post(url, params, constOptions);
   }
 
@@ -52,8 +50,7 @@ export class ComunicationsService {
         'Accept': 'application/json'        
       })
     }
-    let url = `${this.env.apiUrl}${urlController}`;
-    console.log(url);
+    let url = `${this.env.apiUrl}${urlController}`;    
     return this.http.post(url, params,constOptions);
   }
 
@@ -65,8 +62,7 @@ export class ComunicationsService {
       })
     }
 
-    let url = `${this.env.apiUrl}${urlController}`;
-    console.log(constOptions.headers);
+    let url = `${this.env.apiUrl}${urlController}`;    
     return this.http.post(url, params, constOptions);
   }
 

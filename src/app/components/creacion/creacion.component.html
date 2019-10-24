@@ -61,15 +61,15 @@
                                     <span><i class="fas fa-hashtag"></i></span>
                                 </div>
                             </div>
-                            <input type="text" data-toggle="tooltip" data-placement="bottom" [title]="ctcontr.con_ncon" [readOnly]="pqr.inp_tcli == 'F'" class="form-control" name="con_ncon" id="con_ncon" [(ngModel)]="ctcontr.con_ncon" required #con_ncon="ngModel">
-                            <input type="text" style="width: 50%;" data-toggle="tooltip" data-placement="bottom" [title]="ctcontr.con_desc" disabled="true" class="form-control" name="con_desc" id="con_desc" [(ngModel)]="ctcontr.con_desc" required #con_desc="ngModel">
+                            <input type="text" data-toggle="tooltip" data-placement="bottom" [title]="ctcontr.con_ncon" [readOnly]="pqr.inp_tcli == 'F'" class="form-control" name="con_ncon" id="con_ncon" [(ngModel)]="ctcontr.con_ncon">
+                            <input type="text" style="width: 50%;" data-toggle="tooltip" data-placement="bottom" [title]="ctcontr.con_desc" disabled="true" class="form-control" name="con_desc" id="con_desc" [(ngModel)]="ctcontr.con_desc" #con_desc="ngModel">
                             <button type="button" class="btn btn-primary" (click)="openLupa()">
-                <span><i class="fas fa-search"></i></span>
-              </button>
+                                <span><i class="fas fa-search"></i></span>
+                            </button>
                         </div>
-                        <div [hidden]="con_ncon.valid || con_ncon.pristine" class="alert alert-danger">
+                        <!-- <div [hidden]="con_ncon.valid || con_ncon.pristine" class="alert alert-danger">
                             No Contrato es requerido
-                        </div>
+                        </div> -->
 
                     </div>
                     <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf="area && spq000001.dig_valo=='S'">
@@ -80,12 +80,12 @@
                                     <span><i class="fas fa-external-link-square-alt"></i></span>
                                 </div>
                             </div>
-                            <input data-toggle="tooltip" data-placement="top" [title]="area.arb_codi" type="text" [readOnly]="pqr.inp_tcli == 'F'" class="form-control" name="arb_codia" id="arb_codia" [(ngModel)]="area.arb_codi" required #arb_codia="ngModel">
-                            <input type="text" style="width: 70%;" data-toggle="tooltip" data-placement="bottom" [title]="area.arb_nomb" disabled="true" class="form-control" name="arb_nomba" id="arb_nomba" [(ngModel)]="area.arb_nomb" required #arb_nomba="ngModel">
+                            <input data-toggle="tooltip" data-placement="top" [title]="area.arb_codi" type="text" [readOnly]="pqr.inp_tcli == 'F'" class="form-control" name="arb_codia" id="arb_codia" [(ngModel)]="area.arb_codi" #arb_codia="ngModel">
+                            <input type="text" style="width: 70%;" data-toggle="tooltip" data-placement="bottom" [title]="area.arb_nomb" disabled="true" class="form-control" name="arb_nomba" id="arb_nomba" [(ngModel)]="area.arb_nomb" #arb_nomba="ngModel">
                         </div>
-                        <div [hidden]="arb_codia.valid || arb_codia.pristine" class="alert alert-danger">
+                        <!-- <div [hidden]="arb_codia.valid || arb_codia.pristine" class="alert alert-danger">
                             Línea de negocio es requerida
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="row">
@@ -252,7 +252,7 @@
                                     <span><i class="fas fa-map-marked-alt"></i></span>
                                 </div>
                             </div>
-                            <input type="text" required class="form-control" placeholder="Dirección" name="inp_dire" id="inp_dire" [(ngModel)]="pqr.inp_dire" #inp_dire="ngModel">
+                            <input type="text" [readOnly]="pqr.inp_tcli == 'F'" required class="form-control" placeholder="Dirección" name="inp_dire" id="inp_dire" [(ngModel)]="pqr.inp_dire" #inp_dire="ngModel">
                         </div>
                         <div [hidden]="inp_dire.valid || inp_dire.pristine" class="alert alert-danger">
                             Dirección es requerida
@@ -304,7 +304,7 @@
                                     <span><i class="fas fa-at"></i></span>
                                 </div>
                             </div>
-                            <input type="email" class="form-control" placeholder="Email" name="inp_mail" id="inp_mail" [(ngModel)]="pqr.inp_mail" required #inp_mail="ngModel">
+                            <input [readOnly]="pqr.inp_tcli == 'F'" type="email" class="form-control" placeholder="Email" name="inp_mail" id="inp_mail" [(ngModel)]="pqr.inp_mail" required #inp_mail="ngModel">
 
                         </div>
                         <div [hidden]="inp_mail.valid || inp_mail.pristine" class="alert alert-danger">
@@ -460,8 +460,12 @@
             </form>
         </div>
     </div>
+
     <app-alert [message]="message"></app-alert>
-    <app-confirm-dialog leftButton="Anónimo/Ciudadanía General" (buttonClick)="setOptionConfirm($event)" rightButton="Cliente" modalBody="¿Como desea realizar el ingreso?" modalTitle="Confirmación"></app-confirm-dialog>
+
+    <app-confirm-dialog id="ingreso" leftButton="Anónimo/Ciudadanía General" (buttonClick)="setOptionConfirm($event)" rightButton="Cliente" modalBody="¿Como desea realizar el ingreso?" modalTitle="Confirmación"></app-confirm-dialog>
+
+
     <app-table-search Title="Contratos" (rowCLick)="setContract($event)"></app-table-search>
     <app-modal title="Seleccione empresa" (accept)="modal.dismiss();Load()">
         <form>
@@ -475,3 +479,27 @@
             </div>
         </form>
     </app-modal>
+
+    <button type="button" id="dialogConfirm" class="btn btn-primary invisible" data-toggle="modal" data-target="#dialog-confirm">       
+      </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="dialog-confirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Confirmación</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                </div>
+                <div class="modal-body">
+                    ¿ Está seguro ingresar la PQR sin número de contrato ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="executeAction('NO' , undefined)" data-dismiss="modal">NO</button>
+                    <button type="button" (click)="executeAction('SI', pqrForm)" class="btn btn-primary" data-dismiss="modal">SI</button>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,153 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Estadisticas PQR</h1>
+
+    </div>
+</div>
+<div class="container">
+
+    <div class="card card-gray" *ngIf="!submitted">
+        <div class="card-header bg-primary text-white">Consultar estadisticas</div>
+        <div class="card-body">
+            <form>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="fec_fini">Fecha Inicial</label>
+                        <div class="input-group">
+                            <mat-datepicker-toggle [for]="pro_fent"></mat-datepicker-toggle>
+                            <mat-datepicker #pro_fent touchUi></mat-datepicker>
+                            <input matInput placeholder="Fecha Inicial" required readonly [matDatepicker]="pro_fent" type="text" class="form-control" name="pro_fent" id="pro_fent">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="pro_fven">Fecha Final</label>
+                        <div class="input-group">
+                            <mat-datepicker-toggle [for]="pro_fven"></mat-datepicker-toggle>
+                            <mat-datepicker #pro_fven touchUi></mat-datepicker>
+                            <input matInput placeholder="Fecha Final" required readonly [matDatepicker]="pro_fven" type="text" class="form-control" name="pro_fven" id="pro_fven">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rev_esta">Seccional</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-book"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" id="" name="">
+                                <option value="0">Todos</option>
+                                <option *ngFor="let secc of estadisti.seccional" [value]="secc.arb_codi">{{secc.arb_nomb | titlecase}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rev_esta">Forma de Recibido</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-bullseye"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" id="" name="">
+                                    <option value="0">Todos</option>
+                                    <option *ngFor="let frec of estadisti.formRecib" [value]="frec.ite_codi">{{frec.ite_nomb | titlecase}}</option>                           
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rev_esta">Tipo de PQR</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="far fa-hand-paper"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" id="" name="">
+                                <option value="0">Todos</option>
+                                <option *ngFor="let tpqr of estadisti.tipoDePqr" [value]="tpqr.ite_codi">{{tpqr.ite_nomb | titlecase}}</option>                        
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rev_esta">Area Responsable</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-warehouse"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" id="" name="">
+                                        <option value="0">Todos</option>   
+                                        <option *ngFor="let resp of estadisti.areaRespo" [value]="resp.arb_codi">{{resp.arb_nomb | titlecase}}</option>                          
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rev_esta">Tipificación</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-layer-group"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" id="" name="">
+                                <option value="0">Todos</option>
+                                <option *ngFor="let tipi of estadisti.tipificac" [value]="tipi.ite_codi">{{tipi.ite_nomb | titlecase}}</option>                             
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rev_esta">SubTipificación</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-object-ungroup"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" id="" name="">
+                                <option value="0">Todos</option>  
+                                <option *ngFor="let subtipi of estadisti.subtipifi" [value]="subtipi.ite_codi">{{subtipi.ite_nomb | titlecase}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        <label for="rev_esta">Grupo Perteneciente</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-stream"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" id="" name="">
+                                        <option value="0">Todos</option>   
+                                        <option *ngFor="let secc of estadisti.seccional" [value]="secc.arb_codi">{{secc.arb_nomb | titlecase}}</option>                          
+                                </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-3">
+                        <button *ngIf="this.client" type="submit" class="btn btn-primary btn-lg btn-block btn-lg"> 
+                                    <span><i class="fas fa-search"></i> &nbsp;Consultar</span>
+                                </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<app-gnempre title="Seleccione empresa" (accept)="_EmpreModal.dismiss();load()">
+    <form>
+        <div class="form-group">
+            <label for="emp_codi" class="col-form-label"></label>
+            <select class="form-control" id="usu_codi" name="usu_codi" [(ngModel)]="emp_codi" required #usu_codi="ngModel">
+                    <option value="0">Seleccione</option>
+                    <option *ngFor="let companie of companies" [value]="companie.emp_codi">{{companie.emp_nomb | titlecase}}
+                    </option>
+                </select>
+        </div>
+    </form>
+</app-gnempre>
+
+<app-alert-message [message]="msg"></app-alert-message>
