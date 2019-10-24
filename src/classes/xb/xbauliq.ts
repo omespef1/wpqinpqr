@@ -8,4 +8,12 @@ export class XbAuliq {
     cxc_desc: string;
     cxc_tota: number;
     cxc_sald: number;
+    Par_Fech:Date;
+    liq_apro:boolean;
 }
+export class xbautliqp {
+    emp_codi:number;
+    cli_coda:string;
+    cuentas:XbAuliq[];
+}
+
