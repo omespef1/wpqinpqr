@@ -6,7 +6,7 @@ import { ComunicationsService } from "../../../../services/comunications.service
 import { GnempreService } from "../../../services/gn/gnempre.service";
 import { ModalComponent } from "../../dialogs/modal/modal.component";
 import { companies, ToTransaction } from "src/classes/models";
-import { XbAuliq, xbpceca } from "../../../../classes/xb/xbauliq";
+import { XbAuliq, xbpceca, xbautliqp } from '../../../../classes/xb/xbauliq';
 import { GnempreComponent } from "../../gn/gnempre/gnempre.component";
 import { ActivatedRoute, ParamMap } from "@angular/router";
 import { error } from "util";
@@ -106,9 +106,13 @@ export class XbauliqComponent implements OnInit {
     }
   }
   SetXbAutliq() {
-
+   this.loading=true;
     const aprobar =  this.cacxcob.filter(c=>c.liq_apro == true);
-      this._service.SetXbAuliq(aprobar).subscribe(resp=>{
+
+      let cuentas:xbautliqp = {emp_codi : this.emp_codi, cli_coda : this.client,cuentas: aprobar,usu_codi:this.usu_codi} ;
+
+      this._service.SetXbAuliq(cuentas).subscribe(resp=>{
+        this.loading=false;
         if(resp.Retorno==0){
           
         }

@@ -16,6 +16,7 @@ export class XbAuliq {
 export class xbautliqp {
   emp_codi: number;
   cli_coda: string;
+  usu_codi:string;
   cuentas: XbAuliq[];
 }
 

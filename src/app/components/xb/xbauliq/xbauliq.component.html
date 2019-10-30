@@ -233,7 +233,7 @@
                             </table>
                  </div>
                  <div class="col-sm-12 col-xs-12 col-md-6 col-lg-1">
-                     <button [disabled]="CuentasXaprobar()" type="button" data-toggle="tooltip" data-placement="top" title="Tooltip on top" class="btn btn-success btn-lg">
+                     <button [disabled]="CuentasXaprobar() || loading" type="button" (click)="SetXbAutliq()" data-toggle="tooltip" data-placement="top" title="Tooltip on top" class="btn btn-success btn-lg">
                             <i class="fa fa-check">
                                 </i> Aprobar
                      </button>
