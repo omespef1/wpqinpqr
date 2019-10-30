@@ -20,7 +20,7 @@ export class PqestadComponent implements OnInit {
   @ViewChild(GnempreComponent) _EmpreModal: GnempreComponent;
   @ViewChild(AlertMessageComponent) alert: AlertMessageComponent;
   @ViewChild(ModalComponent) modal: ModalComponent;
-
+  submitted:boolean;
   companies: companies[];
   emp_codi = 0;
   client = '';

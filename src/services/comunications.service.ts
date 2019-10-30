@@ -42,6 +42,16 @@ export class ComunicationsService {
     return this.http.post(url, params, constOptions);
   }
 
+  PostTransaction<T>(urlController: string, params: any) {
+    let constOptions = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*'
+      })
+    }
+    let url = `${this.env.apiUrl}${urlController}`;    
+    return this.http.post<T>(url, params, constOptions);
+  }
+
   PostUpload(urlController: string, params: any) {
     let constOptions = {
       headers: new HttpHeaders({
