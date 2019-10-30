@@ -21,7 +21,7 @@ const app_routes: Routes = [
    { path: 'rnradic', component: RnradicComponent },
    { path: 'pqestad' , loadChildren : './pages/pq/pqestad/pqestad.module#PqestadModule' },
    { path: 'xbauliq' , loadChildren : './components/xb/xbauliq/xbauliq.module#XbauliqModule' },
-    { path: '**', pathMatch: 'full', redirectTo: 'pqestad' }
+    { path: '**', pathMatch: 'full', redirectTo: 'xbauliq' }
 ];
 
 export const app_routing = RouterModule.forRoot(app_routes);

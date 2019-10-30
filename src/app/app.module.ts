@@ -36,6 +36,7 @@ import { RnradicComponent } from './components/rn/rnradic/rnradic.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { TableSearchGenericComponent } from './components/tools/table-search-generic/table-search-generic.component';
 import { ModalDoctosComponent } from './components/rn/rnradic/modal-doctos/modal-doctos.component';
+import {NgxPaginationModule} from 'ngx-pagination'; // <-- import the module
 
 export const MY_FORMATS = {
   parse: {
@@ -75,6 +76,7 @@ export const MY_FORMATS = {
   imports: [
     FormsModule,                               // <========== Add this line!
     BrowserModule,
+    NgxPaginationModule,
   NgxSpinnerModule,
       HttpClientModule,
       AngularFontAwesomeModule,
