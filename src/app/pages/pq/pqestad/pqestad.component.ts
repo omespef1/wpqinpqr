@@ -5,13 +5,11 @@ import { companies } from 'src/classes/models';
 import { GnempreComponent } from 'src/app/components/gn/gnempre/gnempre.component';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { Gnitems } from 'src/classes/gn/gnitems';
-import { Gnarbol } from 'src/classes/gn/gnarbol';
 import { ModalComponent } from 'src/app/components/dialogs/modal/modal.component';
 import { AlertMessageComponent } from 'src/app/components/dialogs/alert-message/alert-message.component';
-import { LoadedRouterConfig } from '@angular/router/src/config';
 import { PqestadService } from 'src/app/services/pq/pqestad/pqestad.service';
-import { Pqestad } from 'src/classes/pq/pqestad';
+import { Pqestad, InfoPqEstad } from 'src/classes/pq/pqestad';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-pqestad',
@@ -30,8 +28,10 @@ export class PqestadComponent implements OnInit {
   msg = '';
 
   estadisti: Pqestad = new Pqestad();
+  dataEncue: InfoPqEstad[];
 
   constructor(private spinner: NgxSpinnerService, private sanitizer: DomSanitizer,
+    // tslint:disable-next-line:max-line-length
     private titleService: Title,  private _gnempre: GnempreService, private route: ActivatedRoute,  private _service: PqestadService) {
    }
 
@@ -45,13 +45,11 @@ export class PqestadComponent implements OnInit {
 
         this.loadCompanies();
 
-        if (this.emp_codi) {
+        if (this.emp_codi)
           this.load();
-        }
 
-      } else {
+      } else
         this.showAlertMesssage('Acceso Denegado.');
-      }
 
     } catch ( err ) {
       this.showAlertMesssage(err);
@@ -64,7 +62,6 @@ load() {
   this._service.loadInfoEstadisticas(this.emp_codi).subscribe(resp => {
     if (resp.retorno === 0) {
       this.estadisti = resp.objTransaction;
-      console.log(this.estadisti);
     }
   });
 
@@ -108,5 +105,15 @@ load() {
       this.spinner.hide();
       this._EmpreModal.present();
     });
+  }
+
+  postPqEstad() {
+   this.spinner.show();
+    // tslint:disable-next-line:max-line-length
+    this._service.loadPqEstadisticas(this.emp_codi, moment(this.estadisti.fec_inic).format('YYYY-MM-DD'),  moment(this.estadisti.fec_fina).format('YYYY-MM-DD'), 'seccional' , '2' ).subscribe(resp => {
+      if (resp.retorno === 0)
+        this.dataEncue = resp.objTransaction;
+  });
+    this.spinner.hide();
   }
 }

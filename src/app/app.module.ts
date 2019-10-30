@@ -70,7 +70,6 @@ export const MY_FORMATS = {
     RnradicComponent,
     TableSearchGenericComponent,
     ModalDoctosComponent
-    
   ],
   imports: [
     FormsModule,                               // <========== Add this line!

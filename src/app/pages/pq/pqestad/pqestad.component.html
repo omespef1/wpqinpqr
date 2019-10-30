@@ -5,18 +5,17 @@
     </div>
 </div>
 <div class="container">
-
-    <div class="card card-gray" *ngIf="!submitted">
+    <div class="card card-gray">
         <div class="card-header bg-primary text-white">Consultar estadisticas</div>
         <div class="card-body">
-            <form>
+            <form #estadForm="ngForm" (ngSubmit)="postPqEstad()">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                         <label for="fec_fini">Fecha Inicial</label>
                         <div class="input-group">
                             <mat-datepicker-toggle [for]="pro_fent"></mat-datepicker-toggle>
                             <mat-datepicker #pro_fent touchUi></mat-datepicker>
-                            <input matInput placeholder="Fecha Inicial" required readonly [matDatepicker]="pro_fent" type="text" class="form-control" name="pro_fent" id="pro_fent">
+                            <input [(ngModel)]="estadisti.fec_inic" matInput placeholder="Fecha Inicial" required readonly [matDatepicker]="pro_fent" type="text" class="form-control" name="pro_fent" id="pro_fent">
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -24,7 +23,7 @@
                         <div class="input-group">
                             <mat-datepicker-toggle [for]="pro_fven"></mat-datepicker-toggle>
                             <mat-datepicker #pro_fven touchUi></mat-datepicker>
-                            <input matInput placeholder="Fecha Final" required readonly [matDatepicker]="pro_fven" type="text" class="form-control" name="pro_fven" id="pro_fven">
+                            <input [(ngModel)]="estadisti.fec_fina" matInput placeholder="Fecha Final" required readonly [matDatepicker]="pro_fven" type="text" class="form-control" name="pro_fven" id="pro_fven">
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -134,6 +133,7 @@
             </form>
         </div>
     </div>
+
 </div>
 
 
@@ -142,12 +142,13 @@
         <div class="form-group">
             <label for="emp_codi" class="col-form-label"></label>
             <select class="form-control" id="usu_codi" name="usu_codi" [(ngModel)]="emp_codi" required #usu_codi="ngModel">
-                    <option value="0">Seleccione</option>
-                    <option *ngFor="let companie of companies" [value]="companie.emp_codi">{{companie.emp_nomb | titlecase}}
-                    </option>
-                </select>
+                <option value="0">Seleccione</option>
+                <option *ngFor="let companie of companies" [value]="companie.emp_codi">{{companie.emp_nomb | titlecase}}
+                </option>
+            </select>
         </div>
     </form>
 </app-gnempre>
 
 <app-alert-message [message]="msg"></app-alert-message>
+<app-pie-chart [infoData]="dataEncue"></app-pie-chart>

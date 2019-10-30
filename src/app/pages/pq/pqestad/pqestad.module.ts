@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { PqestadComponent } from './pqestad.component';
 import { FormsModule } from '@angular/forms';
-import { MatDatepickerModule } from '@angular/material';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ChartsModule } from 'ng2-charts';
+import { MatDatepickerModule } from '@angular/material';
 
 const routes: Routes = [
   {
@@ -20,8 +19,7 @@ const routes: Routes = [
     FormsModule ,
     RouterModule.forChild(routes),
     MatDatepickerModule,
-    SharedModule,
-    ChartsModule
+    SharedModule
   ],
   declarations: [
     PqestadComponent
