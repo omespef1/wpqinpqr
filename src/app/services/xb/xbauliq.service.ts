@@ -17,7 +17,7 @@ export class XbauliqService {
    return this._comu.GetTransaction<Transaction>(`api/XbbAuliq?emp_codi=${emp_codi}&cli_coda=${cli_coda}&par_fech=${par_fech}`);
   }
 
-  SetXbAuliq(aprobation: XbAuliq:xbautliqp) {
+  SetXbAuliq(aprobation:xbautliqp) {
   return this._comu.PostTransaction<Transaction>("api/XbbAuliq", aprobation);
   }
 }
