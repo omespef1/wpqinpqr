@@ -1,11 +1,15 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
+</ngx-spinner>
+
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
         <h1 class="display-4">Estadisticas PQR</h1>
 
     </div>
 </div>
+
 <div class="container">
-    <div class="card card-gray">
+    <div class="card card-gray" *ngIf="!showChart">
         <div class="card-header bg-primary text-white">Consultar estadisticas</div>
         <div class="card-body">
             <form #estadForm="ngForm" (ngSubmit)="postPqEstad()">
@@ -34,9 +38,9 @@
                                     <span><i class="fas fa-book"></i></span>
                                 </div>
                             </div>
-                            <select class="form-control" id="" name="">
-                                <option value="0">Todos</option>
-                                <option *ngFor="let secc of estadisti.seccional" [value]="secc.arb_codi">{{secc.arb_nomb | titlecase}}</option>
+                            <select class="form-control" name="seccional" [(ngModel)]="estadisti.selSecc">
+                                <option value = undefined>Todos</option>
+                                <option *ngFor="let secc of estadisti.seccional" [value]="secc.arb_cont">{{secc.arb_nomb | titlecase}}</option>
                             </select>
                         </div>
                     </div>
@@ -48,9 +52,9 @@
                                     <span><i class="fas fa-bullseye"></i></span>
                                 </div>
                             </div>
-                            <select class="form-control" id="" name="">
-                                    <option value="0">Todos</option>
-                                    <option *ngFor="let frec of estadisti.formRecib" [value]="frec.ite_codi">{{frec.ite_nomb | titlecase}}</option>                           
+                            <select class="form-control" name="FormRec" [(ngModel)]="estadisti.selForm">
+                                    <option value = undefined>Todos</option>
+                                    <option *ngFor="let frec of estadisti.formRecib" [value]="frec.arb_cont">{{frec.ite_nomb | titlecase}}</option>                           
                             </select>
                         </div>
                     </div>
@@ -62,9 +66,9 @@
                                     <span><i class="far fa-hand-paper"></i></span>
                                 </div>
                             </div>
-                            <select class="form-control" id="" name="">
-                                <option value="0">Todos</option>
-                                <option *ngFor="let tpqr of estadisti.tipoDePqr" [value]="tpqr.ite_codi">{{tpqr.ite_nomb | titlecase}}</option>                        
+                            <select class="form-control" name="TipoPQR" [(ngModel)]="estadisti.selTpqr">
+                                <option value = undefined>Todos</option>
+                                <option *ngFor="let tpqr of estadisti.tipoDePqr" [value]="tpqr.arb_cont">{{tpqr.ite_nomb | titlecase}}</option>                        
                             </select>
                         </div>
                     </div>
@@ -76,9 +80,9 @@
                                     <span><i class="fas fa-warehouse"></i></span>
                                 </div>
                             </div>
-                            <select class="form-control" id="" name="">
-                                        <option value="0">Todos</option>   
-                                        <option *ngFor="let resp of estadisti.areaRespo" [value]="resp.arb_codi">{{resp.arb_nomb | titlecase}}</option>                          
+                            <select class="form-control" name="area" [(ngModel)]="estadisti.selArea">
+                                <option value = undefined>Todos</option>
+                                <option *ngFor="let resp of estadisti.areaRespo" [value]="resp.arb_cont">{{resp.arb_nomb | titlecase}}</option>                          
                             </select>
                         </div>
                     </div>
@@ -90,9 +94,9 @@
                                     <span><i class="fas fa-layer-group"></i></span>
                                 </div>
                             </div>
-                            <select class="form-control" id="" name="">
-                                <option value="0">Todos</option>
-                                <option *ngFor="let tipi of estadisti.tipificac" [value]="tipi.ite_codi">{{tipi.ite_nomb | titlecase}}</option>                             
+                            <select class="form-control" name="tipificacion" [(ngModel)]="estadisti.selTipi">
+                                <option value = undefined>Todos</option>
+                                <option *ngFor="let tipi of estadisti.tipificac" [value]="tipi.ite_cont">{{tipi.ite_nomb | titlecase}}</option>                             
                             </select>
                         </div>
                     </div>
@@ -104,9 +108,9 @@
                                     <span><i class="fas fa-object-ungroup"></i></span>
                                 </div>
                             </div>
-                            <select class="form-control" id="" name="">
-                                <option value="0">Todos</option>  
-                                <option *ngFor="let subtipi of estadisti.subtipifi" [value]="subtipi.ite_codi">{{subtipi.ite_nomb | titlecase}}</option>
+                            <select class="form-control" name="subtipificacion" [(ngModel)]="estadisti.selSubT">
+                                <option value = undefined>Todos</option>
+                                <option *ngFor="let subtipi of estadisti.subtipifi" [value]="subtipi.ite_cont">{{subtipi.ite_nomb | titlecase}}</option>
                             </select>
                         </div>
                     </div>
@@ -118,24 +122,225 @@
                                     <span><i class="fas fa-stream"></i></span>
                                 </div>
                             </div>
-                            <select class="form-control" id="" name="">
-                                        <option value="0">Todos</option>   
-                                        <option *ngFor="let secc of estadisti.seccional" [value]="secc.arb_codi">{{secc.arb_nomb | titlecase}}</option>                          
-                                </select>
+                            <select class="form-control" name="grupo" [(ngModel)]="estadisti.selGrup">
+                                <option value = undefined>Todos</option>
+                                <option *ngFor="let pert of estadisti.grupPerte" [value]= pert.arb_cont>{{pert.arb_nomb | titlecase}}</option>                          
+                            </select>
                         </div>
                     </div>
                     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-3">
                         <button *ngIf="this.client" type="submit" class="btn btn-primary btn-lg btn-block btn-lg"> 
-                                    <span><i class="fas fa-search"></i> &nbsp;Consultar</span>
-                                </button>
+                            <span><i class="fas fa-search"></i> &nbsp;Consultar</span>
+                        </button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 
-</div>
+    <div class="accordion mb-5" id="accordionEstadistic" *ngIf="showChart">
+        <div class="card">
 
+            <div class="card-header text-white bg-primary  font-weight-bold" data-toggle="collapse" [attr.data-target]="'#seccional'" aria-expanded="false" [attr.aria-controls]="'collapseOne'">
+                <h6>
+                    PQR X SECCIONAL
+                </h6>
+            </div>
+            <div id="seccional" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionEstadistic">
+                <div class="card-body" style="border-bottom: 0.5px solid grey;">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                            <app-pie-chart [infoData]=estadSeccional [isGrouped]=false>
+                            </app-pie-chart>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                            <div class="table-responsive mt-5">
+                                <table class="table table-hover table-striped table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Seccional</th>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Porcentaje</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let dat of estadSeccional">
+                                            <td>{{dat.dat_nomb}}</td>
+                                            <td>{{dat.cantidad}}</td>
+                                            <td>{{dat.porcentaje}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <p class="font-weight-bold">Total</p>
+                                            </td>
+                                            <td>
+                                                <p class="font-weight-bold">{{ getSum(estadSeccional) }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="font-weight-bold">{{ getPercent(estadSeccional) | number: '1.0-0' }} %</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="estadFormRecib?.length" class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#formRecib'" aria-expanded="false" [attr.aria-controls]="'formRecib'">
+                <h6>
+                    PQR X FORMA DE RECIBIDO
+                </h6>
+            </div>
+            <div *ngIf="estadFormRecib?.length" id="formRecib" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionEstadistic">
+                <div class="card-body" style="border-bottom: 0.5px solid gray;">
+                    <!-- *ngFor="let object of estadFormRecib | groupBy:'arb_nomb'" -->
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
+                            <app-pie-chart [infoData]=estadFormRecib [isGrouped]=false>
+                            </app-pie-chart>
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
+                            <div class="table-responsive mt-5">
+                                <table class="table table-hover table-striped table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Forma de Recibido</th>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Porcentaje</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- <tr *ngFor="let dat of object.value">
+                                            <td>{{dat.ite_nomb}}</td>
+                                            <td>{{dat.cantidad}}</td>
+                                            <td>{{dat.porcentaje}}</td>
+                                        </tr> -->
+                                        <tr *ngFor="let dat of estadFormRecib">
+                                            <td>{{dat.dat_nomb}}</td>
+                                            <td>{{dat.cantidad}}</td>
+                                            <td>{{dat.porcentaje}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <p class="font-weight-bold">Total</p>
+                                            </td>
+                                            <td>
+                                                <p class="font-weight-bold">{{ getSum(estadFormRecib) }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="font-weight-bold">{{ getPercent(estadFormRecib) | number: '1.0-0' }} %</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="estadTipoDePqr?.length" class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#tipoPQR'" aria-expanded="false" [attr.aria-controls]="'tipoPQR'">
+                <h6>
+                    PQR X TIPO DE PQR
+                </h6>
+            </div>
+            <div *ngIf="estadTipoDePqr?.length" id="tipoPQR" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionEstadistic">
+                <div class="card-body" style="border-bottom: 0.5px solid grey;">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                            <app-pie-chart [infoData]=estadTipoDePqr [isGrouped]=false>
+                            </app-pie-chart>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                            <div class="table-responsive mt-5">
+                                <table class="table table-hover table-striped table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Tipo de PQR</th>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Porcentaje</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let dat of estadTipoDePqr">
+                                            <td>{{dat.dat_nomb}}</td>
+                                            <td>{{dat.cantidad}}</td>
+                                            <td>{{dat.porcentaje}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <p class="font-weight-bold">Total</p>
+                                            </td>
+                                            <td>
+                                                <p class="font-weight-bold">{{ getSum(estadSeccional) }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="font-weight-bold">{{ getPercent(estadSeccional) | number: '1.0-0' }} %</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="estadAreaRespo?.length" class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#areaRespon'" aria-expanded="false" [attr.aria-controls]="'areaRespon'">
+                <h6>
+                    PQR X AREA RESPONSABLE
+                </h6>
+            </div>
+            <div *ngIf="estadAreaRespo?.length" id="areaRespon" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionEstadistic">
+                <div class="card-body">
+                </div>
+            </div>
+
+            <div *ngIf="estadTipificac?.length" class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#tipificacion'" aria-expanded="false" [attr.aria-controls]="'tipificacion'">
+                <h6>
+                    PQR X TIPIFICACIÓN
+                </h6>
+            </div>
+            <div *ngIf="estadTipificac?.length" id="tipificacion" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionEstadistic">
+                <div class="card-body">
+                </div>
+            </div>
+
+            <div *ngIf="estadSubTipifi?.length" class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#subtipificacion'" aria-expanded="false" [attr.aria-controls]="'subtipificacion'">
+                <h6>
+                    PQR X SUBTIPIFICACIÓN
+                </h6>
+            </div>
+            <div *ngIf="estadSubTipifi?.length" id="subtipificacion" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionEstadistic">
+                <div class="card-body">
+                </div>
+            </div>
+
+            <div *ngIf="estadGrupoPert?.length" class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#grupoPert'" aria-expanded="false" [attr.aria-controls]="'grupoPert'">
+                <h6>
+                    PQR X GRUPO PERTENECIENTE
+                </h6>
+            </div>
+            <div *ngIf="estadGrupoPert?.length" id="grupoPert" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionEstadistic">
+                <div class="card-body">
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-lg btn-block btn-lg" (click)="returnView()"> 
+                <span><i class="fas fa-backward"></i> Volver</span>
+            </button>
+        </div>
+    </div>
+</div>
 
 <app-gnempre title="Seleccione empresa" (accept)="_EmpreModal.dismiss();load()">
     <form>
@@ -150,5 +355,5 @@
     </form>
 </app-gnempre>
 
+
 <app-alert-message [message]="msg"></app-alert-message>
-<app-pie-chart [infoData]="dataEncue"></app-pie-chart>

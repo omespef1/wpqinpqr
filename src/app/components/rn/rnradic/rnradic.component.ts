@@ -610,6 +610,16 @@ cleanDataForm() {
     this.dperc.ite_codi = ddo.ite_codi;
   }
 
+  numberOnly(event): boolean {
+
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
+  }
+
   hideShowControls() {
     this.hideControls();
     if (this.cra_clar === 'A' && this.cra_prim === 'N' && this.cra_dest === 'F') {

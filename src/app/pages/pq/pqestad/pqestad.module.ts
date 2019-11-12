@@ -5,6 +5,7 @@ import { PqestadComponent } from './pqestad.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatDatepickerModule } from '@angular/material';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 const routes: Routes = [
   {
@@ -19,7 +20,8 @@ const routes: Routes = [
     FormsModule ,
     RouterModule.forChild(routes),
     MatDatepickerModule,
-    SharedModule
+    SharedModule,
+    NgxSpinnerModule
   ],
   declarations: [
     PqestadComponent

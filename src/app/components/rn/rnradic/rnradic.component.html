@@ -56,7 +56,19 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf="SRN000001 === 'S'">
+                    <div class="col-lg-2 col-md-2 col-xs-12 col-sm-12">
+                        <label for="con_cont">Folios</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-hashtag"></i></span>
+                                </div>
+                            </div>
+                            <input id="rad_nfol" name="rad_nfol" type="text" (keypress)="numberOnly($event)" maxlength="6" [(ngModel)]="radic.rad_nfol" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12" *ngIf="SRN000001 === 'S'">
                         <label for="con_cont">Autoriza tratamiento de datos personales</label>
                         <div class="input-group mt-2">
                             <div class="custom-control custom-radio">
@@ -69,13 +81,12 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                         <label for="con_cont">Observaciones</label>
-                        <textarea type="text" class="form-control" id="rad_obse" name="rad_obse" [(ngModel)]="radic.rad_obse" required #rad_obse="ngModel"></textarea>
+                        <textarea type="text" class="form-control" id="rad_obse" name="rad_obse" [(ngModel)]="radic.rad_obse" #rad_obse="ngModel" [required]="SRN000002 === 'S'"></textarea>
                     </div>
                 </div>
             </div>
@@ -162,7 +173,7 @@
                                                 <span><i class="fas fa-phone"></i></span>
                                             </div>
                                         </div>
-                                        <input id="dsu_tele" name="dsu_tele" [(ngModel)]="radic.dsu_tele" required #dsu_tele="ngModel" type="text" class="form-control" placeholder="Teléfono">
+                                        <input id="dsu_tele" name="dsu_tele" [(ngModel)]="radic.dsu_tele" [required]="SRN000002 === 'S'" #dsu_tele="ngModel" type="text" class="form-control" placeholder="Teléfono">
                                     </div>
                                 </div>
                             </div>
@@ -281,7 +292,7 @@
                                                 <span><i class="fas fa-hashtag"></i></span>
                                             </div>
                                         </div>
-                                        <input id="rad_dire" name="rad_dire" [(ngModel)]="radic.rad_dire" required #rad_dire="ngModel" type="text" class="form-control" placeholder="Dirección">
+                                        <input id="rad_dire" name="rad_dire" [(ngModel)]="radic.rad_dire" [required]="SRN000002 === 'S'" #rad_dire="ngModel" type="text" class="form-control" placeholder="Dirección">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -292,7 +303,7 @@
                                                 <span><i class="fas fa-mail-bulk"></i></span>
                                             </div>
                                         </div>
-                                        <input id="rad_emai" name="rad_emai" [(ngModel)]="radic.rad_emai" type="text" class="form-control" placeholder="Correo Electrónico">
+                                        <input id="rad_emai" name="rad_emai" [(ngModel)]="radic.rad_emai" [required]="SRN000002 === 'S'" type="text" class="form-control" placeholder="Correo Electrónico">
                                     </div>
                                 </div>
                             </div>

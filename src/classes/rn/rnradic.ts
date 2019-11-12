@@ -24,6 +24,7 @@ export class RnRadic {
     public rad_tdat = 'N';
     public rad_obse: string;
     public ite_depe: string;
+    public rad_nfol: number;
 
     public tip_codi: number;
     public tip_noma: string;
