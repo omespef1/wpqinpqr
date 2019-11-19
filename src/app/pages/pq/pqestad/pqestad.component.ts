@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { GnempreService } from 'src/app/services/gn/gnempre.service';
-import { companies } from 'src/classes/models';
+import { companies, ToTransaction } from 'src/classes/models';
 import { GnempreComponent } from 'src/app/components/gn/gnempre/gnempre.component';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -11,6 +11,7 @@ import { PqestadService } from 'src/app/services/pq/pqestad/pqestad.service';
 import { Pqestad, InfoPqEstad } from 'src/classes/pq/pqestad';
 import * as moment from 'moment';
 import { PieChartComponent } from 'src/app/components/charts/pie-chart/pie-chart.component';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-pqestad',
@@ -21,7 +22,7 @@ export class PqestadComponent implements OnInit {
   @ViewChild(GnempreComponent) _EmpreModal: GnempreComponent;
   @ViewChild(AlertMessageComponent) alert: AlertMessageComponent;
   @ViewChild(ModalComponent) modal: ModalComponent;
-  @ViewChild(PieChartComponent) _pie: PieChartComponent;
+
   submitted = true;
   companies: companies[];
   emp_codi = 0;
@@ -31,6 +32,7 @@ export class PqestadComponent implements OnInit {
   showChart = false;
   filter = '';
   titulo = '';
+  myForm: NgForm;
 
   estadisti: Pqestad = new Pqestad();
 
@@ -41,8 +43,6 @@ export class PqestadComponent implements OnInit {
   estadTipificac: InfoPqEstad[] = [];
   estadSubTipifi: InfoPqEstad[] = [];
   estadGrupoPert: InfoPqEstad[] = [];
-
-  groupInfo = [];
 
   constructor(private spinner: NgxSpinnerService, private sanitizer: DomSanitizer, private titleService: Title,
     private _gnempre: GnempreService, private route: ActivatedRoute,  private _service: PqestadService) {
@@ -74,11 +74,8 @@ load() {
 
   this.spinner.show();
   this._service.loadInfoEstadisticas(this.emp_codi).subscribe(resp => {
-    if (resp.retorno === 0) {
+    if (resp.retorno === 0)
       this.estadisti = resp.objTransaction;
-      this.estadisti.fec_inic = new Date('2015/01/01');
-      this.estadisti.fec_fina = new Date('2019/11/01');
-    }
   });
 
   this.spinner.hide();
@@ -94,13 +91,12 @@ load() {
 
         this.route.queryParamMap.subscribe(queryParams => {
 
-        if (queryParams.get('client') != null) {
+        if (queryParams.get('client') != null)
           this.client = atob(queryParams.get('client'));
-        }
 
-        if (queryParams.get('usu_codi') != null) {
+        if (queryParams.get('usu_codi') != null)
           this.usu_codi = atob(queryParams.get('usu_codi'));
-        }
+
         return true;
       }, err => {
         return false;
@@ -123,60 +119,33 @@ load() {
     });
   }
 
-  postPqEstad() {
-    this.getInfoFromType('seccional');
-    this.getInfoFromType('formRecib');
-    this.getInfoFromType('tipodePqr');
-    this.getInfoFromType('areaRespo');
-    this.getInfoFromType('tipificac');
-    this.getInfoFromType('subtipifi');
-    this.getInfoFromType('grupoPert');
+  async postPqEstad(form: NgForm) {
+    this.myForm = form;
+    this.showChart = true;
+    this.getInfoFromType('seccional', this.estadisti.selSecc).then(resp => this.estadSeccional = resp.objTransaction);
+    this.getInfoFromType('formRecib', this.estadisti.selForm).then(resp => this.estadFormRecib = resp.objTransaction);
+    this.getInfoFromType('tipodePqr', this.estadisti.selTpqr).then(resp => this.estadTipoDePqr = resp.objTransaction);
+    this.getInfoFromType('areaRespo', this.estadisti.selArea).then(resp => this.estadAreaRespo = resp.objTransaction);
+    this.getInfoFromType('tipificac', this.estadisti.selTipi).then(resp => this.estadTipificac = resp.objTransaction);
+    this.getInfoFromType('subtipifi', this.estadisti.selSubT).then(resp => this.estadSubTipifi = resp.objTransaction);
+    this.getInfoFromType('grupoPert', this.estadisti.selGrup).then(resp => this.estadGrupoPert = resp.objTransaction);
   }
 
-  getInfoFromType(type: string) {
-
-    if (type === 'seccional')
-      this.filter = this.estadisti.selSecc;
-     else if (type === 'formRecib')
-      this.filter = this.estadisti.selForm;
-     else if (type === 'tipodePqr')
-      this.filter = this.estadisti.selTpqr;
-     else if (type === 'areaRespo')
-      this.filter = this.estadisti.selArea;
-     else if (type === 'tipificac')
-      this.filter = this.estadisti.selTipi;
-     else if (type === 'subtipifi')
-      this.filter = this.estadisti.selSubT;
-     else if (type === 'grupoPert')
-      this.filter = this.estadisti.selGrup;
-
-    this.spinner.show();
-    this._service.loadPqEstadisticas(this.emp_codi, moment(this.estadisti.fec_inic).format('YYYY-MM-DD'),
-      moment(this.estadisti.fec_fina).format('YYYY-MM-DD'), type, this.filter).subscribe(resp => {
-        if (resp.retorno === 0) {
-          this.showChart = true;
-
-           if (type === 'seccional')
-            this.estadSeccional = resp.objTransaction;
-           else if (type === 'formRecib')
-            this.estadFormRecib = resp.objTransaction;
-           else if (type === 'tipodePqr')
-            this.estadTipoDePqr =  resp.objTransaction;
-           else if (type === 'areaRespo')
-            this.estadAreaRespo =  resp.objTransaction;
-           else if (type === 'tipificac')
-            this.estadTipificac =  resp.objTransaction;
-           else if (type === 'subtipifi')
-            this.estadSubTipifi =  resp.objTransaction;
-           else if (type === 'grupoPert')
-            this.estadGrupoPert =  resp.objTransaction;
-        }
-      });
-    this.spinner.hide();
-  }
+   getInfoFromType(type: string, filter: string) {
+     return this._service.loadPqEstadisticas(this.emp_codi, moment(this.estadisti.fec_inic).format('YYYY-MM-DD'),
+       moment(this.estadisti.fec_fina).format('YYYY-MM-DD'), type, filter).toPromise();
+   }
 
   returnView() {
     this.showChart = false;
+    this.myForm.reset();
+    this.estadSeccional = [];
+    this.estadFormRecib = [];
+    this.estadTipoDePqr = [];
+    this.estadAreaRespo = [];
+    this.estadTipificac = [];
+    this.estadSubTipifi = [];
+    this.estadGrupoPert = [];
   }
 
   transform(collection: Array<any>, property: string): Array<any> {
@@ -185,7 +154,7 @@ load() {
         return null;
 
     const groupedCollection = collection.reduce((previous, current) => {
-        if (!previous[current[property]]) 
+        if (!previous[current[property]])
             previous[current[property]] = [current];
          else
             previous[current[property]].push(current);
@@ -196,12 +165,13 @@ load() {
     return Object.keys(groupedCollection).map(key => ({ key, value: groupedCollection[key] }));
   }
 
-  getSum(source:any[]){
-     return source.reduce((sum,actual)=> sum + actual.cantidad,0);
+  getSum(source: any[]) {
+    if (source !== null)
+     return source.reduce((sum, actual) => sum + actual.cantidad, 0);
   }
 
-  getPercent(source:any[]){
-    return source.reduce((sum,actual)=> sum + actual.porcentaje,0);
+  getPercent(source: any[]) {
+    if (source !== null)
+      return source.reduce((sum, actual) => sum + actual.porcentaje, 0);
  }
-
 }

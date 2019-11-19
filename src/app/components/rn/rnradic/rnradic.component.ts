@@ -103,6 +103,14 @@ export class RnradicComponent implements OnInit {
     if (this.radic.emp_codi) {
       this.Load();
     }
+
+    if (this.SRN000002 === 'S') {
+      this.radic.rad_obse = '.';
+      this.radic.dsu_tele = '.';
+      this.radic.rad_dire = '.';
+      this.radic.rad_emai = '.';
+    }
+
    }
 
    loadCompanies() {
@@ -203,6 +211,14 @@ export class RnradicComponent implements OnInit {
       } else {
         this.showAlertMesssage(`${resp.txtRetorno}`);
       }
+
+      if (this.SRN000002 === 'S') {
+        this.radic.rad_obse = '.';
+        this.radic.dsu_tele = '.';
+        this.radic.rad_dire = '.';
+        this.radic.rad_emai = '.';
+      }
+
       this.spinner.hide();
     }, err => {
       console.log(err);
@@ -211,7 +227,7 @@ export class RnradicComponent implements OnInit {
     });
   }
 
- async LoadClasificacion() {
+  async LoadClasificacion() {
     // tslint:disable-next-line:max-line-length
     const info: any = <any>await this._comu.Get(`api/RnRadic/RnCracoLoad?emp_codi=${this.radic.emp_codi}&gru_cont=${this.radic.gru_cont}`).toPromise();
 
@@ -318,6 +334,14 @@ export class RnradicComponent implements OnInit {
     this.cra_prim =  rowSelected.CRA_PRIM;
     this.cra_clar =   rowSelected.CRA_CLAR;
     this.cra_dest =  rowSelected.CRA_DEST;
+
+    if (this.SRN000002 === 'S') {
+      this.radic.rad_obse = '.';
+      this.radic.dsu_tele = '.';
+      this.radic.rad_dire = '.';
+      this.radic.rad_emai = '.';
+    }
+
     this.hideShowControls();
   }
 

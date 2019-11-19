@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild, Input } from '@angular/core';
+import { InfoPqEstad } from 'src/classes/pq/pqestad';
 
 declare var google: any;
 
@@ -11,10 +12,7 @@ export class PieChartComponent implements AfterViewInit {
   @ViewChild('pieChart') pieChart: ElementRef;
 
   @Input()
-  public infoData: any[] = [];
-
-  @Input()
-  public data = new google.visualization.DataTable();
+  public infoData: InfoPqEstad[] = [];
 
   @Input()
   public columnNames: Array<string>;
@@ -26,18 +24,18 @@ export class PieChartComponent implements AfterViewInit {
   public options: any = {};
 
   @Input()
-  public isGrouped: boolean;
+  public isGrouped = false;
+
+  data = new google.visualization.DataTable();
 
   drawChart = () => {
-
-    this.data = new google.visualization.DataTable();
-
     if (this.isGrouped) {
       this.data.addColumn('string', 'Forma de Recibido');
       this.data.addColumn('number', 'Cantidad');
       this.loadChartGrouped();
     } else {
-      this.data.addColumn('string', 'Seccional');
+      this.data = new google.visualization.DataTable();
+      this.data.addColumn('string', 'Nombre');
       this.data.addColumn('number', 'Cantidad');
       this.loadChart();
     }
@@ -50,6 +48,7 @@ export class PieChartComponent implements AfterViewInit {
   }
 
   loadChart() {
+
     let stringData = '[';
     for (let i = 0; i < this.infoData.length; i++) {
       stringData += '["' + this.infoData[i].dat_nomb + '",' + this.infoData[i].cantidad + ']';

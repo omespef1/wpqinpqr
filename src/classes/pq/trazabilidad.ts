@@ -1,7 +1,7 @@
 import { Gnarbol } from '../gn/gnarbol';
 import { Gnitems } from '../gn/gnitems';
 
-export class Pqestad {
+export class Trazabilidad {
    public seccional: Gnarbol[];
    public formRecib: Gnitems[];
    public tipoDePqr: Gnitems[];
@@ -9,10 +9,10 @@ export class Pqestad {
    public tipificac: Gnitems[];
    public subtipifi: Gnitems[];
    public grupPerte: Gnarbol[];
-
-   public fec_inic = new Date();
-   public fec_fina = new Date();
-
+   public fec_inic: Date;
+   public fec_fina: Date;
+   public inp_cont: string;
+   public cas_cont: string;
    public selSecc: string;
    public selForm: string;
    public selTpqr: string;
@@ -39,11 +39,3 @@ export class Pqestad {
       this.selGrup = '';
   }
 }
-
-export class InfoPqEstad {
-   public dat_nomb: string;
-   public cantidad: number;
-   public porcentaje: number;
-}
-
-
