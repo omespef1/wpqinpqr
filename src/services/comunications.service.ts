@@ -2,7 +2,7 @@ import { Injectable, ErrorHandler } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EnvService } from '../app/env.service';
 //models
-import { ToTransaction } from '../classes/models';
+import { ToTransaction, ToTransactionSafe } from '../classes/models';
 @Injectable({
   providedIn: 'root'
 })
@@ -21,6 +21,14 @@ export class ComunicationsService {
       url += `&emp_codi=${emp_codi}`;
     }
     return this.http.get<T>(url);
+  }
+
+  GetTransactionSafe<T>(urlController: string, emp_codi: number = 0) {
+    let url = `${this.env.apiUrl}${urlController}`;
+    if (emp_codi !== 0)  {
+      url += `&emp_codi=${emp_codi}`;
+    }
+    return this.http.get<ToTransactionSafe<T>>(url);
   }
   
   async getAsync(urlController: string) {

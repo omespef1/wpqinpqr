@@ -97,6 +97,11 @@ export interface ToTransaction{
   TxtError:string,
   ObjTransaction:any
 }
+export interface  ToTransactionSafe<T> {
+  Retorno: number;
+  TxtError: string;
+  ObjTransaction: T;
+}
 
 export interface companies {
   emp_nomb:string;

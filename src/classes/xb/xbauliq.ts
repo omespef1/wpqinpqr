@@ -1,22 +1,27 @@
 export class XbAuliq {
+  emp_codi:number;
   ite_ctse: number;
   cts_nomb: string;
-  ddi_vige: number;
+  rcx_vige: number;
   top_codi: number;
   top_nomb: string;
   cxc_desc: string;
   cxc_tota: number;
   cxc_sald: number;
+  dpa_tari:number;
   Par_Fech: Date;
   liq_apro: boolean;
   error: string;
   cxc_inmo: number;
   cxc_inan: number;
+  liq_lock:boolean;
+  print:boolean;
 }
 export class xbautliqp {
   emp_codi: number;
   cli_coda: string;
   usu_codi:string;
+  par_fech:Date;
   cuentas: XbAuliq[];
 }
 
@@ -56,4 +61,19 @@ export class xbpceca {
   arb_armi: number;
   arb_prmi: number;
   pro_comi: number;
+}
+
+export class PrintLiq {
+  emp_nomb :number;
+   emp_codi :number;
+  usu_codi :string;
+   cli_coda :string;
+   cli_noco :string;
+   cli_dire :string;
+  mun_nomb :string;
+   dep_nomb :string;
+   ite_nose :string;
+  ina_refe :string;
+  cxc_info :XbAuliq;
+
 }
