@@ -37,8 +37,6 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { TableSearchGenericComponent } from './components/tools/table-search-generic/table-search-generic.component';
 import { ModalDoctosComponent } from './components/rn/rnradic/modal-doctos/modal-doctos.component';
 import {NgxPaginationModule} from 'ngx-pagination';
-import { TrazabilidadComponent } from './pages/pq/trazabilidad/trazabilidad.component';
-import { SfforpoComponent } from './pages/sf/sfforpo/sfforpo.component'; // <-- import the module
 
 export const MY_FORMATS = {
   parse: {
