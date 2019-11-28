@@ -134,7 +134,7 @@
                                     <ng-template [ngSwitchCase]="'A'">
                                         <div class="alert alert-light mb-0 text-dark">
                                             <div class="row">
-                                                <div class="text-center" style="width: 5%">
+                                                <div class="text-center" style="width: 4%">
                                                     {{ i+ 1 }}
                                                 </div>
                                                 <div style="width: 45%">
@@ -154,7 +154,7 @@
                                                     {{pregunta.drs_preg}}
                                                 </div>
                                                 <div style="width: 49%">
-                                                    <form class="form-inline">
+                                                    <form class="form">
                                                         <ng-template ngFor let-preguntaMult [ngForOf]="pregunta.Respuestas" let-i="index">
                                                             <div class="col-auto my-1">
                                                                 <div class="form-group custom-checkbox mr-sm-2">

@@ -1,0 +1,802 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Formulario Postulación para el subsidio de vivienda FOVIS </h1>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="card card-gray mb-3">
+        <div class="card-header bg-primary text-white">FOVIS</div>
+        <div class="card-body">
+            <form>
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-basicos-tab" data-toggle="tab" href="#nav-basicos" role="tab" aria-controls="nav-basicos" aria-selected="true">Datos básicos</a>
+                        <a class="nav-item nav-link" id="nav-miembros-tab" data-toggle="tab" href="#nav-miembros" role="tab" aria-controls="nav-miembros" aria-selected="false">Miembros del Hogar</a>
+                        <a class="nav-item nav-link" id="nav-infoHogar-tab" data-toggle="tab" href="#nav-infoHogar" role="tab" aria-controls="nav-infoHogar" aria-selected="false">Información del Hogar Postulante</a>
+                        <a class="nav-item nav-link" id="nav-recursos-tab" data-toggle="tab" href="#nav-recursos" role="tab" aria-controls="nav-recursos" aria-selected="false">Recursos Económicos Y Financiacion de la Vivienda</a>
+                        <a class="nav-item nav-link" id="nav-trayectoria-tab" data-toggle="tab" href="#nav-trayectoria" role="tab" aria-controls="nav-trayectoria" aria-selected="false">Trayectoria</a>
+                        <a class="nav-item nav-link" id="nav-novedades-tab" data-toggle="tab" href="#nav-novedades" role="tab" aria-controls="nav-novedades" aria-selected="false">Novedades</a>
+                    </div>
+                </nav>
+
+                <div class="tab-content" id="nav-tabContent">
+
+                    <div class="tab-pane fade show active" id="nav-basicos" role="tabpanel" aria-labelledby="nav-basicos-tab">
+                        <div class="container mt-3">
+                            <div class="row">
+
+                                <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                    <label for="for_fech">Fecha Postulación</label>
+                                    <div class="input-group">
+                                        <mat-datepicker-toggle [for]="for_fech"></mat-datepicker-toggle>
+                                        <mat-datepicker #for_fech touchUi></mat-datepicker>
+                                        <input matInput placeholder="Fecha Postulación" readonly [matDatepicker]="for_fech" type="text" class="form-control" name="for_fech" id="for_fech">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                    <label for="for_fvig">Fecha Vigencia</label>
+                                    <div class="input-group">
+                                        <mat-datepicker-toggle [for]="for_fvig"></mat-datepicker-toggle>
+                                        <mat-datepicker #for_fvig touchUi></mat-datepicker>
+                                        <input matInput placeholder="Fecha Inicial" required readonly [matDatepicker]="for_fvig" type="text" class="form-control" name="for_fvig" id="for_fvig">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                    <label for="for_fpro">Fecha Prorroga</label>
+                                    <div class="input-group">
+                                        <mat-datepicker-toggle [for]="for_fpro"></mat-datepicker-toggle>
+                                        <mat-datepicker #for_fpro touchUi></mat-datepicker>
+                                        <input matInput placeholder="Fecha Inicial" required readonly [matDatepicker]="for_fpro" type="text" class="form-control" name="for_fpro" id="for_fpro">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                    <label for="for_fasi">Fecha Asignación</label>
+                                    <div class="input-group">
+                                        <mat-datepicker-toggle [for]="for_fasi"></mat-datepicker-toggle>
+                                        <mat-datepicker #for_fasi touchUi></mat-datepicker>
+                                        <input matInput placeholder="Fecha Inicial" required readonly [matDatepicker]="for_fasi" type="text" class="form-control" name="for_fasi" id="for_fasi">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="pro_codi">Número</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-qrcode"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Código" name="pro_codi" autocomplete="off">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-5 col-md-12 col-xs-12 col-sm-12">
+                                    <label for="con_cont">Modalidad de Vivienda</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-align-justify"></i></span>
+                                            </div>
+                                        </div>
+                                        <input id="mod_codi" name="mod_codi" readonly required type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
+                                        <input id="mod_nomb" name="mod_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                        <button type="button" class="btn btn-primary">
+                                            <span><i class="fas fa-search"></i></span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4 col-md-12 col-xs-12 col-sm-12">
+                                    <label for="con_cont">Tipo de Convocatoria</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-align-justify"></i></span>
+                                            </div>
+                                        </div>
+                                        <input id="tco_codi" name="tco_codi" readonly required type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
+                                        <input id="tco_nomb" name="gru_nomb" readonly required type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-3">
+                                    <div class="card">
+                                        <div class="card-header bg-primary text-white">Datos Postulante</div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                                    <label for="con_cont">Radicado</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-align-justify"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input id="mod_nomb" name="mod_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                                        <button type="button" class="btn btn-primary">
+                                                            <span><i class="fas fa-search"></i></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                                    <label for="con_cont">Tipo de Documento</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-id-card"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input id="tip_codi" name="tip_codi" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                        <input id="tip_nomb" name="tip_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                                    <label for="con_cont">Identificación del Postulante</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-hashtag"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input id="afi_docu" name="afi_docu" required type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Número Documento">
+                                                        <button type="button" class="btn btn-primary">
+                                                            <span><i class="fas fa-search"></i></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                                    <label for="afi_fecn">Fecha Nacimiento</label>
+                                                    <div class="input-group">
+                                                        <mat-datepicker-toggle [for]="afi_fecn"></mat-datepicker-toggle>
+                                                        <mat-datepicker #afi_fecn touchUi></mat-datepicker>
+                                                        <input matInput placeholder="Fecha Inicial" required readonly [matDatepicker]="afi_fecn" type="text" class="form-control" name="afi_fecn" id="afi_fecn">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                                    <label for="pro_codi">Categoría</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-qrcode"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Categoría" autocomplete="off">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                                    <label for="pro_codi">Edad</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-qrcode"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Edad" autocomplete="off">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                                    <label for="pro_codi">Primer Nombre</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-qrcode"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Primer Nombre" autocomplete="off">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                                    <label for="pro_codi">Segundo Nombre</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-qrcode"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Segundo Nombre" autocomplete="off">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                                    <label for="pro_codi">Primer Apellido</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-qrcode"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Primer Apellido" autocomplete="off">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                                    <label for="pro_codi">Segundo Apellido</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-qrcode"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Segundo Apellido" autocomplete="off">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                                    <div class="card mt-2">
+                                                        <div class="card-header">
+                                                            Género
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupClaProv" value="P">
+                                                                <label class="custom-control-label" for="defaultGroupExample1">Masculino</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupClaProv" value="A">
+                                                                <label class="custom-control-label" for="defaultGroupExample2">Femenino</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                                    <div class="card mt-2">
+                                                        <div class="card-header">
+                                                            Inscripción Fovis
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupClaProv" value="P">
+                                                                <label class="custom-control-label" for="defaultGroupExample1">Primera
+                                                                        Vez</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupClaProv" value="A">
+                                                                <label class="custom-control-label" for="defaultGroupExample2">Actualización</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                                    <div class="card mt-2">
+                                                        <div class="card-header">
+                                                            Estado Civil
+                                                        </div>
+                                                        <div class="card-body">
+
+                                                            <div class="row">
+                                                                <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                                                    <div class="custom-control custom-radio">
+                                                                        <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupClaProv" value="P">
+                                                                        <label class="custom-control-label" for="defaultGroupExample1">Soltero</label>
+                                                                    </div>
+                                                                    <div class="custom-control custom-radio">
+                                                                        <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupClaProv" value="A">
+                                                                        <label class="custom-control-label" for="defaultGroupExample2">Casado</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                                                    <div class="custom-control custom-radio">
+                                                                        <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupClaProv" value="P">
+                                                                        <label class="custom-control-label" for="defaultGroupExample1">Separado</label>
+                                                                    </div>
+                                                                    <div class="custom-control custom-radio">
+                                                                        <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupClaProv" value="A">
+                                                                        <label class="custom-control-label" for="defaultGroupExample2">Divorciado</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                                                    <div class="custom-control custom-radio">
+                                                                        <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupClaProv" value="P">
+                                                                        <label class="custom-control-label" for="defaultGroupExample1">Viudo</label>
+                                                                    </div>
+                                                                    <div class="custom-control custom-radio">
+                                                                        <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupClaProv" value="A">
+                                                                        <label class="custom-control-label" for="defaultGroupExample2">Unión Libre</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-12 col-xs-6 col-sm-12">
+                                                    <label for="pro_pais">Condición Especial</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-globe-americas"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <select class="form-control">
+                                                            <option value="">Seleccione</option>
+                                                          </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                                    <label for="con_cont">Tipo Postulante</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-align-justify"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input id="mod_codi" name="mod_codi" readonly required type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
+                                                        <input id="mod_nomb" name="mod_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                                        <button type="button" class="btn btn-primary">
+                                                            <span><i class="fas fa-search"></i></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                                    <label for="con_cont">Ocupación</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-align-justify"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input id="mod_codi" name="mod_codi" readonly required type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
+                                                        <input id="mod_nomb" name="mod_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                                        <button type="button" class="btn btn-primary">
+                                                            <span><i class="fas fa-search"></i></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                                    <label for="pro_codi">Ingreso Pila</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-qrcode"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Ingreso Pila" autocomplete="off">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                                    <label for="pro_codi">Salario Constancia</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-qrcode"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="Salario Constancia" autocomplete="off">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                                    <label for="pro_codi"># Postulaciones</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-qrcode"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input type="text" class="form-control" placeholder="# Postulaciones" autocomplete="off">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                                    <div class="input-group mt-4">
+                                                        <span class="switch">
+                                                            <input type="checkbox" name="chkAutoriza" class="switch switch-sm disabled"
+                                                                id="switch-id">
+                                                            <label for="switch-id">Autoriza Tratamiento de Datos Personales</label>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="nav-miembros" role="tabpanel" aria-labelledby="nav-miembros-tab">
+                        <div class="container mt-3">
+
+                            <nav>
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                    <a class="nav-item nav-link active" id="nav-conyuge-tab" data-toggle="tab" href="#nav-conyuge" role="tab" aria-controls="nav-conyuge" aria-selected="true">Cónyuge Permanente</a>
+                                    <a class="nav-item nav-link" id="nav-personas-tab" data-toggle="tab" href="#nav-personas" role="tab" aria-controls="nav-personas" aria-selected="false">Personas a Cargo</a>
+                                    <a class="nav-item nav-link" id="nav-otros-tab" data-toggle="tab" href="#nav-otros" role="tab" aria-controls="nav-otros" aria-selected="false">Otros Miembros del Hogar Postulante</a>
+                                </div>
+                            </nav>
+
+                            <div class="tab-pane fade show active" id="nav-conyuge" role="tabpanel" aria-labelledby="nav-conyuge-tab">
+                                <div class="container mt-3">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                            <label for="con_cont">Identificación del Postulante</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <span><i class="fas fa-hashtag"></i></span>
+                                                    </div>
+                                                </div>
+                                                <input id="afi_docu" name="afi_docu" required type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Número Documento">
+                                                <button type="button" class="btn btn-primary">
+                                                            <span><i class="fas fa-search"></i></span>
+                                                        </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                            <label for="afi_fenc">Fecha Nacimiento</label>
+                                            <div class="input-group">
+                                                <mat-datepicker-toggle [for]="afi_fenc"></mat-datepicker-toggle>
+                                                <mat-datepicker #afi_fenc touchUi></mat-datepicker>
+                                                <input matInput placeholder="Fecha Inicial" required readonly [matDatepicker]="afi_fenc" type="text" class="form-control" name="afi_fenc" id="afi_fenc">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                            <label for="pro_codi">Edad</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <span><i class="fas fa-qrcode"></i></span>
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Edad" autocomplete="off">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                            <label for="pro_codi">Primer Nombre</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <span><i class="fas fa-qrcode"></i></span>
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Primer Nombre" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                            <label for="pro_codi">Segundo Nombre</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <span><i class="fas fa-qrcode"></i></span>
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Segundo Nombre" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                            <label for="pro_codi">Primer Apellido</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <span><i class="fas fa-qrcode"></i></span>
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Primer Apellido" autocomplete="off">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                            <label for="pro_codi">Segundo Apellido</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <span><i class="fas fa-qrcode"></i></span>
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Segundo Apellido" autocomplete="off">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                            <div class="card mt-2">
+                                                <div class="card-header">
+                                                    Género
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupClaProv" value="P">
+                                                        <label class="custom-control-label" for="defaultGroupExample1">Masculino</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupClaProv" value="A">
+                                                        <label class="custom-control-label" for="defaultGroupExample2">Femenino</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                            <div class="card mt-2">
+                                                <div class="card-header">
+                                                    Condición
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupClaProv" value="P">
+                                                        <label class="custom-control-label" for="defaultGroupExample1">Normal</label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupClaProv" value="A">
+                                                        <label class="custom-control-label" for="defaultGroupExample2">Discapacitado</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                            <div class="card mt-2">
+                                                <div class="card-header">
+                                                    Estado Civil
+                                                </div>
+                                                <div class="card-body">
+
+                                                    <div class="row">
+                                                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupClaProv" value="P">
+                                                                <label class="custom-control-label" for="defaultGroupExample1">Soltero</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupClaProv" value="A">
+                                                                <label class="custom-control-label" for="defaultGroupExample2">Casado</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupClaProv" value="P">
+                                                                <label class="custom-control-label" for="defaultGroupExample1">Separado</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupClaProv" value="A">
+                                                                <label class="custom-control-label" for="defaultGroupExample2">Divorciado</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupClaProv" value="P">
+                                                                <label class="custom-control-label" for="defaultGroupExample1">Viudo</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupClaProv" value="A">
+                                                                <label class="custom-control-label" for="defaultGroupExample2">Unión Libre</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                            <label for="con_cont">Tipo Postulante</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <span><i class="fas fa-align-justify"></i></span>
+                                                    </div>
+                                                </div>
+                                                <input id="mod_codi" name="mod_codi" readonly required type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
+                                                <input id="mod_nomb" name="mod_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                                <button type="button" class="btn btn-primary">
+                                                        <span><i class="fas fa-search"></i></span>
+                                                    </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                            <label for="con_cont">Ocupación</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <span><i class="fas fa-align-justify"></i></span>
+                                                    </div>
+                                                </div>
+                                                <input id="mod_codi" name="mod_codi" readonly required type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
+                                                <input id="mod_nomb" name="mod_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                                <button type="button" class="btn btn-primary">
+                                                        <span><i class="fas fa-search"></i></span>
+                                                    </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                            <label for="pro_codi">Empresa</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <span><i class="fas fa-qrcode"></i></span>
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Empresa" autocomplete="off">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                            <label for="pro_codi">Ingreso Pila</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <span><i class="fas fa-qrcode"></i></span>
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Ingreso Pila" autocomplete="off">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                            <label for="pro_codi">Salario Constancia</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text">
+                                                        <span><i class="fas fa-qrcode"></i></span>
+                                                    </div>
+                                                </div>
+                                                <input type="text" class="form-control" placeholder="Salario Constancia" autocomplete="off">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade show active" id="nav-personas" role="tabpanel" aria-labelledby="nav-personas-tab">
+                                <div class="container mt-3">
+                                    <div class="row">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade show active" id="nav-otros" role="tabpanel" aria-labelledby="nav-otros-tab">
+                                <div class="container mt-3">
+                                    <div class="row">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <hr style="width: 100%; color: lightgray; height: 0.1px; background-color:rgb(146, 143, 143);" />
+
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="pro_codi"># Miembros del Hogar</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-qrcode"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="# Miembros del Hogar" autocomplete="off">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="pro_codi">Total Ingresos Miembros del Hogar</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-qrcode"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Total Ingresos Miembros del Hogar" autocomplete="off">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="pro_codi">Total Ingresos</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-qrcode"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Total Ingresos" autocomplete="off">
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="pro_codi"># Salarios</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-qrcode"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="# Salarios" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade show active" id="nav-infoHogar" role="tabpanel" aria-labelledby="nav-infoHogar-tab">
+                        <div class="container mt-3">
+                            <!-- <div class="row">
+                                <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="pro_codi">Código</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-qrcode"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Código" name="pro_codi" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show active" id="nav-recursos" role="tabpanel" aria-labelledby="nav-recursos-tab">
+                        <div class="container mt-3">
+                            <!-- <div class="row">
+                                <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="pro_codi">Código</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-qrcode"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Código" name="pro_codi" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show active" id="nav-trayectoria" role="tabpanel" aria-labelledby="nav-trayectoria-tab">
+                        <div class="container mt-3">
+                            <!-- <div class="row">
+                                <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="pro_codi">Código</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-qrcode"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Código" name="pro_codi" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show active" id="nav-novedades" role="tabpanel" aria-labelledby="nav-novedades-tab">
+                        <div class="container mt-3">
+                            <!-- <div class="row">
+                                <div class="col-lg-3 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="pro_codi">Código</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-qrcode"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Código" name="pro_codi" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

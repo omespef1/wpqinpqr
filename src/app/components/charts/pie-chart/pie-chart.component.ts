@@ -27,6 +27,7 @@ export class PieChartComponent implements AfterViewInit {
   public isGrouped = false;
 
   data = new google.visualization.DataTable();
+  stringData = '';
 
   drawChart = () => {
     if (this.isGrouped) {
@@ -37,26 +38,33 @@ export class PieChartComponent implements AfterViewInit {
       this.data = new google.visualization.DataTable();
       this.data.addColumn('string', 'Nombre');
       this.data.addColumn('number', 'Cantidad');
+      this.data.addColumn('number', 'Porcentaje');
       this.loadChart();
     }
 
     this.options = {
       title: this.title,
-      legend: { position: 'right' },
-      is3D: true
+      legend: { position: 'right', textStyle: { fontSize: 10 }},
+      is3D: true,
+      chartArea: {left: '20%', width: '80%'},
+      sliceVisibilityThreshold: 0.0001,
+      tooltip: {
+        showColorCode: true,
+        text: 'value',
+      },
+      pieSliceText: 'value',
     };
   }
 
   loadChart() {
 
-    let stringData = '[';
     for (let i = 0; i < this.infoData.length; i++) {
-      stringData += '["' + this.infoData[i].dat_nomb + '",' + this.infoData[i].cantidad + ']';
+      // tslint:disable-next-line:max-line-length
+      this.stringData += '["' + this.infoData[i].dat_nomb + '", {v:' + this.infoData[i].porcentaje + ', f: "' + this.infoData[i].porcentaje + '%"}]';
+
       if (i < this.infoData.length - 1)
-        stringData += ',';
+      this.stringData += ',';
     }
-    stringData += ']';
-    this.data.addRows(JSON.parse(stringData));
   }
 
   loadChartGrouped() {
@@ -84,8 +92,16 @@ export class PieChartComponent implements AfterViewInit {
     if (this.data !== undefined) {
       this.drawChart();
       google.setOnLoadCallback(this.drawChart);
+
+      const dataArray = [
+        ['nombre', 'cantidad']
+      ];
+
+      // tslint:disable-next-line:no-eval
+      const newDataArray = dataArray.concat(eval('[' + this.stringData + ']'));
+      const data = google.visualization.arrayToDataTable(newDataArray);
       const chart = new google.visualization.PieChart(this.pieChart.nativeElement);
-      chart.draw(this.data, this.options);
+      chart.draw(data, this.options);
     }
   }
 }
