@@ -1,0 +1,440 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
+</ngx-spinner>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Trazabilidad PQR - WF</h1>
+
+    </div>
+</div>
+<div class="container">
+    <div class="card card-gray" *ngIf="visibleEncabez">
+        <div class="card-header bg-primary text-white">Consultar Trazabilidad</div>
+        <div class="card-body">
+            <form #estadForm="ngForm">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="fec_fini">Fecha Inicial</label>
+                        <div class="input-group">
+                            <mat-datepicker-toggle [for]="pro_fent"></mat-datepicker-toggle>
+                            <mat-datepicker #pro_fent touchUi></mat-datepicker>
+                            <input [(ngModel)]="trazPQRWF.fec_inic" matInput placeholder="Fecha Inicial" required readonly [matDatepicker]="pro_fent" type="text" class="form-control" name="pro_fent" id="pro_fent">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="pro_fven">Fecha Final</label>
+                        <div class="input-group">
+                            <mat-datepicker-toggle [for]="pro_fven"></mat-datepicker-toggle>
+                            <mat-datepicker #pro_fven touchUi></mat-datepicker>
+                            <input [(ngModel)]="trazPQRWF.fec_fina" matInput placeholder="Fecha Final" required readonly [matDatepicker]="pro_fven" type="text" class="form-control" name="pro_fven" id="pro_fven">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rev_esta">Seccional</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-book"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" name="seccional" [(ngModel)]="trazPQRWF.selSecc">
+                                  <option value = undefined>Seleccione</option>
+                                  <option *ngFor="let secc of trazPQRWF.seccional" [value]="secc.arb_cont">{{secc.arb_nomb | titlecase}}</option>
+                              </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rev_esta">Forma de Recibido</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-bullseye"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" name="FormRec" [(ngModel)]="trazPQRWF.selForm">
+                                <option value=undefined>Seleccione</option>
+                                <option *ngFor="let frec of trazPQRWF.formRecib" [value]="frec.ite_cont">{{frec.ite_nomb | titlecase}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rev_esta">Tipo de PQR</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="far fa-hand-paper"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" name="TipoPQR" [(ngModel)]="trazPQRWF.selTpqr">
+                                  <option value = undefined>Seleccione</option>
+                                  <option *ngFor="let tpqr of trazPQRWF.tipoDePqr" [value]="tpqr.ite_cont">{{tpqr.ite_nomb | titlecase}}</option>                        
+                              </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rev_esta">Area Responsable</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-warehouse"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" name="area" [(ngModel)]="trazPQRWF.selArea">
+                                  <option value = undefined>Seleccione</option>
+                                  <option *ngFor="let resp of trazPQRWF.areaRespo" [value]="resp.arb_cont">{{resp.arb_nomb | titlecase}}</option>                          
+                              </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rev_esta">Tipificación</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-layer-group"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" name="tipificacion" [(ngModel)]="trazPQRWF.selTipi">
+                                  <option value = undefined>Seleccione</option>
+                                  <option *ngFor="let tipi of trazPQRWF.tipificac" [value]="tipi.ite_cont">{{tipi.ite_nomb | titlecase}}</option>                             
+                              </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rev_esta">SubTipificación</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-object-ungroup"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" name="subtipificacion" [(ngModel)]="trazPQRWF.selSubT">
+                                  <option value = undefined>Seleccione</option>
+                                  <option *ngFor="let subtipi of trazPQRWF.subtipifi" [value]="subtipi.ite_cont">{{subtipi.ite_nomb | titlecase}}</option>
+                              </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        <label for="rev_esta">Grupo Perteneciente</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-stream"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" name="grupo" [(ngModel)]="trazPQRWF.selGrup">
+                                  <option value = undefined>Seleccione</option>
+                                  <option *ngFor="let pert of trazPQRWF.grupPerte" [value]="pert.dpa_codi">{{pert.dpa_grup | titlecase}}</option>                          
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="inp_cont">Número de PQR</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-hashtag"></i></span>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control" placeholder="PQR" name="inp_cont" id="inp_cont" autocomplete="off" [(ngModel)]="trazPQRWF.inp_cont">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="cas_cont">Caso de WF</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-briefcase"></i></span>
+                                </div>
+                            </div>
+                            <input type="text" class="form-control" placeholder="WF" name="cas_cont" id="cas_cont" autocomplete="off" [(ngModel)]="trazPQRWF.cas_cont">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-3">
+                        <button *ngIf="client" type="submit" class="btn btn-primary btn-lg btn-block btn-lg" (click)="consultarInfoTraz()" [disabled]="!estadForm.form.valid"> 
+                              <span><i class="fas fa-search"></i> &nbsp;Consultar</span>
+                          </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card card-gray" *ngIf="visibleDetalle">
+        <div class="card-header bg-primary text-white">Detalle de PQR</div>
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                    <label for="inp_nomb">Nombres</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span><i class="fas fa-user-circle"></i></span>
+                            </div>
+                        </div>
+                        <input readOnly type="text" class="form-control" placeholder="Nombres" name="inp_nomb" id="inp_nomb" [(ngModel)]="infoPqrTraza.inp_nomb">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                    <label for="inp_apel">Apellidos</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span><i class="fas fa-user-circle"></i></span>
+                            </div>
+                        </div>
+                        <input readOnly type="text" class="form-control" placeholder="Apellidos" name="inp_apel" id="inp_apel" [(ngModel)]="infoPqrTraza.inp_apel">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                    <label for="inp_nide">Identificación</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span><i class="fas fa-id-card"></i></span>
+                            </div>
+                        </div>
+                        <input readOnly type="text" class="form-control" placeholder="Identificación" name="inp_nide" id="inp_nide" [(ngModel)]="infoPqrTraza.inp_nide">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                    <label for="inp_mail">Correo Electrónico</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span><i class="fas fa-mail-bulk"></i></span>
+                            </div>
+                        </div>
+                        <input readOnly type="text" class="form-control" placeholder="Correo Electrónico" name="inp_mail" id="inp_mail" [(ngModel)]="infoPqrTraza.inp_mail">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                    <label for="ite_nomb">Tipo de solicitud</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span><i class="far fa-keyboard"></i></span>
+                            </div>
+                        </div>
+                        <input readOnly type="text" class="form-control" placeholder="Tipo PQR" name="ite_nomb" id="ite_nomb" [(ngModel)]="infoPqrTraza.ite_nomb">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                    <label for="arb_nomb">Área Responsable</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span><i class="far fa-keyboard"></i></span>
+                            </div>
+                        </div>
+                        <input readOnly type="text" class="form-control" placeholder="Área Responsable" name="arb_nomb" id="arb_nomb" [(ngModel)]="infoPqrTraza.arb_nomb">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                    <label for="dpa_grup">Grupo Perteneciente</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span><i class="far fa-keyboard"></i></span>
+                            </div>
+                        </div>
+                        <input readOnly type="text" class="form-control" placeholder="Grupo Perteneciente" name="dpa_grup" id="dpa_grup" [(ngModel)]="infoPqrTraza.dpa_grup">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                    <label for="inp_esta">Estado</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <span><i class="far fa-keyboard"></i></span>
+                            </div>
+                        </div>
+                        <input readOnly type="text" class="form-control" placeholder="Estado" name="inp_esta" id="inp_esta" [(ngModel)]="infoPqrTraza.inp_esta">
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                    <label for="inp_mpqr">Descripción</label>
+
+                    <div class="input-group">
+                        <textarea type="text" class="form-control" multiple placeholder="Descripción" name="inp_mpqr" id="inp_mpqr" [(ngModel)]="infoPqrTraza.inp_mpqr"></textarea>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-2" *ngIf="infoPqrTraza.seguimientos?.length">
+                    <div class="card-gray">
+                        <div class="card-header bg-primary text-white">
+                            Seguimientos
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-hover table-striped table-bordered">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Seguimiento</th>
+                                        <th scope="col">Usuario Seguimiento</th>
+                                        <th scope="col">Fecha Seguimiento</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let segui of infoPqrTraza.seguimientos; let i=index">
+                                        <td>{{ i + 1 }}</td>
+                                        <td>{{ segui.din_segt }}</td>
+                                        <td>{{ segui.aud_usua }}</td>
+                                        <td>{{ segui.din_fese | date : "dd/MM/yyyy h:mm:ss" }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-3">
+                    <button class="btn btn-primary btn-md btn-block btn-md" (click)="returnDataGrid()">
+                            <span><i class="fas fa-backward"></i> &nbsp;Volver</span>
+                        </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-gray m-5" *ngIf="visibleAdjunto">
+        <div class="card-header bg-primary text-white">Documentos adjuntos</div>
+        <div class="card-body">
+            <table class="table table-hover table-striped table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">Archivo</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let adjunto of gnAdjunt; let i=index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{adjunto.doc_desc}}</td>
+                        <td>
+                            <button (click)="download(adjunto.doc_desc)" type="button" class="btn btn-link btn-sm btn-block">
+                                        <span><i class="fas fa-download"></i>
+                                        </span>
+                                    </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-3">
+                <button class="btn btn-primary btn-md btn-block btn-md" (click)="returnDataGrid()">
+                            <span><i class="fas fa-backward"></i> &nbsp;Volver</span>
+                        </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="card card-gray m-5" *ngIf="visibleDatGrid">
+    <div class="card-header bg-primary text-white">Detalles de PQR</div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                <div class="table-responsive mt-2">
+                    <table class="table table-hover table-striped table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">No. PQR</th>
+                                <th scope="col">Caso WF</th>
+                                <th scope="col">Fecha Inicial</th>
+                                <th scope="col">Fecha Registro PQR</th>
+                                <th scope="col">Fecha Limite</th>
+                                <th scope="col">Dias Flujo de Trabajo</th>
+                                <th scope="col">Seccional</th>
+                                <th scope="col">Forma Recibido</th>
+                                <th scope="col">Tipo PQR</th>
+                                <th scope="col">Área Responsable</th>
+                                <th scope="col">Grupo Perteneciente</th>
+                                <th scope="col">Tipificación</th>
+                                <th scope="col">Subtipificación</th>
+                                <th scope="col">Estado PQR</th>
+                                <th scope="col">Estado WF</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let info of infoTraza | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                <td>{{info.Numero_PQR}}</td>
+                                <td>{{info.Caso_Wf }}</td>
+                                <td>{{info.Fecha_Inicial}}</td>
+                                <td>{{info.Fecha_Registro}}</td>
+                                <td>{{info.Fecha_Limite}}</td>
+                                <td>{{info.Dias_Flujo}}</td>
+                                <td>{{info.Seccional}}</td>
+                                <td>{{info.Forma_Recibido}}</td>
+                                <td>{{info.Tipo_PQR}}</td>
+                                <td>{{info.Area_Responsable}}</td>
+                                <td>{{info.Grupo_Perteneciente}}</td>
+                                <td>{{info.Tipificacion}}</td>
+                                <td>{{info.SubTipificacion}}</td>
+                                <td>{{info.Estado_PQR}}</td>
+                                <td>{{info.Estado_Wf}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-link btn-sm btn-block" data-toggle="tooltip" data-placement="top" title="Ver Detalle" (click)="verDetalle(info.Numero_PQR)">
+                                        <span><i class="fas fa-eye"></i>
+                                        </span>
+                                    </button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-link btn-sm btn-block" data-toggle="tooltip" data-placement="top" title="Ver Adjuntos" (click)="verAdjuntos(info.Caso_Wf)">
+                                        <span><i class="fas fa-paperclip"></i>
+                                        </span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <pagination-controls (pageChange)="p = $event" maxSize="10" autoHide="true" previousLabel="Anterior" nextLabel="Siguiente">
+                    </pagination-controls>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 text-center pt-3">
+                <button class="btn btn-primary btn-md btn-block btn-md" (click)="returnConsulta()">
+                        <span><i class="fas fa-backward"></i> &nbsp;Volver</span>
+                    </button>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 text-center pt-3">
+                <button class="btn btn-primary btn-md btn-block btn-md" (click)="exportAsXLSX()">
+                        <span><i class="fas fa-file-excel"></i> &nbsp;Exportar</span>
+                    </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-gnempre title="Seleccione empresa" (accept)="_EmpreModal.dismiss();load()">
+    <form>
+        <div class="form-group">
+            <label for="emp_codi" class="col-form-label"></label>
+            <select class="form-control" id="usu_codi" name="usu_codi" [(ngModel)]="emp_codi" required #usu_codi="ngModel">
+                  <option value="0">Seleccione</option>
+                  <option *ngFor="let companie of companies" [value]="companie.emp_codi">{{companie.emp_nomb | titlecase}}
+                  </option>
+              </select>
+        </div>
+    </form>
+</app-gnempre>
+
+<app-alert-message [message]="msg"></app-alert-message>

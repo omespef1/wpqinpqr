@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { PqestadComponent } from './pqestad.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatDatepickerModule } from '@angular/material';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { TrazabilidadComponent } from './trazabilidad.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ExcelService } from 'src/app/services/pq/pqestad/excel.service';
 
 const routes: Routes = [
   {
     path: '',
-    component: PqestadComponent
+    component: TrazabilidadComponent
   }
 ];
 
@@ -21,10 +23,14 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     MatDatepickerModule,
     SharedModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    NgxPaginationModule
   ],
   declarations: [
-    PqestadComponent
+    TrazabilidadComponent
   ],
+
+  providers: [ExcelService]
+
 })
-export class PqestadModule { }
+export class TrazabilidadModule { }

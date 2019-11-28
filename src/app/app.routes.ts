@@ -20,6 +20,7 @@ const app_routes: Routes = [
    { path: 'eereles', component: EerelesComponent },
    { path: 'rnradic', component: RnradicComponent },
    { path: 'pqestad' , loadChildren : './pages/pq/pqestad/pqestad.module#PqestadModule' },
+   { path: 'trazabilidad' , loadChildren : './pages/pq/trazabilidad/trazabilidad.module#TrazabilidadModule' },
    { path: 'xbauliq' , loadChildren : './components/xb/xbauliq/xbauliq.module#XbauliqModule' },
     { path: '**', pathMatch: 'full', redirectTo: 'xbauliq' }
 ];

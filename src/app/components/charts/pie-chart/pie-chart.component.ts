@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, ViewChild, Input } from '@angular/core';
+import { InfoPqEstad } from 'src/classes/pq/pqestad';
 
 declare var google: any;
 
@@ -6,31 +7,85 @@ declare var google: any;
   selector: 'app-pie-chart',
   templateUrl: './pie-chart.component.html'
 })
-export class PieChartComponent implements AfterViewInit   {
+export class PieChartComponent implements AfterViewInit {
 
   @ViewChild('pieChart') pieChart: ElementRef;
-  @Input() infoData: any[] = [];
+
+  @Input()
+  public infoData: InfoPqEstad[] = [];
+
+  @Input()
+  public columnNames: Array<string>;
+
+  @Input()
+  public title: string;
+
+  @Input()
+  public options: any = {};
+
+  @Input()
+  public isGrouped = false;
+
+  data = new google.visualization.DataTable();
 
   drawChart = () => {
+    if (this.isGrouped) {
+      this.data.addColumn('string', 'Forma de Recibido');
+      this.data.addColumn('number', 'Cantidad');
+      this.loadChartGrouped();
+    } else {
+      this.data = new google.visualization.DataTable();
+      this.data.addColumn('string', 'Nombre');
+      this.data.addColumn('number', 'Cantidad');
+      this.loadChart();
+    }
 
-    const data =   google.visualization.arrayToDataTable(this.infoData);
+    this.options = {
+      title: this.title,
+      legend: { position: 'right' },
+      is3D: true
+    };
+  }
 
+  loadChart() {
 
-  const options = {
-    title: 'Estadisticas PQR',
-    legend: {position: 'right'},
-    is3D: true
-  };
+    let stringData = '[';
+    for (let i = 0; i < this.infoData.length; i++) {
+      stringData += '["' + this.infoData[i].dat_nomb + '",' + this.infoData[i].cantidad + ']';
+      if (i < this.infoData.length - 1)
+        stringData += ',';
+    }
+    stringData += ']';
+    this.data.addRows(JSON.parse(stringData));
+  }
 
-  const chart = new google.visualization.PieChart(this.pieChart.nativeElement);
-  chart.draw(data, options);
-}
+  loadChartGrouped() {
+
+    let stringData = '[';
+    let mySource: any;
+
+    mySource = this.infoData;
+    this.title = mySource.key;
+
+    let contador = 0;
+    for (const item2 of mySource.value) {
+      stringData += `["${item2.ite_nomb}",${item2.cantidad}]`;
+
+      if (mySource.value.length - 1 !== contador)
+        stringData += ',';
+
+      contador += 1;
+    }
+    stringData += ']';
+    this.data.addRows(JSON.parse(stringData));
+  }
 
   ngAfterViewInit() {
-
-    if (this.infoData !== undefined) {
-      google.load('visualization', '1', {packages: ['corechart', 'controls', 'table']});
+    if (this.data !== undefined) {
+      this.drawChart();
       google.setOnLoadCallback(this.drawChart);
+      const chart = new google.visualization.PieChart(this.pieChart.nativeElement);
+      chart.draw(this.data, this.options);
     }
   }
 }
