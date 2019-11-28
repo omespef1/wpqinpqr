@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ComunicationsService } from '../../../services/comunications.service';
 import { Transaction } from '../../../classes/gn/ToTransaction';
-import {  PrintLiq } from '../../../classes/xb/xbauliq';
+import {  PrintLiq, xbautliqp } from '../../../classes/xb/xbauliq';
 
 @Injectable({
   providedIn: 'root'
