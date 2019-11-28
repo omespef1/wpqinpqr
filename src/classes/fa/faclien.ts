@@ -15,4 +15,7 @@ dep_codi: number;
 mun_codi: number;
 reg_codi: number;
 tip_abre: string;
+mun_nomb:string;
+dep_nomb:string;
+
 }

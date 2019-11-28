@@ -7,7 +7,7 @@ import { GroupByPipe } from '../pipes/groupdata.pipe';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
   ],
   declarations: [
     GnempreComponent,
