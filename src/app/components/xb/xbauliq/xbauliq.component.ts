@@ -24,6 +24,8 @@ import { FainaclService } from "../../../services/fa/fainacl.service";
 import { fainacl } from "../../../../classes/fa/fainacl";
 import { FaclienService } from "../../../services/fa/faclien.service";
 import { Faclien } from "../../../../classes/fa/faclien";
+// import { ToastService } from '../../../services/components/toast/toast.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: "app-xbauliq",
   templateUrl: "./xbauliq.component.html",
@@ -55,7 +57,8 @@ export class XbauliqComponent implements OnInit {
     private _xbpceca: XbpcecaService,
     private _faddina: FaddinaService,
     private _fainacl: FainaclService,
-    private _faclien: FaclienService
+    private _faclien: FaclienService,
+    private toastr: ToastrService
   ) {}
 
   async ngOnInit() {
@@ -91,6 +94,7 @@ export class XbauliqComponent implements OnInit {
         console.log(resp);
         if (resp.Retorno === 0) {
           this.cacxcob = resp.ObjTransaction;
+         
         }
       });
   }
@@ -161,6 +165,10 @@ export class XbauliqComponent implements OnInit {
           aproba.print = true;
         }
       }
+      else {
+        this.toastr.success(resp.TxtRetorno, 'Error');
+      }
+        
     });
   }
 
@@ -242,4 +250,13 @@ export class XbauliqComponent implements OnInit {
     }
     
   }
+
+  // showSuccess(msg:string,header:string) {
+  //   this.toastService.show(msg, {
+  //     classname: 'bg-success text-light',
+  //     delay: 2000 ,
+  //     autohide: true,
+  //     headertext: header
+  //   });
+  // }
 }

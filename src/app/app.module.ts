@@ -32,11 +32,15 @@ import { AlertDialogComponent } from './components/dialogs/alert-dialog/alert-di
 import { WgnfpassComponent } from './pages/gn/wgnfpass/wgnfpass.component';
 import { EerelesComponent } from './components/ee/eereles/eereles.component';
 import { RnradicComponent } from './components/rn/rnradic/rnradic.component';
+// import { ToastComponent } from "./components/toast/toast/toast.component";
 // plugins
 import { FileUploadModule } from 'ng2-file-upload';
 import { TableSearchGenericComponent } from './components/tools/table-search-generic/table-search-generic.component';
 import { ModalDoctosComponent } from './components/rn/rnradic/modal-doctos/modal-doctos.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+// import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule } from 'ngx-toastr';
+
 
 export const MY_FORMATS = {
   parse: {
@@ -70,9 +74,11 @@ export const MY_FORMATS = {
     EerelesComponent,
     RnradicComponent,
     TableSearchGenericComponent,
-    ModalDoctosComponent
+    ModalDoctosComponent,
+    // ToastComponent
   ],
   imports: [
+    ToastrModule.forRoot(), // ToastrModule added
     FormsModule,                               // <========== Add this line!
     BrowserModule,
     NgxPaginationModule,
@@ -88,7 +94,8 @@ export const MY_FORMATS = {
       MatTableModule,
       MatPaginatorModule,
       FileUploadModule,
-      BrowserModule
+      BrowserModule,
+      // NgbModule
   ],
   providers: [
      {provide: MAT_DATE_LOCALE, useValue: 'es-ES'},
