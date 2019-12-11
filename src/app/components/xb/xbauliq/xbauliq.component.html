@@ -1,12 +1,7 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
     <!-- <p text-center style="font-size: 15px; color: gray">{{loading}}</p> -->
 </ngx-spinner>
-<div class="jumbotron jumbotron">
-    <div class="container-fluid">
-        <h1 class="display-4">Generación de autoliquidación</h1>
 
-    </div>
-</div>
 
 <div class="container-fluid">
     <div class="row">
@@ -16,28 +11,31 @@
     </div>
 
     <div class="card card-gray">
-        <div class="card-header bg-primary text-white">Parámetros</div>
+        <div class="card-header bg-primary text-white">Generacion de Autoliquidación</div>
         <div class="card-body">
             <form #xbauliq="ngForm">
                 <div class="row">
-                    <div class="alert alert-info" role="alert">
-                        * Mediante esta opción podrá generar la autoliquidación correspondiente a las cuentas por pagar
+                    <div class="alert alert-info small" role="alert">
+                       <b>*Mediante esta opción podrá generar la autoliquidación correspondiente a las cuentas por pagar
                         a la SuperIntendencia de Vigilancia y Seguridad Privada, para cada uno de los conceptos
-                        pendientes y por cada una de las vigencias. Para ello, debe pulsar
-                        sobre el botón "CONSULTAR Y/O LIQUIDAR". * Las cuentas e intereses se presentan con corte a la
-                        fecha en la que se realiza la consulta. * Solo se presentan las cuentas que tienen saldos
-                        pendientes de pago.
+                        pendientes y por cada una de las vigencias.Para ello, debe pulsar
+                        sobre el botón "CONSULTAR Y/O LIQUIDAR". <br>
+                        * Las cuentas e intereses se presentan con corte a la
+                        fecha en la que se realiza la consulta. <br>
+                        * Solo se presentan las cuentas que tienen saldos
+                        pendientes de pago.</b>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="alert alert-danger">
-                        <p> Si tiene informes financieros por reportar, esta autoliquidación no desplegará información
+                    <div class="alert alert-danger small">
+                        <p> 
+                            <b>Si tiene informes financieros por reportar, esta autoliquidación no desplegará información
                             asociada con ello.
                             Verifique si ha presentado toda la información financiera que le ha sido requerida. En caso
                             de tener reportes pendientes, por favor repórtelos.
                             Los valores indicados solamente aplican para para la fecha de generación de la
                             autoliquidación: {{par_fech | date:'dd/MM/yyyy'}}. Si no realiza el pago en esta fecha por
-                            favor genere nuevamente la autoliquidación
+                            favor genere nuevamente la autoliquidación</b>
                         </p>
                     </div>
                 </div>
@@ -93,6 +91,7 @@
                                 #ite_ctsee="ngModel">
                                 <option *ngFor="let item of faddina" [ngValue]="item">{{item.ite_nose}}
                                 </option>
+                               
                             </select>
                         </div>
                         <div [hidden]="ite_ctsee.valid || ite_ctsee.pristine" class="alert alert-danger">
@@ -109,7 +108,7 @@
                     </div>
                     <div class="col-lg-1 col-md-4 col-xs-12 col-sm-12">
                         <br>
-                        <button type="button" class="btn btn-danger" (click)="xbauliq.form.reset();GetUrlParams();GetGnTerce();">
+                        <button type="button" class="btn btn-danger" (click)="clean()">
                             <i class="fa fa-trash">
                             </i> Limpiar
                         </button>
@@ -147,7 +146,7 @@
                         <tr [class]="item.error==null?'table-success':''"
                             *ngFor="let item of cacxcob | paginate: { itemsPerPage: 10, currentPage: p };let i = index">
                             <td scope="row">
-                                {{ i }}
+                                {{ i +1}}
                             </td>
                             <td>
                                 {{ item.cts_nomb  }}
@@ -162,10 +161,10 @@
                                 {{ item.cxc_desc }}
                             </td>
                             <td>
-                                {{ item.cxc_cont==0? 'No aplica' :  item.cxc_cont  }}
+                                {{ item.cxc_bgrav   | currency:'COP' }}
                             </td>
                             <td>
-                                {{ item.cxc_cont==0? 'No aplica' :  item.dpa_tari  }}
+                                {{   item.dpa_tari  }}
                             </td>
                             <td>
                                 {{ item.cxc_tota | currency:'COP' }}
@@ -194,11 +193,13 @@
                                 </span>
                             </td>
                             <td>
-                                <button [disabled]="!item.print || loading"  (click)="BuildPrint()"
+                                <button [disabled]="!item.print || item.printing"  (click)="BuildPrint(item)"
                                 data-toggle="tooltip" data-placement="top" title="Imprimir autoliquidación"
                                 class="btn btn-success btn-lg">
-                                <i class="fa fa-print">
-                                </i> 
+                                <i [class]="!item.printing?'fa fa-print':'fa fa-cog fa-spin'">
+                                </i>  
+
+                                
                             </button>
                             </td>
                         </tr>
@@ -262,11 +263,11 @@
                     </table>
                 </div>
                 <div class="col-sm-12 col-xs-12 col-md-6 col-lg-1">
-                    <button [disabled]="CuentasXaprobar() || loading" type="button" (click)="SetXbAutliq()"
+                    <button [disabled]="CuentasXaprobar() || aprobbing || approbed" type="button" (click)="SetXbAutliq()"
                         data-toggle="tooltip" data-placement="top" title="Tooltip on top"
                         class="btn btn-success btn-lg">
-                        <i class="fa fa-check">
-                        </i> Aprobar
+                        <i [class]="!aprobbing?'fa fa-check':'fa fa-cog fa-spin'">
+                        </i> {{!aprobbing && !approbed?'Aprobar':approbed?'Aprobado':'Aprobando...'}}
                     </button>
                 </div>
 
@@ -299,8 +300,5 @@
     </form>
 </app-gnempre>
 
-2
+<app-alert-message [message]="msg"></app-alert-message>
 
-2
-3
-4

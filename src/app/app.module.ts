@@ -39,7 +39,7 @@ import { TableSearchGenericComponent } from './components/tools/table-search-gen
 import { ModalDoctosComponent } from './components/rn/rnradic/modal-doctos/modal-doctos.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrModule } from 'ngx-toastr';
+
 
 
 export const MY_FORMATS = {
@@ -78,7 +78,6 @@ export const MY_FORMATS = {
     // ToastComponent
   ],
   imports: [
-    ToastrModule.forRoot(), // ToastrModule added
     FormsModule,                               // <========== Add this line!
     BrowserModule,
     NgxPaginationModule,

@@ -10,3 +10,9 @@ export interface ToTransaction{
     TxtRetorno:string,
     ObjTransaction:any
   }
+
+  export interface Transaction2 {
+    Retorno:number,
+    TxtError:string,
+    ObjTransaction:any
+  }
