@@ -25,7 +25,7 @@ import { fainacl } from "../../../../classes/fa/fainacl";
 import { FaclienService } from "../../../services/fa/faclien.service";
 import { Faclien } from "../../../../classes/fa/faclien";
 // import { ToastService } from '../../../services/components/toast/toast.service';
-import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: "app-xbauliq",
   templateUrl: "./xbauliq.component.html",
@@ -57,8 +57,7 @@ export class XbauliqComponent implements OnInit {
     private _xbpceca: XbpcecaService,
     private _faddina: FaddinaService,
     private _fainacl: FainaclService,
-    private _faclien: FaclienService,
-    private toastr: ToastrService
+    private _faclien: FaclienService,    
   ) {}
 
   async ngOnInit() {
@@ -166,7 +165,7 @@ export class XbauliqComponent implements OnInit {
         }
       }
       else {
-        this.toastr.success(resp.TxtRetorno, 'Error');
+        // this.toastr.success(resp.TxtRetorno, 'Error');
       }
         
     });
