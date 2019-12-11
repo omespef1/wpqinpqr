@@ -3,12 +3,16 @@ import { CommonModule } from '@angular/common';
 import { SfforpoComponent } from './sfforpo.component';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MatDatepickerModule } from '@angular/material';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { MatDatepickerModule, MatNativeDateModule, MatFormFieldModule,
+          MatInputModule, MatTableModule, MatPaginatorModule } from '@angular/material';
+import { NewTableSearchComponent } from 'src/app/components/tools/new-table-search/new-table-search.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: SfforpoComponent
+    component: SfforpoComponent,
   }
 ];
 
@@ -17,10 +21,21 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     RouterModule.forChild(routes),
-    MatDatepickerModule
+    NgxSpinnerModule,
+    SharedModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   declarations: [
-    SfforpoComponent
+    SfforpoComponent,
+    NewTableSearchComponent
+  ],
+  exports: [
+    NewTableSearchComponent
   ]
 })
 export class SfforpoModule { }
