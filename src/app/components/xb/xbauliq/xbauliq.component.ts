@@ -24,8 +24,9 @@ import { FainaclService } from "../../../services/fa/fainacl.service";
 import { fainacl } from "../../../../classes/fa/fainacl";
 import { FaclienService } from "../../../services/fa/faclien.service";
 import { Faclien } from "../../../../classes/fa/faclien";
+import { AlertMessageComponent } from "../../dialogs/alert-message/alert-message.component";
 // import { ToastService } from '../../../services/components/toast/toast.service';
-
+import { service } from '../../../../classes/xb/xbauliq';
 @Component({
   selector: "app-xbauliq",
   templateUrl: "./xbauliq.component.html",
@@ -33,7 +34,9 @@ import { Faclien } from "../../../../classes/fa/faclien";
 })
 export class XbauliqComponent implements OnInit {
   @ViewChild(GnempreComponent) _EmpreModal: GnempreComponent;
+  @ViewChild(AlertMessageComponent) alert: AlertMessageComponent;
   companies: companies[];
+  msg:string;
   cacxcob: XbAuliq[] = [];
   loading = false;
   logo: string;
@@ -43,11 +46,13 @@ export class XbauliqComponent implements OnInit {
   usu_codi: string;
   par_fech: Date = new Date();
   today: Date = new Date();
-  service = { ite_ctse: 0, ite_nose: "" };
+  service :service;
   faddina: faddina[] = [];
   fainacl: fainacl;
   faclien: Faclien;
   xbpceca: xbpceca = new xbpceca();
+  aprobbing=false;
+  approbed=false;
   constructor(
     private _service: XbauliqService,
     private spinner: NgxSpinnerService,
@@ -57,7 +62,8 @@ export class XbauliqComponent implements OnInit {
     private _xbpceca: XbpcecaService,
     private _faddina: FaddinaService,
     private _fainacl: FainaclService,
-    private _faclien: FaclienService,    
+    private _faclien: FaclienService,
+    private _empre:GnempreService
   ) {}
 
   async ngOnInit() {
@@ -67,9 +73,11 @@ export class XbauliqComponent implements OnInit {
   }
 
   GetSettings() {
+    this.GetFaclien();
     this.GetXbPceca();
     this.GetFaddina();
     this.GetFaInacl();
+    this.GetLogo();
   }
   GetXbPceca() {
     this._xbpceca.GetXbPceca(this.emp_codi).subscribe(resp => {
@@ -78,6 +86,11 @@ export class XbauliqComponent implements OnInit {
         this.xbpceca = resp.ObjTransaction;
       }
     });
+  }
+  GetLogo(){
+    this._empre.GetLogo(this.emp_codi).subscribe((resp:any)=>{
+      this.logo =resp.objTransaction.emp_logs;
+    })
   }
   GetAutliq() {
     this.loading = true;
@@ -102,8 +115,10 @@ export class XbauliqComponent implements OnInit {
     this.spinner.show();
     this._gnempre.GetGnEmpre(this.usu_codi).subscribe((resp: any) => {
       this.companies = resp.objTransaction;
-      this.spinner.hide();
-      this._EmpreModal.present();
+      this.emp_codi = this.companies[0].emp_codi;
+      this.GetSettings();
+      // this.spinner.hide();
+      // this._EmpreModal.present();
     });
   }
 
@@ -111,6 +126,7 @@ export class XbauliqComponent implements OnInit {
     this.spinner.show();
     this._terce.GetGnTerce(this.usu_codi).subscribe(resp => {
       this.spinner.hide();
+      console.log(resp);
       if (resp.Retorno === 0) {
         this.ter_noco = resp.ObjTransaction.ter_noco;
       }
@@ -119,7 +135,9 @@ export class XbauliqComponent implements OnInit {
 
   GetFaclien() {
     this._faclien.GetFaclien(this.emp_codi, this.client).subscribe(resp => {
-      if (resp.Retorno === 0) this.faclien = resp.ObjTransaction;
+      if (resp.Retorno === 0) {
+        this.faclien = resp.ObjTransaction;
+      }
     });
   }
   async GetUrlParams() {
@@ -140,13 +158,14 @@ export class XbauliqComponent implements OnInit {
 
   GetFaInacl() {
     this._fainacl.GetFaInacl(this.emp_codi, this.client).subscribe(resp => {
+      console.log(resp);
       if (resp.Retorno == 0) {
         this.fainacl = resp.ObjTransaction;
       }
     });
   }
   SetXbAutliq() {
-    this.loading = true;
+  this.aprobbing=true;
     const aprobar = this.cacxcob.filter(c => c.liq_apro == true);
 
     const cuentas: xbautliqp = {
@@ -158,16 +177,21 @@ export class XbauliqComponent implements OnInit {
     };
 
     this._service.SetXbAuliq(cuentas).subscribe(resp => {
-      this.loading = false;
+      this.aprobbing=false;
       if (resp.Retorno === 0) {
         for (const aproba of cuentas.cuentas) {
           aproba.print = true;
         }
+        this.approbed=true;
+
+        this.showAlertMesssage('Se ha realizado la aprobación correctamente!');
       }
       else {
-        // this.toastr.success(resp.TxtRetorno, 'Error');
+        this.showAlertMesssage(`Error aprobando : ${resp.TxtError}`);
       }
-        
+    },(err)=>{   
+      this.aprobbing=false;
+      this.showAlertMesssage(`Error aprobando : ${err}`);
     });
   }
 
@@ -180,7 +204,7 @@ export class XbauliqComponent implements OnInit {
     const saldos = this.cacxcob
       .filter(
         item =>
-          item.liq_apro === true && item.top_codi === this.xbpceca.top_coco
+          item.liq_apro === true && (item.top_codi === this.xbpceca.top_coco)
       )
       .reduce((sum, current) => sum + current.cxc_sald, 0);
     const interesesMora = this.cacxcob
@@ -230,24 +254,44 @@ export class XbauliqComponent implements OnInit {
 
   BuildPrint(item: XbAuliq) {
     try {
-      this.loading = true;
+     item.printing=true;
+    
       const newReport: PrintLiq = new PrintLiq();
       newReport.usu_codi = this.usu_codi;
+      newReport.cli_noco= this.faclien.cli_nomb;   
       newReport.cli_coda = this.client;
       newReport.cxc_info = item;
       newReport.mun_nomb = this.faclien.mun_nomb;
       newReport.emp_codi = this.emp_codi;
-      newReport.ina_refe = this.fainacl.ina_refe;
+      newReport.ina_refe = this.fainacl.Ina_Refe;
       newReport.ite_nose = this.service.ite_nose;
+      newReport.cli_dire = this.faclien.dcl_dire;
+      newReport.dep_nomb = this.faclien.dep_nomb;
+      newReport.emp_nomb = this.companies.filter(e=>e.emp_codi==this.emp_codi)[0].emp_nomb;
       this._service.print(newReport).subscribe(resp => {
+        item.printing=false;
         if (resp.Retorno === 0) {
           window.open(resp.ObjTransaction, "_black");
         }
-      }, () => this.loading= false);
+        else {         
+          this.showAlertMesssage(`Error generando reporte : ${resp.TxtError}`);
+        }
+      }, () =>   item.printing=false);
     } catch (error) {
-      this.loading = false;
+      this.showAlertMesssage(`Error generando reporte : ${error}`);
+      item.printing=false;
     }
     
+  }
+
+  showAlertMesssage(msg: string) {
+    this.msg = msg;
+    this.alert.show();
+  }
+  clean(){
+    this.cacxcob=[];     
+     this.aprobbing =false;
+     this.approbed = false;
   }
 
   // showSuccess(msg:string,header:string) {

@@ -40,6 +40,8 @@ import { ModalDoctosComponent } from './components/rn/rnradic/modal-doctos/modal
 import {NgxPaginationModule} from 'ngx-pagination';
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+
+
 export const MY_FORMATS = {
   parse: {
     dateInput: 'DD/MM/YYYY',
@@ -76,7 +78,6 @@ export const MY_FORMATS = {
     // ToastComponent
   ],
   imports: [
-    
     FormsModule,                               // <========== Add this line!
     BrowserModule,
     NgxPaginationModule,

@@ -10,12 +10,14 @@ export class XbAuliq {
   cxc_sald: number;
   dpa_tari:number;
   Par_Fech: Date;
+  cxc_bgrav:number;
   liq_apro: boolean;
   error: string;
   cxc_inmo: number;
   cxc_inan: number;
   liq_lock:boolean;
   print:boolean;
+  printing:boolean;
 }
 export class xbautliqp {
   emp_codi: number;
@@ -64,7 +66,7 @@ export class xbpceca {
 }
 
 export class PrintLiq {
-  emp_nomb :number;
+  emp_nomb :string;
    emp_codi :number;
   usu_codi :string;
    cli_coda :string;
@@ -76,4 +78,10 @@ export class PrintLiq {
   ina_refe :string;
   cxc_info :XbAuliq;
 
+}
+
+
+export class service {
+  ite_ctse:number;
+  ite_nose:string;
 }
