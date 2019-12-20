@@ -134,3 +134,9 @@
 .table-td-error{
     color:red;
 }
+
+.table td, .table th {
+    padding: .50rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}

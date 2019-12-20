@@ -11,11 +11,12 @@
     </div>
 
     <div class="card card-gray">
-        <div class="card-header bg-primary text-white">Generacion de Autoliquidación</div>
+        <div class="card-header bg-primary text-white">Generación de Autoliquidación</div>
         <div class="card-body">
             <form #xbauliq="ngForm">
                 <div class="row">
-                    <div class="alert alert-info small" role="alert">
+                        <div class="col-md-12">
+                    <div class="alert alert small" role="alert">
                        <b>*Mediante esta opción podrá generar la autoliquidación correspondiente a las cuentas por pagar
                         a la SuperIntendencia de Vigilancia y Seguridad Privada, para cada uno de los conceptos
                         pendientes y por cada una de las vigencias.Para ello, debe pulsar
@@ -25,19 +26,24 @@
                         * Solo se presentan las cuentas que tienen saldos
                         pendientes de pago.</b>
                     </div>
+                        </div>
                 </div>
                 <div class="row">
-                    <div class="alert alert-danger small">
+                    <div class="col-md-12">
+                    <div class="alert alert small">
                         <p> 
                             <b>Si tiene informes financieros por reportar, esta autoliquidación no desplegará información
                             asociada con ello.
+                            <br>
                             Verifique si ha presentado toda la información financiera que le ha sido requerida. En caso
                             de tener reportes pendientes, por favor repórtelos.
-                            Los valores indicados solamente aplican para para la fecha de generación de la
+                            <br>
+                            Los valores indicados solamente aplican para la fecha de generación de la
                             autoliquidación: {{par_fech | date:'dd/MM/yyyy'}}. Si no realiza el pago en esta fecha por
                             favor genere nuevamente la autoliquidación</b>
                         </p>
                     </div>
+                </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-2 col-md-4 col-xs-12 col-sm-12">
@@ -164,7 +170,7 @@
                                 {{ item.cxc_bgrav   | currency:'COP' }}
                             </td>
                             <td>
-                                {{   item.dpa_tari  }}
+                               % {{   item.dpa_tari  }}
                             </td>
                             <td>
                                 {{ item.cxc_tota | currency:'COP' }}
