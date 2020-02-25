@@ -31,6 +31,11 @@
                     </table>
                     <mat-paginator [pageSize]="5"></mat-paginator>
                 </div>
+                <div *ngIf="!data">
+                        <div class="alert alert-danger" role="alert">
+                               No se encontraron datos
+                              </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>

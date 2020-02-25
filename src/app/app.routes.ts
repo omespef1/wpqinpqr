@@ -23,7 +23,8 @@ const app_routes: Routes = [
    { path: 'trazabilidad' , loadChildren : './pages/pq/trazabilidad/trazabilidad.module#TrazabilidadModule' },
    { path: 'sfforpo' , loadChildren : './pages/sf/sfforpo/sfforpo.module#SfforpoModule' },
    { path: 'xbauliq' , loadChildren : './components/xb/xbauliq/xbauliq.module#XbauliqModule' },
-{ path: '**', pathMatch: 'full', redirectTo: 'sfforpo' }
+   { path: 'scfscrev' , loadChildren : './pages/cf/scfscrev/scfscrev.module#ScfscrevModule' },
+{ path: '**', pathMatch: 'full', redirectTo: 'scfscrev' }
 ];
 
 export const app_routing = RouterModule.forRoot(app_routes);

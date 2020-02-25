@@ -38,6 +38,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { TableSearchGenericComponent } from './components/tools/table-search-generic/table-search-generic.component';
 import { ModalDoctosComponent } from './components/rn/rnradic/modal-doctos/modal-doctos.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 

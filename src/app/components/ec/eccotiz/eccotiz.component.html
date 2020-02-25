@@ -51,7 +51,7 @@
               </div>
               <input matInput placeholder="Fecha inicial" [matDatepicker]="fec_finiP" type="text" class="form-control" name="fec_fini" id="fec_fini" [(ngModel)]="par_busq.fec_fini" required #fec_fini="ngModel" readonly>
               <mat-datepicker-toggle [for]="fec_finiP"></mat-datepicker-toggle>
-              <mat-datepicker disabled="false" #fec_finiP touchUi></mat-datepicker>
+              <mat-datepicker disabled="false" #fec_finiP ></mat-datepicker>
             </div>
             <div [hidden]="fec_fini.valid || fec_fini.pristine" class="alert alert-danger">
               Fecha inicial es requerida

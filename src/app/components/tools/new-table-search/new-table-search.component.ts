@@ -19,6 +19,7 @@ export class NewTableSearchComponent {
   @Input() displayedColumns: string[] = []; // Vector del cual se obtienen los valores que se mostraran en la tabla
   @Input() showColumns: string[] = []; //  Nombre de las columnas a mostrar en la tabla
   @Input() id = '';
+  data=true;
   element: HTMLElement;
 
   constructor() {
@@ -27,6 +28,10 @@ export class NewTableSearchComponent {
   }
 
   render(source: any) {
+    if(source==null || source ==undefined)
+     this.data=false;
+     else
+     this.data=true;
     this.dataSource = new MatTableDataSource(source);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
