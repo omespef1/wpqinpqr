@@ -96,13 +96,11 @@ export class RnradicComponent implements OnInit {
 
     await this.GetParams();
 
-    if (this.radic.emp_codi === undefined) {
+    if (this.radic.emp_codi === undefined)
       this.loadCompanies();
-    }
 
-    if (this.radic.emp_codi) {
+    if (this.radic.emp_codi)
       this.Load();
-    }
 
     if (this.SRN000002 === 'S') {
       this.radic.rad_obse = '.';

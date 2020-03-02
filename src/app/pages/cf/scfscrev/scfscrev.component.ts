@@ -158,6 +158,6 @@ export class ScfscrevComponent implements OnInit {
   }
 
   GeSuTraye(){
-    this._sutraye.GetSuTraye(this.emp_codi,this.scfscrev)
+    this._sutraye.GetSuTraye(this.emp_codi,0)
   }
 }

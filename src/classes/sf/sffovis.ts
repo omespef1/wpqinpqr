@@ -76,7 +76,7 @@ export class InfoAportante {
 }
 
 export class InfoEmpresa {
-    public apo_coda: string;
+    public apo_coda = '';
     public apo_razs: string;
     public tia_codi: string;
     public tia_nomb: string;

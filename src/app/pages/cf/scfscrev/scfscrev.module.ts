@@ -23,6 +23,6 @@ import { NewTableSearchComponent } from "src/app/components/tools/new-table-sear
     MatDatepickerModule,
     MatNativeDateModule,
   ],
-  declarations: [ScfscrevComponent, NewTableSearchComponent]
+   declarations: [ScfscrevComponent, NewTableSearchComponent]
 })
 export class ScfscrevModule { }
