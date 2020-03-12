@@ -1,1347 +1,1240 @@
-<div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-4">Formulario Solicitud de crédito </h1>
-  </div>
+<!-- <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Formulario Solicitud de crédito </h1>
+    </div>
 </div>
 
 <form #scfsrevF="ngForm" (ngSubmit)="SetScfScrev(scfsrevF)">
-  <div class="container mb-4" style="min-height: 800px">
-    <div class="card card-gray">
-      <div class="card-header bg-success text-white">SOLICITUD DE CRÉDITO</div>
-      <!-- <div class="card-body"> -->
-      <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <a class="nav-item nav-link" [ngClass]="activeTab==0?'active':''" id="nav-info-afili" data-toggle="tab"
-            href="#nav-info-afiliT" role="tab" aria-controls="nav-info-afiliT" aria-selected="true">Información básica
+    <div class="container mb-4" style="min-height: 800px">
+        <div class="card card-gray">
+            <div class="card-header bg-success text-white">SOLICITUD DE CRÉDITO</div>
+
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link" [ngClass]="activeTab==0?'active':''" id="nav-info-afili" data-toggle="tab" href="#nav-info-afiliT" role="tab" aria-controls="nav-info-afiliT" aria-selected="true">Información básica
             del afiliado</a>
-          <a class="nav-item nav-link" [ngClass]="activeTab==1?'active':''" id="nav-info-basic" data-toggle="tab"
-            href="#nav-info-basicT" role="tab" aria-controls="nav-info-basicT" aria-selected="false">Información del
+                    <a class="nav-item nav-link" [ngClass]="activeTab==1?'active':''" id="nav-info-basic" data-toggle="tab" href="#nav-info-basicT" role="tab" aria-controls="nav-info-basicT" aria-selected="false">Información del
             crédito</a>
-          <a class="nav-item nav-link" [ngClass]="activeTab==2?'active':''" id="nav-info-lab" data-toggle="tab"
-            href="#nav-info-labT" role="tab" aria-controls="nav-info-labT" [ngClass]="activeTab==3?'active':''"
-            aria-selected="false">Información laboral</a>
-          <a class="nav-item nav-link" id="nav-info-codeu" data-toggle="tab" href="#nav-info-codeuT" role="tab"
-            aria-controls="nav-info-codeuT" [ngClass]="activeTab==4?'active':''" aria-selected="false">Información
+                    <a class="nav-item nav-link" [ngClass]="activeTab==2?'active':''" id="nav-info-lab" data-toggle="tab" href="#nav-info-labT" role="tab" aria-controls="nav-info-labT" [ngClass]="activeTab==3?'active':''" aria-selected="false">Información laboral</a>
+                    <a class="nav-item nav-link" id="nav-info-codeu" data-toggle="tab" href="#nav-info-codeuT" role="tab" aria-controls="nav-info-codeuT" [ngClass]="activeTab==4?'active':''" aria-selected="false">Información
             codeudor</a>
-          <a class="nav-item nav-link" [ngClass]="activeTab==5?'active':''" id="nav-info-codeu-lab" data-toggle="tab"
-            href="#nav-info-codeu-labT" role="tab" aria-controls="nav-info-codeu-labT" aria-selected="false">Información
+                    <a class="nav-item nav-link" [ngClass]="activeTab==5?'active':''" id="nav-info-codeu-lab" data-toggle="tab" href="#nav-info-codeu-labT" role="tab" aria-controls="nav-info-codeu-labT" aria-selected="false">Información
             laboral codeudor cuando
             es empleado</a>
-          <a class="nav-item nav-link" id="nav-info-codeu-lab-indep" data-toggle="tab" href="#nav-info-codeu-lab-indepT"
-            [ngClass]="activeTab==6?'active':''" role="tab" aria-controls="nav-info-codeu-lab-indepT"
-            aria-selected="false">Información laboral codeudor cuando es
+                    <a class="nav-item nav-link" id="nav-info-codeu-lab-indep" data-toggle="tab" href="#nav-info-codeu-lab-indepT" [ngClass]="activeTab==6?'active':''" role="tab" aria-controls="nav-info-codeu-lab-indepT" aria-selected="false">Información laboral codeudor cuando es
             independiente</a>
-          <a class="nav-item nav-link" id="nav-ref-pers" [ngClass]="activeTab==7?'active':''" data-toggle="tab"
-            href="#nav-ref-persT" role="tab" aria-controls="nav-ref-persT" aria-selected="false">Referencias
+                    <a class="nav-item nav-link" id="nav-ref-pers" [ngClass]="activeTab==7?'active':''" data-toggle="tab" href="#nav-ref-persT" role="tab" aria-controls="nav-ref-persT" aria-selected="false">Referencias
             personales</a>
-          <a class="nav-item nav-link" id="nav-ref-fami" [ngClass]="activeTab==8?'active':''" data-toggle="tab"
-            href="#nav-ref-famiT" role="tab" aria-controls="nav-ref-famiT" aria-selected="false">Referencias
+                    <a class="nav-item nav-link" id="nav-ref-fami" [ngClass]="activeTab==8?'active':''" data-toggle="tab" href="#nav-ref-famiT" role="tab" aria-controls="nav-ref-famiT" aria-selected="false">Referencias
             familiares</a>
-        </div>
-      </nav>
-      <div class="tab-content" id="nav-tabContent">
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
 
-        <div class="tab-pane fade show active" id="nav-info-afiliT" role="tabpanel" aria-labelledby="nav-info-afili">
-          <div class="card card-gray">
-            <div class="card-header bg-primary text-white">Información básica del afiliado</div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-lg-4 offset-md-8 col-md-4 col-xs-12 col-sm-12">
-                  <label for="afe_fech">Fecha Solicitud</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-id-card" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="afi_fech" value="{{today | date : 'dd-MM-yyyy'}}" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="afi_docu">No.Identificación</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-id-card" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="afi_docu" [(ngModel)]="suafili.afi_docu" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="tip_codi">Tipo Documento</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-id-card" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="tip_codi" [(ngModel)]="suafili.tip_nomb" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                <div class="tab-pane fade show active" id="nav-info-afiliT" role="tabpanel" aria-labelledby="nav-info-afili">
+                    <div class="card card-gray">
+                        <div class="card-header bg-primary text-white">Información básica del afiliado</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4 offset-md-8 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="afe_fech">Fecha Solicitud</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-id-card" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="afi_fech" value="{{today | date : 'dd-MM-yyyy'}}" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="afi_docu">No.Identificación</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-id-card" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="afi_docu" [(ngModel)]="suafili.afi_docu" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="tip_codi">Tipo Documento</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-id-card" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="tip_codi" [(ngModel)]="suafili.tip_nomb" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="afi_sucu">Sucursal</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-building" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="afi_sucu" [(ngModel)]="sucursalInfoBasica.arb_nomb" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control" required #afi_sucu="ngModel">
-                    <button type="button" class="btn btn-primary" (click)="showSucursalesInfoBasica()">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="afi_sucu">Sucursal</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-building" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="afi_sucu" [(ngModel)]="sucursalInfoBasica.arb_nomb" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control" required #afi_sucu="ngModel">
+                                        <button type="button" class="btn btn-primary" (click)="showSucursalesInfoBasica()">
                       <span><i class="fas fa-search"></i></span>
                     </button>
 
-                  </div>
+                                    </div>
 
-                  <div [hidden]="afi_sucu.valid || afi_sucu.pristine" class="alert alert-danger">
-                    Sucursal requerida
-                  </div>
-                </div>
+                                    <div [hidden]="afi_sucu.valid || afi_sucu.pristine" class="alert alert-danger">
+                                        Sucursal requerida
+                                    </div>
+                                </div>
 
-                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
-                  <label for="afi_noco">Nombre completo</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-id-card" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="afi_noco" [(ngModel)]="suafili.afi_noco" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+                                    <label for="afi_noco">Nombre completo</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-id-card" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="afi_noco" [(ngModel)]="suafili.afi_noco" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
+                                    </div>
+                                </div>
 
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="afi_gene">Género</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-transgender" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="afi_gene" [(ngModel)]="suafili.afi_gene" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="afi_gene">Género</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-transgender" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="afi_gene" [(ngModel)]="suafili.afi_gene" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
+                                    </div>
+                                </div>
 
 
-                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
-                  <label for="afi_dire">Dirección</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-address-book" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="afi_dire" [(ngModel)]="suafili.afi_dire" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+                                    <label for="afi_dire">Dirección</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-address-book" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="afi_dire" [(ngModel)]="suafili.afi_dire" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
+                                    </div>
+                                </div>
 
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="afi_tele">Teléfono fijo</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-phone" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="afi_tele" [(ngModel)]="suafili.afi_tele" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="afi_tele">Teléfono fijo</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="afi_tele" [(ngModel)]="suafili.afi_tele" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="afi_celu">Celular</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-mobile" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="afi_celu" [(ngModel)]="suafili.afi_celu" type="text" data-toggle="tooltip"
-                      data-placement="bottom" class="form-control" #afi_celu="ngModel">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="afi_celu">Celular</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-mobile" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="afi_celu" [(ngModel)]="suafili.afi_celu" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" #afi_celu="ngModel">
 
-                  </div>
-                  <div [hidden]="afi_celu.valid || afi_celu.pristine" class="alert alert-danger">
-                    Celular requerido
-                  </div>
-                </div>
+                                    </div>
+                                    <div [hidden]="afi_celu.valid || afi_celu.pristine" class="alert alert-danger">
+                                        Celular requerido
+                                    </div>
+                                </div>
 
 
-                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
-                  <label for="afi_mail">Email</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-at" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="afi_mail" [(ngModel)]="suafili.afi_mail" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+                                    <label for="afi_mail">Email</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-at" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="afi_mail" [(ngModel)]="suafili.afi_mail" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="afi_cate">Categoría</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-users" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="afi_cate" [(ngModel)]="suafili.afi_cate" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="afi_cate">Categoría</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-users" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="afi_cate" [(ngModel)]="suafili.afi_cate" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
-                  <button id="nextAfili" type="button" class="btn btn-primary btn-lg mt-3">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
+                                    <button id="nextAfili" type="button" class="btn btn-primary btn-lg mt-3">
                     &nbsp;Siguiente <i class="fas fa-arrow-circle-right"></i></button>
-                </div>
+                                </div>
 
 
 
-              </div>
+                            </div>
 
 
 
 
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane fade" id="nav-info-basicT" role="tabpanel" aria-labelledby="nav-info-basic">
-          <div class="card card-gray">
-            <div class="card-header bg-primary text-white">Información del crédito</div>
-            <div class="card-body">
-              <div class="row">
-
-
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="inf_tasa">Tasa</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-percent" aria-hidden="true"></i></span>
-                      </div>
+                        </div>
                     </div>
-                    <input name="inf_tasa" [(ngModel)]="tasaInfoCred.tas_nomb" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                    <button type="button" class="btn btn-primary" (click)="showCfTasasModal()">
+                </div>
+                <div class="tab-pane fade" id="nav-info-basicT" role="tabpanel" aria-labelledby="nav-info-basic">
+                    <div class="card card-gray">
+                        <div class="card-header bg-primary text-white">Información del crédito</div>
+                        <div class="card-body">
+                            <div class="row">
+
+
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="inf_tasa">Tasa</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-percent" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="inf_tasa" [(ngModel)]="tasaInfoCred.tas_nomb" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                        <button type="button" class="btn btn-primary" (click)="showCfTasasModal()">
                       <span><i class="fas fa-search"></i></span>
                     </button>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="inf_mcre">Modalidad del crédito</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fas fa-chart-line"></i></span>
-                      </div>
-                    </div>
-                    <input name="inf_mcre" [(ngModel)]="modalidadInfoCred.mod_nomb" (ngModelChange)="searchLine($event)"
-                      type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
-                    <button type="button" class="btn btn-primary" (click)="showCfModcrModal()">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="inf_mcre">Modalidad del crédito</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-chart-line"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="inf_mcre" [(ngModel)]="modalidadInfoCred.mod_nomb" (ngModelChange)="searchLine($event)" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                        <button type="button" class="btn btn-primary" (click)="showCfModcrModal()">
                       <span><i class="fas fa-search"></i></span>
                     </button>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="afi_lcre">Línea de crédito</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fas fa-chart-line"></i></span>
-                      </div>
-                    </div>
-                    <input name="afi_lcre" [(ngModel)]="lineaCred.lic_nomb" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="afi_lcre">Línea de crédito</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-chart-line"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="afi_lcre" [(ngModel)]="lineaCred.lic_nomb" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="inf_vcre">Valor solicitado</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fas fa-money-bill-alt"></i></span>
-                      </div>
-                    </div>
-                    <input name="inf_vcre" [(ngModel)]="scfscrev.inf_vcre" type="number" data-toggle="tooltip"
-                      data-placement="bottom" class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="inf_plaz">Plazo</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fas fa-calendar-week"></i></span>
-                      </div>
-                    </div>
-                    <select [disabled]="plazoInfoCred.length==0" class="form-control" id="inf_plaz" name="inf_plaz"
-                      [(ngModel)]="scfscrev.inf_plaz" required #inf_plaz="ngModel">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="inf_vcre">Valor solicitado</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-money-bill-alt"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="inf_vcre" [(ngModel)]="scfscrev.inf_vcre" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="inf_plaz">Plazo</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-calendar-week"></i></span>
+                                            </div>
+                                        </div>
+                                        <select [disabled]="plazoInfoCred.length==0" class="form-control" id="inf_plaz" name="inf_plaz" [(ngModel)]="scfscrev.inf_plaz" required #inf_plaz="ngModel">
                       <option *ngFor="let month of plazoInfoCred" [value]="month">{{month}}</option>
                     </select>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="afi_fprc">Fecha Primera cuota</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fas fa-calendar-week"></i></span>
-                      </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="afi_fprc">Fecha Primera cuota</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-calendar-week"></i></span>
+                                            </div>
 
-                    </div>
-                    <input matInput [min]="today" [matDatepicker]="fec_priC" type="text" class="form-control"
-                      name="afi_fprc" id="afi_fprc" [(ngModel)]="scfscrev.afi_fprc" required #afi_fprc="ngModel"
-                      readonly>
-                    <mat-datepicker-toggle [for]="fec_priC"></mat-datepicker-toggle>
-                    <mat-datepicker #fec_priC></mat-datepicker>
+                                        </div>
+                                        <input matInput [min]="today" [matDatepicker]="fec_priC" type="text" class="form-control" name="afi_fprc" id="afi_fprc" [(ngModel)]="scfscrev.afi_fprc" required #afi_fprc="ngModel" readonly>
+                                        <mat-datepicker-toggle [for]="fec_priC"></mat-datepicker-toggle>
+                                        <mat-datepicker #fec_priC></mat-datepicker>
 
-                  </div>
-                  <div [hidden]="afi_fprc.valid || afi_fprc.pristine" class="alert alert-danger">
-                    Fecha primera cuota es requerida
-                  </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-                  <label for="afi_lab"></label>
-                  <div class="input-group">
-                    <span class="switch">
+                                    </div>
+                                    <div [hidden]="afi_fprc.valid || afi_fprc.pristine" class="alert alert-danger">
+                                        Fecha primera cuota es requerida
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <label for="afi_lab"></label>
+                                    <div class="input-group">
+                                        <span class="switch">
                       <input type="checkbox" name="afi_lab" [(checked)]="scfscrev.afi_lab" class="switch switch-sm"
                         id="switch-id">
                       <label for="afi_lab">Información laboral ¿Trabaja?</label>
                     </span>
-                  </div>
-                </div>
+                                    </div>
+                                </div>
 
-                <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
-                  <button id="nextInfoCre" type="button" class="btn btn-primary btn-lg mt-3">
+                                <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
+                                    <button id="nextInfoCre" type="button" class="btn btn-primary btn-lg mt-3">
                     &nbsp;Siguiente <i class="fas fa-arrow-circle-right"></i></button>
-                </div>
-              </div>
+                                </div>
+                            </div>
 
 
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane fade" id="nav-info-labT" role="tabpanel" aria-labelledby="nav-info-lab">
-          <div class="card card-gray">
-            <div class="card-header bg-primary text-white">Información laboral</div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
-                  <label for="ifl_noem">Nombre de la empresa</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-building" aria-hidden="true"></i></span>
-                      </div>
+                        </div>
                     </div>
-                    <input name="ifl_noem" [(ngModel)]="scfscrev.ifl_noem" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_tele">Teléfono</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-phone" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_tele" [(ngModel)]="scfscrev.ifl_tele" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
+                <div class="tab-pane fade" id="nav-info-labT" role="tabpanel" aria-labelledby="nav-info-lab">
+                    <div class="card card-gray">
+                        <div class="card-header bg-primary text-white">Información laboral</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+                                    <label for="ifl_noem">Nombre de la empresa</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-building" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_noem" [(ngModel)]="scfscrev.ifl_noem" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_tele">Teléfono</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_tele" [(ngModel)]="scfscrev.ifl_tele" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
 
-                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
-                  <label for="ifl_diem">Dirección de la empresa</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-address-book" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_diem" [(ngModel)]="scfscrev.car_diem" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_exte">Extensión</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-phone" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_exte" [(ngModel)]="scfscrev.ifl_exte" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_pais">País</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-globe" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_pais" [(ngModel)]="scfscrev.ifl_pais" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_depa">Departamento</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-globe" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_depa" [(ngModel)]="scfscrev.ifl_depa" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
+                                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+                                    <label for="ifl_diem">Dirección de la empresa</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-address-book" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_diem" [(ngModel)]="scfscrev.car_diem" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_exte">Extensión</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_exte" [(ngModel)]="scfscrev.ifl_exte" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_pais">País</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_pais" [(ngModel)]="scfscrev.ifl_pais" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_depa">Departamento</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_depa" [(ngModel)]="scfscrev.ifl_depa" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
 
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_ciud">Ciudad</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-globe" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_ciud" [(ngModel)]="scfscrev.ifl_ciud" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_ciud">Ciudad</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_ciud" [(ngModel)]="scfscrev.ifl_ciud" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
 
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_sala">Salario</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fas fa-money-bill-alt"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_sala" [(ngModel)]="scfscrev.ifl_sala" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_sala">Salario</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-money-bill-alt"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_sala" [(ngModel)]="scfscrev.ifl_sala" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
 
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_carg">Cargo</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
-                      </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_carg">Cargo</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_carg" [(ngModel)]="scfscrev.ifl_carg" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <input name="ifl_carg" [(ngModel)]="scfscrev.ifl_carg" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane fade" id="nav-info-codeuT" role="tabpanel" aria-labelledby="nav-info-codeu">
-          <div class="card card-gray">
-            <div class="card-header bg-primary text-white">Información del codeudor</div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifc_noin">No.Identificación</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-id-card" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifc_noin" [(ngModel)]="scfscrev.ifc_noin" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifc_tido">Tipo documento</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-id-card" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifc_tido" [(ngModel)]="scfscrev.ifc_tido" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifc_gene">Género</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-transgender-alt" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifc_gene" [(ngModel)]="scfscrev.ifc_gene" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifc_pino">Primer Nombre</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-id-badge" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifc_pino" [(ngModel)]="scfscrev.ifc_pino" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifc_seno">Segundo nombre</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-id-badge" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifc_seno" [(ngModel)]="scfscrev.ifc_seno" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifc_piap">Primer Apellido</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-id-badge" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifc_piap" [(ngModel)]="scfscrev.ifc_piap" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_seap">Segundo Apellido</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-id-badge" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_seap" [(ngModel)]="scfscrev.ifl_seap" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_prof">Profesión</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_prof" [(ngModel)]="scfscrev.ifl_prof" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_nies">Nivel de estudios</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_nies" [(ngModel)]="scfscrev.ifl_nies" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_fena">Fecha Nacimiento</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-birthday-cake" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_fena" [(ngModel)]="scfscrev.ifl_fena" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_cina">Ciudad de nacimiento</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-globe" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_cina" [(ngModel)]="scfscrev.ifl_cina" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_feex">Fecha de expedición</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_feex" [(ngModel)]="scfscrev.ifl_feex" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_ciex">Ciudad Expedición</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-globe" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_ciex" [(ngModel)]="scfscrev.ifl_ciex" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_tivi">Tipo de vivienda</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-home" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_tivi" [(ngModel)]="scfscrev.ifl_tivi" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_dire">Dirección Residencia</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-location-arrow" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_dire" [(ngModel)]="scfscrev.ifl_dire" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_barr">Barrio</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-globe" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_barr" [(ngModel)]="scfscrev.ifl_barr" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_cire">Ciudad residencia</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-globe" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_cire" [(ngModel)]="scfscrev.ifl_cire" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_tfre">Teléfono fijo residencia</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-phone" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_tfre" [(ngModel)]="scfscrev.ifl_tfre" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_noce">No.Celular</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-mobile" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_noce" [(ngModel)]="scfscrev.ifl_noce" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_estra">Estrato</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-building" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_estra" [(ngModel)]="scfscrev.ifl_estra" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ifl_ocup">Ocupación</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ifl_ocup" [(ngModel)]="scfscrev.ifl_ocup" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
+                <div class="tab-pane fade" id="nav-info-codeuT" role="tabpanel" aria-labelledby="nav-info-codeu">
+                    <div class="card card-gray">
+                        <div class="card-header bg-primary text-white">Información del codeudor</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifc_noin">No.Identificación</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-id-card" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifc_noin" [(ngModel)]="scfscrev.ifc_noin" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifc_tido">Tipo documento</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-id-card" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifc_tido" [(ngModel)]="scfscrev.ifc_tido" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifc_gene">Género</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-transgender-alt" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifc_gene" [(ngModel)]="scfscrev.ifc_gene" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifc_pino">Primer Nombre</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-id-badge" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifc_pino" [(ngModel)]="scfscrev.ifc_pino" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifc_seno">Segundo nombre</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-id-badge" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifc_seno" [(ngModel)]="scfscrev.ifc_seno" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifc_piap">Primer Apellido</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-id-badge" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifc_piap" [(ngModel)]="scfscrev.ifc_piap" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_seap">Segundo Apellido</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-id-badge" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_seap" [(ngModel)]="scfscrev.ifl_seap" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_prof">Profesión</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_prof" [(ngModel)]="scfscrev.ifl_prof" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_nies">Nivel de estudios</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_nies" [(ngModel)]="scfscrev.ifl_nies" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_fena">Fecha Nacimiento</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-birthday-cake" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_fena" [(ngModel)]="scfscrev.ifl_fena" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_cina">Ciudad de nacimiento</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_cina" [(ngModel)]="scfscrev.ifl_cina" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_feex">Fecha de expedición</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_feex" [(ngModel)]="scfscrev.ifl_feex" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_ciex">Ciudad Expedición</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_ciex" [(ngModel)]="scfscrev.ifl_ciex" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_tivi">Tipo de vivienda</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-home" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_tivi" [(ngModel)]="scfscrev.ifl_tivi" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_dire">Dirección Residencia</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-location-arrow" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_dire" [(ngModel)]="scfscrev.ifl_dire" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_barr">Barrio</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_barr" [(ngModel)]="scfscrev.ifl_barr" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_cire">Ciudad residencia</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_cire" [(ngModel)]="scfscrev.ifl_cire" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_tfre">Teléfono fijo residencia</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_tfre" [(ngModel)]="scfscrev.ifl_tfre" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_noce">No.Celular</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-mobile" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_noce" [(ngModel)]="scfscrev.ifl_noce" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_estra">Estrato</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-building" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_estra" [(ngModel)]="scfscrev.ifl_estra" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ifl_ocup">Ocupación</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ifl_ocup" [(ngModel)]="scfscrev.ifl_ocup" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
 
-                <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
-                  <button id="nextInfoCodeu" type="button" class="btn btn-primary btn-lg mt-3">
+                                <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
+                                    <button id="nextInfoCodeu" type="button" class="btn btn-primary btn-lg mt-3">
                     &nbsp;Siguiente <i class="fas fa-arrow-circle-right"></i></button>
-                </div>
-              </div>
+                                </div>
+                            </div>
 
 
 
-            </div>
+                        </div>
 
-          </div>
-        </div>
-        <div class="tab-pane fade" id="nav-info-codeu-labT" role="tabpanel" aria-labelledby="nav-info-codeu-lab">
-          <div class="card card-gray">
-            <div class="card-header bg-primary text-white">Información laboral del codeudor cuando es empleado</div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-info-codeu-labT" role="tabpanel" aria-labelledby="nav-info-codeu-lab">
+                    <div class="card card-gray">
+                        <div class="card-header bg-primary text-white">Información laboral del codeudor cuando es empleado</div>
 
 
 
-            <div class="card-body">
-              <div class="row">
-                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
-                  <label for="ilc_noem">Nombre de la empresa</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-building" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ilc_noem" [(ngModel)]="scfscrev.ilc_noem" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ilc_tele">Teléfono</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-phone" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ilc_tele" [(ngModel)]="scfscrev.ilc_tele" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
-                  <label for="ilc_diem">Dirección Empresa</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-location-arrow" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ilc_diem" [(ngModel)]="scfscrev.ilc_diem" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ilc_exte">Extensión</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-phone" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ilc_exte" [(ngModel)]="scfscrev.ilc_exte" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ilc_pais">Páís</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-globe" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ilc_pais" [(ngModel)]="scfscrev.ilc_pais" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ilc_depar">Departamento</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-globe" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ilc_depar" [(ngModel)]="scfscrev.ilc_depar" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ilc_ciud">Ciudad</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-globe" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ilc_depar" [(ngModel)]="scfscrev.ilc_depar" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ilc_sala">Salario</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fas fa-money-bill-alt"></i></span>
-                      </div>
-                    </div>
-                    <input name="ilc_sala" [(ngModel)]="scfscrev.ilc_sala" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ilc_carg">Cargo</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ilc_carg" [(ngModel)]="scfscrev.ilc_carg" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
-                  <label for="ilc_tivi">Tipo Vivienda</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-building" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ilc_tivi" [(ngModel)]="scfscrev.ilc_tivi" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ilc_emai">Email</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-at" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ilc_emai" [(ngModel)]="scfscrev.ilc_emai" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ilc_celu">Celular</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-mobile" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ilc_celu" [(ngModel)]="scfscrev.ilc_celu" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ilc_tico">Tipo Contrato</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-clipboard" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ilc_tico" [(ngModel)]="scfscrev.ilc_tico" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ilc_fein">Fecha Ingreso</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ilc_fein" [(ngModel)]="scfscrev.ilc_fein" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
-                  <button id="nextInfoCodeuLab" type="button" class="btn btn-primary btn-lg mt-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+                                    <label for="ilc_noem">Nombre de la empresa</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-building" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ilc_noem" [(ngModel)]="scfscrev.ilc_noem" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ilc_tele">Teléfono</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ilc_tele" [(ngModel)]="scfscrev.ilc_tele" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+                                    <label for="ilc_diem">Dirección Empresa</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-location-arrow" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ilc_diem" [(ngModel)]="scfscrev.ilc_diem" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ilc_exte">Extensión</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ilc_exte" [(ngModel)]="scfscrev.ilc_exte" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ilc_pais">Páís</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ilc_pais" [(ngModel)]="scfscrev.ilc_pais" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ilc_depar">Departamento</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ilc_depar" [(ngModel)]="scfscrev.ilc_depar" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ilc_ciud">Ciudad</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ilc_depar" [(ngModel)]="scfscrev.ilc_depar" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ilc_sala">Salario</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-money-bill-alt"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ilc_sala" [(ngModel)]="scfscrev.ilc_sala" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ilc_carg">Cargo</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ilc_carg" [(ngModel)]="scfscrev.ilc_carg" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+                                    <label for="ilc_tivi">Tipo Vivienda</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-building" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ilc_tivi" [(ngModel)]="scfscrev.ilc_tivi" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ilc_emai">Email</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-at" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ilc_emai" [(ngModel)]="scfscrev.ilc_emai" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ilc_celu">Celular</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-mobile" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ilc_celu" [(ngModel)]="scfscrev.ilc_celu" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ilc_tico">Tipo Contrato</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-clipboard" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ilc_tico" [(ngModel)]="scfscrev.ilc_tico" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ilc_fein">Fecha Ingreso</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ilc_fein" [(ngModel)]="scfscrev.ilc_fein" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
+                                    <button id="nextInfoCodeuLab" type="button" class="btn btn-primary btn-lg mt-3">
                     &nbsp;Siguiente <i class="fas fa-arrow-circle-right"></i></button>
-                </div>
-              </div>
+                                </div>
+                            </div>
 
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane fade" id="nav-info-codeu-lab-indepT" role="tabpanel"
-          aria-labelledby="nav-info-codeu-lab-indep">
-          <div class="card card-gray">
-            <div class="card-header bg-primary text-white">Información laboral cuando el codeudor es independiente
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
-                  <label for="ili_noem">Nombre Empresa</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-building" aria-hidden="true"></i></span>
-                      </div>
+                        </div>
                     </div>
-                    <input name="ili_noem" [(ngModel)]="scfscrev.ili_noem" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ili_nit">Nit</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ili_nit" [(ngModel)]="scfscrev.ili_nit" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
-                  <label for="ili_acec">Actividad Económica</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-shopping-bag" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ili_acec" [(ngModel)]="scfscrev.ili_acec" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ili_ocup">Ocupación</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ili_ocup" [(ngModel)]="scfscrev.ili_ocup" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
-                  <label for="ili_fcon">Fecha de constitución</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ili_fcon" [(ngModel)]="scfscrev.ili_fcon" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
-                  <button id="nextInfoCodeIndep" type="button" class="btn btn-primary btn-lg mt-3">
+                <div class="tab-pane fade" id="nav-info-codeu-lab-indepT" role="tabpanel" aria-labelledby="nav-info-codeu-lab-indep">
+                    <div class="card card-gray">
+                        <div class="card-header bg-primary text-white">Información laboral cuando el codeudor es independiente
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+                                    <label for="ili_noem">Nombre Empresa</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-building" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ili_noem" [(ngModel)]="scfscrev.ili_noem" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ili_nit">Nit</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ili_nit" [(ngModel)]="scfscrev.ili_nit" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+                                    <label for="ili_acec">Actividad Económica</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-shopping-bag" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ili_acec" [(ngModel)]="scfscrev.ili_acec" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ili_ocup">Ocupación</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ili_ocup" [(ngModel)]="scfscrev.ili_ocup" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+                                    <label for="ili_fcon">Fecha de constitución</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ili_fcon" [(ngModel)]="scfscrev.ili_fcon" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
+                                    <button id="nextInfoCodeIndep" type="button" class="btn btn-primary btn-lg mt-3">
                     &nbsp;Siguiente <i class="fas fa-arrow-circle-right"></i></button>
-                </div>
-              </div>
+                                </div>
+                            </div>
 
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane fade" id="nav-ref-persT" role="tabpanel" aria-labelledby="nav-ref-pers">
-          <div class="card card-gray">
-            <div class="card-header bg-primary text-white">Referencias personales</div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="rpe_pnom">Primer Nombre</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
-                      </div>
+                        </div>
                     </div>
-                    <input name="rpe_pno" [(ngModel)]="scfscrev.rpe_pno" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                </div>
+                <div class="tab-pane fade" id="nav-ref-persT" role="tabpanel" aria-labelledby="nav-ref-pers">
+                    <div class="card card-gray">
+                        <div class="card-header bg-primary text-white">Referencias personales</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="rpe_pnom">Primer Nombre</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="rpe_pno" [(ngModel)]="scfscrev.rpe_pno" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="rep_snom">Segundo Nombre</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="rep_snom" [(ngModel)]="scfscrev.rep_snom" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="rep_eciv">Estado civil</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fas fa-list-ol"></i></span>
-                      </div>
-                    </div>
-                    <input name="rep_eciv" [(ngModel)]="scfscrev.rep_eciv" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="rep_snom">Segundo Nombre</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="rep_snom" [(ngModel)]="scfscrev.rep_snom" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="rep_eciv">Estado civil</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-list-ol"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="rep_eciv" [(ngModel)]="scfscrev.rep_eciv" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="rep_pape">Primer Apellido</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="rep_pape" [(ngModel)]="scfscrev.rep_pape" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="rep_pape">Primer Apellido</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="rep_pape" [(ngModel)]="scfscrev.rep_pape" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="rep_sape">Segundo Apellido</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="rep_sape" [(ngModel)]="scfscrev.rep_sape" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="rep_sape">Segundo Apellido</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="rep_sape" [(ngModel)]="scfscrev.rep_sape" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="rep_prof">Profesión</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="rep_prof" [(ngModel)]="scfscrev.rep_prof" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="rep_prof">Profesión</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="rep_prof" [(ngModel)]="scfscrev.rep_prof" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="rep_pare">Parentesco</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="rep_pare" [(ngModel)]="scfscrev.rep_pare" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="rep_pare">Parentesco</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="rep_pare" [(ngModel)]="scfscrev.rep_pare" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="rep_tfre">Teléfono fijo residencia</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-phone" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="rep_tfre" [(ngModel)]="scfscrev.rep_tfre" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="rep_tfre">Teléfono fijo residencia</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="rep_tfre" [(ngModel)]="scfscrev.rep_tfre" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="rep_ncel">Celular</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-mobile" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="rep_ncel" [(ngModel)]="scfscrev.rep_ncel" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="rep_ncel">Celular</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-mobile" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="rep_ncel" [(ngModel)]="scfscrev.rep_ncel" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="rep_dres">Dirección residencia</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-building" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="rep_dres" [(ngModel)]="scfscrev.rep_dres" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="rep_dres">Dirección residencia</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-building" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="rep_dres" [(ngModel)]="scfscrev.rep_dres" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="rep_emai">Correo electrónico</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-at" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="rep_emai" [(ngModel)]="scfscrev.rep_emai" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="rep_emai">Correo electrónico</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-at" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="rep_emai" [(ngModel)]="scfscrev.rep_emai" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="rep_cres">Ciudad Residencia</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-globe" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="rep_cres" [(ngModel)]="scfscrev.rep_cres" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="rep_cres">Ciudad Residencia</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="rep_cres" [(ngModel)]="scfscrev.rep_cres" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
-                  <button id="nextref_pers" type="button" class="btn btn-primary btn-lg mt-3">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
+                                    <button id="nextref_pers" type="button" class="btn btn-primary btn-lg mt-3">
                     &nbsp;Siguiente <i class="fas fa-arrow-circle-right"></i></button>
-                </div>
-              </div>
-            </div>
+                                </div>
+                            </div>
+                        </div>
 
 
 
 
-          </div>
-        </div>
-        <div class="tab-pane fade" id="nav-ref-famiT" role="tabpanel" aria-labelledby="nav-ref-fami">
-          <div class="card card-gray">
-            <div class="card-header bg-primary text-white">Referencias personales</div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ref_pnom">Primer Nombre</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
-                      </div>
                     </div>
-                    <input name="ref_pnom" [(ngModel)]="scfscrev.ref_pnom" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                </div>
+                <div class="tab-pane fade" id="nav-ref-famiT" role="tabpanel" aria-labelledby="nav-ref-fami">
+                    <div class="card card-gray">
+                        <div class="card-header bg-primary text-white">Referencias personales</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ref_pnom">Primer Nombre</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ref_pnom" [(ngModel)]="scfscrev.ref_pnom" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ref_snom">Segundo Nombre</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ref_snom" [(ngModel)]="scfscrev.ref_snom" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ref_snom">Segundo Nombre</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ref_snom" [(ngModel)]="scfscrev.ref_snom" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ref_eciv">Estado Civil</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-sign-language" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="Estado" [(ngModel)]="scfscrev.Estado" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ref_eciv">Estado Civil</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-sign-language" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="Estado" [(ngModel)]="scfscrev.Estado" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ref_pape">Primer Apellido</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ref_pape" [(ngModel)]="scfscrev.ref_pape" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ref_pape">Primer Apellido</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ref_pape" [(ngModel)]="scfscrev.ref_pape" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ref_sape">Segundo Apellido</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ref_sape" [(ngModel)]="scfscrev.ref_sape" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ref_sape">Segundo Apellido</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ref_sape" [(ngModel)]="scfscrev.ref_sape" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ref_prof">Profesión</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ref_prof" [(ngModel)]="scfscrev.ref_prof" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ref_prof">Profesión</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-graduation-cap" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ref_prof" [(ngModel)]="scfscrev.ref_prof" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ref_pare">Parentesco</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ref_pare" [(ngModel)]="scfscrev.ref_pare" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ref_pare">Parentesco</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-address-card" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ref_pare" [(ngModel)]="scfscrev.ref_pare" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ref_tref">Teléfono Residencia Fija</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-phone" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ref_tref" [(ngModel)]="scfscrev.ref_tref" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ref_tref">Teléfono Residencia Fija</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ref_tref" [(ngModel)]="scfscrev.ref_tref" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ref_ncel">No. Celular</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-mobile" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ref_ncel" [(ngModel)]="scfscrev.ref_ncel" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ref_dres">Dirección residencia</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-location-arrow" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ref_dres" [(ngModel)]="scfscrev.ref_dres" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ref_emai">Email</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-at" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ref_emai" [(ngModel)]="scfscrev.ref_emai" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                  <label for="ref_cres">Ciudad residencia</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <span><i class="fa fa-globe" aria-hidden="true"></i></span>
-                      </div>
-                    </div>
-                    <input name="ref_cres" [(ngModel)]="scfscrev.ref_cres" type="text" data-toggle="tooltip"
-                      data-placement="bottom" readonly class="form-control">
-                  </div>
-                </div>
-                <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
-                  <button id="nextref_fam" type="button" class="btn btn-primary btn-lg mt-3">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ref_ncel">No. Celular</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-mobile" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ref_ncel" [(ngModel)]="scfscrev.ref_ncel" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ref_dres">Dirección residencia</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-location-arrow" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ref_dres" [(ngModel)]="scfscrev.ref_dres" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ref_emai">Email</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-at" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ref_emai" [(ngModel)]="scfscrev.ref_emai" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="ref_cres">Ciudad residencia</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fa fa-globe" aria-hidden="true"></i></span>
+                                            </div>
+                                        </div>
+                                        <input name="ref_cres" [(ngModel)]="scfscrev.ref_cres" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
+                                    <button id="nextref_fam" type="button" class="btn btn-primary btn-lg mt-3">
                     &nbsp;Siguiente <i class="fas fa-arrow-circle-right"></i></button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
-              </div>
 
             </div>
-          </div>
+
         </div>
 
-      </div>
-      <!-- </div> -->
+
+
     </div>
 
+    <app-new-table-search Title="Sucursal" [displayedColumns]="['arb_codi', 'arb_nomb']" [showColumns]="['Código', 'Nombre']" (rowCLick)="SetSucursalBasica($event)" btnModalQb="btnSucursaInfoBasica" ModalQb="modalSucursaInfoBasica" #modalSucursalesInfoBasica></app-new-table-search>
+    <app-new-table-search Title="Tasa" [displayedColumns]="['tas_cont', 'tas_nomb']" [showColumns]="['Código', 'Nombre']" (rowCLick)="SetCfTasas($event)" btnModalQb="btnCfTasas" ModalQb="modalCfTasas" #modalCfTasas></app-new-table-search>
+    <app-new-table-search Title="Modalidad de crédito" [displayedColumns]="['mod_cont', 'mod_nomb']" [showColumns]="['Código', 'Nombre']" (rowCLick)="SetCfModcr($event)" btnModalQb="btnCfModcr" ModalQb="modalCfModcrs" #modalCfModcr></app-new-table-search>
 
-
-  </div>
-
-  <app-new-table-search Title="Sucursal" [displayedColumns]="['arb_codi', 'arb_nomb']"
-    [showColumns]="['Código', 'Nombre']" (rowCLick)="SetSucursalBasica($event)" btnModalQb="btnSucursaInfoBasica"
-    ModalQb="modalSucursaInfoBasica" #modalSucursalesInfoBasica></app-new-table-search>
-  <app-new-table-search Title="Tasa" [displayedColumns]="['tas_cont', 'tas_nomb']" [showColumns]="['Código', 'Nombre']"
-    (rowCLick)="SetCfTasas($event)" btnModalQb="btnCfTasas" ModalQb="modalCfTasas" #modalCfTasas></app-new-table-search>
-  <app-new-table-search Title="Modalidad de crédito" [displayedColumns]="['mod_cont', 'mod_nomb']"
-    [showColumns]="['Código', 'Nombre']" (rowCLick)="SetCfModcr($event)" btnModalQb="btnCfModcr" ModalQb="modalCfModcrs"
-    #modalCfModcr></app-new-table-search>
-
-</form>
+</form> -->

@@ -2,14 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ScfscrevRoutingModule } from './scfscrev-routing.module';
-import { ScfscrevComponent } from './scfscrev.component';
+// import { ScfscrevComponent } from './scfscrev.component';
 import { FormsModule } from "@angular/forms";
 import { MatInputModule, MatTableModule, MatPaginatorModule, MatDatepickerModule, MatNativeDateModule } from "@angular/material";
 import { NgxPaginationModule } from "ngx-pagination";
-import { NewTableSearchComponent } from "src/app/components/tools/new-table-search/new-table-search.component";
-
-
-
+import { SharedModule } from "src/app/shared/shared.module";
 
 @NgModule({
   imports: [
@@ -22,7 +19,8 @@ import { NewTableSearchComponent } from "src/app/components/tools/new-table-sear
     NgxPaginationModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    SharedModule
   ],
-   declarations: [ScfscrevComponent, NewTableSearchComponent]
+  //  declarations: [ScfscrevComponent]
 })
 export class ScfscrevModule { }

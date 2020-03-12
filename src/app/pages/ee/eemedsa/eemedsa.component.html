@@ -1,0 +1,65 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
+</ngx-spinner>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Medición de la Satisfacción y la Oportunidad en la Prestación del Servicio</h1>
+    </div>
+</div>
+
+<div class="container mb-4">
+    <div class="card card-gray">
+        <div class="card-header bg-primary text-white">
+            <span><i class="fas fa-chart-bar"></i></span> Gráficas.
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                        <label for="fec_fini">Fecha Inicial</label>
+                        <div class="input-group">
+                            <mat-datepicker-toggle [for]="pro_fent"></mat-datepicker-toggle>
+                            <mat-datepicker #pro_fent touchUi></mat-datepicker>
+                            <input matInput placeholder="Fecha Inicial" required readonly [matDatepicker]="pro_fent" type="text" class="form-control" name="pro_fent" id="pro_fent">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                        <label for="pro_fven">Fecha Final</label>
+                        <div class="input-group">
+                            <mat-datepicker-toggle [for]="pro_fven"></mat-datepicker-toggle>
+                            <mat-datepicker #pro_fven touchUi></mat-datepicker>
+                            <input matInput placeholder="Fecha Final" required readonly [matDatepicker]="pro_fven" type="text" class="form-control" name="pro_fven" id="pro_fven">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                        <label for="rev_esta">Seccional</label>
+                        <div class="input-group text-center">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-book"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control" name="seccional">
+                             <option value=undefined>Seleccione</option>
+                            <!-- <option *ngFor="let secc of trazPQRWF.seccional" [value]="secc.arb_cont">{{secc.arb_nomb | titlecase}}
+                            </option> -->
+                          </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 pt-3 text-right">
+                        <button type="submit" class="btn btn-success btn-md">
+                        <span><i class="fas fa-search"></i> &nbsp;Consultar</span>
+                      </button>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 pt-3 text-left">
+                        <button type="submit" class="btn btn-primary btn-md">
+                      <span><i class="fas fa-eraser"></i> &nbsp;Reestablecer</span>
+                    </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

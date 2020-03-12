@@ -28,6 +28,7 @@ export class RnRadic {
 
     public tip_codi: number;
     public tip_noma: string;
+    public afi_cont: number;
     public afi_docu: string;
     public afi_nom1: string;
     public afi_nom2: string;

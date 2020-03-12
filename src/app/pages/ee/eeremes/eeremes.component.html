@@ -1,0 +1,224 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
+</ngx-spinner>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Medición de Satisfacción al Usuario</h1>
+    </div>
+</div>
+
+<div class="container mb-4">
+    <div class="card card-gray">
+        <div class="card-header bg-primary text-white">
+            Ingrese por favor sus datos y seleccione el servicio a evaluar.
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="con_cont">Tipo Documento</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-address-card"></i></span>
+                                </div>
+                            </div>
+                            <input id="tip_abre" name="tip_abre" [(ngModel)]="faclien.tip_abre" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                            <input id="tip_nomb" name="tip_nomb" [(ngModel)]="faclien.tip_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+
+                            <!-- <button type="button" class="btn btn-primary" (click)="getTipoDocumento()">
+                                <span><i class="fas fa-search"></i></span>
+                            </button> -->
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="con_cont">Número Documento</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-hashtag"></i></span>
+                                </div>
+                            </div>
+                            <input id="cli_coda" name="cli_coda" [(ngModel)]="faclien.cli_coda" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" autocomplete="off">
+                            <button type="button" class="btn btn-primary" (click)="getInfoClien()">
+                                <span><i class="fas fa-search"></i></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rad_nomr">Nombre</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-user-circle"></i></span>
+                                </div>
+                            </div>
+                            <input id="cli_noco" name="cli_noco" [(ngModel)]="faclien.cli_noco" type="text" class="form-control" placeholder="Nombre" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rad_nomr">Edad</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-birthday-cake"></i></span>
+                                </div>
+                            </div>
+                            <input id="cli_edad" name="cli_edad" [(ngModel)]="faclien.cli_edad" type="text" class="form-control" placeholder="Edad" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rad_nomr">Género</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-venus-mars"></i></span>
+                                </div>
+                            </div>
+                            <input id="cli_gene" name="cli_gene" [(ngModel)]="faclien.cli_gene" type="text" class="form-control" placeholder="Género" readonly>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rad_nomr">Teléfono</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-phone"></i></span>
+                                </div>
+                            </div>
+                            <input id="ter_ntel" name="ter_ntel" [(ngModel)]="faclien.ter_ntel" type="text" class="form-control" placeholder="Teléfono" readonly>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rad_nomr">Correo Electrónico</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-at"></i></span>
+                                </div>
+                            </div>
+                            <input id="ter_mail" name="ter_mail" [(ngModel)]="faclien.ter_mail" type="text" class="form-control" placeholder="Correo Electrónico" readonly>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rad_nomr">Categoría</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-angle-double-right"></i></span>
+                                </div>
+                            </div>
+                            <input id="afi_cate" name="afi_cate" [(ngModel)]="faclien.afi_cate" type="text" class="form-control" placeholder="Categoría" readonly>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rad_nomr">Celular</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-mobile-alt"></i></span>
+                                </div>
+                            </div>
+                            <input id="ter_celu" name="ter_celu" [(ngModel)]="faclien.ter_celu" type="text" class="form-control" placeholder="Celular" readonly>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="rad_nomr">Afiliado</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-user-circle"></i></span>
+                                </div>
+                            </div>
+                            <input type="text" id="afi_esta" name="afi_esta" [(ngModel)]="faclien.afi_esta" class="form-control" placeholder="Afiliado" readonly>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-3">
+                        <div class="input-group">
+                            <textarea style="height: 200px;" type="text" placeholder="Ley de Protección de Datos" class="form-control" multiple readonly name="par_ptda" id="par_ptda" [(ngModel)]="faclien.par_ptda"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12 mt-2">
+                        <div class="input-group mt-2">
+                            <span class="switch">
+                                <input type="checkbox" [(checked)]="faclien.ter_audp"  (change)= "faclien.ter_audp=!faclien.ter_audp" name="chkAutoriza" class="switch switch-sm disabled" id="switch-id-autoriza">
+                                <label for="switch-id-autoriza">Autoriza Protección de Datos</label>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8 col-md-12 col-xs-12 col-sm-12 mt-2">
+                        <div class="input-group mt-2">
+                            <span class="switch">
+                                <input type="checkbox" name="chkRevoca" class="switch switch-sm disabled" id="switch-id-revoca">
+                                <label for="switch-id-revoca">REVOCACIÓN DE AUTORIZACIÓN ( Si no desea seguir recibiendo información )</label>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-2">
+                        <hr>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 mt-2">
+                        <label for="pro_locr">Servicio</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-server"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control">
+                                <option *ngFor="let serv of GnItemsIteServ" [value]="serv.ite_codi"  >{{serv.ite_codi + ' - ' + serv.ite_nomb | titlecase}}</option>
+                                <option value="">Seleccione</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 mt-2">
+                        <label for="pro_locr">Modo Recolección</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="far fa-handshake"></i></span>
+                                </div>
+                            </div>
+                            <select class="form-control">
+                                <option *ngFor="let fore of GnItemsIteFoRe" [value]="fore.ite_codi"  >{{fore.ite_codi + ' - ' + fore.ite_nomb | titlecase}}</option>
+                                <option value="">Seleccione</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row mt-3">
+
+                    <div class="col-lg-6 col-md-6 col-xs-6 col-sm-1 pt-3 text-right">
+                        <button type="submit" class="btn btn-success btn-md">
+                        <span><i class="fas fa-search"></i> &nbsp;Siguiente</span>
+                      </button>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-xs-6 col-sm-1 pt-3 text-left">
+                        <button type="submit" class="btn btn-primary btn-md">
+                      <span><i class="fas fa-eraser"></i> &nbsp;Cancelar</span>
+                    </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<app-alert-message [message]="msg"></app-alert-message>
+
+<app-new-table-search Title="Modalidad Vivienda" [displayedColumns]="['TIP_CODI', 'TIP_NOMB']" [showColumns]="['Código', 'Nombre']" btnModalQb="btnTipoDocto" ModalQb="modalTipoDocto" #modalTipoDocto></app-new-table-search>
