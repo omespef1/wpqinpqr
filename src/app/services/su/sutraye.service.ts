@@ -14,7 +14,7 @@ export class SutrayeService {
    }
 
 GetSuTraye(emp_codi:number,afi_cont:number){
- this._comu.GetTransaction<ToTransactionSafe<sutraye>>(`api/SuTraye?emp_codi=${emp_codi}&afi_cont=${afi_cont}`);
+ return this._comu.GetTransaction<ToTransactionSafe<sutraye>>(`api/SuTraye?emp_codi=${emp_codi}&afi_cont=${afi_cont}`);
 }
 
 }

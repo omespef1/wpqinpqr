@@ -39,6 +39,7 @@ import { TableSearchGenericComponent } from './components/tools/table-search-gen
 import { ModalDoctosComponent } from './components/rn/rnradic/modal-doctos/modal-doctos.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 
+
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -75,7 +76,7 @@ export const MY_FORMATS = {
     EerelesComponent,
     RnradicComponent,
     TableSearchGenericComponent,
-    ModalDoctosComponent,
+    ModalDoctosComponent
     // ToastComponent
   ],
   imports: [

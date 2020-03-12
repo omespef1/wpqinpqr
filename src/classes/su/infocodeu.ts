@@ -1,0 +1,28 @@
+export class infocodeu {
+    cod_dnum:string;
+    tip_codi:number;
+    tip_nomb:string;
+    cod_sexo:string;
+    cod_nom1:string;
+    cod_nom2:string;
+    cod_ape1:string;
+    cod_ape2:string;
+    cod_estc:string;
+    cod_prof:string;
+    cod_nest:string;
+    cod_fnac:Date;
+    mun_codn:number;
+    mun_conn:string;
+    cod_fecc:Date;
+    mun_cocc:number;
+    mun_cocn:string;
+    cod_tviv:string;
+    cod_dirr:string;
+    cod_barr:string;
+    mun_codr:number;
+    mun_codc:string;
+    cod_telr:string;
+    cod_celu:string;
+    cod_ocui:string;
+    cod_estr:string;
+}

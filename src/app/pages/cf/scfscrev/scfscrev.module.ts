@@ -4,10 +4,8 @@ import { CommonModule } from '@angular/common';
 import { ScfscrevRoutingModule } from './scfscrev-routing.module';
 import { ScfscrevComponent } from './scfscrev.component';
 import { FormsModule } from "@angular/forms";
-import { MatInputModule, MatTableModule, MatPaginatorModule, MatDatepickerModule, MatNativeDateModule } from "@angular/material";
-import { NgxPaginationModule } from "ngx-pagination";
-import { NewTableSearchComponent } from "src/app/components/tools/new-table-search/new-table-search.component";
-
+import { SharedModule } from '../../../shared/shared.module';
+import { ToastModule } from '../../../shared/toast/toast.module';
 
 
 
@@ -16,13 +14,8 @@ import { NewTableSearchComponent } from "src/app/components/tools/new-table-sear
     CommonModule,
     ScfscrevRoutingModule,
     FormsModule,
-    MatInputModule,
-    MatTableModule,
-    MatPaginatorModule,
-    NgxPaginationModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
+    SharedModule,ToastModule
   ],
-   declarations: [ScfscrevComponent, NewTableSearchComponent]
+   declarations: [ScfscrevComponent]
 })
 export class ScfscrevModule { }

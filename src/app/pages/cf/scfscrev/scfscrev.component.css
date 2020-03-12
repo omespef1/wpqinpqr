@@ -131,11 +131,13 @@
     margin-left: 1rem;
 }
 
-body {
-    padding: 1rem;
-}
+
 
 label {
     font-weight: bold;
     color:gray;
+}
+
+.completed {
+    color:#28A745;
 }

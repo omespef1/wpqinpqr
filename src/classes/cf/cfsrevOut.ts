@@ -11,6 +11,7 @@ export class cfscrevOut {
   afi_cate: string;
   tip_nomb:string;
   dcl_icac:number;
+  afi_cont:number;
   
 
   inf_tasa: string;
@@ -31,27 +32,7 @@ export class cfscrevOut {
   ifl_sala: string;
   ifl_carg: string;
 
-  ifc_noin: string;
-  ifc_tido: string;
-  ifc_gene: string;
-  ifc_pino: string;
-  ifc_seno: string;
-  ifc_piap: string;
-  ifl_seap: string;
-  ifl_prof: string;
-  ifl_nies: string;
-  ifl_fena: Date;
-  ifl_cina: string;
-  ifl_feex: Date;
-  ifl_ciex: string;
-  ifl_tivi: string;
-  ifl_dire: string;
-  ifl_barr: string;
-  ifl_cire: string;
-  ifl_tfre: string;
-  ifl_noce: string;
-  ifl_estra: number;
-  ifl_ocup: string;
+
 
   ilc_noem: string;
   ilc_tele: string;
