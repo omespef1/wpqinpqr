@@ -89,6 +89,34 @@
                         <textarea type="text" class="form-control" id="rad_obse" name="rad_obse" [(ngModel)]="radic.rad_obse" #rad_obse="ngModel" [required]="SRN000002 === 'S'"></textarea>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-4">
+                        <div class="btn-group">
+                            <label class="btn btn-primary label-button">
+                                <input type="file" class="btn btn-primary" ng2FileSelect [uploader]="uploader" multiple
+                                    placeholder="Subir archivos" style="display:none" accept=".pdf,.doc,.docx,.jpg,.png,.xls,.xlsx" />
+                                <i class="fas fa-file-upload"></i> &nbsp;Agregar adjuntos
+                            </label>
+                            <button type="button" [class]="!uploader.queue.length?'btn btn-outline-danger':'btn btn-danger'" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                                <span><i class="fas fa-trash"></i></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-2" *ngIf=" uploader.queue.length > 0">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        <div class="input-group">
+                            <h4>Total de archivos: {{ uploader?.queue?.length }}</h4>
+                            <ul>
+                                <li *ngFor="let item of uploader.queue">
+                                    {{ item?.file?.name }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="container mt-3 mb-3">
@@ -292,7 +320,10 @@
                                                 <span><i class="fas fa-hashtag"></i></span>
                                             </div>
                                         </div>
-                                        <input id="rad_dire" name="rad_dire" [(ngModel)]="radic.rad_dire" [required]="SRN000002 === 'S'" #rad_dire="ngModel" type="text" class="form-control" placeholder="Dirección">
+                                        <input id="rad_dire" name="rad_dire" [(ngModel)]="radic.rad_dire" readonly [required]="SRN000002 === 'S'" #rad_dire="ngModel" type="text" class="form-control" placeholder="Dirección">
+                                        <button type="button" class="btn btn-primary" (click)="lupaDirecciones()">
+                                            <span><i class="fas fa-search"></i></span>
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -586,7 +617,7 @@
 
 <app-alert [message]="msg"></app-alert>
 
-<app-modal title="Seleccione empresa" (accept)="modal.dismiss();Load()">
+<app-modal title="Seleccione empresa" (accept)="modal.dismiss();Load();loadAfiliados();">
     <div class="form-group">
         <label for="emp_codi" class="col-form-label"></label>
         <select class="form-control" id="usu_coda" name="usu_coda" [(ngModel)]="radic.emp_codi" required #usu_coda="ngModel">
@@ -638,3 +669,5 @@
     </table>
 
 </app-modal-doctos>
+
+<app-address-tool (myAddress)="getDireccionEmitt($event)"></app-address-tool>

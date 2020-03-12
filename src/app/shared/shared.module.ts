@@ -27,13 +27,18 @@ import { NgxPaginationModule } from 'ngx-pagination';
     GroupByPipe,
     NewTableSearchComponent
   ],
-  exports: [ GnempreComponent, AlertMessageComponent, PieChartComponent, GroupByPipe, NewTableSearchComponent,
+  exports: [ GnempreComponent,
+    AlertMessageComponent,
+    PieChartComponent,
+    GroupByPipe,
+    NewTableSearchComponent,
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
-    NgxPaginationModule]
+    NgxPaginationModule
+  ]
 })
 export class SharedModule { }

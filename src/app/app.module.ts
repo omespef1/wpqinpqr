@@ -1,48 +1,48 @@
-import { BrowserModule,Title } from '@angular/platform-browser';
-import { NgModule  } from '@angular/core';
+import { BrowserModule, Title } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 // Services
-import {ComunicationsService} from '../services/comunications.service';
+import { ComunicationsService } from '../services/comunications.service';
 import { ConsultaComponent } from './components/consulta/consulta.component';
 import { CreacionComponent } from './components/creacion/creacion.component';
 // RUTAS
-import {app_routing} from './app.routes';
+import { app_routing } from './app.routes';
 import { AlertComponent } from './components/alert/alert.component';
+
 import { SocoxcnComponent } from './components/so_socio/socoxcn/socoxcn.component';
 import { EstadosPipe } from './pipes/estados.pipe';
 import { EccotizComponent } from './components/ec/eccotiz/eccotiz.component';
 import { CtpropoComponent } from './components/ct/ctpropo/ctpropo.component';
 import { CtconsuComponent } from './components/ct/ctconsu/ctconsu.component';
 // Angular material
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule, MatFormFieldModule, MatInputModule, MatTableModule, MatPaginatorModule} from '@angular/material';
-import {MomentDateAdapter} from '@angular/material-moment-adapter';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MatFormFieldModule, MatInputModule, MatTableModule, MatPaginatorModule } from '@angular/material';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { TarjetasPipe } from './pipes/socoxcn/tarjetas.pipe';
 import { EnvServiceProvider } from './env.service.provider';
 import { ConfirmDialogComponent } from './components/dialogs/confirm-dialog/confirm-dialog.component';
-import {ModalComponent} from './components/dialogs/modal/modal.component';
+import { ModalComponent } from './components/dialogs/modal/modal.component';
 import { TableSearchComponent } from './components/tools/table-search/table-search.component';
 import { AlertDialogComponent } from './components/dialogs/alert-dialog/alert-dialog.component';
 import { WgnfpassComponent } from './pages/gn/wgnfpass/wgnfpass.component';
 import { EerelesComponent } from './components/ee/eereles/eereles.component';
-import { RnradicComponent } from './components/rn/rnradic/rnradic.component';
-// import { ToastComponent } from "./components/toast/toast/toast.component";
+
 // plugins
 import { FileUploadModule } from 'ng2-file-upload';
 import { TableSearchGenericComponent } from './components/tools/table-search-generic/table-search-generic.component';
 import { ModalDoctosComponent } from './components/rn/rnradic/modal-doctos/modal-doctos.component';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { AddressToolComponent } from './components/tools/address-tool/address-tool.component';
+import { RnradicComponent } from './components/rn/rnradic/rnradic.component';
 
 
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-
 
 export const MY_FORMATS = {
   parse: {
@@ -74,34 +74,35 @@ export const MY_FORMATS = {
     CtpropoComponent,
     CtconsuComponent,
     EerelesComponent,
-    RnradicComponent,
     TableSearchGenericComponent,
-    ModalDoctosComponent
+    ModalDoctosComponent,
+    AddressToolComponent,
+    RnradicComponent
     // ToastComponent
   ],
   imports: [
     FormsModule,                               // <========== Add this line!
     BrowserModule,
     NgxPaginationModule,
-  NgxSpinnerModule,
-      HttpClientModule,
-      AngularFontAwesomeModule,
-      app_routing,
-      BrowserAnimationsModule,
-      MatDatepickerModule,
-      MatNativeDateModule,
-      MatFormFieldModule,
-      MatInputModule,
-      MatTableModule,
-      MatPaginatorModule,
-      FileUploadModule,
-      BrowserModule,
-      // NgbModule
+    NgxSpinnerModule,
+    HttpClientModule,
+    AngularFontAwesomeModule,
+    app_routing,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatPaginatorModule,
+    FileUploadModule,
+    BrowserModule
+    // NgbModule
   ],
   providers: [
-     {provide: MAT_DATE_LOCALE, useValue: 'es-ES'},
-     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-   {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     ComunicationsService,
     AlertComponent,
     MatNativeDateModule,
@@ -110,8 +111,10 @@ export const MY_FORMATS = {
     ConfirmDialogComponent,
     ModalComponent,
     TableSearchComponent,
-    ModalDoctosComponent
+    ModalDoctosComponent,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {
+
+}

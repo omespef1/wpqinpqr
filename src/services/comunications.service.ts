@@ -12,7 +12,7 @@ export class ComunicationsService {
 
   Get(urlController: string, emp_codi = 0) {
     let url = `${this.env.apiUrl}${urlController}`;
-    url += `&emp_codi=${emp_codi}`;    
+    url += `&emp_codi=${emp_codi}`;
     return this.http.get(url);
   }
   GetTransaction<T>(urlController: string, emp_codi: number = 0) {

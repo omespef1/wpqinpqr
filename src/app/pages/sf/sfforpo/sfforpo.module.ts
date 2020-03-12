@@ -7,7 +7,6 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatDatepickerModule, MatNativeDateModule, MatFormFieldModule,
           MatInputModule, MatTableModule, MatPaginatorModule } from '@angular/material';
-// import { NewTableSearchComponent } from 'src/app/components/tools/new-table-search/new-table-search.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import * as $ from 'jquery';
@@ -25,15 +24,12 @@ const routes: Routes = [
     FormsModule,
     RouterModule.forChild(routes),
     NgxSpinnerModule,
-    SharedModule    
+    SharedModule
   ],
   declarations: [
-    SfforpoComponent,
-    // NewTableSearchComponent
+    SfforpoComponent
   ],
   exports: [
-    // SharedModule
-    // NewTableSearchComponent
   ]
 })
 export class SfforpoModule { }

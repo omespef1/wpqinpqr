@@ -1,4 +1,4 @@
- .switch {
+.switch {
     font-size: 1rem;
     position: relative;
 }
@@ -131,13 +131,39 @@
     margin-left: 1rem;
 }
 
-
-
-label {
-    font-weight: bold;
-    color:gray;
+body {
+    padding: 1rem;
 }
 
-.completed {
-    color:#28A745;
+.dropdown-menu {
+    margin-top: .75rem;
+}
+
+.img-fluid {
+    height: auto;
+}
+
+.area {
+    width: 100%;
+    padding: 15px;
+    margin: 15px;
+    background-color: transparent;
+}
+
+#dropZone {
+    border: 2px dashed black;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 50px;
+    text-align: center;
+    font: 21pt bold arial;
+    color: #bbb;
+}
+
+.drop-file-over {
+    background: #333;
+}
+
+.label-button {
+    margin-bottom: 0px;
 }
