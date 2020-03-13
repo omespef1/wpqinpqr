@@ -17,7 +17,7 @@ import { cfscrevOut } from "src/classes/cf/cfsrevOut";
 import { rtrtmcl } from "../../../../classes/cr/crrtmcl";
 import { calicre } from "src/classes/ca/calicre";
 import { SutrayeService } from "../../../services/su/sutraye.service";
-import { suafili } from "../../../../classes/su/suafili";
+import { suafili2 } from "../../../../classes/su/suafili";
 import { sutraye } from "../../../../classes/su/sutraye";
 import { infocodeu } from "src/classes/su/infocodeu";
 import { CfcodeuService } from "../../../services/cf/cfcodeu.service";

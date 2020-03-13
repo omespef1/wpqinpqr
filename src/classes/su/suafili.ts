@@ -1,4 +1,4 @@
-export class suafili {
+export class suafili2 {
 
     afi_docu:string;
     tip_codi:number;
