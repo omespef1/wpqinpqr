@@ -55,7 +55,7 @@ export class ScfscrevComponent implements OnInit {
   
   
   // Variable de consulta para informacion básica del afiliado
-  suafili: suafili = new suafili();
+  suafili: suafili2 = new suafili2();
   // Variable de consulta para tasas
   cftasas: cftasas[] = [];
   // Variable de consulta para tasa seleccionada
