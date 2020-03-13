@@ -145,8 +145,10 @@ export class RnradicComponent implements OnInit {
     this.gnmunic = [];
     this.gnlocal = [];
     this.gnbarri = [];
-    this.radic.rad_tdat = 'N';
     this.sumpare = [];
+    this.Load();
+    this.radic.rad_tdat = 'N';
+    this.uploader.clearQueue();
     this.selectedPare = new SumPare();
    }
 
@@ -158,13 +160,12 @@ export class RnradicComponent implements OnInit {
 
           const rad_cont: number = resp.objTransaction.rad_cont;
 
-          if (rad_cont !== 0)
+          if (rad_cont !== 0) {
             this.saveAdjuntos(rad_cont);
-
-          this.showAlertMesssage('Documento guardado correctamente.');
-          this.ngOnInit();
-          this.clear();
-          form.reset();
+            this.showAlertMesssage('Documento guardado correctamente.');
+            this.clear();
+            form.reset();
+          }
         } else {
           this.showAlertMesssage(resp.txtRetorno);
           this.spinner.hide();
@@ -195,8 +196,6 @@ export class RnradicComponent implements OnInit {
       this._comu.Post('api/uploadAttachment/subirArchivoAdjunto', formData).subscribe((respAdj: any) => {
         if (respAdj.retorno === 1)
           this.showAlertMesssage(`Se produjo un error subiendo el archivo. Intentelo nuevamente : ${respAdj.txtRetorno}`);
-        else
-          this.alert.showHtmlMessage(respAdj.objTransaction.msg);
       }, err => { console.log(err); });
     }
 
