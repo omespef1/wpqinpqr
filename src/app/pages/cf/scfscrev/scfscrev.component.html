@@ -261,7 +261,7 @@
                         <span><i class="fas fa-chart-line"></i></span>
                       </div>
                     </div>
-                    <input name="inf_mcre" required [(ngModel)]="modalidadInfoCred.mod_nomb" (ngModelChange)="searchLine($event) "
+                    <input name="inf_mcre" required [(ngModel)]="modalidadInfoCred.mod_nomb" (ngModelChange)="searchLine() "
                       type="text" data-toggle="tooltip" data-placement="bottom"  class="form-control" disabled>
                     <button type="button" class="btn btn-primary" (click)="showCfModcrModal()">
                       <span><i class="fas fa-search"></i></span>
@@ -337,7 +337,7 @@
                 </div>
 
                 <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
-                  <button (click)="GoTab(2)" [disabled]="!infoCred.form.valid" id="nextInfoCre" type="button" class="btn btn-success mt-3">
+                  <button (click)="trabaja?GoTab(2):GoTab(3)" [disabled]="!infoCred.form.valid" id="nextInfoCre" type="button" class="btn btn-success mt-3">
                     &nbsp;Continuar <i class="fas fa-arrow-circle-right"></i></button>
                 </div>
               </div>
