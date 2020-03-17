@@ -615,8 +615,6 @@
 <app-table-search-generic Title="Número de Documento" [displayedColumns]="['TIP_NOMB', 'AFI_DOCU', 'AFI_NOM1' , 'AFI_NOM2', 'AFI_APE1', 'AFI_APE2', 'APO_CODA' , 'APO_RAZS']" [showColumns]="['Tipo Documento', 'Documento', 'Primer Nombre', 'Segundo Nombre', 'Primer Apellido', 'Segundo Apellido','Aportante', 'Razon Social']"
     (rowCLick)="setDocumento($event)" btnModalQb="btnDocumento" ModalQb="modalDocumento" #modalDocumento></app-table-search-generic>
 
-<app-alert [message]="msg"></app-alert>
-
 <app-modal title="Seleccione empresa" (accept)="modal.dismiss();Load();loadAfiliados();">
     <div class="form-group">
         <label for="emp_codi" class="col-form-label"></label>
@@ -670,4 +668,6 @@
 
 </app-modal-doctos>
 
+
 <app-address-tool (myAddress)="getDireccionEmitt($event)"></app-address-tool>
+<app-alert [message]="msg"></app-alert>

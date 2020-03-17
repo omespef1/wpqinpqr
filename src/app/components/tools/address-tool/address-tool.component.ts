@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild , EventEmitter, Output} from '@angular/core';
 import { ComunicationsService } from 'src/services/comunications.service';
 import { GnNomdi } from 'src/classes/gn/gnnomdi';
-import { AlertComponent } from '../../alert/alert.component';
 
 @Component({
   selector: 'app-address-tool',
@@ -10,7 +9,6 @@ import { AlertComponent } from '../../alert/alert.component';
 })
 export class AddressToolComponent implements OnInit {
 
-  @ViewChild(AlertComponent) Alert: AlertComponent;
   @Output() myAddress: EventEmitter<string>;
 
   dataTemp = [];
@@ -25,8 +23,8 @@ export class AddressToolComponent implements OnInit {
   public nom_edtn = '';
   public countLetr = 0;
   msg = '';
-  isError= false;
-  messageErrorAddres ="";
+  isError = false;
+  messageErrorAddres = '';
 
 
   constructor(private _comu: ComunicationsService) {
@@ -79,7 +77,7 @@ export class AddressToolComponent implements OnInit {
   }
 
   showAlertMesssage(msg: string) {
-   this.isError=true;
+   this.isError = true;
    this.messageErrorAddres = msg;
   }
 

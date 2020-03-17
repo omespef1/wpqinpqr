@@ -15,8 +15,6 @@ safeHtml: SafeHtml;
   }
 
   showMessage(msg: string) {
-    this.message = msg;
-    console.log(this.message);
     document.getElementById('btnModal').click();
   }
   showHtmlMessage(msg: string) {
@@ -24,7 +22,6 @@ safeHtml: SafeHtml;
     document.getElementById('btnModal').click();
   }
   show() {
-    console.log(this.message);
     document.getElementById('btnModal').click();
   }
 }

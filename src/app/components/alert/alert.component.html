@@ -16,9 +16,6 @@
             </div>
             <div *ngIf="safeHtml" class="modal-body" [innerHTML]="safeHtml">
             </div>
-
-            {{message|json}}
-
             <div *ngIf="message!=''" class="modal-body">
                 <p>{{message}}</p>
             </div>
