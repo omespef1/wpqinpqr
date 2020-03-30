@@ -1783,7 +1783,7 @@
                                                                 <span><i class="fas fa-money-check-alt"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input type="text" name="dfo_vtvi" class="form-control" placeholder="Valor Total Vivienda" autocomplete="off">
+                                                        <input type="text" name="dfo_vtvi" [(ngModel)]="forpo.InfoHogar.dfo_vtvi" class="form-control" placeholder="Valor Total Vivienda" autocomplete="off">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1811,7 +1811,7 @@
                                                                 <span><i class="fas fa-money-bill-alt"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input type="text" name="dfo_vpre" [(ngModel)]="forpo.InfoHogar.dfo_vpre" class="form-control" placeholder="Ahorro Previo" autocomplete="off">
+                                                        <input type="text" name="dfo_vpre" [(ngModel)]="tAhorroPrevio" readonly class="form-control" placeholder="Ahorro Previo" autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
@@ -1822,18 +1822,18 @@
                                                                 <span><i class="fas fa-money-bill"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input type="text" name="dfo_vtvi" class="form-control" placeholder="Recursos Complementarios" autocomplete="off">
+                                                        <input type="text" name="tRecursosComp" [(ngModel)]="tRecursosComp" readonly class="form-control" placeholder="Recursos Complementarios" autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
-                                                    <label for="pro_codi">Valor Total Solución</label>
+                                                    <label for="pro_codi">Subsidio Solicitado</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <div class="input-group-text">
                                                                 <span><i class="fas fa-hand-holding-usd"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input type="text" name="dfo_vtvi" class="form-control" placeholder="Valor Total Solución" autocomplete="off">
+                                                        <input type="text" name="dfo_vsol" [(ngModel)]="forpo.InfoHogar.dfo_vsol" readonly class="form-control" placeholder="Valor Total Solución" autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
@@ -1844,7 +1844,7 @@
                                                                 <span><i class="fas fa-funnel-dollar"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input type="text" name="dfo_vtvi" class="form-control" placeholder="Total Valor" autocomplete="off">
+                                                        <input type="text" name="tValorViviend" [(ngModel)]="tValorViviend" readonly class="form-control" placeholder="Total Valor" autocomplete="off">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1852,7 +1852,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 

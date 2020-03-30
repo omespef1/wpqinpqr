@@ -140,12 +140,12 @@ export class RnradicComponent implements OnInit {
     this.radic.rad_muni = 0;
     this.radic.rad_loca = 0;
     this.radic.rad_barr = 0;
-    this.gnregio = [];
-    this.gndepar = [];
-    this.gnmunic = [];
-    this.gnlocal = [];
-    this.gnbarri = [];
-    this.sumpare = [];
+    // this.gnregio = [];
+    // this.gndepar = [];
+    // this.gnmunic = [];
+    // this.gnlocal = [];
+    // this.gnbarri = [];
+    // this.sumpare = [];
     this.Load();
     this.radic.rad_tdat = 'N';
     this.uploader.clearQueue();
@@ -376,6 +376,20 @@ export class RnradicComponent implements OnInit {
     this.radic.apo_coda = rowSelected.APO_CODA;
     this.radic.apo_razs = rowSelected.APO_RAZS;
     this.radic.afi_tele = rowSelected.AFI_TELE;
+
+    if (this.cra_prim !== 'S') {
+      this.radic.rad_pais = 0;
+      this.filtrarRegiones('', 0);
+      this.radic.rad_regi = 0;
+      this.filtrarDeptos('', 0, 0);
+      this.radic.rad_depa = 0;
+      this.filtrarMunic('', 0, 0, 0);
+      this.radic.rad_muni = 0;
+      this.filtrarLocal('', 0, 0, 0, 0);
+      this.radic.rad_loca = 0;
+      this.filtrarBarri('', 0, 0, 0, 0, 0);
+      this.radic.rad_barr = 0;
+    }
   }
 
   setGruRadic(rowSelected: any) {
@@ -491,11 +505,12 @@ cleanDataForm() {
   this.radic.dsu_tele = '';
   this.radic.rad_dire = '';
   this.radic.rad_emai = '';
-  this.gnregio = [];
-  this.gndepar = [];
-  this.gnmunic = [];
-  this.gnlocal = [];
-  this.gnbarri = [];
+  this.radic.rad_pais = 0;
+  this.radic.rad_regi = 0;
+  this.radic.rad_depa = 0;
+  this.radic.rad_muni = 0;
+  this.radic.rad_loca = 0;
+  this.radic.rad_barr = 0;
 }
   showAlertMesssage(msg: string) {
     this.msg = msg;

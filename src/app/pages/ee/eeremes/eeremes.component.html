@@ -13,7 +13,7 @@
             Ingrese por favor sus datos y seleccione el servicio a evaluar.
         </div>
         <div class="card-body">
-            <form>
+            <form #remesForm="ngForm">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                         <label for="con_cont">Tipo Documento</label>
@@ -40,7 +40,7 @@
                                     <span><i class="fas fa-hashtag"></i></span>
                                 </div>
                             </div>
-                            <input id="cli_coda" name="cli_coda" [(ngModel)]="faclien.cli_coda" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" autocomplete="off">
+                            <input id="cli_coda" name="cli_coda" [(ngModel)]="eereenc.cli_coda" required #cli_coda type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" autocomplete="off">
                             <button type="button" class="btn btn-primary" (click)="getInfoClien()">
                                 <span><i class="fas fa-search"></i></span>
                             </button>
@@ -146,21 +146,21 @@
 
                     <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12 mt-2">
                         <div class="input-group mt-2">
-                            <span class="switch">
-                                <input type="checkbox" [(checked)]="faclien.ter_audp"  (change)= "faclien.ter_audp=!faclien.ter_audp" name="chkAutoriza" class="switch switch-sm disabled" id="switch-id-autoriza">
+                            <span class="switch">                                
+                                <input type="checkbox" [disabled]="faclien.cli_coda === ''" [(checked)]="faclien.ter_audp"  (change)= "actualizarPolitica();faclien.ter_audp=!faclien.ter_audp" name="chkAutoriza" class="switch switch-sm disabled" id="switch-id-autoriza">
                                 <label for="switch-id-autoriza">Autoriza Protección de Datos</label>
                             </span>
                         </div>
                     </div>
 
-                    <div class="col-lg-8 col-md-12 col-xs-12 col-sm-12 mt-2">
+                    <!-- <div class="col-lg-8 col-md-12 col-xs-12 col-sm-12 mt-2">
                         <div class="input-group mt-2">
                             <span class="switch">
                                 <input type="checkbox" name="chkRevoca" class="switch switch-sm disabled" id="switch-id-revoca">
                                 <label for="switch-id-revoca">REVOCACIÓN DE AUTORIZACIÓN ( Si no desea seguir recibiendo información )</label>
                             </span>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-2">
                         <hr>
@@ -174,9 +174,9 @@
                                     <span><i class="fas fa-server"></i></span>
                                 </div>
                             </div>
-                            <select class="form-control">
-                                <option *ngFor="let serv of GnItemsIteServ" [value]="serv.ite_codi"  >{{serv.ite_codi + ' - ' + serv.ite_nomb | titlecase}}</option>
-                                <option value="">Seleccione</option>
+                            <select class="form-control" name="ree_serv" [(ngModel)]="eereenc.ree_serv" required #ree_serv="ngModel">
+                                <option value=undefined>Seleccione</option>
+                                <option *ngFor="let serv of GnItemsIteServ" [value]="serv.ite_codi"  >{{serv.ite_codi + ' - ' + serv.ite_nomb | titlecase}}</option>                                
                             </select>
                         </div>
                     </div>
@@ -188,9 +188,9 @@
                                     <span><i class="far fa-handshake"></i></span>
                                 </div>
                             </div>
-                            <select class="form-control">
-                                <option *ngFor="let fore of GnItemsIteFoRe" [value]="fore.ite_codi"  >{{fore.ite_codi + ' - ' + fore.ite_nomb | titlecase}}</option>
-                                <option value="">Seleccione</option>
+                            <select class="form-control" name="ree_more" [(ngModel)]="eereenc.ree_more" required #ree_more="ngModel">
+                                <option value=undefined>Seleccione</option>
+                                <option *ngFor="let fore of GnItemsIteFoRe" [value]="fore.ite_codi"  >{{fore.ite_codi + ' - ' + fore.ite_nomb | titlecase}}</option>                                
                             </select>
                         </div>
                     </div>
@@ -198,27 +198,23 @@
                 </div>
 
                 <div class="row mt-3">
-
                     <div class="col-lg-6 col-md-6 col-xs-6 col-sm-1 pt-3 text-right">
-                        <button type="submit" class="btn btn-success btn-md">
+                        <button (click)="insertInfoMedicion();" class="btn btn-success btn-md" [disabled]="!remesForm.form.valid" [routerLink]="['/eereles']" [queryParams]="{ rel_serv: revEncode(eereenc.ree_serv), emp_codi: revEncode(102)}">
                         <span><i class="fas fa-search"></i> &nbsp;Siguiente</span>
                       </button>
                     </div>
 
                     <div class="col-lg-6 col-md-6 col-xs-6 col-sm-1 pt-3 text-left">
-                        <button type="submit" class="btn btn-primary btn-md">
+                        <button type="submit" class="btn btn-primary btn-md" (click)='clearForm();'>
                       <span><i class="fas fa-eraser"></i> &nbsp;Cancelar</span>
                     </button>
                     </div>
-
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-
-
 <app-alert-message [message]="msg"></app-alert-message>
 
-<app-new-table-search Title="Modalidad Vivienda" [displayedColumns]="['TIP_CODI', 'TIP_NOMB']" [showColumns]="['Código', 'Nombre']" btnModalQb="btnTipoDocto" ModalQb="modalTipoDocto" #modalTipoDocto></app-new-table-search>
+<app-new-table-search Title="Tipo de Documento" [displayedColumns]="['TIP_CODI', 'TIP_NOMB']" [showColumns]="['Código', 'Nombre']" btnModalQb="btnTipoDocto" ModalQb="modalTipoDocto" #modalTipoDocto></app-new-table-search>

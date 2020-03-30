@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ComunicationsService } from '../../../services/comunications.service';
 import { ToTransaction } from 'src/classes/gn/toTransaction';
+import { Eeremes } from "src/classes/ee/eeremes";
+import { Eereenc } from "src/classes/ee/eereenc";
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +20,19 @@ export class EeremesService {
   }
 
   loadServiciosEncuesta() {
-    return this._comu.GetTransaction<ToTransaction>(`api/GnItems?tit_cont=546`);
+    return this._comu.GetTransaction<any>(`api/GnItems?tit_cont=546`);
   }
 
   loadMetodosRecoleccion() {
-    return this._comu.GetTransaction<ToTransaction>(`api/GnItems?tit_cont=547`);
+    return this._comu.GetTransaction<any>(`api/GnItems?tit_cont=547`);
   }
 
+  saveInfoMedicion(remes: Eereenc) {
+    // tslint:disable-next-line:max-line-length
+    return this._comu.PostTransaction<ToTransaction>(`/api/EeRemes/EeRemesSaveInfo`, remes);
+  }
+
+  actualizarPolitica(cli_coda: string) {
+    return this._comu.GetTransaction<any>(`api/EeRemes/updateTratamiento?cli_coda=${cli_coda}`);
+  }
 }

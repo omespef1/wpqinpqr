@@ -6,6 +6,8 @@ import { AlertMessageComponent } from 'src/app/components/dialogs/alert-message/
 import { Eeremes } from 'src/classes/ee/eeremes';
 import { ToTransaction } from 'src/classes/gn/toTransaction';
 import { gnItem } from 'src/classes/models';
+import { Eereenc } from 'src/classes/ee/eereenc';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-eeremes',
@@ -20,12 +22,14 @@ export class EeremesComponent implements OnInit {
   @ViewChild(AlertMessageComponent) alert: AlertMessageComponent;
 
   public faclien: Eeremes = new Eeremes();
+  public eereenc: Eereenc = new Eereenc();
   public GnItemsIteServ: gnItem[];
   public GnItemsIteFoRe: gnItem[];
 
   constructor( private _service: EeremesService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
+    this.loadItems();
   }
 
   getTipoDocumento() {
@@ -39,13 +43,17 @@ export class EeremesComponent implements OnInit {
 
   getInfoClien() {
     this.spinner.show();
-    this._service.loadInfoFaClien(0, '88284896').subscribe(resp => {
-    if (resp.retorno === 0) {
-      this.faclien = resp.objTransaction;
-      this.loadItems();
-    } else
-      this.showAlertMesssage(resp.txtRetorno);
-    });
+
+    if (this.eereenc.cli_coda === '')
+      this.showAlertMesssage('Digite un número de documento.');
+    else {
+      this._service.loadInfoFaClien(0, this.eereenc.cli_coda).subscribe(resp => {
+        if (resp.retorno === 0)
+          this.faclien = resp.objTransaction;
+        else
+          this.showAlertMesssage(resp.txtRetorno);
+        });
+    }
     this.spinner.hide();
   }
 
@@ -55,28 +63,60 @@ export class EeremesComponent implements OnInit {
   }
 
   loadItems() {
-    this.loadServicios();
-    this.loadItems();
+     this.loadServicios();
+     this.loadMetodosRec();
   }
 
   loadServicios() {
     this.spinner.show();
     this._service.loadServiciosEncuesta().subscribe(resp => {
-    if (resp.retorno === 0)
-      this.GnItemsIteServ = resp.objTransaction;
-    else
-      this.showAlertMesssage(resp.txtRetorno);
+      this.GnItemsIteServ = resp;
     });
     this.spinner.hide();
   }
 
   loadMetodosRec() {
     this.spinner.show();
-    this._service.loadServiciosEncuesta().subscribe(resp => {
-    if (resp.retorno === 0)
-      this.GnItemsIteServ = resp.objTransaction;
-    else
-      this.showAlertMesssage(resp.txtRetorno);
+    this._service.loadMetodosRecoleccion().subscribe(resp => {
+      this.GnItemsIteFoRe = resp;
+    });
+    this.spinner.hide();
+  }
+
+  clearForm() {
+    this.faclien = new Eeremes();
+    this.eereenc = new Eereenc();
+    this.loadItems();
+  }
+
+  revEncode(rev_cont: string) {
+    return btoa(rev_cont);
+  }
+
+  insertInfoMedicion(form: NgForm) {
+    this.topFunction();
+    this.spinner.show();
+    this._service.saveInfoMedicion(this.eereenc).subscribe(resp => {
+      if (resp.retorno === 0)
+       this.clearForm();
+      else
+        this.showAlertMesssage(resp.txtRetorno);
+    });
+    this.spinner.hide();
+  }
+
+  topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
+  actualizarPolitica() {
+    this.spinner.show();
+    this._service.actualizarPolitica(this.eereenc.cli_coda).subscribe(resp => {
+      if (resp.retorno === 0)
+       this.showAlertMesssage('Autorización de tratamiento de Datos Modificada Correctamente.');
+      else
+        this.showAlertMesssage(resp.txtRetorno);
     });
     this.spinner.hide();
   }

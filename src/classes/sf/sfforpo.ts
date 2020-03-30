@@ -75,6 +75,7 @@ export class InfoHogar {
     public dfo_vsol: number;
     public dfo_vpre: number;
     public dfo_vlot: number;
+    public dfo_vtvi: number;
     public dfo_tota = 0;
     public dfo_fesc: Date;
     public dfo_matr: string;

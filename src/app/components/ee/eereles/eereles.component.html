@@ -11,7 +11,7 @@
 
 <form #relesForm="ngForm" (ngSubmit)="PostEereles(relesForm)">
     <div class="container mb-5">
-        <div class="card card-gray">
+        <div class="card card-gray" *ngIf="inp_cont !== 0">
             <div class="card-header bg-primary text-white">Datos PQR</div>
             <div class="card-body">
                 <div class="row">

@@ -12,4 +12,9 @@ export class Eeremes {
     public afi_esta: string;
     public par_ptda: string;
     public ter_audp: boolean;
+
+    constructor() {
+        this.cli_coda = '';
+    }
 }
+

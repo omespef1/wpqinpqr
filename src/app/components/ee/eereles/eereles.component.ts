@@ -38,6 +38,8 @@ export class EerelesComponent implements OnInit {
   countEereles = 0;
   countEerelesMult = 0;
 
+  public rel_serv = 0;
+
   // tslint:disable-next-line:max-line-length
   constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer, private titleService: Title, private route: ActivatedRoute, private _confirm: ConfirmDialogComponent, private env: EnvService) {
   }
@@ -47,16 +49,17 @@ export class EerelesComponent implements OnInit {
       this.setTitle('Encuesta de Satisfacción');
       this.spinner.show();
       await this.GetParams();
-
-      if (this.inp_cont && this.emp_codi) {
+        if (this.inp_cont !== 0) {
         await this.LoadPqParam();
         await this.LoadInfoPqr();
 
         if (this.pqpar.rel_cont) {
           this.GetEeReles();
         }
+      } else {
+          await this.getRelContFromService();
+          await this.GetEeReles();
       }
-
     } catch (err) {
       this.showAlertMesssage(err);
     }
@@ -68,12 +71,10 @@ export class EerelesComponent implements OnInit {
 
       this.route.queryParamMap.subscribe(queryParams => {
 
-        if (queryParams.get('inp_cont') != null) {
+        if (queryParams.get('inp_cont') != null)
           this.inp_cont = Number(atob(queryParams.get('inp_cont')));
-        } else {
-          this.showAlertMesssage('Parámetro Número de PQR no enviado');
-          return;
-        }
+        else
+          this.rel_serv = Number(atob(queryParams.get('rel_serv')));
 
         if (queryParams.get('emp_codi') != null) {
           this.emp_codi = Number(atob(queryParams.get('emp_codi')));
@@ -99,19 +100,23 @@ export class EerelesComponent implements OnInit {
 
   async LoadPqParam() {
     const info: any = <any>await this._comu.Get(`api/EeReles/LoadPqParam?emp_codi=${this.emp_codi}`).toPromise();
-    if (info.retorno === 0) {
+    if (info.retorno === 0)
       this.pqpar = info.objTransaction;
-    }
+  }
+
+  async getRelContFromService() {
+    // tslint:disable-next-line:max-line-length
+    const info: any = <any>await this._comu.Get(`api/EeRemes/loadInfoRelesService?rel_serv=${this.rel_serv}&emp_codi=${102}`).toPromise();    
+    if (info.retorno === 0)
+      this.pqpar = info.objTransaction;
   }
 
   async GetEeReles() {
     const info: any = <any>await this._comu.Get(`api/EeReles/EeRelesLoad?rel_cont=${this.pqpar.rel_cont}`).toPromise();
-    if (info.retorno === 0) {
+    if (info.retorno === 0)
       this.reles = info.objTransaction;
-      console.log(this.reles );
-    } else {
+    else
       this.showAlertMesssage(info.txtRetorno);
-    }
   }
 
   showAlertMesssage(msg: string) {

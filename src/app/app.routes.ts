@@ -28,7 +28,7 @@ const app_routes: Routes = [
    { path: 'eemedsa' , loadChildren : './pages/ee/eemedsa/eemedsa.module#EemedsaModule' },
 
     // { path: 'scfscrev' , loadChildren : './pages/cf/scfscrev/scfscrev.module#ScfscrevModule' },
-    { path: '**', pathMatch: 'full', redirectTo: 'eemedsa' }
+    { path: '**', pathMatch: 'full', redirectTo: 'eeremes' }
 ];
 
 export const app_routing = RouterModule.forRoot(app_routes);

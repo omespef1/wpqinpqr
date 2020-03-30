@@ -21,7 +21,7 @@
                                     <span><i class="fas fa-align-justify"></i></span>
                                 </div>
                             </div>
-                            <input id="gru_cont" name="gru_cont" [(ngModel)]="radic.gru_cont" readonly required #gru_cont="ngModel" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
+                            <input id="gru_codi" name="gru_codi" [(ngModel)]="radic.gru_codi" readonly required #gru_codi="ngModel" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
                             <input id="gru_nomb" name="gru_nomb" [(ngModel)]="radic.gru_nomb" readonly #gru_nomb="ngModel" type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
                             <button type="button" class="btn btn-primary" (click)="lupaGrupoRadicacion()">
                                 <span><i class="fas fa-search"></i></span>
@@ -477,7 +477,7 @@
                                                 <span><i class="fas fa-globe-americas"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="cra_prim !== 'S'" class="form-control" id="rad_pais" [value]="" name="rad_pais" [(ngModel)]="radic.rad_pais" (change)="filtrarRegiones('',radic.rad_pais)" required="0" #rad_pais="ngModel">                                            
+                                        <select class="form-control" id="rad_pais" [value]="" name="rad_pais" [(ngModel)]="radic.rad_pais" (change)="filtrarRegiones('',radic.rad_pais)" required="0" #rad_pais="ngModel">                                            
                                             <option *ngFor="let pais of gnpaise" [value]="pais.pai_codi">{{pais.pai_nomb | titlecase}}</option>
                                             <option value="">Seleccione</option>
                                           </select>
@@ -491,7 +491,7 @@
                                                 <span><i class="fas fa-flag"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnregio.length == 0 || cra_prim !== 'S'" [value]="" class="form-control" id="rad_regi" name="rad_regi" [(ngModel)]="radic.rad_regi" (change)="filtrarDeptos('',radic.rad_pais,radic.rad_regi)" required #rad_regi="ngModel">
+                                        <select [disabled]="gnregio.length == 0" [value]="" class="form-control" id="rad_regi" name="rad_regi" [(ngModel)]="radic.rad_regi" (change)="filtrarDeptos('',radic.rad_pais,radic.rad_regi)" required #rad_regi="ngModel">
                                             <option [value]="">Seleccione</option>
                                             <option *ngFor="let region of gnregio" [value]="region.reg_codi">{{region.reg_nomb | titlecase}}</option>                                           
                                         </select>
@@ -505,7 +505,7 @@
                                                 <span><i class="far fa-flag"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gndepar.length == 0 || cra_prim !== 'S'" [value]="" class="form-control" id="rad_depa" name="rad_depa" [(ngModel)]="radic.rad_depa" (change)="filtrarMunic('',radic.rad_pais,radic.rad_regi,radic.rad_depa)" required #rad_depa="ngModel">                                                
+                                        <select [disabled]="gndepar.length == 0" [value]="" class="form-control" id="rad_depa" name="rad_depa" [(ngModel)]="radic.rad_depa" (change)="filtrarMunic('',radic.rad_pais,radic.rad_regi,radic.rad_depa)" required #rad_depa="ngModel">                                                
                                                 <option *ngFor="let depto of gndepar" [value]="depto.dep_codi">{{depto.dep_nomb | titlecase}}</option>
                                                 <option value="">Seleccione</option>
                                         </select>
@@ -519,7 +519,7 @@
                                                 <span><i class="fas fa-city"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnmunic.length == 0 || cra_prim !== 'S'" [value]="" class="form-control" id="rad_muni" name="rad_muni" [(ngModel)]="radic.rad_muni" (change)="filtrarLocal('',radic.rad_pais,radic.rad_regi,radic.rad_depa,radic.rad_muni)" required #rad_muni="ngModel">                                       
+                                        <select [disabled]="gnmunic.length == 0" [value]="" class="form-control" id="rad_muni" name="rad_muni" [(ngModel)]="radic.rad_muni" (change)="filtrarLocal('',radic.rad_pais,radic.rad_regi,radic.rad_depa,radic.rad_muni)" required #rad_muni="ngModel">                                       
                                             <option *ngFor="let munic of gnmunic" [value]="munic.mun_codi">{{munic.mun_nomb | titlecase}}</option>
                                             <option value="">Seleccione</option>
                                         </select>
@@ -533,8 +533,7 @@
                                                 <span><i class="fas fa-map-pin"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnlocal.length == 0 || cra_prim !== 'S'" [value]="" class="form-control" id="rad_loca" name="rad_loca" [(ngModel)]="radic.rad_loca" (change)="filtrarBarri('',radic.rad_pais,radic.rad_regi,radic.rad_depa,radic.rad_muni,radic.rad_loca)"
-                                            required #rad_loca="ngModel">
+                                        <select [disabled]="gnlocal.length == 0" [value]="" class="form-control" id="rad_loca" name="rad_loca" [(ngModel)]="radic.rad_loca" (change)="filtrarBarri('',radic.rad_pais,radic.rad_regi,radic.rad_depa,radic.rad_muni,radic.rad_loca)" required #rad_loca="ngModel">
                                                 <option *ngFor="let local of gnlocal" [value]="local.loc_codi">{{local.loc_nomb | titlecase}}</option>
                                                 <option value="">Seleccione</option>
                                         </select>
@@ -548,7 +547,7 @@
                                                 <span><i class="fas fa-map-signs"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnbarri.length == 0 || cra_prim !== 'S'" [value]="" class="form-control" id="rad_barr" name="rad_barr" [(ngModel)]="radic.rad_barr" required #rad_loca="ngModel">                                                
+                                        <select [disabled]="gnbarri.length == 0" [value]="" class="form-control" id="rad_barr" name="rad_barr" [(ngModel)]="radic.rad_barr" required #rad_loca="ngModel">                                                
                                                 <option *ngFor="let barri of gnbarri" [value]="barri.bar_codi">{{barri.bar_nomb | titlecase}}</option>
                                                 <option value="">Seleccione</option>
                                         </select>

@@ -82,6 +82,10 @@ export class SfforpoComponent implements OnInit {
   viewDdforR = false;
   con_codi = 0;
 
+  tAhorroPrevio = 0;
+  tRecursosComp = 0;
+  tValorViviend = 0;
+
   constructor(private spinner: NgxSpinnerService, private sanitizer: DomSanitizer, private titleService: Title,
     private route: ActivatedRoute, private _gnempre: GnempreService, private _service: SfForpoService,
     private _serviceLoc: LocalizacionService) {
@@ -142,13 +146,13 @@ export class SfforpoComponent implements OnInit {
 
 
   PostForpo(form: NgForm) {
-  this.spinner.show();
   if (this.fovis.val_tdat)
     this.fovis.InfoAportante.for_tdat = 'S';
   else
     this.fovis.InfoAportante.for_tdat = 'N';
     this.forpo.InfoAportante = this.fovis;
     this.topFunction();
+    this.spinner.show();
     this._service.saveInfoFovis(this.forpo).subscribe(resp => {
       this.showAlertMesssage(resp.txtRetorno);
       if (resp.retorno === 0) {
@@ -189,6 +193,7 @@ export class SfforpoComponent implements OnInit {
   }
 
   setModalidad(rowSelected: any) {
+    debugger;
     this.InfoModvi.mod_cont = rowSelected.MOD_CONT;
     this.InfoModvi.mod_nomb = rowSelected.MOD_NOMB;
     this.InfoModvi.tco_codi = rowSelected.TCO_CODI;
@@ -761,6 +766,24 @@ export class SfforpoComponent implements OnInit {
         this.sfdforeA = new SfDfore();
         this.viewDdforA = false;
       }
+
+      this.setTotal();
+  }
+
+  setTotal() {
+
+    this.tAhorroPrevio = 0;
+    this.tRecursosComp = 0;
+    this.tValorViviend = 0;
+
+    for (let i = 0; i < this.forpo.Infodfore.length; i++) {
+      if ( this.forpo.Infodfore[i].dfo_tipo === 'A')
+        this.tAhorroPrevio +=  Number(this.forpo.Infodfore[i].dfo_sald);
+      else
+        this.tRecursosComp +=  Number(this.forpo.Infodfore[i].dfo_sald);
+    }
+
+    this.tValorViviend =  Number(this.tAhorroPrevio) + Number(this.tRecursosComp) + Number(this.forpo.InfoHogar.dfo_vsol);
   }
 
   addDdforA() {
@@ -788,6 +811,8 @@ export class SfforpoComponent implements OnInit {
         this.sfdforeR = new SfDfore();
         this.viewDdforR = false;
       }
+
+      this.setTotal();
   }
 
   addDdforR() {
