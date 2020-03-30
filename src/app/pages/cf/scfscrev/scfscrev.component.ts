@@ -7,7 +7,7 @@ import {
 } from "../../../../classes/gn/ToTransaction";
 import { Gnarbol } from "../../../../classes/gn/gnarbol";
 import { GnarbolService } from "../../../services/gn/gnarbol.service";
-import { NewTableSearchComponent } from '../../../components/tools/new-table-search/new-table-search.component';
+import { NewTableSearchComponent } from "../../../components/tools/new-table-search/new-table-search.component";
 import { CftasasService } from "../../../services/cf/cftasas.service";
 import { cftasas } from "src/classes/cf/cftasas";
 import { cfmodcr } from "../../../../classes/cf/cfmodcr";
@@ -32,7 +32,7 @@ import { cfrefen } from "../../../../classes/cf/cfrefen";
 import { gnItem } from "../../../../classes/models";
 import { GnitemsService } from "../../../services/gn/gnitems.service";
 import { CfscrevService } from "src/app/services/cf/cfscrev.service";
-import { ToastService } from '../../../services/utils/toast.service';
+import { ToastService } from "../../../services/utils/toast.service";
 
 @Component({
   selector: "app-scfscrev",
@@ -47,13 +47,13 @@ export class ScfscrevComponent implements OnInit {
   @ViewChild("modalDivPolInfCodRe")
   _modalDivPolInfCodRe: NewTableSearchComponent;
   @ViewChild("modalDivPolInfLab") _modalDivPolInfLab: NewTableSearchComponent;
-  @ViewChild("modalDivPolInfCodExp") _modalDivPolInfCodExp: NewTableSearchComponent;
-  @ViewChild("DivPolrRefPers")_modalDivPolrRefPers: NewTableSearchComponent;
-  @ViewChild("DivPolrRefFami")_modalDivPolrRefFami: NewTableSearchComponent;
-  @ViewChild("DivPolCiudNac")_DivPolCiudNac: NewTableSearchComponent;
-  @ViewChild("DivPolCiudInfEmpl")_DivIndEmpl: NewTableSearchComponent;
-  
-  
+  @ViewChild("modalDivPolInfCodExp")
+  _modalDivPolInfCodExp: NewTableSearchComponent;
+  @ViewChild("DivPolrRefPers") _modalDivPolrRefPers: NewTableSearchComponent;
+  @ViewChild("DivPolrRefFami") _modalDivPolrRefFami: NewTableSearchComponent;
+  @ViewChild("DivPolCiudNac") _DivPolCiudNac: NewTableSearchComponent;
+  @ViewChild("DivPolCiudInfEmpl") _DivIndEmpl: NewTableSearchComponent;
+
   // Variable de consulta para informacion básica del afiliado
   suafili: suafili2 = new suafili2();
   // Variable de consulta para tasas
@@ -103,14 +103,15 @@ export class ScfscrevComponent implements OnInit {
   refpers: cfrefen = new cfrefen();
   // Variable que contiene los items de parentezco
   itemsParentesco: gnItem[] = [];
-// Nombre de la ciudad seleccioanda en referencias personales
+  // Nombre de la ciudad seleccioanda en referencias personales
   mun_nombRP: string;
   // Variable de referencia familiar
-  mun_nombRF:string;
+  mun_nombRF: string;
   // Variable para controlar icono mostrado en boton enviar solicitud
-  sendingCred=false;
+  sendingCred = false;
 
-  reffami:cfrefen= new cfrefen();
+  reffami: cfrefen = new cfrefen();
+  cfrefen: cfrefen[] = [];
   constructor(
     private _suafili: SuafiliService,
     private _gnarbol: GnarbolService,
@@ -122,12 +123,9 @@ export class ScfscrevComponent implements OnInit {
     private _gntipdo: GntipdoService,
     private _gndivpo: GndivpoService,
     private _gnitems: GnitemsService,
-    private _cfscrev:CfscrevService,
-    private toastService:ToastService
+    private _cfscrev: CfscrevService,
+    private toastService: ToastService
   ) {}
-
-
-
 
   ngOnInit() {
     this.ReadSuAfili();
@@ -196,9 +194,7 @@ export class ScfscrevComponent implements OnInit {
     this._modalDivPolInfCodRe.render(this.divisionPolitica);
     this._modalDivPolInfCodRe.show();
   }
-  showDivIndEmpl(){
-
-  }
+  showDivIndEmpl() {}
   showDivisionRefPers() {
     console.log(this.divisionPolitica);
     this._modalDivPolrRefPers.render(this.divisionPolitica);
@@ -218,7 +214,7 @@ export class ScfscrevComponent implements OnInit {
     this._DivPolCiudNac.show();
   }
 
-  showDivisionDivIndEmpl(){
+  showDivisionDivIndEmpl() {
     this._DivIndEmpl.render(this.divisionPolitica);
     this._DivIndEmpl.show();
   }
@@ -237,7 +233,6 @@ export class ScfscrevComponent implements OnInit {
   SetCfTasas(row: any) {
     this.tasaInfoCred = row;
     this.searchLine();
-
   }
 
   SetCfModcr(row: any) {
@@ -270,31 +265,29 @@ export class ScfscrevComponent implements OnInit {
     this.codeudor.mun_cocc = row.mun_codi;
     this.informacionCodeudor.mun_cocn = row.mun_nomb;
   }
-  SetDivPolrRefPers(row:any){
+  SetDivPolrRefPers(row: any) {
     this.refpers.pai_codi = row.pai_codi;
     this.refpers.reg_codi = row.reg_codi;
     this.refpers.dep_codi = row.dep_codi;
     this.refpers.mun_codi = row.mun_codi;
     this.mun_nombRP = row.mun_nomb;
-
   }
-  SetDivPolrRefFami(row:any){
+  SetDivPolrRefFami(row: any) {
     this.reffami.pai_codi = row.pai_codi;
     this.reffami.reg_codi = row.reg_codi;
     this.reffami.dep_codi = row.dep_codi;
     this.reffami.mun_codi = row.mun_codi;
     this.mun_nombRF = row.mun_nomb;
-
   }
 
-  SetDivPolCiudNac(row:any){
+  SetDivPolCiudNac(row: any) {
     this.codeudor.pai_codn = row.pai_codi;
     this.codeudor.reg_codn = row.reg_codi;
     this.codeudor.dep_codn = row.dep_codi;
     this.codeudor.mun_codn = row.mun_codi;
     this.informacionCodeudor.mun_conn = row.mun_nomb;
   }
-  SetDivPolCiudInfEmpl(row:any){
+  SetDivPolCiudInfEmpl(row: any) {
     this.codeudor.pai_codc = row.pai_codi;
     this.codeudor.reg_codc = row.reg_codi;
     this.codeudor.dep_codc = row.dep_codi;
@@ -420,47 +413,51 @@ export class ScfscrevComponent implements OnInit {
     });
   }
 
-  SendRequest(){
-    this.sendingCred=true;
-    this.credito.emp_codi = this.emp_codi;    
+  SendRequest() {
+
+
+    //Construir el objeto del  codeudor con sus referencias
+    this.reffami.ref_tipo = "P";
+    this.refpers.ref_tipo = "F";
+    this.cfrefen.push(this.reffami);
+    this.cfrefen.push(this.refpers);
+    this.codeudor.referencias = this.cfrefen;
+    //Construirt el objeto del crédito
+    this.sendingCred = true;
+    this.credito.emp_codi = this.emp_codi;
     this.credito.cli_codi = this.suafili.cli_codi;
-  this.credito.tip_codi = this.suafili.tip_codi;
-  this.credito.arb_sucu = this.sucursalInfoBasica.arb_cont;
-  this.credito.scr_gene = this.suafili.afi_gene;
-  this.credito.scr_dire = this.suafili.afi_dire;
-  this.credito.scr_tele = this.suafili.afi_tele;
-  this.credito.scr_mail = this.suafili.afi_mail;
-  this.credito.lic_cont = this.lineaCred.lic_cont;
-  this.credito.scr_nent = this.informacionLaboral.apo_razs;
-  this.credito.scr_teem = Number(this.informacionLaboral.dsu_tele);
-  this.credito.scr_diem = this.informacionLaboral.dsu_dire;
-  this.credito.pai_codu = this.informacionLaboral.pai_codi;
-  this.credito.dep_codu = this.informacionLaboral.dep_codi;
-  this.credito.reg_codu = this.informacionLaboral.reg_codi;
-  this.credito.mun_codu = this.informacionLaboral.mun_codi;
-  this.credito.scr_sala = this.informacionLaboral.tra_salb;
-  this.credito.scr_care = this.informacionLaboral.itn_carg;
-    this._cfscrev.SetCfScrev(this.credito).subscribe(resp=>{
-     this.sendingCred=false;
-      if(resp!=undefined && resp.Retorno==0){
-        
-      }
-      else {
+    this.credito.tip_codi = this.suafili.tip_codi;
+    this.credito.arb_sucu = this.sucursalInfoBasica.arb_cont;
+    this.credito.scr_gene = this.suafili.afi_gene;
+    this.credito.scr_dire = this.suafili.afi_dire;
+    this.credito.scr_tele = this.suafili.afi_tele;
+    this.credito.scr_mail = this.suafili.afi_mail;
+    this.credito.lic_cont = this.lineaCred.lic_cont;
+    this.credito.scr_nent = this.informacionLaboral.apo_razs;
+    this.credito.scr_teem = Number(this.informacionLaboral.dsu_tele);
+    this.credito.scr_diem = this.informacionLaboral.dsu_dire;
+    this.credito.pai_codu = this.informacionLaboral.pai_codi;
+    this.credito.dep_codu = this.informacionLaboral.dep_codi;
+    this.credito.reg_codu = this.informacionLaboral.reg_codi;
+    this.credito.mun_codu = this.informacionLaboral.mun_codi;
+    this.credito.scr_sala = this.informacionLaboral.tra_salb;
+    this.credito.scr_care = this.informacionLaboral.itn_carg;
+    this.credito.codeudores.push(this.codeudor);
+    this._cfscrev.SetCfScrev(this.credito).subscribe(resp => {
+      this.sendingCred = false;
+      if (resp != undefined && resp.Retorno == 0) {
+      } else {
         this.showError();
       }
-    })
-    
-
+    });
   }
 
   showError() {
-    this.toastService.show('I am a success toast', {
-      classname: 'bg-danger text-light',
-      delay: 2000 ,
+    this.toastService.show("I am a success toast", {
+      classname: "bg-danger text-light",
+      delay: 2000,
       autohide: true,
-      headertext: 'Error!!!'
+      headertext: "Error!!!"
     });
-
- 
-}
+  }
 }

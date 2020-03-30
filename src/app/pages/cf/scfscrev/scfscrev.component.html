@@ -71,7 +71,7 @@
                                         <!-- <input name="tip_codi" [(ngModel)]="suafili.tip_nomb" type="text" data-toggle="tooltip"
                       data-placement="bottom"  class="form-control"> -->
                                         <select disabled class="form-control" id="tip_codiS" name="tip_codi" [(ngModel)]="suafili.tip_codi" required #tip_codiS="ngModel">
-                      <option *ngFor="let item of tiposDocumento"  [value]="item.TIP_CODI">{{item.TIP_NOMB}}</option>                   
+                      <option *ngFor="let item of tiposDocumento"  [value]="item.TIP_CODI">{{item.TIP_NOMB}}</option>
                     </select>
 
                                     </div>
@@ -229,18 +229,19 @@
                                         <button type="button" class="btn btn-primary" (click)="showCfTasasModal()">
                       <span><i class="fas fa-search"></i></span>
                     </button>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                                    <label for="inf_mcre">Modalidad del crédito</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <span><i class="fas fa-chart-line"></i></span>
-                                            </div>
-                                        </div>
-                                        <input name="inf_mcre" required [(ngModel)]="modalidadInfoCred.mod_nomb" (ngModelChange)="searchLine() " type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" disabled>
-                                        <button type="button" class="btn btn-primary" (click)="showCfModcrModal()">
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                  <label for="inf_mcre">Modalidad del crédito</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <span><i class="fas fa-chart-line"></i></span>
+                      </div>
+                    </div>
+                    <input name="inf_mcre" required [(ngModel)]="modalidadInfoCred.mod_nomb" (ngModelChange)="searchLine() "
+                      type="text" data-toggle="tooltip" data-placement="bottom"  class="form-control" disabled>
+                    <button type="button" class="btn btn-primary" (click)="showCfModcrModal()">
                       <span><i class="fas fa-search"></i></span>
                     </button>
                                     </div>
@@ -471,7 +472,7 @@
                                             </div>
                                         </div>
                                         <select class="form-control" id="tip_codi" name="tip_codi" required [(ngModel)]="informacionCodeudor.tip_codi" required #cod_sexo="ngModel">
-                    <option *ngFor="let item of tiposDocumento"  [value]="item.TIP_CODI">{{item.TIP_NOMB}}</option>                   
+                    <option *ngFor="let item of tiposDocumento"  [value]="item.TIP_CODI">{{item.TIP_NOMB}}</option>
                   </select>
                                         <!-- <input name="ifc_tido" [(ngModel)]="informacionCodeudor.tip_codi" type="text" data-toggle="tooltip"
                       data-placement="bottom"  class="form-control"> -->
@@ -574,7 +575,7 @@
                       </div>
                       <div class="card-body">
                         <div class="row">
-                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">                 
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
                                   <div class="custom-control custom-radio">
                                       <input [(ngModel)]="informacionCodeudor.cod_nest" type="radio" disabled class="custom-control-input" id="cod_nestP" name="groupEsci" value="P">
                                       <label class="custom-control-label" for="cod_nestP">Primaria</label>
@@ -584,7 +585,7 @@
                                       <label class="custom-control-label" for="cod_nestT">Técnica</label>
                                   </div>
                                 </div>
-                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">            
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
                                   <div class="custom-control custom-radio">
                                       <input [(ngModel)]="informacionCodeudor.cod_nest" type="radio" disabled class="custom-control-input" id="cod_nestR" name="groupEsci" value="R">
                                       <label class="custom-control-label" for="cod_nestR">Profesional</label>
@@ -594,7 +595,7 @@
                                       <label class="custom-control-label" for="cod_nestS">Secundaria</label>
                                   </div>
                                 </div>
-                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">           
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
                                   <div class="custom-control custom-radio">
                                       <input [(ngModel)]="informacionCodeudor.cod_nest" type="radio" disabled class="custom-control-input" id="cod_nestE" name="groupEsci" value="E">
                                       <label class="custom-control-label" for="cod_nestE">Tecnológica</label>
@@ -605,7 +606,7 @@
                                   </div>
                               </div>
                             </div>
-                         
+
                       </div>
                   </div>
               </div> -->
@@ -917,9 +918,9 @@
                                         <!-- <input name="ilc_tico" [(ngModel)]="scfscrev.ilc_tico" type="text" data-toggle="tooltip"
                       data-placement="bottom"  class="form-control"> -->
                                         <select class="form-control" id="cod_tipc" name="cod_tico" [(ngModel)]="codeudor.cod_tico" required #cod_tico="ngModel" required>
-                      <option  value="I">Indefinido</option>  
-                      <option  value="F">Fijo</option>       
-                      <option  value="P">Prestación de servicios</option>                        
+                      <option  value="I">Indefinido</option>
+                      <option  value="F">Fijo</option>
+                      <option  value="P">Prestación de servicios</option>
                     </select>
                                     </div>
                                 </div>
@@ -1109,7 +1110,7 @@
                                         <!-- <input name="rep_pare" [(ngModel)]="refpers.ite_cont" type="text" data-toggle="tooltip"
                       data-placement="bottom"  class="form-control"> -->
                                         <select class="form-control" id="ite_contP" name="ite_contP" required [(ngModel)]="refpers.ite_cont" required #tip_codiS="ngModel">
-                      <option *ngFor="let item of itemsParentesco"  [value]="item.ite_cont">{{item.ite_nomb | titlecase }}</option>                   
+                      <option *ngFor="let item of itemsParentesco"  [value]="item.ite_cont">{{item.ite_nomb | titlecase }}</option>
                     </select>
 
                                     </div>
@@ -1224,7 +1225,7 @@
                       </div>
                       <input name="rep_eciv" [(ngModel)]="refpers.rep_eciv" type="text" data-toggle="tooltip"
                         data-placement="bottom"  class="form-control">
-  
+
                     </div>
                   </div> -->
                                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -1261,7 +1262,7 @@
                       </div>
                       <input name="rep_prof" [(ngModel)]="scfscrev.rep_prof" type="text" data-toggle="tooltip"
                         data-placement="bottom"  class="form-control">
-  
+
                     </div>
                   </div> -->
                                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -1275,7 +1276,7 @@
                                         <!-- <input name="rep_pare" [(ngModel)]="refpers.ite_cont" type="text" data-toggle="tooltip"
                         data-placement="bottom"  class="form-control"> -->
                                         <select class="form-control" id="ite_contRF" name="ite_contRF" required [(ngModel)]="reffami.ite_cont" required #ite_contRF="ngModel">
-                        <option *ngFor="let item of itemsParentesco"  [value]="item.ite_cont">{{item.ite_nomb | titlecase }}</option>                   
+                        <option *ngFor="let item of itemsParentesco"  [value]="item.ite_cont">{{item.ite_nomb | titlecase }}</option>
                       </select>
 
                                     </div>
@@ -1343,7 +1344,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
-                                    <button id="nextref_pers" type="button" class="btn btn-success mt-3" [disabled]="!infoBasAfi.form.valid || !infoCred.form.valid || !InfoLaboral.form.valid || 
+                                    <button id="nextref_pers" type="button" class="btn btn-success mt-3" [disabled]="!infoBasAfi.form.valid || !infoCred.form.valid || !InfoLaboral.form.valid ||
                       !infocodeudor.form.valid || !infoCodEsEmpl.form.valid || !CodEsIndep.form.valid || !refpersForm.form.valid || !refFamiForm.form.valid">
                       &nbsp;Terminar solicitud <i class="far fa-save"></i></button>
                                 </div>

@@ -1,3 +1,4 @@
+import { Cfcodeu } from './cfcodeu';
 export class cfscrev {
   aud_esta: string;
   aud_usua: string;
@@ -88,6 +89,7 @@ export class cfscrev {
   scr_exem:number;
   scr_sala:number;
   scr_care:string;
+  codeudores: Cfcodeu[];
   constructor(){
     this.aud_esta= "";
     this.aud_usua= "";
@@ -178,5 +180,6 @@ export class cfscrev {
     this.scr_exem=0;
     this.scr_sala=0;
     this.scr_care="";
+    this.codeudores=[];
   }
 }
