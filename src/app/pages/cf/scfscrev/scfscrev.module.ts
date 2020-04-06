@@ -5,7 +5,7 @@ import { ScfscrevRoutingModule } from './scfscrev-routing.module';
 import { ScfscrevComponent } from './scfscrev.component';
 import { FormsModule } from "@angular/forms";
 import { SharedModule } from '../../../shared/shared.module';
-import { ToastModule } from '../../../shared/toast/toast.module';
+import { ModalModule } from '../../../shared/modal/modal.module';
 
 
 
@@ -14,7 +14,8 @@ import { ToastModule } from '../../../shared/toast/toast.module';
     CommonModule,
     ScfscrevRoutingModule,
     FormsModule,
-    SharedModule,ToastModule
+    SharedModule,
+    ModalModule
   ],
    declarations: [ScfscrevComponent]
 })

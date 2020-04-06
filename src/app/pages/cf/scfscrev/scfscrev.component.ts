@@ -33,6 +33,9 @@ import { gnItem } from "../../../../classes/models";
 import { GnitemsService } from "../../../services/gn/gnitems.service";
 import { CfscrevService } from "src/app/services/cf/cfscrev.service";
 import { ToastService } from "../../../services/utils/toast.service";
+import { AddressToolGenericComponent } from '../../../components/tools/address-tool-generic/address-tool-generic.component';
+import { gnmodul } from '../../../../classes/gn/gnmodul';
+import { GnmodulService } from '../../../services/gn/gnmodul.service';
 
 @Component({
   selector: "app-scfscrev",
@@ -53,6 +56,15 @@ export class ScfscrevComponent implements OnInit {
   @ViewChild("DivPolrRefFami") _modalDivPolrRefFami: NewTableSearchComponent;
   @ViewChild("DivPolCiudNac") _DivPolCiudNac: NewTableSearchComponent;
   @ViewChild("DivPolCiudInfEmpl") _DivIndEmpl: NewTableSearchComponent;
+  @ViewChild('modalAfiDire') _tableDireccion: AddressToolGenericComponent;
+  @ViewChild('modalDsuDire') _tableDirectionDsuDire:AddressToolGenericComponent;
+  @ViewChild('modalcod_dirc') _tableDirectionCodDirc:AddressToolGenericComponent;
+  @ViewChild('modalcod_dirr') _tableDirectionCodDirr:AddressToolGenericComponent;
+  @ViewChild('modal_RedDire') _tablerDirectionRefDire:AddressToolGenericComponent;
+  @ViewChild('modal_direccRefFami') _tableDirecionesRefFami:AddressToolGenericComponent;
+  @ViewChild('modal_direccionesCodeu') _tableDireccionesCodeu:AddressToolGenericComponent;
+  @ViewChild('modal_direCodEmpl') _tableDireccionesCodeuEmpl:AddressToolGenericComponent;
+  
 
   // Variable de consulta para informacion básica del afiliado
   suafili: suafili2 = new suafili2();
@@ -109,6 +121,8 @@ export class ScfscrevComponent implements OnInit {
   mun_nombRF: string;
   // Variable para controlar icono mostrado en boton enviar solicitud
   sendingCred = false;
+  // Variable para controlar si el modulo 189 está instalado
+  mod189:gnmodul= new gnmodul();
 
   reffami: cfrefen = new cfrefen();
   cfrefen: cfrefen[] = [];
@@ -124,10 +138,12 @@ export class ScfscrevComponent implements OnInit {
     private _gndivpo: GndivpoService,
     private _gnitems: GnitemsService,
     private _cfscrev: CfscrevService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private gnmodulService:GnmodulService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.GetGnModul(189);
     this.ReadSuAfili();
     this.getSucursalesInfoBasica();
     this.getCfTasas();
@@ -135,9 +151,11 @@ export class ScfscrevComponent implements OnInit {
     this.GetGnTipdo();
     this.GetGnDivpo();
     this.GetParentescos();
+   
   }
 
   async ReadSuAfili() {
+
     const result = <Transaction2>(
       await this._suafili.GetSuAfili(this.emp_codi, this.afi_docu).toPromise()
     );
@@ -147,6 +165,15 @@ export class ScfscrevComponent implements OnInit {
       this.suafili = result.ObjTransaction;
       this.GeSuTraye();
     }
+  }
+
+  GetGnModul(mod_codi:number){
+      this.gnmodulService.GetGnModul(mod_codi).subscribe(resp=>{
+        if(resp!=null && resp.Retorno==0){
+          this.mod189 = resp.ObjTransaction;
+
+        }
+      })
   }
 
   async getSucursalesInfoBasica() {
@@ -329,12 +356,16 @@ export class ScfscrevComponent implements OnInit {
   }
 
   GeSuTraye() {
-    this._sutraye
+    if(this.mod189.mod_inst=="S"){
+      this._sutraye
       .GetSuTraye(this.emp_codi, this.suafili.afi_cont)
       .subscribe(resp => {
         console.log(resp.ObjTransaction);
         this.informacionLaboral = resp.ObjTransaction;
       });
+    }
+    
+    
   }
 
   searchCodeu() {
@@ -460,4 +491,57 @@ export class ScfscrevComponent implements OnInit {
       headertext: "Error!!!"
     });
   }
+  getDireccionEmitt(mensaje) {
+    this.suafili.afi_dire = mensaje;
+}
+getDireccionEmittRefFami(address:string){
+  this.reffami.ref_dire = address;
+}
+getDireccionEmittCodEmpl(address:string){
+this.codeudor.cod_dirc = address;
+}
+getDireccionEmittDsuDire(address:string){
+this.informacionLaboral.dsu_dire  = address;
+console.log(address);
+}
+
+
+
+getDireccionEmittRefDire(address:any){
+  console.log('entra');
+  this.refpers.ref_dire = address;
+}
+getDireccionEmittDireCodeu(address:string){
+  this.informacionCodeudor.cod_dirr = address;
+}
+
+async lupaDirecciones() {
+  this._tableDireccion.show();
+}
+async lupaDireccionesDsuDire(){
+  this._tableDirectionDsuDire.show();
+}
+async lupaDireccionesCodDirc(){
+this._tableDirectionCodDirc.show();
+}
+async lupaDireccionesCodDirr(){
+this._tableDirectionCodDirr.show();
+}
+async lupaDireccionesRefDire(){
+  this._tablerDirectionRefDire.show();
+}
+async lupadireccionesRefFami(){
+  this._tableDirecionesRefFami.show();
+}
+async lupaDireccionesCodeu(){
+  this._tableDireccionesCodeu.show();
+}
+async lupaDireccionesCodeEmpl(){
+  this._tableDireccionesCodeuEmpl.show();
+
+}
+validTrabaja(event:any){
+
+  
+}
 }

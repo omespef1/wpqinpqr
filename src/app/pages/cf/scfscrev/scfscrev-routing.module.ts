@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-// import { ScfscrevComponent } from './scfscrev.component';
+ import { ScfscrevComponent } from './scfscrev.component';
 
 const routes: Routes = [
   {
     path: '',
-    // component: ScfscrevComponent
+   component: ScfscrevComponent
   }
 ];
 

@@ -16,7 +16,7 @@
                 <a class="nav-item nav-link" [ngClass]="activeTab==1?'active':''" id="nav-info-basic" data-toggle="tab" href="#nav-info-basicT" role="tab" aria-controls="nav-info-basicT" aria-selected="false">Información del
             crédito &nbsp;<i [class]="infoCred.form.valid?'fa fa-check-circle completed':'fa fa-check-circle-o'" aria-hidden="true"></i></a>
 
-                <a class="nav-item nav-link" [ngClass]="activeTab==2?'active':''" id="nav-info-lab" data-toggle="tab" href="#nav-info-labT" role="tab" aria-controls="nav-info-labT" [ngClass]="activeTab==3?'active':''" aria-selected="false">Información laboral &nbsp;<i [class]="InfoLaboral.form.valid?'fa fa-check-circle completed':'fa fa-check-circle-o'" aria-hidden="true"></i></a>
+                <a  class="nav-item nav-link" [ngClass]="activeTab==2?'active':''" id="nav-info-lab" data-toggle="tab" href="#nav-info-labT" role="tab" aria-controls="nav-info-labT" [ngClass]="activeTab==3?'active':''" aria-selected="false">Información laboral &nbsp;<i [class]="InfoLaboral.form.valid?'fa fa-check-circle completed':'fa fa-check-circle-o'" aria-hidden="true"></i></a>
                 <a class="nav-item nav-link" id="nav-info-codeu" data-toggle="tab" href="#nav-info-codeuT" role="tab" aria-controls="nav-info-codeuT" [ngClass]="activeTab==4?'active':''" aria-selected="false">Información
             codeudor &nbsp;<i [class]="infocodeudor.form.valid?'fa fa-check-circle completed':'fa fa-check-circle-o'" aria-hidden="true"></i></a>
                 <a class="nav-item nav-link" [ngClass]="activeTab==5?'active':''" id="nav-info-codeu-lab" data-toggle="tab" href="#nav-info-codeu-labT" role="tab" aria-controls="nav-info-codeu-labT" aria-selected="false">Información
@@ -137,7 +137,9 @@
                                             </div>
                                         </div>
                                         <input name="afi_dire" [(ngModel)]="suafili.afi_dire" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
-
+                                        <!-- <button type="button" class="btn btn-primary" (click)="lupaDirecciones()">
+                                            <span><i class="fas fa-search"></i></span>
+                                        </button> -->
                                     </div>
                                 </div>
 
@@ -303,15 +305,15 @@
                                     <label for="afi_lab"></label>
                                     <div class="input-group">
                                         <span class="switch">
-                      <input type="checkbox" [(ngModel)]="trabaja" name="afi_lab" class="switch switch-sm"
+                      <input type="checkbox" [(ngModel)]="trabaja" (ngModelChange)="validTrabaja($event)" name="afi_lab" class="switch switch-sm"
                         id="switch-id" #trabajad="ngModel">
-                      <label for="switch-id">Información laboral ¿Trabaja?</label>
+                                        <label for="switch-id">Información laboral ¿Trabaja? </label>
                     </span>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
-                                    <button (click)="GoTab(2)" [disabled]="!infoCred.form.valid" id="nextInfoCre" type="button" class="btn btn-success mt-3">
+                                    <button (click)="GoTab(trabaja?2:3)" [disabled]="!infoCred.form.valid" id="nextInfoCre" type="button" class="btn btn-success mt-3">
                     &nbsp;Continuar <i class="fas fa-arrow-circle-right"></i></button>
                                 </div>
                             </div>
@@ -334,7 +336,7 @@
                                                 <span><i class="fa fa-building" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input name="ifl_noem" [(ngModel)]="informacionLaboral.apo_razs" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                        <input [disabled] = "mod189.mod_inst=='S'" name="ifl_noem" [(ngModel)]="informacionLaboral.apo_razs" type="text" data-toggle="tooltip" data-placement="bottom"  class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -345,7 +347,7 @@
                                                 <span><i class="fa fa-phone" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input name="ifl_tele" [(ngModel)]="informacionLaboral.dsu_tele" type="number" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                        <input [disabled] = "mod189.mod_inst=='S'" name="ifl_tele" [(ngModel)]="informacionLaboral.dsu_tele" type="number" data-toggle="tooltip" data-placement="bottom"  class="form-control">
                                     </div>
                                 </div>
 
@@ -357,7 +359,10 @@
                                                 <span><i class="fa fa-address-book" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input name="ifl_diem" [(ngModel)]="informacionLaboral.dsu_dire" type="text" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                        <input  name="ifl_diem" [(ngModel)]="informacionLaboral.dsu_dire" type="text" data-toggle="tooltip" data-placement="bottom" disabled class="form-control">
+                                        <button type="button" class="btn btn-primary" (click)="lupaDireccionesDsuDire()" [disabled] = "mod189.mod_inst=='S'">
+                                            <span><i class="fas fa-search"></i></span>
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -368,7 +373,7 @@
                                                 <span><i class="fa fa-phone" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input readonly name="scr_exem" [(ngModel)]="credito.scr_exem" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                        <input [disabled] = "mod189.mod_inst=='S'" name="scr_exem" [(ngModel)]="credito.scr_exem" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control">
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -404,10 +409,10 @@
                                                 <span><i class="fa fa-globe" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input readonly name="ifl_ciud" [(ngModel)]="informacionLaboral.mun_nomb" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
-                                        <!-- <button type="button" class="btn btn-primary" (click)="showDivisionInfLaboral()">
+                                        <input   name="ifl_ciud" [(ngModel)]="informacionLaboral.mun_nomb" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                        <button [disabled] = "mod189.mod_inst=='S'" type="button" class="btn btn-primary" (click)="showDivisionInfLaboral()">
                           <span><i class="fas fa-search"></i></span>
-                        </button> -->
+                        </button>
                                     </div>
                                 </div>
 
@@ -437,7 +442,7 @@
 
                                 <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
                                     <button id="nextInfoCre" [disabled]="!InfoLaboral.form.valid" type="button" class="btn btn-success mt-3" (click)="SendRequest();GoTab(3)">
-                      &nbsp;Enviar solicitud <i class="fas fa-arrow-circle-right"></i></button>
+                                    &nbsp;Enviar solicitud<i class="fas fa-arrow-circle-right"></i></button>
                                 </div>
                             </div>
                         </form>
@@ -693,7 +698,11 @@
                                                 <span><i class="fa fa-location-arrow" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input name="ifl_dire" [(ngModel)]="informacionCodeudor.cod_dirr" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
+                                        <input name="ifl_dire" [(ngModel)]="informacionCodeudor.cod_dirr" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" required disabled>
+                                        
+                                        <button type="button" class="btn btn-primary" (click)="lupaDireccionesCodeu()">
+                                            <span><i class="fas fa-search"></i></span>
+                                          </button>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -807,7 +816,11 @@
                                                 <span><i class="fa fa-location-arrow" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input name="cod_dirc" [(ngModel)]="codeudor.cod_dirc" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
+                                        <input name="cod_dirc" [(ngModel)]="codeudor.cod_dirc" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" required disabled>
+                                        <button type="button" class="btn btn-primary" (click)="lupaDireccionesCodeEmpl()">
+                                            <span><i class="fas fa-search"></i></span>
+                                        </button>
+                                        
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -818,7 +831,7 @@
                                                 <span><i class="fa fa-phone" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input name="ilc_exte" [(ngModel)]="codeudor.cod_next" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
+                                        <input name="ilc_exte" [(ngModel)]="codeudor.cod_next" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -1147,7 +1160,10 @@
                                                 <span><i class="fa fa-building" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input name="ref_dire" [(ngModel)]="refpers.ref_dire" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
+                                        <input name="ref_dire" [(ngModel)]="refpers.ref_dire" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" disabled required>
+                                        <button type="button" class="btn btn-primary" (click)="lupaDireccionesRefDire()">
+                                            <span><i class="fas fa-search"></i></span>
+                                        </button>
 
                                     </div>
                                 </div>
@@ -1313,7 +1329,10 @@
                                                 <span><i class="fa fa-building" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input name="ref_dire" [(ngModel)]="reffami.ref_dire" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
+                                        <input name="ref_dire" [(ngModel)]="reffami.ref_dire" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" required disabled>
+                                        <button type="button" class="btn btn-primary" (click)="lupadireccionesRefFami()">
+                                            <span><i class="fas fa-search"></i></span>
+                                        </button>
 
                                     </div>
                                 </div>
@@ -1377,3 +1396,10 @@
     (rowCLick)="SetDivPolCiudNac($event)" btnModalQb="btnModalDivPolCiudNac" ModalQb="modalDivPolCiudNac" #DivPolCiudNac></app-new-table-search>
 <app-new-table-search Title="Ciudad" [displayedColumns]="['mun_codi', 'mun_nomb','dep_codi','dep_nomb','pai_codi','pai_nomb','reg_codi','reg_nomb']" [showColumns]="['Código', 'Ciudad','Código','Departamento/Estado','Código','País','Código','Región']"
     (rowCLick)="SetDivPolCiudInfEmpl($event)" btnModalQb="btnModalCiudInfEmpl" ModalQb="modalDivCiudInfEmpl" #DivPolCiudInfEmpl></app-new-table-search>
+     <app-address-tool-generic #modal_direCodEmpl  buttonModalId="btnModalCodEmpl" ModalId="modalCodEmpl" (myAddress)="getDireccionEmittCodEmpl($event)"></app-address-tool-generic> 
+   
+    <app-address-tool-generic #modal_direccRefFami buttonModalId="btnModalRefFami" ModalId="modalRefFami" (myAddress)="getDireccionEmittRefFami($event)"></app-address-tool-generic> 
+    <app-address-tool-generic #modalDsuDire buttonModalId="btnModalDsuDire" ModalId="modalDsuDire" (myAddress)="getDireccionEmittDsuDire($event)"></app-address-tool-generic>
+    <app-address-tool-generic #modal_RedDire buttonModalId="btnModalDire" ModalId="modalDireRef" (myAddress)="getDireccionEmittRefDire($event)"></app-address-tool-generic>
+    <app-address-tool-generic #modal_direccionesCodeu buttonModalId="btnModalDireCodeu" ModalId="modalDireCodeu" (myAddress)="getDireccionEmittDireCodeu($event)"></app-address-tool-generic>
+    

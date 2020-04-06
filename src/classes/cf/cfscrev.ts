@@ -124,7 +124,6 @@ export class cfscrev {
     this.scr_nhij= 0;
     this.lic_cont= 0;
     this.scr_vivi= "";
-    this.scr_vsol= 0;
     this.pai_codc= 0;
     this.dep_codc= 0;
     this.mun_codc= 0;
