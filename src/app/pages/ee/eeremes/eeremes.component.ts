@@ -46,14 +46,15 @@ export class EeremesComponent implements OnInit {
 
     if (this.eereenc.cli_coda === '')
       this.showAlertMesssage('Digite un número de documento.');
-    else {
+    else
       this._service.loadInfoFaClien(0, this.eereenc.cli_coda).subscribe(resp => {
         if (resp.retorno === 0)
           this.faclien = resp.objTransaction;
-        else
+        else {
           this.showAlertMesssage(resp.txtRetorno);
-        });
-    }
+          this.eereenc.cli_coda = '';
+        }
+      });
     this.spinner.hide();
   }
 
@@ -63,14 +64,14 @@ export class EeremesComponent implements OnInit {
   }
 
   loadItems() {
-     this.loadServicios();
-     this.loadMetodosRec();
+      this.loadServicios();
+      this.loadMetodosRec();
   }
 
   loadServicios() {
     this.spinner.show();
     this._service.loadServiciosEncuesta().subscribe(resp => {
-      this.GnItemsIteServ = resp;
+      this.GnItemsIteServ = resp.ObjTransaction;
     });
     this.spinner.hide();
   }
@@ -78,7 +79,7 @@ export class EeremesComponent implements OnInit {
   loadMetodosRec() {
     this.spinner.show();
     this._service.loadMetodosRecoleccion().subscribe(resp => {
-      this.GnItemsIteFoRe = resp;
+      this.GnItemsIteFoRe = resp.ObjTransaction;
     });
     this.spinner.hide();
   }
@@ -89,11 +90,13 @@ export class EeremesComponent implements OnInit {
     this.loadItems();
   }
 
-  revEncode(rev_cont: string) {
-    return btoa(rev_cont);
+  revEncode(rev_cont: any) {
+
+    if (rev_cont !== undefined)
+      return btoa(rev_cont);
   }
 
-  insertInfoMedicion(form: NgForm) {
+  insertInfoMedicion() {
     this.topFunction();
     this.spinner.show();
     this._service.saveInfoMedicion(this.eereenc).subscribe(resp => {

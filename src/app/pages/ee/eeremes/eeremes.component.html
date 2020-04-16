@@ -176,7 +176,7 @@
                             </div>
                             <select class="form-control" name="ree_serv" [(ngModel)]="eereenc.ree_serv" required #ree_serv="ngModel">
                                 <option value=undefined>Seleccione</option>
-                                <option *ngFor="let serv of GnItemsIteServ" [value]="serv.ite_codi"  >{{serv.ite_codi + ' - ' + serv.ite_nomb | titlecase}}</option>                                
+                                <option *ngFor="let serv of GnItemsIteServ" [value]="serv.ite_cont"  >{{serv.ite_codi + ' - ' + serv.ite_nomb | titlecase}}</option>                                
                             </select>
                         </div>
                     </div>
@@ -199,7 +199,7 @@
 
                 <div class="row mt-3">
                     <div class="col-lg-6 col-md-6 col-xs-6 col-sm-1 pt-3 text-right">
-                        <button (click)="insertInfoMedicion();" class="btn btn-success btn-md" [disabled]="!remesForm.form.valid" [routerLink]="['/eereles']" [queryParams]="{ rel_serv: revEncode(eereenc.ree_serv), emp_codi: revEncode(102)}">
+                        <button (click)="insertInfoMedicion();" class="btn btn-success btn-md" [disabled]="!remesForm.form.valid" [routerLink]="['/eereles']" [queryParams]="{ rel_serv: revEncode(eereenc.ree_serv), emp_codi: revEncode('0')}">
                         <span><i class="fas fa-search"></i> &nbsp;Siguiente</span>
                       </button>
                     </div>

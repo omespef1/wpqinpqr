@@ -31,19 +31,19 @@
                             <input matInput placeholder="Fecha Final" required readonly [matDatepicker]="pro_fven" type="text" class="form-control" name="pro_fven" id="pro_fven">
                         </div>
                     </div>
+
                     <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                        <label for="rev_esta">Seccional</label>
+                        <label for="rev_esta">Servicio</label>
                         <div class="input-group text-center">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     <span><i class="fas fa-book"></i></span>
                                 </div>
                             </div>
-                            <select class="form-control" name="seccional">
-                             <option value=undefined>Seleccione</option>
-                            <!-- <option *ngFor="let secc of trazPQRWF.seccional" [value]="secc.arb_cont">{{secc.arb_nomb | titlecase}}
-                            </option> -->
-                          </select>
+                            <select class="form-control" name="ree_serv">
+                                <option value=undefined>Seleccione</option>
+                                <option *ngFor="let serv of GnItemsIteServ" [value]="serv.ite_cont"  >{{serv.ite_codi + ' - ' + serv.ite_nomb | titlecase}}</option>                                
+                            </select>
                         </div>
                     </div>
 

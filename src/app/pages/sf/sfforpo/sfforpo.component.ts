@@ -193,7 +193,6 @@ export class SfforpoComponent implements OnInit {
   }
 
   setModalidad(rowSelected: any) {
-    debugger;
     this.InfoModvi.mod_cont = rowSelected.MOD_CONT;
     this.InfoModvi.mod_nomb = rowSelected.MOD_NOMB;
     this.InfoModvi.tco_codi = rowSelected.TCO_CODI;
