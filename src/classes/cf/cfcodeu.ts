@@ -13,6 +13,7 @@ export class Cfcodeu {
   pai_codc: number;
   dep_codc: number;
   mun_codc: number;
+  mun_codc_D:number;
   cod_dirc: string;
   cod_telc: string;
   dir_envi: string;
@@ -109,4 +110,5 @@ export class Cfcodeu {
   cod_next: string;
   cas_cont: number;
   referencias:cfrefen[];
+
 }

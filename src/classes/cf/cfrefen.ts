@@ -1,5 +1,6 @@
 export class cfrefen{
 
+  
 emp_codi:number;
 cod_cont:number;
 ref_cont:number;

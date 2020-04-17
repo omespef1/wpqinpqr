@@ -36,6 +36,9 @@ import { ToastService } from "../../../services/utils/toast.service";
 import { AddressToolGenericComponent } from '../../../components/tools/address-tool-generic/address-tool-generic.component';
 import { gnmodul } from '../../../../classes/gn/gnmodul';
 import { GnmodulService } from '../../../services/gn/gnmodul.service';
+import { AlertMessageComponent } from "src/app/components/dialogs/alert-message/alert-message.component";
+import { ActivatedRoute } from "@angular/router";
+import { error } from "util";
 
 @Component({
   selector: "app-scfscrev",
@@ -64,6 +67,15 @@ export class ScfscrevComponent implements OnInit {
   @ViewChild('modal_direccRefFami') _tableDirecionesRefFami:AddressToolGenericComponent;
   @ViewChild('modal_direccionesCodeu') _tableDireccionesCodeu:AddressToolGenericComponent;
   @ViewChild('modal_direCodEmpl') _tableDireccionesCodeuEmpl:AddressToolGenericComponent;
+  @ViewChild(AlertMessageComponent) alert: AlertMessageComponent;
+  @ViewChild("infoBasAfi") infoBasAfi :NgForm;
+  @ViewChild("infoCred") infoCred:NgForm;
+  @ViewChild("InfoLaboral") InfoLaboral:NgForm;
+  @ViewChild("infocodeudor")infocodeudor:NgForm;
+  @ViewChild("infoCodEsEmpl")infoCodEsEmpl:NgForm;
+@ViewChild("CodEsIndep") CodEsIndep:NgForm;
+@ViewChild("refpersForm")refpersForm:NgForm;
+@ViewChild("refFamiForm") refFamiForm:NgForm;
   
 
   // Variable de consulta para informacion básica del afiliado
@@ -93,9 +105,9 @@ export class ScfscrevComponent implements OnInit {
   // Variable de consulta para sucursales
   sucursales: Gnarbol[] = [];
   sucursalInfoBasica: Gnarbol = new Gnarbol("", "", 0, "", "");
-  emp_codi = 102;
+  emp_codi = 0;
   today = new Date();
-  afi_docu = "88284896";
+  afi_docu = "";
   informacionLaboral: sutraye = new sutraye();
   informacionCodeudor: infocodeu = new infocodeu();
   tiposDocumento: gntipdo[] = [];
@@ -111,8 +123,7 @@ export class ScfscrevComponent implements OnInit {
   creditoGuardado = false;
   // Variable para controlar si se muestra el tab de información laboral
   trabaja: boolean = false;
-  // Variable de referencia personal
-  refpers: cfrefen = new cfrefen();
+
   // Variable que contiene los items de parentezco
   itemsParentesco: gnItem[] = [];
   // Nombre de la ciudad seleccioanda en referencias personales
@@ -123,9 +134,13 @@ export class ScfscrevComponent implements OnInit {
   sendingCred = false;
   // Variable para controlar si el modulo 189 está instalado
   mod189:gnmodul= new gnmodul();
-
+  // Variable de referencia personal del coudeudor
+  refpers: cfrefen = new cfrefen();
+   // Variable de referencia familiar del coudeudor
   reffami: cfrefen = new cfrefen();
   cfrefen: cfrefen[] = [];
+  // Variable para mostrar mensajes de alerta
+  msg:string;
   constructor(
     private _suafili: SuafiliService,
     private _gnarbol: GnarbolService,
@@ -139,10 +154,12 @@ export class ScfscrevComponent implements OnInit {
     private _gnitems: GnitemsService,
     private _cfscrev: CfscrevService,
     private toastService: ToastService,
-    private gnmodulService:GnmodulService
+    private gnmodulService:GnmodulService,
+    private route: ActivatedRoute,
   ) {}
 
   async ngOnInit() {
+  await this.GetUrlParams();
     await this.GetGnModul(189);
     this.ReadSuAfili();
     this.getSucursalesInfoBasica();
@@ -153,7 +170,22 @@ export class ScfscrevComponent implements OnInit {
     this.GetParentescos();
    
   }
-
+  async GetUrlParams() {
+    try {
+      this.route.queryParamMap.subscribe(queryParams => {
+        console.log(queryParams.get("client"));
+        if (queryParams.get("client") == null)
+        this.showMessage("Acceso no autorizado");
+        this.afi_docu = atob(queryParams.get("client"));
+        if (queryParams.get("emp_codi") == null)
+        this.showMessage("Acceso no autorizado");
+        this.emp_codi =  parseInt(atob(queryParams.get("emp_codi")));
+        
+      });
+    } catch (err) {
+     this.showMessage(err)
+    }
+  }
   async ReadSuAfili() {
 
     const result = <Transaction2>(
@@ -164,6 +196,9 @@ export class ScfscrevComponent implements OnInit {
       // this.scfscrev = result.ObjTransaction;
       this.suafili = result.ObjTransaction;
       this.GeSuTraye();
+    }
+    else {
+      this.showMessage(result.TxtError)
     }
   }
 
@@ -249,6 +284,8 @@ export class ScfscrevComponent implements OnInit {
     const tasasTran = await this._cftasas.GetCfTasas(this.emp_codi).toPromise();
     if (tasasTran !== undefined && tasasTran.Retorno === 0)
       this.cftasas = tasasTran.ObjTransaction;
+      if(this.cftasas==null || this.cftasas.length===0)
+         this.showMessage("No se encontraron tasas parametrizadas. Verifique.")
   }
 
   SetSucursalBasica(row: any) {
@@ -269,11 +306,12 @@ export class ScfscrevComponent implements OnInit {
   }
   SetDivPolInfCodRe(row: Gndivpo) {
     console.log(row);
-    this.codeudor.pai_codr = row.pai_codi;
-    this.codeudor.reg_codr = row.reg_codi;
-    this.codeudor.dep_codr = row.dep_codi;
-    this.codeudor.mun_codr = row.mun_codi;
-    this.informacionCodeudor.mun_codc = row.mun_nomb;
+    this.informacionCodeudor.pai_codr = row.pai_codi;
+    this.informacionCodeudor.reg_codr = row.reg_codi;
+    this.informacionCodeudor.dep_codr = row.dep_codi;
+    this.informacionCodeudor.mun_codr = row.mun_codi;
+    this.informacionCodeudor.mun_codr_D = row.mun_nomb;
+   // mun_codc
   }
 
   SetDivPolInfLab(row: any) {
@@ -286,11 +324,11 @@ export class ScfscrevComponent implements OnInit {
   }
   SetDivPolInfCodExp(row: any) {
     console.log(row);
-    this.codeudor.pai_cocc = row.pai_codi;
-    this.codeudor.reg_cocc = row.reg_codi;
-    this.codeudor.dep_cocc = row.dep_codi;
-    this.codeudor.mun_cocc = row.mun_codi;
-    this.informacionCodeudor.mun_cocn = row.mun_nomb;
+    this.informacionCodeudor.pai_cocc = row.pai_codi;
+    this.informacionCodeudor.reg_cocc = row.reg_codi;
+    this.informacionCodeudor.dep_cocc = row.dep_codi;
+    this.informacionCodeudor.mun_cocc = row.mun_codi;
+    this.informacionCodeudor.mun_cocc_D = row.mun_nomb;
   }
   SetDivPolrRefPers(row: any) {
     this.refpers.pai_codi = row.pai_codi;
@@ -308,18 +346,18 @@ export class ScfscrevComponent implements OnInit {
   }
 
   SetDivPolCiudNac(row: any) {
-    this.codeudor.pai_codn = row.pai_codi;
-    this.codeudor.reg_codn = row.reg_codi;
-    this.codeudor.dep_codn = row.dep_codi;
-    this.codeudor.mun_codn = row.mun_codi;
-    this.informacionCodeudor.mun_conn = row.mun_nomb;
+    this.informacionCodeudor.pai_codn = row.pai_codi;
+    this.informacionCodeudor.reg_codn = row.reg_codi;
+    this.informacionCodeudor.dep_codn = row.dep_codi;
+    this.informacionCodeudor.mun_codn = row.mun_codi;
+    this.informacionCodeudor.mun_codn_D = row.mun_nomb;
   }
   SetDivPolCiudInfEmpl(row: any) {
     this.codeudor.pai_codc = row.pai_codi;
     this.codeudor.reg_codc = row.reg_codi;
     this.codeudor.dep_codc = row.dep_codi;
     this.codeudor.mun_codc = row.mun_codi;
-    this.codeudor.mun_cemp = row.mun_nomb;
+    this.codeudor.mun_codc_D = row.mun_nomb;
   }
   async getCfModcr() {
     const modcrTran = await this._cfmodcr.GetCfmodcr(this.emp_codi).toPromise();
@@ -360,8 +398,13 @@ export class ScfscrevComponent implements OnInit {
       this._sutraye
       .GetSuTraye(this.emp_codi, this.suafili.afi_cont)
       .subscribe(resp => {
-        console.log(resp.ObjTransaction);
-        this.informacionLaboral = resp.ObjTransaction;
+        if(resp!=undefined && resp.Retorno==0){
+          console.log(resp.ObjTransaction);
+          this.informacionLaboral = resp.ObjTransaction;
+        }
+       else {
+         this.showMessage(resp.TxtError);
+       }
       });
     }
     
@@ -369,14 +412,24 @@ export class ScfscrevComponent implements OnInit {
   }
 
   searchCodeu() {
+    let codeu:string = this.informacionCodeudor.cod_dnum;
     this._cfcodeu
       .GetCfCodeu(this.emp_codi, this.informacionCodeudor.cod_dnum)
       .subscribe(resp => {
         if (resp !== undefined && resp.Retorno === 0) {
           console.log(this.informacionCodeudor);
-          if (resp.ObjTransaction != null)
+          if (resp.ObjTransaction != null){
+            console.log(resp.ObjTransaction);
             this.informacionCodeudor = resp.ObjTransaction;
-          else this.informacionCodeudor = new infocodeu();
+            // Se llenan las variables de  municipios,departamentos,paises,etc en caso de que el usuario no modifique esa información
+          
+          }
+          
+          else {
+            this.informacionCodeudor = new infocodeu();
+            this.informacionCodeudor.cod_dnum = codeu;
+
+          }
         }
       });
   }
@@ -389,18 +442,6 @@ export class ScfscrevComponent implements OnInit {
     });
   }
 
-  private SetCfCodeu() {
-    this.codeudor.cod_dnum = this.informacionCodeudor.cod_dnum;
-    this.codeudor.tip_codi = this.informacionCodeudor.tip_codi;
-    this.codeudor.cod_sexo = this.informacionCodeudor.cod_sexo;
-    this.codeudor.cod_nom1 = this.informacionCodeudor.cod_nom1;
-    this.codeudor.cod_nom2 = this.informacionCodeudor.cod_nom2;
-    this.codeudor.cod_ape1 = this.informacionCodeudor.cod_ape1;
-    this.codeudor.cod_ape2 = this.informacionCodeudor.cod_ape2;
-    this.codeudor.cod_prof = this.informacionCodeudor.cod_prof;
-    this.codeudor.cod_nest = this.informacionCodeudor.cod_nest;
-    this.codeudor.mun_codn = this.informacionCodeudor.mun_codn;
-  }
 
   GetGnDivpo() {
     this._gndivpo.GetGnDivpo().subscribe(resp => {
@@ -443,13 +484,51 @@ export class ScfscrevComponent implements OnInit {
       }
     });
   }
+  private SetCfCodeu() {
+this.codeudor.emp_codi = this.emp_codi;
+this.codeudor.cod_dnum = this.informacionCodeudor.cod_dnum;
+this.codeudor.tip_codi = this.informacionCodeudor.tip_codi;
+this.codeudor.cod_sexo = this.informacionCodeudor.cod_sexo;
+this.codeudor.cod_nom1 = this.informacionCodeudor.cod_nom1;
+this.codeudor.cod_nom2 = this.informacionCodeudor.cod_nom2;
+this.codeudor.cod_ape1 = this.informacionCodeudor.cod_ape1;
+this.codeudor.cod_ape2 = this.informacionCodeudor.cod_ape2;
+this.codeudor.cod_prof = this.informacionCodeudor.cod_prof;
+this.codeudor.cod_nest = this.informacionCodeudor.cod_nest;
+this.codeudor.cod_cont = this.informacionCodeudor.cod_cont;
+this.codeudor.cod_fecc = this.informacionCodeudor.cod_fecc;
+this.codeudor.cod_fnac = this.informacionCodeudor.cod_fnac;
+this.codeudor.cod_tviv = this.informacionCodeudor.cod_tviv;
+this.codeudor.cod_dirr = this.informacionCodeudor.cod_dirr;
+this.codeudor.cod_barr = this.informacionCodeudor.cod_barr;
+this.codeudor.cod_telr = this.informacionCodeudor.cod_telr;
+this.codeudor.cod_celu = this.informacionCodeudor.cod_celu;
+this.codeudor.cod_estr = this.informacionCodeudor.cod_estr;
+this.codeudor.pai_codr= this.informacionCodeudor.pai_codr;
+this.codeudor.reg_codr= this.informacionCodeudor.reg_codr;
+this.codeudor.dep_codr= this.informacionCodeudor.dep_codr;
+this.codeudor.mun_codr= this.informacionCodeudor.mun_codr;
+this.codeudor.pai_cocc = this.informacionCodeudor.pai_cocc;
+this.codeudor.reg_cocc = this.informacionCodeudor.reg_cocc;
+this.codeudor.dep_cocc = this.informacionCodeudor.dep_cocc;
+this.codeudor.mun_cocc = this.informacionCodeudor.mun_cocc;
+this.codeudor.pai_codn =this.informacionCodeudor.pai_codn;
+this.codeudor.reg_codn =this.informacionCodeudor.reg_codn;
+this.codeudor.dep_codn =this.informacionCodeudor.dep_codn;
+this.codeudor.mun_codn =this.informacionCodeudor.mun_codn;
+
+
+
+  }
 
   SendRequest() {
-
-
+this.credito.codeudores=[];
+  this.cfrefen = [];
     //Construir el objeto del  codeudor con sus referencias
     this.reffami.ref_tipo = "P";
     this.refpers.ref_tipo = "F";
+    this.reffami.emp_codi=this.emp_codi;
+    this.refpers.emp_codi=this.emp_codi;
     this.cfrefen.push(this.reffami);
     this.cfrefen.push(this.refpers);
     this.codeudor.referencias = this.cfrefen;
@@ -464,6 +543,8 @@ export class ScfscrevComponent implements OnInit {
     this.credito.scr_tele = this.suafili.afi_tele;
     this.credito.scr_mail = this.suafili.afi_mail;
     this.credito.lic_cont = this.lineaCred.lic_cont;
+    this.credito.dcl_nfax = this.suafili.afi_celu;
+    this.credito.dcl_mail= this.suafili.afi_mail;
     this.credito.scr_nent = this.informacionLaboral.apo_razs;
     this.credito.scr_teem = Number(this.informacionLaboral.dsu_tele);
     this.credito.scr_diem = this.informacionLaboral.dsu_dire;
@@ -473,24 +554,32 @@ export class ScfscrevComponent implements OnInit {
     this.credito.mun_codu = this.informacionLaboral.mun_codi;
     this.credito.scr_sala = this.informacionLaboral.tra_salb;
     this.credito.scr_care = this.informacionLaboral.itn_carg;
+
+    this.credito.scr_trab = this.trabaja ? 'S' : 'N';
+    this.SetCfCodeu();
     this.credito.codeudores.push(this.codeudor);
+    console.log(this.codeudor);
     this._cfscrev.SetCfScrev(this.credito).subscribe(resp => {
       this.sendingCred = false;
       if (resp != undefined && resp.Retorno == 0) {
+          this.showMessage("Solicitud enviada!");
+          this.infoBasAfi.reset();
+          this.infoCred.reset();
+          this.InfoLaboral.reset();
+          this.infocodeudor.reset();
+          this.infoCodEsEmpl.reset();
+          this.CodEsIndep.reset();
+          this.refpersForm.reset();
+          this.refFamiForm.reset();
+          
       } else {
-        this.showError();
+       this.showMessage(resp.TxtError);
+       this.sendingCred=false;
       }
     });
   }
 
-  showError() {
-    this.toastService.show("I am a success toast", {
-      classname: "bg-danger text-light",
-      delay: 2000,
-      autohide: true,
-      headertext: "Error!!!"
-    });
-  }
+
   getDireccionEmitt(mensaje) {
     this.suafili.afi_dire = mensaje;
 }
@@ -539,6 +628,10 @@ async lupaDireccionesCodeu(){
 async lupaDireccionesCodeEmpl(){
   this._tableDireccionesCodeuEmpl.show();
 
+}
+showMessage(msg:string){
+this.msg = msg;
+this.alert.show();
 }
 validTrabaja(event:any){
 

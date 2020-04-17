@@ -89,6 +89,9 @@ export class cfscrev {
   scr_exem:number;
   scr_sala:number;
   scr_care:string;
+  scr_trab:string;
+  dcl_nfax:string;
+  dcl_mail:string;
   codeudores: Cfcodeu[];
   constructor(){
     this.aud_esta= "";
