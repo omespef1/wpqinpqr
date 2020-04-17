@@ -106,7 +106,7 @@ export class EerelesComponent implements OnInit {
 
   async getRelContFromService() {
     // tslint:disable-next-line:max-line-length
-    const info: any = <any>await this._comu.Get(`api/EeRemes/loadInfoRelesService?rel_serv=${this.rel_serv}&emp_codi=${102}`).toPromise();    
+    const info: any = <any>await this._comu.Get(`api/EeRemes/loadInfoRelesService?rel_serv=${this.rel_serv}&emp_codi=${0}`).toPromise();
     if (info.retorno === 0)
       this.pqpar = info.objTransaction;
   }
