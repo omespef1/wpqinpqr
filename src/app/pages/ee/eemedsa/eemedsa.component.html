@@ -1,3 +1,5 @@
+<script src="date-diff.js"></script>
+
 <ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
 </ngx-spinner>
 
@@ -8,19 +10,19 @@
 </div>
 
 <div class="container mb-4">
-    <div class="card card-gray">
+    <div class="card card-gray" *ngIf="!showChart">
         <div class="card-header bg-primary text-white">
             <span><i class="fas fa-chart-bar"></i></span> Gráficas.
         </div>
         <div class="card-body">
-            <form>
+            <form #medsaForm="ngForm" (ngSubmit)="postEeEstad(medsaForm)">
                 <div class="row">
                     <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
                         <label for="fec_fini">Fecha Inicial</label>
                         <div class="input-group">
                             <mat-datepicker-toggle [for]="pro_fent"></mat-datepicker-toggle>
                             <mat-datepicker #pro_fent touchUi></mat-datepicker>
-                            <input matInput placeholder="Fecha Inicial" required readonly [matDatepicker]="pro_fent" type="text" class="form-control" name="pro_fent" id="pro_fent">
+                            <input matInput placeholder="Fecha Inicial" [(ngModel)]="fechaIni" required readonly [matDatepicker]="pro_fent" type="text" class="form-control" name="pro_fent" id="pro_fent">
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -28,7 +30,7 @@
                         <div class="input-group">
                             <mat-datepicker-toggle [for]="pro_fven"></mat-datepicker-toggle>
                             <mat-datepicker #pro_fven touchUi></mat-datepicker>
-                            <input matInput placeholder="Fecha Final" required readonly [matDatepicker]="pro_fven" type="text" class="form-control" name="pro_fven" id="pro_fven">
+                            <input matInput placeholder="Fecha Final" [(ngModel)]="fechaFin" required readonly [matDatepicker]="pro_fven" type="text" class="form-control" name="pro_fven" id="pro_fven">
                         </div>
                     </div>
 
@@ -40,26 +42,211 @@
                                     <span><i class="fas fa-book"></i></span>
                                 </div>
                             </div>
-                            <select class="form-control" name="ree_serv">
+                            <select class="form-control" name="ree_serv" [(ngModel)]="ree_serv">
                                 <option value=undefined>Seleccione</option>
                                 <option *ngFor="let serv of GnItemsIteServ" [value]="serv.ite_cont"  >{{serv.ite_codi + ' - ' + serv.ite_nomb | titlecase}}</option>                                
                             </select>
                         </div>
                     </div>
-
                     <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 pt-3 text-right">
-                        <button type="submit" class="btn btn-success btn-md">
-                        <span><i class="fas fa-search"></i> &nbsp;Consultar</span>
-                      </button>
+                        <button type="button" (click)="clearFilter()" class="btn btn-primary btn-md btn-block btn-md"> 
+                            <span><i class="fas fa-eraser"></i> &nbsp;Reestablecer</span>
+                        </button>
                     </div>
-
-                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 pt-3 text-left">
-                        <button type="submit" class="btn btn-primary btn-md">
-                      <span><i class="fas fa-eraser"></i> &nbsp;Reestablecer</span>
-                    </button>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 pt-3 text-right">
+                        <button type="submit" class="btn btn-success btn-md btn-block btn-md"> 
+                            <span><i class="fas fa-search"></i> &nbsp;Consultar</span>
+                        </button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+
+    <div class="accordion mb-5" id="accordionEstadistic" *ngIf="showChart">
+        <div class="card">
+
+            <div *ngIf="PorcXServicio?.length" class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#diligenciadas'" aria-expanded="false" [attr.aria-controls]="'tipoPQR'">
+                <h6>
+                    ENCUESTAS DILIGENCIADAS POR SERVICIO.
+                </h6>
+            </div>
+            <div *ngIf="PorcXServicio != null && PorcXServicio?.length > 0" id="diligenciadas" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionEstadistic">
+                <div class="card-body" style="border-bottom: 0.5px solid grey;">
+                    <div class="row">
+                        <app-pie-chart style="width: 900px; height: 500px;" [infoData]=PorcXServicio>
+                        </app-pie-chart>
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Cod-Serv</th>
+                                            <th scope="col">Servicio</th>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Porcentaje</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let dat of PorcXServicio">
+                                            <td>{{dat.ite_codi}}</td>
+                                            <td>{{dat.dat_nomb}}</td>
+                                            <td>{{dat.cantidad}}</td>
+                                            <td>{{dat.porcentaje}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <p class="font-weight-bold">Total</p>
+                                            </td>
+                                            <td>
+                                                <p class="font-weight-bold">{{ getSum(PorcXServicio) }}</p>
+                                            </td>
+                                            <td>
+                                                <p class="font-weight-bold">{{ getPercent(PorcXServicio) | number: '1.0-0' }} %</p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="Satisfaccion?.length" class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#satisfaccion'" aria-expanded="false" [attr.aria-controls]="'tipoPQR'">
+                <h6>
+                    CONSOLIDADO DE SATISFACCIÓN POR CARACTERÍSTICAS.
+                </h6>
+            </div>
+
+            <div *ngIf="Satisfaccion != null && Satisfaccion?.length > 0" id="satisfaccion" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionEstadistic">
+                <div class="card-body" style="border-bottom: 0.5px solid grey;">
+                    <div class="row">
+
+                        <app-bar-chart style="width: 800px; height: 600px;" [infoData]=Satisfaccion vAxisTittle="% Satisfacción" hAxisTittle="Característica" showCodi="sec_codi" showValue="satisfaccion">
+                        </app-bar-chart>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Cod-Caract</th>
+                                            <th scope="col">Caracteristicas</th>
+                                            <th scope="col">Frecuencia</th>
+                                            <th scope="col">Calificación</th>
+                                            <th scope="col">% Satisfacción</th>
+                                            <th scope="col">Interpretación</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let dat of Satisfaccion">
+                                            <td>{{dat.sec_codi}}</td>
+                                            <td>{{dat.sec_nomb}}</td>
+                                            <td>{{dat.frecuencia}}</td>
+                                            <td>{{dat.calificacion}}</td>
+                                            <td>{{dat.satisfaccion}}</td>
+                                            <td>{{dat.interpretacion}}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-link btn-sm btn-block" data-toggle="tooltip" data-placement="top" title="Ver Detalle" (click)="verDetalle(dat.sec_cont)">
+                                                    <span><i class="fas fa-eye"></i>
+                                                    </span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="showSubChart">
+
+                        <app-bar-chart style="width: 800px; height: 600px;" [infoData]=DetalleSatis vAxisTittle="% Satisfacción" hAxisTittle="Pregunta" showCodi="drs_cont" showValue="satisfaccion">
+                        </app-bar-chart>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Cod-Pregunta</th>
+                                            <th scope="col">Pregunta</th>
+                                            <th scope="col">Frecuencia</th>
+                                            <th scope="col">Calificación</th>
+                                            <th scope="col">% Satisfacción</th>
+                                            <th scope="col">Interpretación</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let dat of DetalleSatis">
+                                            <td>{{dat.drs_cont}}</td>
+                                            <td>{{dat.drs_preg}}</td>
+                                            <td>{{dat.frecuencia}}</td>
+                                            <td>{{dat.calificacion}}</td>
+                                            <td>{{dat.satisfaccion}}</td>
+                                            <td>{{dat.interpretacion}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="Oportunidad?.length" class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#oportunidad'" aria-expanded="false" [attr.aria-controls]="'tipoPQR'">
+                <h6>
+                    CONSOLIDADO OPORTUNIDAD POR SERVICIOS.
+                </h6>
+            </div>
+
+            <div *ngIf="Oportunidad != null && Oportunidad?.length > 0" id="oportunidad" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionEstadistic">
+                <div class="card-body" style="border-bottom: 0.5px solid grey;">
+                    <div class="row">
+
+                        <app-bar-chart style="width: 800px; height: 600px;" [infoData]=Oportunidad vAxisTittle="% Oportunidad" hAxisTittle="Servicio" showCodi="ser_codi" showValue="oportunidad">
+                        </app-bar-chart>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Cod-Serv</th>
+                                            <th scope="col">Servicio</th>
+                                            <th scope="col">Frecuencia</th>
+                                            <th scope="col">Calificación</th>
+                                            <th scope="col">% Oportunidad</th>
+                                            <th scope="col">Interpretación</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let dat of Oportunidad">
+                                            <td>{{dat.ser_codi}}</td>
+                                            <td>{{dat.ser_nomb}}</td>
+                                            <td>{{dat.frecuencia}}</td>
+                                            <td>{{dat.calificacion}}</td>
+                                            <td>{{dat.oportunidad}}</td>
+                                            <td>{{dat.interpretacion}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary btn-lg btn-block btn-lg" (click)="returnView()">
+                <span><i class="fas fa-backward"></i> Volver</span>
+            </button>
+        </div>
+    </div>
 </div>
+
+<app-alert-message [message]="msg"></app-alert-message>

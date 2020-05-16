@@ -86,6 +86,8 @@ export class SfforpoComponent implements OnInit {
   tRecursosComp = 0;
   tValorViviend = 0;
 
+  mod_valo = true;
+
   constructor(private spinner: NgxSpinnerService, private sanitizer: DomSanitizer, private titleService: Title,
     private route: ActivatedRoute, private _gnempre: GnempreService, private _service: SfForpoService,
     private _serviceLoc: LocalizacionService) {
@@ -198,6 +200,15 @@ export class SfforpoComponent implements OnInit {
     this.InfoModvi.tco_codi = rowSelected.TCO_CODI;
     this.InfoModvi.tco_nomb = rowSelected.TCO_NOMB;
     this.InfoDModv.mod_cspm = rowSelected.MOD_CSPM;
+    this.InfoDModv.tco_zona = rowSelected.TCO_ZONA;
+
+    if (this.InfoDModv.mod_cspm === 'S')
+      this.mod_valo = false;
+    else if (this.InfoDModv.tco_zona === 'U')
+      this.mod_valo = false;
+    else
+      this.mod_valo = true;
+    
   }
 
   getRadicado() {
@@ -241,8 +252,10 @@ export class SfforpoComponent implements OnInit {
   }
 
   setAfiliados(rowSelected: any) {
+
     this.fovis.InfoAportante.afi_cont = rowSelected.AFI_CONT;
     this.spinner.show();
+
     this._service.loadInfoAfiliados(this.emp_codi, this.fovis.InfoAportante.afi_cont, true).subscribe(resp => {
       if (resp.retorno === 0) {
         this.fovis = resp.objTransaction;
@@ -251,11 +264,14 @@ export class SfforpoComponent implements OnInit {
         if (this.fovis.InfoConyuge.afi_cont !== 0)
           this.fovis.InfoAportante.for_nmie += 1;
 
-      } else
+      } else {
         this.showAlertMesssage(resp.txtRetorno);
+        this.spinner.hide();
+        return;
+      }
+      this.ValidInfoAfiliado();
+      this.spinner.hide();
     });
-    this.spinner.hide();
-    this.ValidInfoAfiliado();
   }
 
   ValidInfoAfiliado() {
@@ -578,6 +594,11 @@ export class SfforpoComponent implements OnInit {
       this.fovis.num_sala = (Number(this.fovis.InfoAportante.for_ting) / Number(this.fovis.InfoGnmasal.mas_vrsm)).toFixed(4);
       this.GetInfoIngresosMensuales();
     }
+
+    if (this.mod_valo)
+    this.forpo.InfoHogar.dfo_vsol = undefined;
+    else
+      this.forpo.InfoHogar.dfo_vsol = this.InfoDModv.dfo_vsol;
   }
 
   ValidarDatos(ev) {

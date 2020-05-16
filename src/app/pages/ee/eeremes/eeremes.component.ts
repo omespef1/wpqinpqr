@@ -8,6 +8,7 @@ import { ToTransaction } from 'src/classes/gn/toTransaction';
 import { gnItem } from 'src/classes/models';
 import { Eereenc } from 'src/classes/ee/eereenc';
 import { NgForm } from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-eeremes',
@@ -25,8 +26,9 @@ export class EeremesComponent implements OnInit {
   public eereenc: Eereenc = new Eereenc();
   public GnItemsIteServ: gnItem[];
   public GnItemsIteFoRe: gnItem[];
+  public rem_cont = '';
 
-  constructor( private _service: EeremesService, private spinner: NgxSpinnerService) { }
+  constructor( private _service: EeremesService, private spinner: NgxSpinnerService, private router: Router) { }
 
   ngOnInit() {
     this.loadItems();
@@ -90,19 +92,24 @@ export class EeremesComponent implements OnInit {
     this.loadItems();
   }
 
-  revEncode(rev_cont: any) {
-
-    if (rev_cont !== undefined)
-      return btoa(rev_cont);
+  revEncode(data: any) {
+    if (data !== undefined)
+      return btoa(data);
   }
 
   insertInfoMedicion() {
     this.topFunction();
     this.spinner.show();
     this._service.saveInfoMedicion(this.eereenc).subscribe(resp => {
-      if (resp.retorno === 0)
-       this.clearForm();
-      else
+      if (resp.retorno === 0) {
+        this.rem_cont = resp.txtRetorno;
+        const relServ = this.revEncode(this.eereenc.ree_serv);
+        const empCodi = this.revEncode(0);
+        const remCont = this.revEncode(this.rem_cont);
+        this.clearForm();
+        // tslint:disable-next-line:max-line-length
+        this.router.navigateByUrl('/eereles?rel_serv=' + relServ + '&emp_codi=' + empCodi + '&rem_cont=' + remCont);
+      } else
         this.showAlertMesssage(resp.txtRetorno);
     });
     this.spinner.hide();

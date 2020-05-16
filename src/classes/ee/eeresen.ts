@@ -4,4 +4,5 @@ export class EeResen {
     public rse_cont: number;
     public drs_cont: number;
     public res_valo: string;
+    public rem_cont: number;
 }

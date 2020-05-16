@@ -103,6 +103,7 @@
                         </div>
 
                         <div id="{{'collapsed' + Iseccion.toString()}}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+
                             <ng-template ngFor let-pregunta [ngForOf]="seccion.Preguntas" let-i="index">
                                 <ng-container [ngSwitch]="pregunta.drs_clas">
                                     <ng-template [ngSwitchCase]="'P'">
@@ -119,12 +120,11 @@
                                                     <td style="width: 75%">
                                                         {{pregunta.drs_preg}}
                                                     </td>
-
                                                     <td *ngFor="let number of [1,2,3,4,5]; let j = index;" class="text-center">
                                                         <div class="custom-control custom-radio custom-control-inline m-auto">
-                                                            <input required type="radio" class="custom-control-input" (change)="setInfoResen(j+1 , reles.rel_cont, pregunta.drs_cont, pregunta.rse_cont, pregunta.drs_clas, 'Puntuacion' + i.toString() + j.toString())" id="{{'Puntuacion' + i.toString() + j.toString() }}"
-                                                                name="{{'groupPuntuacion' + i.toString() }}">
-                                                            <label class="custom-control-label" for="{{'Puntuacion' + i.toString() + j.toString() }}"></label>
+                                                            <input required type="radio" class="custom-control-input" (change)="setInfoResen(j+1 , reles.rel_cont, pregunta.drs_cont, pregunta.rse_cont, pregunta.drs_clas, 'Puntuacion' + i.toString() + j.toString(), pregunta.drs_preg)" id="{{'Puntuacion' + i.toString() + j.toString() + pregunta.drs_cont.toString() }}"
+                                                                name="{{'groupPuntuacion' + pregunta.drs_cont.toString() }}">
+                                                            <label class="custom-control-label" for="{{'Puntuacion' + i.toString() + j.toString() + pregunta.drs_cont.toString()}}"></label>
                                                         </div>
                                                     </td>
                                                 </tr>

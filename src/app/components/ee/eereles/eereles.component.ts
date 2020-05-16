@@ -39,6 +39,7 @@ export class EerelesComponent implements OnInit {
   countEerelesMult = 0;
 
   public rel_serv = 0;
+  public rem_cont = 0;
 
   // tslint:disable-next-line:max-line-length
   constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer, private titleService: Title, private route: ActivatedRoute, private _confirm: ConfirmDialogComponent, private env: EnvService) {
@@ -48,8 +49,10 @@ export class EerelesComponent implements OnInit {
     try {
       this.setTitle('Encuesta de Satisfacción');
       this.spinner.show();
+      
       await this.GetParams();
-        if (this.inp_cont !== 0) {
+
+      if (this.inp_cont !== 0) {
         await this.LoadPqParam();
         await this.LoadInfoPqr();
 
@@ -73,8 +76,10 @@ export class EerelesComponent implements OnInit {
 
         if (queryParams.get('inp_cont') != null)
           this.inp_cont = Number(atob(queryParams.get('inp_cont')));
-        else
+        else {
+          this.rem_cont = Number(atob(queryParams.get('rem_cont')));
           this.rel_serv = Number(atob(queryParams.get('rel_serv')));
+        }
 
         if (queryParams.get('emp_codi') != null) {
           this.emp_codi = Number(atob(queryParams.get('emp_codi')));
@@ -114,9 +119,11 @@ export class EerelesComponent implements OnInit {
   async GetEeReles() {
     const info: any = <any>await this._comu.Get(`api/EeReles/EeRelesLoad?rel_cont=${this.pqpar.rel_cont}`).toPromise();
     if (info.retorno === 0)
-      this.reles = info.objTransaction;
+      this.reles = info.objTransaction;      
     else
       this.showAlertMesssage(info.txtRetorno);
+
+      console.log(this.reles);
   }
 
   showAlertMesssage(msg: string) {
@@ -131,17 +138,20 @@ export class EerelesComponent implements OnInit {
   setInfoText($event: KeyboardEvent, _rel_cont: number, _pre_cont: number, _drp_cont) {
     const value = (<HTMLInputElement>event.target).value;
     if ($event.keyCode !== 9) {
-      this.setInfoResen(value, _rel_cont, _pre_cont, _drp_cont, 'A', '');
+      this.setInfoResen(value, _rel_cont, _pre_cont, _drp_cont, 'A', '', '');
     }
   }
 
-  public setInfoResen(_res_valo: string, _rel_cont: number, _drs_cont: number, _rse_cont, _type: string, _id: string) {
+  public setInfoResen(_res_valo: string, _rel_cont: number, _drs_cont: number, _rse_cont, _type: string, _id: string, _drs_preg: string) {
+
     this.resen = new EeResen();
     this.resen.res_valo = _res_valo;
     this.resen.rel_cont = _rel_cont;
     this.resen.rse_cont = _rse_cont;
     this.resen.drs_cont = _drs_cont;
     this.resen.inp_cont = this.inp_cont;
+    this.resen.rem_cont = this.rem_cont;
+    const drs_pre = _drs_preg;
     const i = this.eeresen.indexOf(this.eeresen.filter(t => t.drs_cont === _drs_cont && t.rse_cont === _rse_cont)[0]);
 
     if (_type === 'P') {
@@ -172,6 +182,7 @@ export class EerelesComponent implements OnInit {
     this.resem.drp_cont = _drp_cont;
     this.resem.ddp_cont = _ddp_cont;
     this.resem.inp_cont = this.inp_cont;
+    this.resem.rem_cont = this.rem_cont;
     this.arrElements = [];
     const i = this.eeresem.indexOf(this.eeresem.filter(t => t.ddp_cont === _ddp_cont && t.drp_cont === _drp_cont)[0]);
 
@@ -243,4 +254,5 @@ export class EerelesComponent implements OnInit {
     this.eeresem = [];
     this.GetEeReles();
   }
+  
 }

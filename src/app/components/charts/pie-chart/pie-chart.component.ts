@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ElementRef, ViewChild, Input } from '@angular/core';
-import { InfoPqEstad } from 'src/classes/pq/pqestad';
 
 declare var google: any;
 
@@ -12,7 +11,8 @@ export class PieChartComponent implements AfterViewInit {
   @ViewChild('pieChart') pieChart: ElementRef;
 
   @Input()
-  public infoData: InfoPqEstad[] = [];
+  public infoData: any[] = [];
+  // public infoData: InfoPqEstad[] = [];
 
   @Input()
   public columnNames: Array<string>;
@@ -25,6 +25,9 @@ export class PieChartComponent implements AfterViewInit {
 
   @Input()
   public isGrouped = false;
+
+  @Input()
+  public formName: string;
 
   data = new google.visualization.DataTable();
   stringData = '';
@@ -44,10 +47,10 @@ export class PieChartComponent implements AfterViewInit {
 
     this.options = {
       title: this.title,
-      legend: { position: 'right', textStyle: { fontSize: 10 }},
+      legend: { position: 'right', textStyle: { fontSize: 12 }},
       is3D: true,
-      chartArea: {left: '20%', width: '80%'},
-      sliceVisibilityThreshold: 0.0001,
+      chartArea: {left: '10%', width: '90%'},
+      sliceVisibilityThreshold: 0,
       tooltip: {
         showColorCode: true,
         text: 'value',
@@ -89,6 +92,7 @@ export class PieChartComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+
     if (this.data !== undefined) {
       this.drawChart();
       google.setOnLoadCallback(this.drawChart);
@@ -101,7 +105,7 @@ export class PieChartComponent implements AfterViewInit {
       const newDataArray = dataArray.concat(eval('[' + this.stringData + ']'));
       const data = google.visualization.arrayToDataTable(newDataArray);
       const chart = new google.visualization.PieChart(this.pieChart.nativeElement);
-      chart.draw(data, this.options);
+      chart.draw(data, this.options);      
     }
   }
 }

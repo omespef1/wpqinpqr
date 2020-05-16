@@ -1162,7 +1162,7 @@
                                                 <span><i class="fas fa-money-check-alt"></i></span>
                                             </div>
                                         </div>
-                                        <input type="text" name="dfo_vsol" [(ngModel)]="forpo.InfoHogar.dfo_vsol" required #dfo_vsol="ngModel" class="form-control" placeholder="Valor Solicitado" autocomplete="off">
+                                        <input type="text" name="dfo_vsol" [(ngModel)]="forpo.InfoHogar.dfo_vsol" [disabled]="!mod_valo" class="form-control" placeholder="Valor Solicitado" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -1681,7 +1681,7 @@
                                                             <tbody>
                                                                 <tr *ngFor="let ddf of InfoDdforFilter(con_codi, 'R') | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
                                                                     <td>{{ ddf.ddf_entc }}</td>
-                                                                    <td>{{ ddf.ddf_fecc | date: 'dd/MM/yyyy'}}</td>
+                                                                    <td>{{ ddf.ddf_feca | date: 'dd/MM/yyyy'}}</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -1709,7 +1709,7 @@
                                                         <div class="input-group">
                                                             <mat-datepicker-toggle [for]="ddf_fecR"></mat-datepicker-toggle>
                                                             <mat-datepicker #ddf_fecR touchUi></mat-datepicker>
-                                                            <input name="ddf_fecR" [(ngModel)]="sfddforR.ddf_fecc" readonly matInput placeholder="  Fecha Apertura" [matDatepicker]="ddf_fecR" type="text" class="form-control">
+                                                            <input name="ddf_fecR" [(ngModel)]="sfddforR.ddf_feca" readonly matInput placeholder="  Fecha Apertura" [matDatepicker]="ddf_fecR" type="text" class="form-control">
                                                             <button type="button" (click)="addDdforR()" class="btn btn-secondary btn-md ml-2">Agregar</button>
                                                         </div>
                                                     </div>
@@ -1811,7 +1811,7 @@
                                                                 <span><i class="fas fa-money-bill-alt"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input type="text" name="dfo_vpre" [(ngModel)]="tAhorroPrevio" readonly class="form-control" placeholder="Ahorro Previo" autocomplete="off">
+                                                        <input type="text" name="tAhorroPrevio" [(ngModel)]="tAhorroPrevio" readonly class="form-control" placeholder="Ahorro Previo" autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">

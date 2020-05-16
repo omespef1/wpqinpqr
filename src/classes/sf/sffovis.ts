@@ -98,7 +98,9 @@ export class InfoDmodv {
     public dmo_rsmd: number;
     public dmo_rsmh: number;
     public dmo_fsvs: number;
+    public dfo_vsol: number;
     public mod_cspm = '';
+    public tco_zona = '';
 }
 
 export class Gnmasal {

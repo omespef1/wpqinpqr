@@ -4,4 +4,5 @@ export class EeResem {
     public drp_cont: number;
     public ddp_cont: number;
     public res_valo: string;
+    public rem_cont: number;
 }

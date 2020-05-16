@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { GnempreComponent } from '../components/gn/gnempre/gnempre.component';
 import { AlertMessageComponent } from '../components/dialogs/alert-message/alert-message.component';
 import { PieChartComponent } from '../components/charts/pie-chart/pie-chart.component';
+import { BarChartComponent } from '../components/charts/bar-chart/bar-chart.component';
 import { GroupByPipe } from '../pipes/groupdata.pipe';
 import { NewTableSearchComponent } from '../components/tools/new-table-search/new-table-search.component';
 // tslint:disable-next-line:max-line-length
@@ -24,12 +25,14 @@ import { NgxPaginationModule } from 'ngx-pagination';
     GnempreComponent,
     AlertMessageComponent,
     PieChartComponent,
+    BarChartComponent,
     GroupByPipe,
     NewTableSearchComponent
   ],
   exports: [ GnempreComponent,
     AlertMessageComponent,
     PieChartComponent,
+    BarChartComponent,
     GroupByPipe,
     NewTableSearchComponent,
     MatDatepickerModule,

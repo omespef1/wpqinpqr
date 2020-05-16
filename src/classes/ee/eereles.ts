@@ -13,6 +13,7 @@ export class EeDrele {
 }
 
 export class EeDrsee {
+    public drs_cont: number;
     public pre_cont: number;
     public drs_preg: string;
     public drs_clas: string;

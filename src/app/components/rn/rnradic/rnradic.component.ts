@@ -96,6 +96,7 @@ export class RnradicComponent implements OnInit {
 
   hasBaseDropZoneOver = false;
   uploader: FileUploader = new FileUploader({});
+  showGuardar = true;
 
   constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer,
     private titleService: Title, private route: ActivatedRoute, private _confirm: ConfirmDialogComponent, private env: EnvService) {
@@ -134,22 +135,19 @@ export class RnradicComponent implements OnInit {
    }
 
    clear() {
-    this.radic.rad_pais = 0;
-    this.radic.rad_regi = 0;
-    this.radic.rad_depa = 0;
-    this.radic.rad_muni = 0;
-    this.radic.rad_loca = 0;
-    this.radic.rad_barr = 0;
-    // this.gnregio = [];
-    // this.gndepar = [];
-    // this.gnmunic = [];
-    // this.gnlocal = [];
-    // this.gnbarri = [];
-    // this.sumpare = [];
-    this.Load();
-    this.radic.rad_tdat = 'N';
-    this.uploader.clearQueue();
-    this.selectedPare = new SumPare();
+
+    this.showGuardar = false;
+
+    // this.radic.rad_pais = 0;
+    // this.radic.rad_regi = 0;
+    // this.radic.rad_depa = 0;
+    // this.radic.rad_muni = 0;
+    // this.radic.rad_loca = 0;
+    // this.radic.rad_barr = 0;
+    // this.Load();
+    // this.radic.rad_tdat = 'N';
+    // this.uploader.clearQueue();
+    // this.selectedPare = new SumPare();
    }
 
    async saveRadic(form: NgForm) {
@@ -157,14 +155,14 @@ export class RnradicComponent implements OnInit {
       if (resp.retorno !== undefined) {
         if (resp.retorno === 0) {
           this.spinner.hide();
-
           const rad_cont: number = resp.objTransaction.rad_cont;
+          const rad_nume: string = resp.objTransaction.rad_nume;
 
           if (rad_cont !== 0) {
             this.saveAdjuntos(rad_cont);
-            this.showAlertMesssage('Documento guardado correctamente.');
+            this.showAlertMesssage('Radicado guardado correctamente # ' + rad_nume);
             this.clear();
-            form.reset();
+            // form.reset();
           }
         } else {
           this.showAlertMesssage(resp.txtRetorno);
@@ -505,12 +503,12 @@ cleanDataForm() {
   this.radic.dsu_tele = '';
   this.radic.rad_dire = '';
   this.radic.rad_emai = '';
-  this.radic.rad_pais = 0;
-  this.radic.rad_regi = 0;
-  this.radic.rad_depa = 0;
-  this.radic.rad_muni = 0;
-  this.radic.rad_loca = 0;
-  this.radic.rad_barr = 0;
+  this.radic.rad_pais = undefined;
+  this.radic.rad_regi = undefined;
+  this.radic.rad_depa = undefined;
+  this.radic.rad_muni = undefined;
+  this.radic.rad_loca = undefined;
+  this.radic.rad_barr = undefined;
 }
   showAlertMesssage(msg: string) {
     this.msg = msg;
@@ -532,12 +530,11 @@ cleanDataForm() {
 
       if (resp.retorno === 0) {
         this.gnregio = resp.objTransaction.GnRegio;
+        this.radic.rad_regi = undefined;
       } else {
         this.showAlertMesssage(`${resp.txtRetorno}`);
       }
     }, err => {
-      console.log(err);
-      // this.spinner.hide();
       this.showAlertMesssage(`Error conectando con el servidor, verfique que el servidor configurado esté escrito correctamente`);
     });
   }
@@ -791,9 +788,16 @@ cleanDataForm() {
   getDireccionEmitt(mensaje) {
       this.radic.rad_dire = mensaje;
   }
-  
+
   fileOverBase(event): void {
     this.hasBaseDropZoneOver = event;
   }
 
+  trackByIdx(index: number, obj: any): any {
+    return index;
+  }
+
+  deleteFile(index: number) {
+    this.uploader.queue[index].remove();
+  }
 }

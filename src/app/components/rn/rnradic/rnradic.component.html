@@ -109,9 +109,12 @@
                     <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                         <div class="input-group">
                             <h4>Total de archivos: {{ uploader?.queue?.length }}</h4>
-                            <ul>
-                                <li *ngFor="let item of uploader.queue">
-                                    {{ item?.file?.name }}
+                            <ul class="fa-ul">
+                                <li *ngFor="let item of uploader.queue;let index=index; trackBy:trackByIdx()">
+                                    <span class="fa-li" placement="top" ngbTooltip="Tooltip on top">
+                                        <i title='Eliminar adjunto' class="fas fa-trash" (click)="deleteFile(index)">                                                                                  
+                                        </i>                                       
+                                    </span> {{ item?.file?.name }}
                                 </li>
                             </ul>
                         </div>
@@ -597,7 +600,7 @@
         </div>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-4 pb-3">
-                <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!radicForm.form.valid">Guardar</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!radicForm.form.valid||!showGuardar">Guardar</button>
             </div>
         </div>
     </form>
@@ -626,7 +629,6 @@
 </app-modal>
 
 <app-modal-doctos tamano="xlg" title="Documentos" (accept)="modalDoctos.dismiss();" class="mw-100">
-
     <table class="table table-hover table-striped table-bordered mt-4">
         <thead class="thead-light">
             <tr>
