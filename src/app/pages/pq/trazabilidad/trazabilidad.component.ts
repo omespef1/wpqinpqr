@@ -39,6 +39,7 @@ export class TrazabilidadComponent implements OnInit {
   visibleDetalle = false;
   visibleAdjunto = false;
   gnAdjunt: any[];
+  SPQ000003 = false;
 
   constructor(private spinner: NgxSpinnerService, private sanitizer: DomSanitizer, private titleService: Title,
     private _gnempre: GnempreService, private route: ActivatedRoute, private _service: TrazabilidadService,
@@ -73,6 +74,10 @@ export class TrazabilidadComponent implements OnInit {
     this._service.loadInfoInitTrazabilidad(this.emp_codi).subscribe(resp => {
       if (resp.retorno === 0)
        this.trazPQRWF = resp.objTransaction;
+
+        if ( this.trazPQRWF.SPQ000003 === 'S')
+          this.SPQ000003 = true;
+
     });
 
     this.spinner.hide();

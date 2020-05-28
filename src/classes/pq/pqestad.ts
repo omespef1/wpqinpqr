@@ -13,6 +13,8 @@ export class Pqestad {
    public fec_inic = new Date();
    public fec_fina = new Date();
 
+   public SPQ000003: string;
+
    public selSecc: string;
    public selForm: string;
    public selTpqr: string;

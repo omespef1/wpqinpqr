@@ -23,7 +23,7 @@ export class ConsultaComponent implements OnInit {
   pqr: pqinpqr = new pqinpqr();
   encuesta: pqEncue[] = [];
   gnAdjunt: any[];
-  showEncuesta = false;
+  deleteEncuesta = false;
   pqrIn: any = {};
   preguntas: string[] = [];
   respuestas: string[] = [];
@@ -76,6 +76,11 @@ export class ConsultaComponent implements OnInit {
 
     if (info.retorno === 0) {
       this.pqr = info.objTransaction;
+
+      if (this.pqr.dig_valo === 'S') {
+        this.deleteEncuesta = true;
+      }
+
     } else {
       this._alert.showMessage(info.txtRetorno());
     }
@@ -132,7 +137,7 @@ export class ConsultaComponent implements OnInit {
     this._conmu.Post('api/PqEncue', this.encuesta).toPromise().then((resp: any) => {
       this.spinner.show();
       if (resp.retorno === 0) {
-        this.showEncuesta = false;
+        this.deleteEncuesta = false;
         this.showMessage('Encuesta enviada!');
       } else {
         this.showMessage(resp.txtRetorno);
@@ -163,9 +168,9 @@ export class ConsultaComponent implements OnInit {
     this.spinner.show();
     this._conmu.Get(`api/PqEncue?inp_cont=${this.pqr.inp_cont}`).toPromise().then((resp: any) => {
       this.spinner.hide();
-      if (resp.retorno === 0) {
-        this.showEncuesta = true;
-      }
+      // if (resp.retorno === 0) {
+      //   this.showEncuesta = true;
+      // }
     }, err => {
       this.spinner.hide();
       this.showMessage('Error conectando con el servidor');

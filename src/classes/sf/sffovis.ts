@@ -72,6 +72,8 @@ export class InfoAportante {
     public afi_cond: string;
     public apo_razs: string;
     public afi_ipil: number;
+    public ite_pare: number;
+    public mpa_codi: string;
     public mpa_nomb: string;
 }
 

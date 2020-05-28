@@ -83,4 +83,8 @@ export class SfForpoService {
       return this._comu.GetTransaction<ToTransaction>(`/api/Fovis/SfForpoGetConcepto?emp_codi=${emp_codi}&con_tipo=${con_tipo}`);
   }
 
+  loadParentesco() {
+    // tslint:disable-next-line:max-line-length
+    return this._comu.GetTransaction<ToTransaction>(`/api/Fovis/SfForpoGetParentesco`);
+  }
 }

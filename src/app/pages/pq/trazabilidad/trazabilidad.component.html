@@ -18,7 +18,7 @@
                         <div class="input-group">
                             <mat-datepicker-toggle [for]="pro_fent"></mat-datepicker-toggle>
                             <mat-datepicker #pro_fent touchUi></mat-datepicker>
-                            <input [(ngModel)]="trazPQRWF.fec_inic" matInput placeholder="Fecha Inicial" required readonly [matDatepicker]="pro_fent" type="text" class="form-control" name="pro_fent" id="pro_fent">
+                            <input [(ngModel)]="trazPQRWF.fec_inic" matInput placeholder="Fecha Inicial" readonly [matDatepicker]="pro_fent" type="text" class="form-control" name="pro_fent" id="pro_fent">
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -26,7 +26,7 @@
                         <div class="input-group">
                             <mat-datepicker-toggle [for]="pro_fven"></mat-datepicker-toggle>
                             <mat-datepicker #pro_fven touchUi></mat-datepicker>
-                            <input [(ngModel)]="trazPQRWF.fec_fina" matInput placeholder="Fecha Final" required readonly [matDatepicker]="pro_fven" type="text" class="form-control" name="pro_fven" id="pro_fven">
+                            <input [(ngModel)]="trazPQRWF.fec_fina" matInput placeholder="Fecha Final" readonly [matDatepicker]="pro_fven" type="text" class="form-control" name="pro_fven" id="pro_fven">
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -100,7 +100,7 @@
                               </select>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf="SPQ000003">
                         <label for="rev_esta">SubTipificación</label>
                         <div class="input-group text-center">
                             <div class="input-group-prepend">

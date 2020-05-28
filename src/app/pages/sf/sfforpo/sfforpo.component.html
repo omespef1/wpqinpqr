@@ -7,6 +7,8 @@
 <form #forpoForm="ngForm" (ngSubmit)="PostForpo(forpoForm)">
     <div class="container">
         <div class="card card-gray mb-5">
+            <ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large" fullScreen="true">
+            </ngx-spinner>
             <div class="card-header bg-primary text-white">FOVIS</div>
             <div class="card-body">
                 <nav>
@@ -941,7 +943,11 @@
                                                             <span><i class="fas fa-user-friends"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input readonly type="text" class="form-control" placeholder="Parentesco" name="afi_mpa_otro" [(ngModel)]="InfoOtrosMiembros.mpa_nomb">
+                                                    <input name="mpa_codi" [(ngModel)]="InfoOtrosMiembros.mpa_codi" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                    <input readonly type="text" class="form-control" placeholder="Parentesco" style="width: 50%;" name="afi_mpa_otro" [(ngModel)]="InfoOtrosMiembros.mpa_nomb">
+                                                    <button type="button" class="btn btn-primary" (click)="getParentescoOtrosM()">
+                                                        <span><i class="fas fa-search"></i></span>
+                                                    </button>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -2085,9 +2091,7 @@
 
 <app-new-table-search Title="Conceptos Recursos" [displayedColumns]="['CON_CODI', 'CON_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setConceptoR($event)" btnModalQb="btnConceptoR" ModalQb="modalConceptoR" #modalConceptoR></app-new-table-search>
 
-<ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
-</ngx-spinner>
-
+<app-new-table-search Title="Parentesco" [displayedColumns]="['ITE_CODI', 'ITE_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setParentescoOtrosM($event)" btnModalQb="btnParentesco" ModalQb="modalParentesco" #modalParentesco></app-new-table-search>
 
 <app-gnempre title="Seleccione empresa" (accept)="_EmpreModal.dismiss();load()">
     <form>

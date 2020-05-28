@@ -38,6 +38,7 @@ export class pqinpqr {
   public usu_codi: string;
   public cas_cont: number;
   public inp_fech: Date;
+  public dig_valo: string;
   seguimientos: any[];
 }
 export class ask {

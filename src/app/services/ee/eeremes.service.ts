@@ -35,4 +35,8 @@ export class EeremesService {
   actualizarPolitica(cli_coda: string) {
     return this._comu.GetTransaction<any>(`api/EeRemes/updateTratamiento?cli_coda=${cli_coda}`);
   }
+
+  validarEncuestaUsuario(cli_coda: string, ite_serv: number) {
+    return this._comu.GetTransaction<any>(`api/EeRemes/loadValidInfoEnc?cli_coda=${cli_coda}&ite_serv=${ite_serv}`);
+  }
 }

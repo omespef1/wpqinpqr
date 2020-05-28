@@ -100,18 +100,25 @@ export class EeremesComponent implements OnInit {
   insertInfoMedicion() {
     this.topFunction();
     this.spinner.show();
-    this._service.saveInfoMedicion(this.eereenc).subscribe(resp => {
-      if (resp.retorno === 0) {
-        this.rem_cont = resp.txtRetorno;
-        const relServ = this.revEncode(this.eereenc.ree_serv);
-        const empCodi = this.revEncode(0);
-        const remCont = this.revEncode(this.rem_cont);
-        this.clearForm();
-        // tslint:disable-next-line:max-line-length
-        this.router.navigateByUrl('/eereles?rel_serv=' + relServ + '&emp_codi=' + empCodi + '&rem_cont=' + remCont);
-      } else
-        this.showAlertMesssage(resp.txtRetorno);
+
+    this._service.validarEncuestaUsuario(this.eereenc.cli_coda, this.eereenc.ree_serv).subscribe(respEnc => {
+      if (respEnc.retorno === 0)
+        this._service.saveInfoMedicion(this.eereenc).subscribe(resp => {
+          if (resp.retorno === 0) {
+            this.rem_cont = resp.txtRetorno;
+            const relServ = this.revEncode(this.eereenc.ree_serv);
+            const empCodi = this.revEncode(0);
+            const remCont = this.revEncode(this.rem_cont);
+            this.clearForm();
+            // tslint:disable-next-line:max-line-length
+            this.router.navigateByUrl('/eereles?rel_serv=' + relServ + '&emp_codi=' + empCodi + '&rem_cont=' + remCont);
+          } else
+            this.showAlertMesssage(resp.txtRetorno);
+        });
+      else
+        this.showAlertMesssage('Ya se registró la encuesta de satisfacción y no es permitido volver a diligenciarla.');
     });
+
     this.spinner.hide();
   }
 

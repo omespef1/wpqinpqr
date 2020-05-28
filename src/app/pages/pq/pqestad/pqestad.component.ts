@@ -33,6 +33,7 @@ export class PqestadComponent implements OnInit {
   filter = '';
   titulo = '';
   myForm: NgForm;
+  SPQ000003 = false;
 
   estadisti: Pqestad = new Pqestad();
 
@@ -76,6 +77,10 @@ load() {
   this._service.loadInfoEstadisticas(this.emp_codi).subscribe(resp => {
     if (resp.retorno === 0)
       this.estadisti = resp.objTransaction;
+
+      if ( this.estadisti.SPQ000003 === 'S')
+      this.SPQ000003 = true;
+
   });
 
   this.spinner.hide();

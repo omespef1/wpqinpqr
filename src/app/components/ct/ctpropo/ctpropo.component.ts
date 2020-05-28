@@ -18,6 +18,7 @@ import { Ctdtrda, ObjTratamiento } from 'src/classes/ct/ctdtrda';
 import {ToTransaction} from '../../../../classes/gn/toTransaction';
 import { Ctrevdo } from 'src/classes/ct/ctrevdo';
 import { EnvService } from 'src/app/env.service';
+import { AddressToolComponent } from '../../tools/address-tool/address-tool.component';
 
 @Component({
   selector: 'app-ctpropo',
@@ -29,7 +30,8 @@ export class CtpropoComponent implements OnInit {
   @ViewChild(TableSearchComponent) _table: TableSearchComponent;
   @ViewChild(AlertComponent) alert: AlertComponent;
   @ViewChild(ModalComponent) modal: ModalComponent;
-
+  @ViewChild(AddressToolComponent) address: AddressToolComponent;
+  
   propo: Ctpropo = new Ctpropo();
   docpr: Ctdocpr = new Ctdocpr(0, '', null, null, '', null , '');
 
@@ -73,6 +75,8 @@ export class CtpropoComponent implements OnInit {
   public usu_codi: String = '';
   mailTo: String = '';
   saveOK = false;
+  SGN000008 = '';
+  typeDir = '';
 
   constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer,
    private titleService: Title, private route: ActivatedRoute, private _confirm: ConfirmDialogComponent, private env: EnvService) {
@@ -297,7 +301,8 @@ export class CtpropoComponent implements OnInit {
 
     this._comu.Get(query, this.propo.emp_codi).subscribe((resp: any) => {
       if (resp.retorno === 0) {
-        this.logo = resp.objTransaction.empImage;
+        this.logo    = resp.objTransaction.empImage;
+        this.SGN000008 = resp.objTransaction.SGN000008;
         this.gntipdo = resp.objTransaction.tipdoct;
         this.ctcamar = resp.objTransaction.CtCamar;
         this.ctcontr = resp.objTransaction.tipCont;
@@ -732,5 +737,17 @@ Aprobar() {
 
   reloadPage() {
     location.reload();
+  }
+
+  async lupaDirecciones(type: string) {
+    this.typeDir = type;
+    this.address.show();
+  }
+
+  getDireccionEmitt(mensaje) {
+    if (this.typeDir === 'L')
+      this.propo.pro_dire = mensaje;
+    else if (this.typeDir === 'O')
+      this.propo.pro_dirn = mensaje;
   }
 }

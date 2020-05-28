@@ -144,7 +144,10 @@
                                                 <span><i class="fas fa-map-marked-alt"></i></span>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Dirección" name="pro_dire" id="pro_dire" [(ngModel)]="propo.pro_dire" required #pro_dire="ngModel">
+                                        <input type="text" class="form-control" placeholder="Dirección" name="pro_dire" [(ngModel)]="propo.pro_dire" required [readonly]='SGN000008 === "S"' #pro_dire="ngModel">
+                                        <button type="button" class="btn btn-primary" (click)="lupaDirecciones('L')" *ngIf="SGN000008 === 'S'">
+                                            <span><i class="fas fa-search"></i></span>
+                                        </button>
                                     </div>
                                     <div [hidden]="pro_dire.valid || pro_dire.pristine" class="alert alert-danger">
                                         Dirección es requerida
@@ -622,7 +625,10 @@
                                                 <span><i class="fas fa-map-marker-alt"></i></span>
                                             </div>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Dirección de Notificación" name="pro_dirn" id="pro_dirn" [(ngModel)]="propo.pro_dirn" required #pro_dirn="ngModel">
+                                        <input type="text" class="form-control" placeholder="Dirección de Notificación" name="pro_dirn" id="pro_dirn" [(ngModel)]="propo.pro_dirn" required [readonly]='SGN000008 === "S"' #pro_dirn="ngModel">
+                                        <button type="button" class="btn btn-primary" (click)="lupaDirecciones('O')" *ngIf="SGN000008 === 'S'">
+                                            <span><i class="fas fa-search"></i></span>
+                                        </button>
                                     </div>
                                     <div [hidden]="pro_dirn.valid || pro_dirn.pristine" class="alert alert-danger">
                                         Dirección de Notificación es requerida
@@ -1148,6 +1154,9 @@
         </div>
     </form>
 </div>
+
+
+<app-address-tool (myAddress)="getDireccionEmitt($event)"></app-address-tool>
 
 <app-alert [message]="msg"></app-alert>
 <app-modal title="Seleccione empresa" (accept)="modal.dismiss();Load()">

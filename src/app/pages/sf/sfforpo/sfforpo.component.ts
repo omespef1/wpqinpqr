@@ -48,6 +48,7 @@ export class SfforpoComponent implements OnInit {
   @ViewChild('modalTpostulanteOtrosM') _tableTipoPosOtrosM: NewTableSearchComponent;
   @ViewChild('modalConcepto') _tableConcepto: NewTableSearchComponent;
   @ViewChild('modalConceptoR') _tableConceptoR: NewTableSearchComponent;
+  @ViewChild('modalParentesco') _tableParentesco: NewTableSearchComponent;
 
   @Output() rowCLick: EventEmitter<any>;
 
@@ -148,14 +149,16 @@ export class SfforpoComponent implements OnInit {
 
 
   PostForpo(form: NgForm) {
-  if (this.fovis.val_tdat)
+  this.spinner.show();
+  if (this.fovis.val_tdat) {
     this.fovis.InfoAportante.for_tdat = 'S';
-  else
+    this.spinner.hide();
+  } else
     this.fovis.InfoAportante.for_tdat = 'N';
     this.forpo.InfoAportante = this.fovis;
     this.topFunction();
-    this.spinner.show();
     this._service.saveInfoFovis(this.forpo).subscribe(resp => {
+      this.spinner.hide();
       this.showAlertMesssage(resp.txtRetorno);
       if (resp.retorno === 0) {
         form.reset();
@@ -163,7 +166,6 @@ export class SfforpoComponent implements OnInit {
       } else
         this.showAlertMesssage(resp.txtRetorno);
     });
-    this.spinner.hide();
   }
 
   public setTitle(newTitle: string) {
@@ -553,6 +555,25 @@ export class SfforpoComponent implements OnInit {
     this.sfdforeR.con_codi = rowSelected.CON_CODI;
     this.sfdforeR.con_nomb = rowSelected.CON_NOMB;
     this.sfdforeA.dfo_tipo = 'R';
+  }
+
+  getParentescoOtrosM() {
+    this.spinner.show();
+    this._service.loadParentesco().subscribe(resp => {
+      if (resp.retorno === 0) {
+        this._tableParentesco.btnModalQb = 'btnParentesco';
+        this._tableParentesco.ModalQb = 'modalParentesco';
+        this._tableParentesco.render(resp.objTransaction);
+        this._tableParentesco.show();
+      }
+    });
+    this.spinner.hide();
+  }
+
+  setParentescoOtrosM(rowSelected: any) {
+    this.InfoOtrosMiembros.ite_pare = rowSelected.ITE_CONT;
+    this.InfoOtrosMiembros.mpa_codi = rowSelected.ITE_CODI;
+    this.InfoOtrosMiembros.mpa_nomb = rowSelected.ITE_NOMB;
   }
 
   numberOnly(event): boolean {

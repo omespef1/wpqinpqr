@@ -2,7 +2,7 @@
     window.__env = window.__env || {};
 
     // API url
-    window.__env.apiUrl = 'http://localhost/RSELFANG/';
+    window.__env.apiUrl = 'http://localhost:62126/';
 
     // window.__env.apiUrl = 'http://testings/angular/api/';
 

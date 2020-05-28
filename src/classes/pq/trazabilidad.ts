@@ -20,6 +20,7 @@ export class Trazabilidad {
    public selTipi: string;
    public selSubT: string;
    public selGrup: string;
+   public SPQ000003: string;
 
    constructor() {
       this.seccional = [];

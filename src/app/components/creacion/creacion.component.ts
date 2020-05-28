@@ -15,6 +15,8 @@ import { ModalComponent } from '../dialogs/modal/modal.component';
 import { TableSearchComponent } from '../tools/table-search/table-search.component';
 import { AlertComponent } from '../alert/alert.component';
 import { FileUploader, FileLikeObject } from 'ng2-file-upload';
+import { AddressToolComponent } from '../tools/address-tool/address-tool.component';
+
 
 @Component({
   selector: 'app-creacion',
@@ -26,6 +28,7 @@ export class CreacionComponent implements OnInit {
   @ViewChild(TableSearchComponent) _table: TableSearchComponent;
   @ViewChild(AlertComponent) alert: AlertComponent;
   @ViewChild(ModalComponent) modal: ModalComponent;
+  @ViewChild(AddressToolComponent) address: AddressToolComponent;
 
   pqr: pqinpqr = new pqinpqr();
   clienInfo: Faclien;
@@ -57,6 +60,7 @@ export class CreacionComponent implements OnInit {
   myFiles: File[] = [];
   uploader: FileUploader = new FileUploader({});
   hasBaseDropZoneOver = false;
+  SGN000008 = '';
 
   // tslint:disable-next-line:max-line-length
   constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer, private titleService: Title,
@@ -97,7 +101,7 @@ export class CreacionComponent implements OnInit {
         this.gndigfl = resp.objTransaction.digiflag;
         this.logo = resp.objTransaction.pqrImage;
         this.GnItemsIteTipi = resp.objTransaction.pqrSubject;
-
+        this.SGN000008 = resp.objTransaction.SGN000008;
         // Si el valor seleccionado coincide con el del digiflag se muestra el desplegable de area de inscripción
         this.inscription = this.GnItemsItePqr.filter((t) => t.ite_codi === this.gndigfl.dig_valo)[0].ite_cont.toString();
         // Carga los datos del cliente si aplica
@@ -381,6 +385,14 @@ export class CreacionComponent implements OnInit {
        }
      });
  }
+
+ async lupaDirecciones() {
+  this.address.show();
+}
+
+getDireccionEmitt(mensaje) {
+  this.pqr.inp_dire = mensaje;
+}
 
   // upload() {
   //   let files = this.getFiles();

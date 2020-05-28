@@ -14,8 +14,7 @@ export class TrazabilidadService {
      return this._comu.GetTransaction<ToTransaction>(`/api/TrazabilidadPQR/PqTrazInitInfo?emp_codi=${emp_codi}`);
    }
 
-   loadInfoTrazabilidad(emp_codi: number, fec_inic: string, fec_fina: string, filter: string) {
-     console.log(fec_inic);
+   loadInfoTrazabilidad(emp_codi: number, fec_inic: string, fec_fina: string, filter: string) {     
     // tslint:disable-next-line:max-line-length
     return this._comu.GetTransaction<ToTransaction>(`/api/TrazabilidadPQR/PqTrazLoadInfo?emp_codi=${emp_codi}&fini=${fec_inic}&ffin=${fec_fina}&filter=${filter}`);
   }

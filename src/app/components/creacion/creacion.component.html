@@ -252,7 +252,10 @@
                                     <span><i class="fas fa-map-marked-alt"></i></span>
                                 </div>
                             </div>
-                            <input type="text" [readOnly]="pqr.inp_tcli == 'F'" required class="form-control" placeholder="Dirección" name="inp_dire" id="inp_dire" [(ngModel)]="pqr.inp_dire" #inp_dire="ngModel">
+                            <input type="text" [readOnly]="pqr.inp_tcli == 'F' || SGN000008 === 'S'" required class="form-control" placeholder="Dirección" name="inp_dire" id="inp_dire" [(ngModel)]="pqr.inp_dire" #inp_dire="ngModel">
+                            <button type="button" class="btn btn-primary" (click)="lupaDirecciones()" *ngIf="SGN000008 === 'S' && pqr.inp_tcli !== 'F'">
+                                <span><i class="fas fa-search"></i></span>
+                            </button>
                         </div>
                         <div [hidden]="inp_dire.valid || inp_dire.pristine" class="alert alert-danger">
                             Dirección es requerida
@@ -503,3 +506,5 @@
             </div>
         </div>
     </div>
+
+    <app-address-tool (myAddress)="getDireccionEmitt($event)"></app-address-tool>
