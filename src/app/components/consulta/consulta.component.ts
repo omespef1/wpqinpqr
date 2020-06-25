@@ -8,8 +8,8 @@ import { ComunicationsService } from '../../../services/comunications.service';
 import { gnItem, pqinpqr, pqEncue } from '../../../classes/models';
 // components
 import { AlertComponent } from '../alert/alert.component';
-// Pipes
-import { EstadosPipe } from '../../pipes/estados.pipe';
+
+
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -23,7 +23,7 @@ export class ConsultaComponent implements OnInit {
   pqr: pqinpqr = new pqinpqr();
   encuesta: pqEncue[] = [];
   gnAdjunt: any[];
-  deleteEncuesta = false;
+  ocultarEncuesta = false;
   pqrIn: any = {};
   preguntas: string[] = [];
   respuestas: string[] = [];
@@ -33,7 +33,7 @@ export class ConsultaComponent implements OnInit {
   submittedEncue = false;
   logo: string;
   message: string;
-
+  
   constructor(private _conmu: ComunicationsService, private spinner: NgxSpinnerService, private route: ActivatedRoute,
     private titleService: Title) {
     this.preguntas.push('¿Su requerimiento fue atendido dentro de los términos establecidos?');
@@ -41,7 +41,6 @@ export class ConsultaComponent implements OnInit {
     this.preguntas.push('¿El servidor brindó una respuesta clara y oportuna?');
   }
   async ngOnInit() {
-
     this.setTitle('Consulta de PQR');
     this.route.queryParamMap.subscribe(queryParams => {
       this.queryInp_Cont = queryParams.get('pqr');
@@ -63,11 +62,15 @@ export class ConsultaComponent implements OnInit {
   async postPqr() {
     this.spinner.show();
     const pqr = <any>await this.GetInfoPqr();
+
     if (pqr.retorno === 0) {
       this.GetAttchment();
       this.GetInfoEncuesta();
       this.submitted = true;
+    } else {
+      this.showAlertMesssage(pqr.txtRetorno);
     }
+    this.spinner.hide();
   }
 
   async GetInfoPqr() {
@@ -77,12 +80,8 @@ export class ConsultaComponent implements OnInit {
     if (info.retorno === 0) {
       this.pqr = info.objTransaction;
 
-      if (this.pqr.dig_valo === 'S') {
-        this.deleteEncuesta = true;
-      }
-
-    } else {
-      this._alert.showMessage(info.txtRetorno());
+      if (this.pqr.dig_valo === 'S')
+        this.ocultarEncuesta = true;
     }
     return info;
   }
@@ -93,13 +92,14 @@ export class ConsultaComponent implements OnInit {
     await this._conmu.Get(`api/GnItems?tit_cont=327`).subscribe((resp: any) => {
       this.GnItemsItePqr = resp;
     }, err => {
-      this.showMessage('Error conectando con el servidor');
+      this.showAlertMesssage('Error conectando con el servidor');
     });
     this.spinner.hide();
   }
 
-  showMessage(msg: string) {
-    this._alert.showMessage(msg);
+  showAlertMesssage(msg: string) {
+    this.message = msg;
+    this._alert.show();
   }
 
   async GetAttchment() {
@@ -137,14 +137,14 @@ export class ConsultaComponent implements OnInit {
     this._conmu.Post('api/PqEncue', this.encuesta).toPromise().then((resp: any) => {
       this.spinner.show();
       if (resp.retorno === 0) {
-        this.deleteEncuesta = false;
-        this.showMessage('Encuesta enviada!');
+        this.ocultarEncuesta = false;
+        this.showAlertMesssage('Encuesta enviada!');
       } else {
-        this.showMessage(resp.txtRetorno);
+        this.showAlertMesssage(resp.txtRetorno);
       }
 
     }, err => {
-      this.showMessage('Error conectando con el servidor');
+      this.showAlertMesssage('Error conectando con el servidor');
       this.spinner.hide();
     });
   }
@@ -173,7 +173,7 @@ export class ConsultaComponent implements OnInit {
       // }
     }, err => {
       this.spinner.hide();
-      this.showMessage('Error conectando con el servidor');
+      this.showAlertMesssage('Error conectando con el servidor');
     });
   }
 
@@ -183,7 +183,7 @@ export class ConsultaComponent implements OnInit {
         this.logo = resp.objTransaction.emp_logs;resp.objTransaction.emp_logs;
       }
     }, err => {
-      this.showMessage('Error conectando con el servidor');
+      this.showAlertMesssage('Error conectando con el servidor');
     });
   }
 }

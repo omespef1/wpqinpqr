@@ -108,9 +108,9 @@ export class TrazabilidadComponent implements OnInit {
     if (this.trazPQRWF.selGrup !== undefined && this.trazPQRWF.selGrup !== 'undefined')
       filter += ' AND PQ_DPARA.DPA_CODI = ' + this.trazPQRWF.selGrup;
     if (this.trazPQRWF.inp_cont !== undefined && this.trazPQRWF.inp_cont !== '')
-      filter += ' OR PQ_INPQR.INP_CONT = ' + this.trazPQRWF.inp_cont;
+      filter += ' AND PQ_INPQR.INP_CONT = ' + this.trazPQRWF.inp_cont;
     if (this.trazPQRWF.cas_cont !== undefined && this.trazPQRWF.cas_cont !== '')
-      filter += ' OR PQ_INPQR.CAS_CONT = ' + this.trazPQRWF.cas_cont;
+      filter += ' AND PQ_INPQR.CAS_CONT = ' + this.trazPQRWF.cas_cont;
 
     this.spinner.show();
 

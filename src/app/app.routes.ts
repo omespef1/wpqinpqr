@@ -26,8 +26,9 @@ const app_routes: Routes = [
    { path: 'sfforpo' , loadChildren : './pages/sf/sfforpo/sfforpo.module#SfforpoModule' },
    { path: 'eeremes' , loadChildren : './pages/ee/eeremes/eeremes.module#EeremesModule' },
    { path: 'eemedsa' , loadChildren : './pages/ee/eemedsa/eemedsa.module#EemedsaModule' },
-   { path: 'scfscrev' , loadChildren : './pages/cf/scfscrev/scfscrev.module#ScfscrevModule' },
-   { path: '**', pathMatch: 'full', redirectTo: 'eemedsa' }
+   { path: 'scfscrev', loadChildren : './pages/cf/scfscrev/scfscrev.module#ScfscrevModule' },
+   { path: 'wgnmenus', loadChildren : './pages/gn/wgnmenus/wgnmenus.module#WgnmenusModule'},
+   { path: '**', pathMatch: 'full', redirectTo: 'wgnmenus' }
 ];
 
 export const app_routing = RouterModule.forRoot(app_routes);

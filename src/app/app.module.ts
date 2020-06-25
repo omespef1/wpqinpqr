@@ -40,6 +40,7 @@ import { ModalDoctosComponent } from './components/rn/rnradic/modal-doctos/modal
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AddressToolComponent } from './components/tools/address-tool/address-tool.component';
 import { RnradicComponent } from './components/rn/rnradic/rnradic.component';
+import { PagesComponent } from './pages/pages.component';
 
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -76,7 +77,8 @@ export const MY_FORMATS = {
     TableSearchGenericComponent,
     ModalDoctosComponent,
     AddressToolComponent,
-    RnradicComponent
+    RnradicComponent,
+    PagesComponent
     // ToastComponent
   ],
   imports: [

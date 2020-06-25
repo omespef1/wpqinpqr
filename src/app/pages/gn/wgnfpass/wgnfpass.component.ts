@@ -20,9 +20,11 @@ export class WgnfpassComponent implements OnInit {
   usu_idpkc: string;
   success = false;
   token: string;
-  error=false;
-  strError:string;
-  message:string;
+  error = false;
+  strError: string;
+  message: string;
+  newUser: string;
+
   constructor(private _fpass: WgnfpassService, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -39,6 +41,7 @@ export class WgnfpassComponent implements OnInit {
         }
          
         this.token = queryParams.get("token");
+        this.newUser = queryParams.get("newUser");
       })
 
     } catch (error) {
@@ -51,7 +54,7 @@ export class WgnfpassComponent implements OnInit {
     this.success=false;
     this.error=false;
     this.loading = true;
-    this._fpass.SetPasswordWithToken(btoa(this.user.usu_idpk), this.token).subscribe((resp:any) => {
+    this._fpass.SetPasswordWithToken(btoa(this.user.usu_idpk), this.token, this.newUser).subscribe((resp:any) => {
       this.loading = false;
      
       if(resp.Retorno == 0)

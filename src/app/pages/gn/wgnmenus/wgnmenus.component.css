@@ -1,0 +1,45 @@
+.accordion {
+    width: 100%;
+    margin: auto;
+    background: #fff;
+    border-radius: 4px;
+}
+
+.accordion .menu {
+    position: relative;
+    padding: 15px 15px 15px 45px;
+    color: #4d4d4d;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.accordion div:last-child .menu {
+    border-bottom: 0;
+}
+
+.accordion div i {
+    position: absolute;
+    top: 1.3rem;
+    left: 1rem;
+    color: #fff;
+    transition: all 0.4s ease;
+}
+
+.accordion div i.fa-chevron-down {
+    right: 1rem;
+    left: auto;
+}
+
+.accordion li.active i.fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+.accordion li.active .menu {
+    color: #b63b4d;
+}
+
+.accordion li.active i {
+    color: #b63b4d;
+}

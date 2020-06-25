@@ -6,14 +6,10 @@ import {ComunicationsService} from '../comunications.service';
 })
 export class WgnfpassService {
 
-  constructor(private _comu:ComunicationsService) { }
+  constructor(private _comu: ComunicationsService) { }
 
-
-  SetPasswordWithToken(passord:string, token:string){
-   
-    let objRequest = { Password: passord};
-    return this._comu.PostToken(`api/gnusuar`,objRequest,token);
+  SetPasswordWithToken(password: string, token: string, newUser: string) {
+    const objRequest = { Password: password, Username: newUser};
+    return this._comu.PostToken(`api/gnusuar`, objRequest, token);
   }
-  
-
 }

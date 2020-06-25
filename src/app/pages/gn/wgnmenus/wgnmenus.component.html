@@ -1,0 +1,25 @@
+<div id="accordion" class="accordion" *ngIf="menus.Categ.length > 0">
+    <!-- <h1 style="color: #939798;">
+        Acceso Público.
+    </h1> -->
+    <ng-template ngFor let-categoria [ngForOf]="menus.Categ" let-ICat="index">
+        <div class="card">
+            <div class="menu card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#collapsed' + ICat.toString()" aria-expanded="false" [attr.aria-controls]="'#collapsed' + ICat.toString()">
+                <i [class]="categoria.cat_icon"></i>
+                <h5>
+                    {{categoria.cat_nomb}}
+                </h5>
+            </div>
+
+            <div id="{{'collapsed' + ICat.toString()}}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <ng-template ngFor let-subMenu [ngForOf]="categoria.Subm" let-i="index">
+                    <div class="list-group">
+                        <a [href]=subMenu.men_prog target="blank" class="list-group-item list-group-item-action">
+                            {{subMenu.men_nomb}}
+                        </a>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </ng-template>
+</div>
