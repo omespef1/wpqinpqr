@@ -151,7 +151,7 @@
                                                 <span><i class="fa fa-phone" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input name="afi_tele" [(ngModel)]="suafili.afi_tele" type="number" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                        <input onkeyup="if(this.value<0){this.value= this.value * -1}" name="afi_tele" [(ngModel)]="suafili.afi_tele" type="number" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
 
                                     </div>
                                 </div>
@@ -163,7 +163,7 @@
                                                 <span><i class="fa fa-mobile" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input name="afi_celu" [(ngModel)]="suafili.afi_celu" type="number" data-toggle="tooltip" data-placement="bottom" readonly class="form-control" #afi_celu="ngModel">
+                                        <input onkeyup="if(this.value<0){this.value= this.value * -1}" name="afi_celu" [(ngModel)]="suafili.afi_celu" type="number" data-toggle="tooltip" data-placement="bottom" readonly class="form-control" #afi_celu="ngModel">
 
                                     </div>
                                     <div [hidden]="afi_celu.valid || afi_celu.pristine" class="alert alert-danger">
@@ -268,8 +268,12 @@
                                                 <span><i class="fas fa-money-bill-alt"></i></span>
                                             </div>
                                         </div>
-                                        <input name="scr_vsol" [(ngModel)]="credito.scr_vsol" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
+                                        <input onkeyup="if(this.value<0){this.value= this.value * -1}" name="scr_vsol" [(ngModel)]="credito.scr_vsol" #scr_vsol="ngModel"  type="number" min="1" step="1" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
                                     </div>
+                                    <!-- <div [hidden]="scr_vsol.value>0 || scr_vsol.pristine" class="alert alert-danger">
+                                       Valor del crédito no válido
+                                    </div> -->
+            
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
                                     <label for="inf_plaz">Plazo</label>
@@ -347,8 +351,11 @@
                                                 <span><i class="fa fa-phone" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input [disabled] = "mod189.mod_inst=='S'" name="ifl_tele" [(ngModel)]="informacionLaboral.dsu_tele" type="number" data-toggle="tooltip" data-placement="bottom"  class="form-control">
+                                        <input onkeyup="if(this.value<0){this.value= this.value * -1}" [disabled] = "mod189.mod_inst=='S'" name="ifl_tele" [(ngModel)]="informacionLaboral.dsu_tele" min="1" step="1"  #dsu_tele="ngModel" type="number" data-toggle="tooltip" data-placement="bottom"  class="form-control">
                                     </div>
+                                    <!-- <div class="alert alert-danger" [hidden] ="dsu_tele.pristine || dsu_tele.value>0">
+                                        Teléfono no válido
+                                    </div> -->
                                 </div>
 
                                 <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
@@ -373,7 +380,7 @@
                                                 <span><i class="fa fa-phone" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input [disabled] = "mod189.mod_inst=='S'" name="scr_exem" [(ngModel)]="credito.scr_exem" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                        <input onkeyup="if(this.value<0){this.value= this.value * -1}" [disabled] = "mod189.mod_inst=='S'" name="scr_exem" [(ngModel)]="credito.scr_exem" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control">
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -424,8 +431,9 @@
                                                 <span><i class="fas fa-money-bill-alt"></i></span>
                                             </div>
                                         </div>
-                                        <input name="ifl_sala" [(ngModel)]="informacionLaboral.tra_salb" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
+                                        <input onkeyup="if(this.value<0){this.value= this.value * -1}" name="ifl_sala" #ifl_sala="ngModel" [(ngModel)]="informacionLaboral.tra_salb" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
                                     </div>
+                                    
                                 </div>
 
                                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -441,7 +449,7 @@
                                 </div>
 
                                 <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
-                                    <button id="nextInfoCre" [disabled]="!InfoLaboral.form.valid  && trabaja" type="button" class="btn btn-success mt-3" (click)="GoTab(3)">
+                                    <button id="nextInfoCre" [disabled]="!InfoLaboral.form.valid" type="button" class="btn btn-success mt-3" (click)="GoTab(3)">
                                     &nbsp;Siguiente<i class="fas fa-arrow-circle-right"></i></button>
                                 </div>
                             </div>
@@ -682,7 +690,7 @@
                                                 <span><i class="fa fa-home" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <select class="form-control"  name="cod_tviv" [(ngModel)]="codeudor.cod_tviv" #cod_tviv="ngModel" required>
+                                        <select class="form-control"  name="cod_tviv" [(ngModel)]="informacionCodeudor.cod_tviv"  required>
                     <option value="A">Arriendo</option>
                       <option value="F">Familiar</option>
                       <option value="P">Propia</option>
@@ -749,7 +757,7 @@
                                                 <span><i class="fa fa-mobile" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input name="ifl_noce" [(ngModel)]="informacionCodeudor.cod_celu" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
+                                        <input onkeyup="if(this.value<0){this.value= this.value * -1}" name="ifl_noce" [(ngModel)]="informacionCodeudor.cod_celu" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -839,7 +847,7 @@
                                                 <span><i class="fa fa-phone" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input name="ilc_exte" [(ngModel)]="codeudor.cod_next" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
+                                        <input onkeyup="if(this.value<0){this.value= this.value * -1}" name="ilc_exte" [(ngModel)]="codeudor.cod_next" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -891,8 +899,9 @@
                                                 <span><i class="fas fa-money-bill-alt"></i></span>
                                             </div>
                                         </div>
-                                        <input name="cod_gacr" [(ngModel)]="codeudor.cod_gacr" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
+                                        <input onkeyup="if(this.value<0){this.value= this.value * -1}" name="cod_gacr" #cod_gacr="ngModel" [(ngModel)]="codeudor.cod_gacr" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
                                     </div>
+                                  
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
                                     <label for="cod_care">Cargo</label>
@@ -925,7 +934,7 @@
                                                 <span><i class="fa fa-mobile" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input name="cod_celu" [(ngModel)]="codeudor.cod_celu" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
+                                        <input onkeyup="if(this.value<0){this.value= this.value * -1}" name="cod_celu" [(ngModel)]="codeudor.cod_celu" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -1145,7 +1154,7 @@
                                                 <span><i class="fa fa-phone" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input name="ref_tele" [(ngModel)]="refpers.ref_tele" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
+                                        <input onkeyup="if(this.value<0){this.value= this.value * -1}" name="ref_tele" [(ngModel)]="refpers.ref_tele" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
 
                                     </div>
                                 </div>
@@ -1157,7 +1166,7 @@
                                                 <span><i class="fa fa-mobile" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input name="ref_celu" [(ngModel)]="refpers.ref_celu" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control required">
+                                        <input onkeyup="if(this.value<0){this.value= this.value * -1}" name="ref_celu" [(ngModel)]="refpers.ref_celu" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
 
                                     </div>
                                 </div>
@@ -1314,7 +1323,7 @@
                                                 <span><i class="fa fa-phone" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input name="ref_tele" [(ngModel)]="reffami.ref_tele" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
+                                        <input onkeyup="if(this.value<0){this.value= this.value * -1}" name="ref_tele" [(ngModel)]="reffami.ref_tele" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
 
                                     </div>
                                 </div>
@@ -1326,7 +1335,7 @@
                                                 <span><i class="fa fa-mobile" aria-hidden="true"></i></span>
                                             </div>
                                         </div>
-                                        <input name="ref_celu" [(ngModel)]="reffami.ref_celu" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
+                                        <input onkeyup="if(this.value<0){this.value= this.value * -1}" name="ref_celu" [(ngModel)]="reffami.ref_celu" type="number" data-toggle="tooltip" data-placement="bottom" class="form-control" required>
 
                                     </div>
                                 </div>
@@ -1372,7 +1381,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4 ml-auto col-md-4 col-xs-12 col-sm-12 text-right">
-                                    <button id="nextref_pers" type="button" class="btn btn-success mt-3" [disabled]="!infoBasAfi.form.valid || !infoCred.form.valid ||  !InfoLaboral.form.valid ||
+                                    <button id="nextref_pers" type="button" class="btn btn-success mt-3" [disabled]="!infoBasAfi.form.valid || !infoCred.form.valid || (!InfoLaboral.form.valid && trabaja  ) ||
                       !infocodeudor.form.valid || ( !infoCodEsEmpl.form.valid && !CodEsIndep.form.valid) || !refpersForm.form.valid || !refFamiForm.form.valid || sendingCred" (click)="SendRequest()">
                       &nbsp;
                       <i *ngIf="!sendingCred" class="far fa-save"></i>

@@ -384,16 +384,19 @@ export class ScfscrevComponent implements OnInit {
             };
             this.loadPlaz(infoLinea.rtm_plaz);
             this.credito.top_codi = infoLinea.top_codi;
+            console.log(this.credito.top_codi);
           }
         });
     }
   }
 
   loadPlaz(max: number) {
+    this.plazoInfoCred=[];
     for (let i = 1; i <= max; i++) this.plazoInfoCred.push(i);
   }
 
   GeSuTraye() {
+    console.log(this.mod189);
     if(this.mod189.mod_inst=="S"){
       this._sutraye
       .GetSuTraye(this.emp_codi, this.suafili.afi_cont)
@@ -558,7 +561,7 @@ this.credito.codeudores=[];
     this.credito.scr_trab = this.trabaja ? 'S' : 'N';
     this.SetCfCodeu();
     this.credito.codeudores.push(this.codeudor);
-    console.log(this.codeudor);
+    console.log(this.credito);
     this._cfscrev.SetCfScrev(this.credito).subscribe(resp => {
       this.sendingCred = false;
       if (resp != undefined && resp.Retorno == 0) {
