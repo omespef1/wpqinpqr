@@ -38,7 +38,7 @@ export class AddressToolGenericComponent implements OnInit {
   }
 
   async loadInfoDireccion() {
-    const info: any = <any>await this._comu.Get(`api/GnNomdi/GetInfoNomdi?emp_codi=102`).toPromise();
+    const info: any = <any>await this._comu.GetWithoutEmpCodi(`api/GnNomdi/GetInfoNomdi`).toPromise();
     if (info.retorno === 0)
       this.Nomdi = info.objTransaction;
   }

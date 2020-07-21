@@ -170,17 +170,16 @@ export class ScfscrevComponent implements OnInit {
     this.GetParentescos();
    
   }
+  
   async GetUrlParams() {
-    try {
-      this.route.queryParamMap.subscribe(queryParams => {
-        console.log(queryParams.get("client"));
+    try {      
+      this.route.queryParamMap.subscribe(queryParams => {       
         if (queryParams.get("client") == null)
         this.showMessage("Acceso no autorizado");
         this.afi_docu = atob(queryParams.get("client"));
-        if (queryParams.get("emp_codi") == null)
+        if (queryParams.get("emp_Codi") == null)
         this.showMessage("Acceso no autorizado");
-        this.emp_codi =  parseInt(atob(queryParams.get("emp_codi")));
-        
+        this.emp_codi =  parseInt(atob(queryParams.get("emp_Codi")));        
       });
     } catch (err) {
      this.showMessage(err)

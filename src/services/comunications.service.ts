@@ -10,6 +10,10 @@ export class ComunicationsService {
 
   constructor(private http: HttpClient, private env: EnvService) { }
 
+  GetWithoutEmpCodi(urlController: string) {
+    const url = `${this.env.apiUrl}${urlController}`;
+    return this.http.get(url);
+  }
   Get(urlController: string, emp_codi = 0) {
     let url = `${this.env.apiUrl}${urlController}`;
     url += `&emp_codi=${emp_codi}`;

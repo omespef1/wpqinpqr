@@ -43,22 +43,23 @@ export class SocoxcnComponent implements OnInit {
   this.spinner.show();
     let fec_ffin =moment(this.par_busq.fec_ffin).format("YYYY-MM-DD");
     this.submitted = true;
-   await  this._comu.Get(`api/cacxcob?cli_coda=${this.par_busq.ter_coda}&cxc_fech=${fec_ffin}`).subscribe((resp:ToTransaction)=>{
+   
+    await  this._comu.Get(`api/cacxcob?cli_coda=${this.par_busq.ter_coda}&cxc_fech=${fec_ffin}`).subscribe((resp:ToTransaction)=>{
      this.spinner.hide();
      
          if(resp.Retorno==0){
              this.cuentasxcobrar = resp.ObjTransaction;
-         }
+               }
          else{
-           this.showMessage(resp.TxtError);
+           this.message = resp.TxtError;
          }
 
      },err=>{
        this.showMessage("Error conectando con el servidor");
      })
 
-this.spinner.show();
-    await this._comu.Get(`api/socoxcn?soc_codi=${this.par_busq.ter_coda}&cox_fech=${fec_ffin}`).subscribe((resp:ToTransaction)=>{
+    
+     await this._comu.Get(`api/socoxcn?soc_codi=${this.par_busq.ter_coda}&cox_fech=${fec_ffin}`).subscribe((resp:ToTransaction)=>{
       this.spinner.hide();
      
        if(resp.Retorno==0){
@@ -70,7 +71,6 @@ this.spinner.show();
      },err=>{
        this.showMessage("Error conectando con el servidor");
      })
-    
 
   }
   getGnterce(){
@@ -98,8 +98,8 @@ this.spinner.show();
   }
 
   showMessage(msg:string){
-    console.log(msg);
-  	this._alert.showMessage(msg);
+    this.message = msg;    
+  	this._alert.show();
   }
 
   getPasarela(){

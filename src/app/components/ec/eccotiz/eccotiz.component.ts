@@ -20,6 +20,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 
 export class EccotizComponent implements OnInit {
   @ViewChild(AlertComponent) _alert : AlertComponent;
+  msg = '';
   message:string;
    cotizaciones : eccotiz[];
    cotizacion:any={};
@@ -60,11 +61,11 @@ async getGnTerce(){
        },err=>{
       
          this.spinner.hide();
-         this.showMessage("Error conectando con el servidor");
+         this.showAlertMesssage("Error conectando con el servidor");
        })
    }
    else {    
-     this._alert.showMessage("No se ha especificado ningún usuario seven");
+     this.showAlertMesssage("No se ha especificado ningún usuario seven");
    }
  });
 
@@ -77,19 +78,19 @@ async getGnTerce(){
     let fini = moment(this.par_busq.fec_fini).format('YYYYMMDD');
     let ffin = moment(this.par_busq.fec_ffin).format('YYYYMMDD');
 
-    this._comu.Get(`api/eccotiz?ter_coda=${this.par_busq.ter_coda}&usu_codi=${this.par_busq.usu_codi}&fec_fini=${fini}&fec_ffin=${ffin}`).subscribe((resp:ToTransaction)=>{
-      console.log(resp);
+    this._comu.Get(`api/eccotiz?ter_coda=${this.par_busq.ter_coda}&usu_codi=${this.par_busq.usu_codi}&fec_fini=${fini}&fec_ffin=${ffin}`).subscribe((resp: ToTransaction) => {
+
       this.spinner.hide();
-        if(resp.Retorno==0){
-          this.cotizaciones = resp.ObjTransaction;
-        }
-        else{
-          this.showMessage(resp.TxtError);
-        }
-   },err=>{
-     this.spinner.hide();
-     this.showMessage("Error conectando con el servidor");
-   })
+      if (resp.Retorno == 0) {
+        this.cotizaciones = resp.ObjTransaction;
+      }
+      else {
+        this.showAlertMesssage(resp.TxtError);
+      }
+    }, err => {
+      this.spinner.hide();
+      this.showAlertMesssage("Error conectando con el servidor");
+    })
   }
   setCotizacion(cotizacion:eccotiz){
     console.log(cotizacion);
@@ -114,8 +115,10 @@ async getGnTerce(){
     this.detalleEspacio = detalleEspacio;
     this.showModales("Productos");
   }
-  showMessage(msg:string){
-    this._alert.showMessage(msg);
+  
+  showAlertMesssage(msg: string) {
+    this.message = msg;
+    this._alert.show();
   }
 
 }
