@@ -12,11 +12,11 @@ export class EeremesService {
   constructor(private _comu: ComunicationsService) { }
 
   loadInfoTipoDocto() {
-    return this._comu.GetTransaction<ToTransaction>(`/api/gntipdo/`);
+    return this._comu.GetTransaction<ToTransaction>(`api/gntipdo/`);
   }
 
   loadInfoFaClien(emp_codi: number, cli_coda: string) {
-    return this._comu.GetTransaction<ToTransaction>(`/api/EeRemes/LoadInfoFaclien?emp_codi=${emp_codi}&cli_coda=${cli_coda}`);
+    return this._comu.GetTransaction<ToTransaction>(`api/EeRemes/LoadInfoFaclien?emp_codi=${emp_codi}&cli_coda=${cli_coda}`);
   }
 
   loadServiciosEncuesta() {
@@ -29,7 +29,7 @@ export class EeremesService {
 
   saveInfoMedicion(remes: Eereenc) {
     // tslint:disable-next-line:max-line-length
-    return this._comu.PostTransaction<ToTransaction>(`/api/EeRemes/EeRemesSaveInfo`, remes);
+    return this._comu.PostTransaction<ToTransaction>(`api/EeRemes/EeRemesSaveInfo`, remes);
   }
 
   actualizarPolitica(cli_coda: string) {

@@ -90,7 +90,7 @@ export class ConsultaComponent implements OnInit {
     // Carga el desplegable de tipo de solicitud
     this.spinner.show();
     await this._conmu.Get(`api/GnItems?tit_cont=327`).subscribe((resp: any) => {
-      this.GnItemsItePqr = resp;
+      this.GnItemsItePqr = resp.ObjTransaction;
     }, err => {
       this.showAlertMesssage('Error conectando con el servidor');
     });

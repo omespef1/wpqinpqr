@@ -1,0 +1,159 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Consulta de postulación para el subsidio de vivienda FOVIS.</h1>
+
+    </div>
+</div>
+<div class="container">
+    <div class="card card-gray">
+        <div class="card-header bg-primary text-white">Consultar postulación</div>
+        <div class="card-body">
+            <form #consuForm="ngForm" (ngSubmit)="getSfConsu()">
+                <div class="row" *ngIf="!showDetail">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="mod_cont">Tipo de Documento</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-id-card-alt"></i></span>
+                                </div>
+                            </div>
+                            <input name="tip_codi" readonly required [(ngModel)]="sfconsu.tip_codi" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                            <input name="tip_nomb" readonly [(ngModel)]="sfconsu.tip_nomb" type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                            <button type="button" class="btn btn-primary" (click)="GetGnTipdo()">
+                            <span><i class="fas fa-search"></i></span>
+                          </button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-12 col-xs-12 col-sm-12">
+                        <label for="pro_codi">Número de Documento</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span> <span><i class="fas fa-id-card"></i></span></span>
+                                </div>
+                            </div>
+                            <input type="text" autocomplete="off" [(ngModel)]="sfconsu.afi_docu" required class="form-control" placeholder="Identificación" name="afi_docu" id="afi_docu">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 col-md-2 col-xs-12 col-sm-12">
+                        <label for="for_tdat"> </label>
+                        <div class="input-group mt-2">
+                            <button type="submit" class="btn btn-primary btn-md btn-block" [disabled]="!consuForm.form.valid">
+                            <span><i class="fas fa-search"></i> &nbsp;Consultar</span>
+                        </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row" *ngIf="showDetail">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="mod_cont">Tipo de Documento</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-id-card-alt"></i></span>
+                                </div>
+                            </div>
+                            <input name="tip_codi" readonly [(ngModel)]="sfconsu.tip_codi" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                            <input name="tip_nomb" readonly [(ngModel)]="sfconsu.tip_nomb" type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="col-lg- col-md-6 col-xs-12 col-sm-12">
+                        <label for="pro_codi">Número de Documento</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span> <span><i class="fas fa-id-card"></i></span></span>
+                                </div>
+                            </div>
+                            <input type="text" readonly [(ngModel)]="sfconsu.afi_docu" class="form-control" placeholder="Identificación" name="afi_docu">
+                        </div>
+                    </div>
+
+                    <div class="col-lg- col-md-6 col-xs-12 col-sm-12">
+                        <label for="pro_codi">Nombres</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span> <span><i class="fas fa-id-card"></i></span></span>
+                                </div>
+                            </div>
+                            <input type="text" readonly [(ngModel)]="suafili.afi_nom1" class="form-control" placeholder="Nombres" name="afi_nom1">
+                        </div>
+                    </div>
+
+                    <div class="col-lg- col-md-6 col-xs-12 col-sm-12">
+                        <label for="pro_codi">Apellidos</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span> <span><i class="fas fa-id-card"></i></span></span>
+                                </div>
+                            </div>
+                            <input type="text" readonly [(ngModel)]="suafili.afi_ape1" class="form-control" placeholder="Apellidos" name="afi_ape1">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-2" *ngIf="suafili.sfforpo?.length">
+                        <div class="card-gray">
+                            <div class="card-header bg-primary text-white">
+                                Detalles de Postulación
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover table-striped table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Número del Formulario</th>
+                                            <th scope="col">Fecha Postulación</th>
+                                            <th scope="col">Fecha Asignación</th>
+                                            <th scope="col">Estado Postulación</th>
+                                            <th scope="col">Valor Subsidio Solicitado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let forpo of suafili.sfforpo| paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                            <td>{{ forpo.for_nume }}</td>
+                                            <td>{{ forpo.for_fech }}</td>
+                                            <td>{{ forpo.for_fasi }}</td>
+                                            <td>{{ forpo.for_esta }}</td>
+                                            <td>{{ forpo.dfo_vsol }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <pagination-controls (pageChange)="p = $event" maxSize="10" autoHide="true" previousLabel="Anterior" nextLabel="Siguiente">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+                        <button type="button" class="btn btn-primary btn-md btn-block" (click)="volver()">
+                          <span>Volver</span>
+                      </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<app-alert-message [message]="msg"></app-alert-message>
+
+<app-new-table-search Title="Tipo de Documento" [displayedColumns]="['TIP_CODI','TIP_NOMB']" [showColumns]="['Código', 'Tipo Documento']" (rowCLick)="SetGnTipdo($event)" btnModalQb="btnTipDocu" ModalQb="modalTipDocu" #modalTipDocu></app-new-table-search>
+
+<app-gnempre title="Seleccione empresa" (accept)="_EmpreModal.dismiss();">
+    <form>
+        <div class="form-group">
+            <label for="emp_codi" class="col-form-label"></label>
+            <select class="form-control" id="usu_codi" name="usu_codi" [(ngModel)]="emp_codi" required #usu_codi="ngModel">
+                <option value="0">Seleccione</option>
+                <option *ngFor="let companie of companies" [value]="companie.emp_codi">{{companie.emp_nomb | titlecase}}
+                </option>
+            </select>
+        </div>
+    </form>
+</app-gnempre>

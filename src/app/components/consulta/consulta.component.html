@@ -123,7 +123,7 @@
                                 <span><i class="far fa-keyboard"></i></span>
                             </div>
                         </div>
-                        <select disabled class="form-control" id="ite_tpqr" name="ite_tpqr" [(ngModel)]="pqr.ite_tpqr">
+                        <select disabled class="form-control" id="ite_tpqr" name="ite_tpqr" [(ngModel)]="pqr.ite_tpqr">                            
                             <option *ngFor="let type of GnItemsItePqr"  [value]="type.ite_cont">
                                 {{type.ite_nomb | titlecase}}</option>
                         </select>

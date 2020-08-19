@@ -417,26 +417,11 @@
                                         </select>
                                     </div>
                                 </div>
-
-                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-                                    <label for="rad_nomr">Nombre documento</label>
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <div class="input-group-text">
-                                                <span><i class="fas fa-users"></i></span>
-                                            </div>
-                                        </div>
-                                        <input id="ddo_ndoc" name="ddo_ndoc" readonly [(ngModel)]="dperc.ddo_ndoc" type="text" class="form-control" placeholder="Nombre documento" autocomplete="off">
-                                        <button type="button" class="btn btn-primary" (click)="showModal()" *ngIf="radic.cra_codi !== undefined">
-                                            <span><i class="fas fa-search"></i></span>
-                                        </button>
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-4 pb-3">
-                                    <button [disabled]="dperc.ddo_ndoc == '' || dperc.dpe_docu == '' || dperc.dpe_nom1 == '' || dperc.dpe_ape1 == '' || selectedPare?.mpa_nomb === ''" type="button" class="btn btn-success btn-lg btn-block" (click)="addGrupoFamiliar()">Agregar</button>
+                                    <button [disabled]="dperc.dpe_docu == '' || dperc.dpe_nom1 == '' || dperc.dpe_ape1 == '' || selectedPare?.mpa_nomb === ''" type="button" class="btn btn-success btn-lg btn-block" (click)="addGrupoFamiliar()">Agregar</button>
                                 </div>
                             </div>
 
@@ -451,6 +436,7 @@
                                             <th scope="col">Segundo Apellido</th>
                                             <th scope="col">Parentesco</th>
                                             <th scope="col"></th>
+                                            <th scope="col"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -460,8 +446,19 @@
                                             <td>{{rnd.dpe_nom2}}</td>
                                             <td>{{rnd.dpe_ape1}}</td>
                                             <td>{{rnd.dpe_ape2}}</td>
-                                            <td>{{rnd?.mpa_nomb}}</td>
-                                            <td><button type="button" class="btn btn-primary btn-sm text-center" (click)="delGrupoFamiliar()">Eliminar</button></td>
+                                            <td>{{rnd.mpa_nomb}}</td>
+                                            <td>
+                                                <button (click)="delGrupoFamiliar(rnd)" type="button" class="btn btn-link btn-sm btn-block">
+                                                    <span><i title="Eliminar" class="fas fa-trash-alt"></i>                                                                                                                                                                                                         
+                                                    </span>
+                                                 </button>
+                                            </td>
+                                            <td>
+                                                <button (click)="showModalDoctos(rnd)" type="button" class="btn btn-link btn-sm btn-block">
+                                                    <span><i title="Documentos" class="fas fa-paperclip"></i>                                                                                                                                                                                                         
+                                                    </span>
+                                                 </button>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -657,16 +654,14 @@
                 <td>
                     <input id="ddo_obse" name="ddo_obse" type="text" class="form-control" autocomplete="off" [(ngModel)]="ddo.ddo_obse">
                 </td>
-                <td>
-                    <button type="button" class="btn btn-link btn-sm btn-block" (click)="selDocumento(ddo)">
-                        <span><i class="far fa-check-circle"></i>                                                                                                                                                                                                         
-                        </span>
-                    </button>
-                </td>
             </tr>
         </tbody>
     </table>
-
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+            <button (click)="modalDoctos.dismiss();sendDocument()" class="btn btn-success btn-lg btn-block">Agregar</button>
+        </div>
+    </div>
 </app-modal-doctos>
 
 

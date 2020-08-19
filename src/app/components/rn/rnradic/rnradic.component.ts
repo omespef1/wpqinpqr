@@ -97,6 +97,8 @@ export class RnradicComponent implements OnInit {
   hasBaseDropZoneOver = false;
   uploader: FileUploader = new FileUploader({});
   showGuardar = true;
+  idoc: number;
+  selectdperc: RnDperc = new RnDperc();
 
   constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer,
     private titleService: Title, private route: ActivatedRoute, private _confirm: ConfirmDialogComponent, private env: EnvService) {
@@ -137,7 +139,9 @@ export class RnradicComponent implements OnInit {
    clear() {
 
     this.showGuardar = false;
-
+    this.radic = new RnRadic();
+    this.ngOnInit();
+    
     // this.radic.rad_pais = 0;
     // this.radic.rad_regi = 0;
     // this.radic.rad_depa = 0;
@@ -170,6 +174,7 @@ export class RnradicComponent implements OnInit {
         }
       }
     }, err => {
+      this.spinner.hide();
       this.showAlertMesssage(err);
     });
    }
@@ -658,8 +663,8 @@ cleanDataForm() {
     }
   }
 
-  delGrupoFamiliar () {
-    const i = this.radic.rndperc.indexOf(this.dperc);
+  delGrupoFamiliar (perc: RnDperc) {
+    const i = this.radic.rndperc.indexOf(perc);
     this.radic.rndperc.splice( i, 1 );
   }
 
@@ -685,13 +690,32 @@ cleanDataForm() {
     });
   }
 
-  showModal() {
-    this.spinner.show();
-    this._comu.Get(`api/RnRadic/RnRadicDocu?cra_codi=${this.radic.cra_codi}`).subscribe((resp: any) => {
-      this.rnddocu = resp.objTransaction;
-      this.spinner.hide();
-      this.modalDoctos.present();
-    });
+  showModalDoctos(perc: RnDperc) {
+
+    this.selectdperc = perc;
+
+    if (this.selectdperc.lst_ddoc.length === 0) {
+      this.spinner.show();
+      this._comu.Get(`api/RnRadic/RnRadicDocu?cra_codi=${this.radic.cra_codi}`).subscribe((resp: any) => {
+        this.rnddocu = resp.objTransaction;
+        this.spinner.hide();
+      });
+    } else {
+      const i = this.radic.rndperc.indexOf(this.selectdperc);
+      this.rnddocu = this.radic.rndperc[i].lst_ddoc;
+    }
+    this.modalDoctos.present();
+  }
+
+  sendDocument() {
+
+    const i = this.radic.rndperc.indexOf(this.selectdperc);
+    
+    if (this.radic.rndperc[i].lst_ddoc.length > 0)
+      this.radic.rndperc[i].lst_ddoc = [];
+
+    for (let j = 0; j < this.rnddocu.length; j++)
+      this.radic.rndperc[i].lst_ddoc.push(this.rnddocu[j]);
   }
 
   hideControls() {
@@ -702,16 +726,6 @@ cleanDataForm() {
     this.numeDocumento = false;
     this.tipDocTrabaja = false;
     this.numDocTrabaja = false;
-  }
-
-  selDocumento(ddo: RnDdocu) {
-    this.modalDoctos.dismiss();
-    this.dperc.ddo_ndoc = ddo.ite_nomb;
-    this.dperc.ddo_cont = ddo.ite_cont;
-    this.dperc.ddo_obse = ddo.ddo_obse;
-    this.dperc.ddo_recb = ddo.ddo_recb;
-    this.dperc.ddo_esis = ddo.ddo_esis;
-    this.dperc.ite_codi = ddo.ite_codi;
   }
 
   numberOnly(event): boolean {
@@ -758,6 +772,7 @@ cleanDataForm() {
     } else if (this.cra_clar === 'P' && this.cra_prim === 'S' && this.cra_dest === 'A') {
       this.tipoAportante = true;
       this.tipoDocumento = true;
+      this.nucleoFamilia = true;
     } else if (this.cra_clar === 'T' && this.cra_prim === 'N' && this.cra_dest === 'F') {
       this.datTrabajador = true;
       this.nucleoFamilia = true;

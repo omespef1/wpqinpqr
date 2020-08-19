@@ -90,6 +90,7 @@ export class CtpropoComponent implements OnInit {
 
       this.setTitle('Creación de Proponentes');
       // this.loadCompanies();
+      this.GetParams();
       this.Load();
 
       if (this.propo.rev_cont !== '') {
@@ -109,6 +110,34 @@ export class CtpropoComponent implements OnInit {
 
   PostCtPropo(form: NgForm) {
     this.guardarInfoProponete(form);
+  }
+
+  GetParams(): boolean {
+    try {
+
+        this.route.queryParamMap.subscribe(queryParams => {
+
+        if (queryParams.get('client') != null) {
+          this.client = atob(queryParams.get('client'));
+        }
+
+        if (queryParams.get('usu_codi') != null) {
+          this.propo.usu_codi = atob(queryParams.get('usu_codi'));
+        }
+
+        if (queryParams.get('rev_cont') != null) {
+          this.propo.rev_cont = atob(queryParams.get('rev_cont'));
+          this.propo.emp_codi = Number(atob(queryParams.get('emp_codi')));
+          this.usu_codi = atob(queryParams.get('usu_codi'));
+        }
+
+        return true;
+      }, err => {
+        return false;
+      });
+    } catch ( err ) {
+      return false;
+    }
   }
 
  async guardarInfoProponete(form: NgForm) {

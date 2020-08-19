@@ -8,7 +8,7 @@ import { gntipdo } from '../../../classes/gn/gntipdo';
 })
 export class GntipdoService {
 
-  constructor(private _comu:ComunicationsService) { }
+  constructor(private _comu: ComunicationsService) { }
 
 
   GetGnTipdo() {

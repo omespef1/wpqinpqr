@@ -119,11 +119,9 @@ export class EerelesComponent implements OnInit {
   async GetEeReles() {
     const info: any = <any>await this._comu.Get(`api/EeReles/EeRelesLoad?rel_cont=${this.pqpar.rel_cont}`).toPromise();
     if (info.retorno === 0)
-      this.reles = info.objTransaction;      
+      this.reles = info.objTransaction;
     else
       this.showAlertMesssage(info.txtRetorno);
-
-      console.log(this.reles);
   }
 
   showAlertMesssage(msg: string) {

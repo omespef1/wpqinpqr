@@ -10,6 +10,6 @@ export class GnmenuService {
   constructor(private _comu: ComunicationsService) { }
 
   loadMenu() {
-    return this._comu.GetTransaction<Transaction>(`/api/gnacrol/AcrolLoad?reql=N`);
+    return this._comu.GetTransaction<Transaction>(`api/gnacrol/AcrolLoad?reql=N`);
   }
  }
