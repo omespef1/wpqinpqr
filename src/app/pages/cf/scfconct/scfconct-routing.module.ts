@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router'; 
-import { CsfconctComponent } from './csfconct.component';
+import { ScfconctComponent } from './scfconct.component';
 
 const routes: Routes = [
   {
     path: '',
-   component: CsfconctComponent
+   component: ScfconctComponent
   }
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CsfconctRoutingModule { }
+export class ScfconctRoutingModule { }

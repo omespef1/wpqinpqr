@@ -41,7 +41,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AddressToolComponent } from './components/tools/address-tool/address-tool.component';
 import { RnradicComponent } from './components/rn/rnradic/rnradic.component';
 import { PagesComponent } from './pages/pages.component';
-import { CsfconctComponent } from './pages/cf/csfconct/csfconct.component';
 
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 

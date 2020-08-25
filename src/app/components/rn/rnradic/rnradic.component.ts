@@ -93,24 +93,25 @@ export class RnradicComponent implements OnInit {
   numeDocumento = false;
   tipDocTrabaja = false;
   numDocTrabaja = false;
-
+  
   hasBaseDropZoneOver = false;
-  uploader: FileUploader = new FileUploader({});
-  showGuardar = true;
+  uploader: FileUploader = new FileUploader({});  
   idoc: number;
   selectdperc: RnDperc = new RnDperc();
+
+  emp_codi = 0;
 
   constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer,
     private titleService: Title, private route: ActivatedRoute, private _confirm: ConfirmDialogComponent, private env: EnvService) {
    }
-   async ngOnInit() {
+   async ngOnInit() {    
 
     await this.GetParams();
 
-    if (this.radic.emp_codi === undefined)
+    if (this.emp_codi === 0)
       this.loadCompanies();
 
-    if (this.radic.emp_codi)
+    if (this.emp_codi)
       this.Load();
 
     if (this.SRN000002 === 'S') {
@@ -138,20 +139,14 @@ export class RnradicComponent implements OnInit {
 
    clear() {
 
-    this.showGuardar = false;
     this.radic = new RnRadic();
-    this.ngOnInit();
-    
-    // this.radic.rad_pais = 0;
-    // this.radic.rad_regi = 0;
-    // this.radic.rad_depa = 0;
-    // this.radic.rad_muni = 0;
-    // this.radic.rad_loca = 0;
-    // this.radic.rad_barr = 0;
-    // this.Load();
-    // this.radic.rad_tdat = 'N';
-    // this.uploader.clearQueue();
-    // this.selectedPare = new SumPare();
+    this.uploader.clearQueue();
+    this.radic.emp_codi = this.emp_codi;
+    this.gnregio = [];
+    this.gndepar = [];
+    this.gnmunic = [];
+    this.gnlocal = [];
+    this.gnbarri = [];
    }
 
    async saveRadic(form: NgForm) {
@@ -239,6 +234,7 @@ export class RnradicComponent implements OnInit {
 
   Load() {
     this.spinner.show();
+    this.radic.emp_codi = this.emp_codi;
     let query = 'api/RnRadic/RnRadicLoad?';
     query += `usu_codi=${this.radic.usu_codi}`;
 
@@ -275,7 +271,7 @@ export class RnradicComponent implements OnInit {
 
   async LoadClasificacion() {
     // tslint:disable-next-line:max-line-length
-    const info: any = <any>await this._comu.Get(`api/RnRadic/RnCracoLoad?emp_codi=${this.radic.emp_codi}&gru_cont=${this.radic.gru_cont}`).toPromise();
+    const info: any = <any>await this._comu.Get(`api/RnRadic/RnCracoLoad?emp_codi=${this.emp_codi}&gru_cont=${this.radic.gru_cont}`).toPromise();
 
     if (info.retorno === 0) {
       this.rncraco = info.objTransaction;
@@ -773,6 +769,9 @@ cleanDataForm() {
       this.tipoAportante = true;
       this.tipoDocumento = true;
       this.nucleoFamilia = true;
+    } else if (this.cra_clar === 'P' && this.cra_prim === 'S' && this.cra_dest === 'F') {
+      this.tipoAportante = true;
+      this.tipoDocumento = true;
     } else if (this.cra_clar === 'T' && this.cra_prim === 'N' && this.cra_dest === 'F') {
       this.datTrabajador = true;
       this.nucleoFamilia = true;

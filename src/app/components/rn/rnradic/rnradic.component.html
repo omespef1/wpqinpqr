@@ -76,7 +76,7 @@
                                 <label class="custom-control-label" for="rad_tdat">Si</label>
                             </div>
                             <div class="custom-control custom-radio ml-3">
-                                <input type="radio" class="custom-control-input" id="rad_tdad" name="grouptdat" value="N" [(ngModel)]="radic.rad_tdat">
+                                <input type="radio" class="custom-control-input" id="rad_tdad" name="grouptdat" value="N" [(ngModel)]="radic.rad_tdat" (change)="hideTratamiento();">
                                 <label class="custom-control-label" for="rad_tdad">No</label>
                             </div>
                         </div>
@@ -597,7 +597,7 @@
         </div>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-4 pb-3">
-                <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!radicForm.form.valid||!showGuardar">Guardar</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!radicForm.form.valid">Guardar</button>
             </div>
         </div>
     </form>
@@ -617,7 +617,7 @@
 <app-modal title="Seleccione empresa" (accept)="modal.dismiss();Load();loadAfiliados();">
     <div class="form-group">
         <label for="emp_codi" class="col-form-label"></label>
-        <select class="form-control" id="usu_coda" name="usu_coda" [(ngModel)]="radic.emp_codi" required #usu_coda="ngModel">
+        <select class="form-control" id="usu_coda" name="usu_coda" [(ngModel)]="emp_codi" required #usu_coda="ngModel">
               <option value="0">Seleccione</option>
               <option *ngFor="let companie of companies" [value]="companie.emp_codi">{{companie.emp_nomb | titlecase}}
               </option>

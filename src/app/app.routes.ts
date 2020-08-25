@@ -29,7 +29,7 @@ const app_routes: Routes = [
    { path: 'scfscrev', loadChildren : './pages/cf/scfscrev/scfscrev.module#ScfscrevModule' },
    { path: 'wgnmenus', loadChildren : './pages/gn/wgnmenus/wgnmenus.module#WgnmenusModule'},
    { path: 'sfconsu' , loadChildren : './pages/sf/sfconsu/sfconsu.module#SfconsuModule'},
-   { path: 'csfconct' , loadChildren : './pages/cf/csfconct/csfconct.module#CsfconctModule'},
+   { path: 'scfconct' , loadChildren : './pages/cf/scfconct/scfconct.module#ScfconctModule'},
    { path: '**', pathMatch: 'full', redirectTo: 'wgnmenus' }
 ];
 

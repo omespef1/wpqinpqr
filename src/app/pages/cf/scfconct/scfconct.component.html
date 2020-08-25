@@ -1,0 +1,107 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Consulta de consumos saldos de tarjeta.</h1>
+
+    </div>
+</div>
+<div class="container">
+    <div class="card card-gray">
+        <div class="card-header bg-primary text-white">Consultar Saldos</div>
+        <div class="card-body">
+            <form #consuForm="ngForm">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="pro_codi">Saldo</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span> <span><i class="fas fa-id-card"></i></span></span>
+                                </div>
+                            </div>
+                            <input [(ngModel)]="subonoc.bon_sald" type="text" autocomplete="off" readonly class="form-control" placeholder="Saldo" name="bon_sald">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="pro_codi">Fecha Saldo</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span> <span><i class="fas fa-id-card"></i></span></span>
+                                </div>
+                            </div>
+                            <input [(ngModel)]="subonoc.dim_fech" type="text" autocomplete="off" readonly class="form-control" placeholder="Fecha Saldo" name="dim_ffech">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="dim_feci">Fecha Inicial</label>
+                        <div class="input-group">
+                            <mat-datepicker-toggle [for]="dim_feci"></mat-datepicker-toggle>
+                            <mat-datepicker #dim_feci touchUi></mat-datepicker>
+                            <input [(ngModel)]="subonoc.dim_feci" matInput placeholder="{{today | date : 'dd/MM/yyyy'}}" readonly [matDatepicker]="dim_feci" type="text" class="form-control" name="dim_feci">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="dim_fecf">Fecha Final</label>
+                        <div class="input-group">
+                            <mat-datepicker-toggle [for]="dim_fecf"></mat-datepicker-toggle>
+                            <mat-datepicker #dim_fecf touchUi></mat-datepicker>
+                            <input [(ngModel)]="subonoc.dim_fecf" matInput placeholder="{{today | date : 'dd/MM/yyyy'}}" readonly [matDatepicker]="dim_fecf" type="text" class="form-control" name="dim_fecf">
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+                        <button *ngIf="showSearch" (click)="loadSuDimco()" [disabled]="!showSearch" type="button" class="btn btn-success btn-md btn-block">
+                            <span><i class="fas fa-search"></i> &nbsp;Consultar</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="showDetail">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-2">
+                        <div class="card-gray">
+                            <div class="card-header bg-primary text-white">
+                                Detalles.
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover table-striped table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Tipo de Transacción</th>
+                                            <th scope="col">Valor</th>
+                                            <th scope="col">Nombre del Operador</th>
+                                            <th scope="col">Punto de Pago</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let dimco of sudimco| paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                            <td>{{ dimco.dim_fech | date : "dd/MM/yyyy" }}</td>
+                                            <td>{{ dimco.dim_dtra }}</td>
+                                            <td>{{ dimco.dim_vtra }}</td>
+                                            <td>{{ dimco.pvr_noco }}</td>
+                                            <td>{{ dimco.dpu_nopp }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <pagination-controls (pageChange)="p = $event" maxSize="10" autoHide="true" previousLabel="Anterior" nextLabel="Siguiente">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+                        <button type="button" class="btn btn-success btn-md btn-block" (click)="volver()">
+                            <span><i class="fas fa-backward"></i> &nbsp;Volver</span>
+                        </button>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+                        <button type="button" class="btn btn-secondary btn-md btn-block" (click)="BuildPrint()">
+                            <span><i class="fas fa-print"></i> &nbsp;Imprimir</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<app-alert-message [message]="msg"></app-alert-message>
