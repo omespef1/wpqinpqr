@@ -1,0 +1,95 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Certificados Subsidios.</h1>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="card card-gray">
+        <div class="card-header bg-primary text-white">Transacciones Disponibles</div>
+        <div class="card-body">
+            <form #arcaceaForm="ngForm">
+                <div class="row">
+                    <div class="col-lg-6 col-md-5 col-xs-12 col-sm-12">
+                        <label for="pro_clap">Tipo de Reporte</label>
+                        <div class="input-group mt-2" *ngIf="ter_coda != ''">
+                            <div class="custom-control custom-radio ml-3">
+                                <input [(ngModel)]="reporte" value="SSuCacAA" type="radio" checked class="custom-control-input" id="SSuCacAA" name="groupclap">
+                                <label class="custom-control-label" for="SSuCacAA">Certificación Afiliado Activo</label>
+                            </div>
+                            <div class="custom-control custom-radio ml-3">
+                                <input [(ngModel)]="reporte" value="SSuCacDT" type="radio" class="custom-control-input" id="SSuCacDT" name="groupclap">
+                                <label class=" custom-control-label " for="SSuCacDT">Certificación Desafiliado con Trayectoria</label>
+                            </div>
+                            <div class="custom-control custom-radio ml-3">
+                                <input [(ngModel)]="reporte" value="SSuCacAT" type="radio" class="custom-control-input " id="SSuCacAT" name="groupclap">
+                                <label class="custom-control-label" for="SSuCacAT">Certificación Afiliado Activo con Trayectoria</label>
+                            </div>
+                            <div class="custom-control custom-radio ml-3 ">
+                                <input [(ngModel)]="reporte" value="SSuCacTD" type="radio" class="custom-control-input" id="SSuCacTD" name="groupclap">
+                                <label class="custom-control-label" for="SSuCacTD">Certificación Trabajador Desafiliado</label>
+                            </div>
+                            <div class="custom-control custom-radio ml-3 ">
+                                <input [(ngModel)]="reporte" value="SSuCacDH" type="radio" class="custom-control-input" id="SSuCacDH" name="groupclap">
+                                <label class="custom-control-label " for="SSuCacDH">Certificación Desafiliado - Histórico</label>
+                            </div>
+                            <div class="custom-control custom-radio ml-3 ">
+                                <input [(ngModel)]="reporte" value="SSuCaCBE" type="radio" class="custom-control-input" id="SSuCaCBE" name="groupclap">
+                                <label class="custom-control-label " for="SSuCaCBE">Certificación de Beneficiarios</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="ter_coda == ''">
+
+                    <div class=" input-group mt-2 ">
+                        <div class="custom-control custom-radio ">
+                            <div class="custom-control custom-radio ">
+                                <input [(ngModel)]="reporte" value="SSuCacNA" type="radio" checked class="custom-control-input active" id="SSuCacNA" name="groupclap">
+                                <label class="custom-control-label active" for="SSuCacNA">Certificación No Afiliado</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12 mt-3 ">
+                        <label for="con_cont ">Número de Identificación</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend ">
+                                <div class="input-group-text ">
+                                    <span><i class="fas fa-hashtag "></i></span>
+                                </div>
+                            </div>
+                            <input [(ngModel)]="identificacion" id="inp_nide" name="inp_nide" type="text" class="form-control " placeholder="Número de Identificación">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12 mt-3 ">
+                        <label for="rad_nomr ">Nombre</label>
+                        <div class="input-group ">
+                            <div class="input-group-prepend ">
+                                <div class="input-group-text ">
+                                    <span><i class="fas fa-user-circle "></i></span>
+                                </div>
+                            </div>
+                            <input [(ngModel)]="nombre" id="inp_nomb " name="inp_nomb " type="text " class="form-control " placeholder="Nombre Completo ">
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="row ">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 text-center pt-4 pb-3 ">
+                        <button [disabled]="reporte == undefined || reporte == ''" type="button " class="btn btn-success btn-md btn-block " (click)="printCertificado() ">
+                          <span><i></i> &nbsp;Imprimir Certificado </span>
+                      </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<app-alert-message [message]="msg "></app-alert-message>

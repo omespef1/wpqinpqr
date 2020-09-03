@@ -1,0 +1,73 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Certificaciones de Aportes.</h1>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="card card-gray">
+        <div class="card-header bg-primary text-white">Transacciones Disponibles</div>
+        <div class="card-body">
+            <form #arcaceaForm="ngForm">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+                        <button type="button" class="btn btn-outline-success btn-lg btn-block" (click)="printDesafiliado()">
+                  <span><i></i> &nbsp;Certificado Desafiliación</span>
+                </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+                        <button [disabled]="per_afil == undefined || per_afil == ''" type="button" class="btn btn-outline-success btn-lg btn-block" (click)="printAfiliado()">
+                        <span><i></i> &nbsp;Certificado Afiliación</span>
+                        </button>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+                        <div class="input-group">
+                            <mat-datepicker-toggle [for]="perafil"></mat-datepicker-toggle>
+                            <mat-datepicker #perafil touchUi startView="multi-year" (monthSelected)="setPeriodoAfiliacion($event, perafil)"></mat-datepicker>
+                            <input hidden readonly [matDatepicker]="perafil" type="text" class="form-control" name="perafil">
+                            <input [(ngModel)]="per_afil" type="text" autocomplete="off" readonly class="form-control" placeholder="Periodo" name="perafil">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+                        <button [disabled]="per_inde == undefined || per_inde == ''" type="button" class="btn btn-outline-success btn-lg btn-block" (click)="printIndependiente()">
+                  <span><i></i> &nbsp;Certificado Independiente</span>
+                </button>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+                        <div class="input-group">
+                            <mat-datepicker-toggle [for]="perinde"></mat-datepicker-toggle>
+                            <mat-datepicker #perinde touchUi startView="multi-year" (monthSelected)="setPeriodoIndependiente($event, perinde)"></mat-datepicker>
+                            <input hidden readonly [matDatepicker]="perinde" type="text" class="form-control" name="perinde">
+                            <input [(ngModel)]="per_inde" type="text" autocomplete="off" readonly class="form-control" placeholder="Periodo" name="perinde">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+                        <button [disabled]="per_pens == undefined || per_pens == ''" type="button" class="btn btn-outline-success btn-lg btn-block" (click)="printPensionado()">
+                            <span><i></i> &nbsp;Certificado Pensionado</span>
+                        </button>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+                        <div class="input-group">
+                            <mat-datepicker-toggle [for]="perpens"></mat-datepicker-toggle>
+                            <mat-datepicker #perpens touchUi startView="multi-year" (monthSelected)="setPeriodoPensionado($event, perpens)"></mat-datepicker>
+                            <input hidden readonly [matDatepicker]="perpens" type="text" class="form-control" name="perpens">
+                            <input [(ngModel)]="per_pens" type="text" autocomplete="off" readonly class="form-control" placeholder="Periodo" name="perpens">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<app-alert-message [message]="msg"></app-alert-message>
