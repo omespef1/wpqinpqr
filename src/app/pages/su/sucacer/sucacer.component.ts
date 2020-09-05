@@ -4,11 +4,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { SucacerService } from 'src/app/services/su/sucacer.service';
+import { Sucacer } from 'src/classes/su/sucacer';
 
 @Component({
   selector: 'app-sucacer',
   templateUrl: './sucacer.component.html',
-  styles: []
+  styleUrls: ['./sucacer.component.css']
 })
 export class SucacerComponent implements OnInit {
 
@@ -20,6 +21,7 @@ export class SucacerComponent implements OnInit {
   msg = '';
   nombre = '';
   identificacion = '';
+  beneficiarios: Sucacer[] = [];
 
   constructor(private spinner: NgxSpinnerService, private sanitizer: DomSanitizer, private titleService: Title,
     private route: ActivatedRoute, private _sucacer: SucacerService) { }
@@ -65,14 +67,29 @@ export class SucacerComponent implements OnInit {
           this.showAlertMesssage('Debe digitar nombres completos');
           return;
         }
-        
+
         this._sucacer.printCertificadoNoAfiliado(this.identificacion, this.nombre, this. emp_codi).subscribe(resp => {
           if (resp.retorno === 0)
            window.open(resp.objTransaction, '_blank');
           else
-            this.showAlertMesssage(`Error generando reporte : ${resp.txtRetorno}`);
+            this.showAlertMesssage(`${resp.txtRetorno}`);
           }
         );
+
+      } if (this.reporte === 'SSuCaCBE') {
+
+        for (let i = 0; i < this.beneficiarios.length; i++) {
+          if (this.beneficiarios[i].ite_chkd === true) {
+            console.log(this.beneficiarios[i].afi_docu);
+            this._sucacer.printCertificado(this.beneficiarios[i].afi_docu, this. emp_codi, this.reporte).subscribe(resp => {
+              if (resp.retorno === 0)
+               window.open(resp.objTransaction, '_blank');
+              else
+                this.showAlertMesssage(`${resp.txtRetorno}`);
+              }
+            );
+          }
+        }
 
       } else {
 
@@ -80,7 +97,7 @@ export class SucacerComponent implements OnInit {
           if (resp.retorno === 0)
            window.open(resp.objTransaction, '_blank');
           else
-            this.showAlertMesssage(`Error generando reporte : ${resp.txtRetorno}`);
+            this.showAlertMesssage(`${resp.txtRetorno}`);
           }
         );
       }
@@ -88,7 +105,16 @@ export class SucacerComponent implements OnInit {
       this.GetParams();
 
      } catch (error) {
-       this.showAlertMesssage(`Error generando reporte : ${error}`);
+       this.showAlertMesssage(`${error}`);
      }
   }
+
+  onItemChange(value) {
+    this.spinner.show();
+    this._sucacer.getGrupoFamiliar(this.ter_coda, this.emp_codi).subscribe((resp: any) => {
+      this.beneficiarios = resp.objTransaction;
+      this.spinner.hide();
+    });
+  }
+
 }

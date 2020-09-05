@@ -116,7 +116,7 @@ export class SsuconctComponent implements OnInit {
 
   initDate() {
     this.today = new Date();
-    this.today.setDate(this.today.getDate() + 1);
+    this.today.setDate(this.today.getDate());
     this.subonoc.dim_feci = moment(this.today).format('YYYY-MM-DD');
     this.subonoc.dim_fecf = moment(this.today).format('YYYY-MM-DD');
   }

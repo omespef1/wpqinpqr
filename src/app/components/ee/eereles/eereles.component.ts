@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ComunicationsService } from 'src/services/comunications.service';
 import { DomSanitizer, Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmDialogComponent } from '../../dialogs/confirm-dialog/confirm-dialog.component';
 import { EnvService } from 'src/app/env.service';
 import { AlertComponent } from '../../alert/alert.component';
@@ -14,6 +14,8 @@ import { EeResen } from 'src/classes/ee/eeresen';
 import { EeResem } from 'src/classes/ee/eeresem';
 import { NgForm } from '@angular/forms';
 import { ToTransaction } from 'src/classes/gn/toTransaction';
+import { FileUploader, FileLikeObject } from 'ng2-file-upload';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-eereles',
@@ -21,7 +23,8 @@ import { ToTransaction } from 'src/classes/gn/toTransaction';
   styleUrls: ['./eereles.component.css']
 })
 export class EerelesComponent implements OnInit {
-
+  
+  @ViewChild(ConfirmDialogComponent) confirm: ConfirmDialogComponent;
   @ViewChild(AlertComponent) alert: AlertComponent;
   @ViewChild(ModalComponent) modal: ModalComponent;
   public arrElements: number[] = [];
@@ -37,12 +40,17 @@ export class EerelesComponent implements OnInit {
   resem: EeResem;
   countEereles = 0;
   countEerelesMult = 0;
+  uploader: FileUploader = new FileUploader({});
+  hasBaseDropZoneOver = false;
 
   public rel_serv = 0;
   public rem_cont = 0;
+  ok = '';
 
   // tslint:disable-next-line:max-line-length
-  constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer, private titleService: Title, private route: ActivatedRoute, private _confirm: ConfirmDialogComponent, private env: EnvService) {
+  constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, 
+    private sanitizer: DomSanitizer, private titleService: Title, private route: ActivatedRoute, 
+    private env: EnvService, private router: Router) {
   }
 
   async ngOnInit() {
@@ -129,6 +137,7 @@ export class EerelesComponent implements OnInit {
     this.alert.show();
   }
 
+
   public setTitle(newTitle: string) {
     this.titleService.setTitle(newTitle);
   }
@@ -200,11 +209,39 @@ export class EerelesComponent implements OnInit {
 
   async PostEereles(form: NgForm) {
     this.topFunction();
-    this.spinner.show();
     await this.saveUnique();
     this.clear();
-    this.spinner.hide();
   }
+
+  saveAdjuntos(rem_cont: number) {
+
+    const formData = new FormData();
+    const files = this.getFiles();
+    let filesCount = 1;
+
+    if (files.length > 0) {
+      files.forEach((file) => {
+        formData.append(`fileUpload${filesCount}`, file.rawFile, file.name);
+        filesCount += 1;
+      });
+
+      formData.append('EMP_CODI', this.emp_codi.toString());
+      formData.append('VAR_CONT', rem_cont.toString());
+      formData.append('VAR_TABL', 'EE_RESEN');
+      formData.append('VAR_PROG', 'SEERESEN');
+
+      this._comu.Post('api/uploadAttachment/subirArchivoAdjunto', formData).subscribe((respAdj: any) => {
+        if (respAdj.retorno === 1)
+          this.showAlertMesssage(`Se produjo un error subiendo el archivo. Intentelo nuevamente : ${respAdj.txtRetorno}`);
+      }, err => { console.log(err); });
+    }
+   }
+
+   getFiles(): FileLikeObject[] {
+    return this.uploader.queue.map((fileItem) => {
+      return fileItem.file;
+    });
+   }
 
   async saveUnique() {
 
@@ -212,9 +249,12 @@ export class EerelesComponent implements OnInit {
       this._comu.Post('api/EeReles/insertEreles', this.eeresen).subscribe(async (resp: ToTransaction) => {
         if (resp.retorno !== undefined) {
           if (resp.retorno === 0) {
+            this.spinner.hide();
             await this.saveMultiple();
+            await this.saveAdjuntos(this.resem.rem_cont);
             resolve();
             this.showAlertMesssage('Encuesta enviada correctamente.');
+            this.clear();
           } else {
             this.showAlertMesssage(resp.txtRetorno);
             reject();
@@ -252,5 +292,21 @@ export class EerelesComponent implements OnInit {
     this.eeresem = [];
     this.GetEeReles();
   }
-  
+
+  fileOverBase(event): void {
+    this.hasBaseDropZoneOver = event;
+  }
+
+  trackByIdx(index: number, obj: any): any {
+    return index;
+  }
+
+  deleteFile(index: number) {
+    this.uploader.queue[index].remove();
+  }
+
+  alertEmitt(event) {
+    this.router.navigate(['eeremes']);
+  }
+
 }

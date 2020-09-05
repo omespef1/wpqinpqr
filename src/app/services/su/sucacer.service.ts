@@ -20,4 +20,9 @@ export class SucacerService {
         // tslint:disable-next-line:max-line-length
         return this._comu.GetTransaction<ToTransaction>(`api/sucacer/printCertificadoNoAfiliado?tna_docu=${tna_docu}&tna_nomb=${tna_nomb}&emp_codi=${emp_codi}`);
     }
+
+    getGrupoFamiliar(ter_coda: string, emp_codi: number) {
+        // tslint:disable-next-line:max-line-length
+        return this._comu.GetTransaction<ToTransaction>(`api/sucacer/getInfoBeneficiarios?ter_coda=${ter_coda}&emp_codi=${emp_codi}`);
+    }
 }

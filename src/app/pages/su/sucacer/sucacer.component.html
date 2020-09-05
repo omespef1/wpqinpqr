@@ -35,7 +35,7 @@
                                 <label class="custom-control-label " for="SSuCacDH">Certificación Desafiliado - Histórico</label>
                             </div>
                             <div class="custom-control custom-radio ml-3 ">
-                                <input [(ngModel)]="reporte" value="SSuCaCBE" type="radio" class="custom-control-input" id="SSuCaCBE" name="groupclap">
+                                <input [(ngModel)]="reporte" value="SSuCaCBE" type="radio" class="custom-control-input" id="SSuCaCBE" name="groupclap" (change)="onItemChange($event.target.value)">
                                 <label class="custom-control-label " for="SSuCaCBE">Certificación de Beneficiarios</label>
                             </div>
                         </div>
@@ -79,9 +79,43 @@
 
                 </div>
 
+                <div class="row" *ngIf="reporte === 'SSuCaCBE'">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-2">
+                        <div class="table table-hover table-striped table-bordered mt-2">
+                            <table class="table table-hover table-striped table-bordered mt-4">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Identificación</th>
+                                        <th scope="col">Nombres</th>
+                                        <th scope="col" class="text-center">Seleccionar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let ben of beneficiarios" style="font-size: 1rem">
+                                        <td>
+                                            <span>
+                                                {{ben.afi_docu}}
+                                            </span>
+                                        </td>
+                                        <td>{{ ben.afi_nom1 + ' ' + ben.afi_nom2 + ' ' + ben.afi_ape1 + ' ' + ben.afi_ape2 }}</td>
+                                        <td class="text-center">
+                                            <span class="switch mt-2">
+                                                <input type="checkbox" name="chk" [(checked)]="ben.ite_chkd"
+                                                    (change)="ben.ite_chkd=!ben.ite_chkd" class="switch switch-sm"
+                                                    id="{{ben.afi_cont}}">
+                                                <label for="{{ben.afi_cont}}"></label>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="row ">
-                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 text-center pt-4 pb-3 ">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-4 pb-3 ">
                         <button [disabled]="reporte == undefined || reporte == ''" type="button " class="btn btn-success btn-md btn-block " (click)="printCertificado() ">
                           <span><i></i> &nbsp;Imprimir Certificado </span>
                       </button>

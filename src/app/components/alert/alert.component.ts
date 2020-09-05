@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-alert',
@@ -9,7 +10,11 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class AlertComponent implements OnInit {
 safeHtml: SafeHtml;
 @Input() message: string;
-  constructor(private sanitizer: DomSanitizer) { }
+@Output() _ok: EventEmitter<string>;
+
+  constructor(private sanitizer: DomSanitizer) {
+    this._ok = new EventEmitter();
+   }
 
   ngOnInit() {
   }
@@ -23,5 +28,9 @@ safeHtml: SafeHtml;
   }
   show() {
     document.getElementById('btnModal').click();
+  }
+
+  ok() {
+    this._ok.emit();
   }
 }
