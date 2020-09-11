@@ -76,7 +76,7 @@ export class SucacerComponent implements OnInit {
           }
         );
 
-      } if (this.reporte === 'SSuCaCBE') {
+      } else if (this.reporte === 'SSuCaCBE') {
 
         for (let i = 0; i < this.beneficiarios.length; i++) {
           if (this.beneficiarios[i].ite_chkd === true) {
