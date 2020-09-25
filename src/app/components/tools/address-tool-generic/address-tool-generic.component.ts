@@ -47,7 +47,6 @@ export class AddressToolGenericComponent implements OnInit {
     this.nom_edtn = '';
     this.dataTemp = [];
     this.direccion = '';
-    console.log(`Mostrando direcciones ${this.ModalId}`);
     document.getElementById(this.buttonModalId).click();
   }
 

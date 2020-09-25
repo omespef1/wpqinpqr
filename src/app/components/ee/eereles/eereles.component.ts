@@ -130,6 +130,8 @@ export class EerelesComponent implements OnInit {
       this.reles = info.objTransaction;
     else
       this.showAlertMesssage(info.txtRetorno);
+
+      console.log(this.reles);
   }
 
   showAlertMesssage(msg: string) {

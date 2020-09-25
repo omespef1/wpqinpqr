@@ -22,7 +22,7 @@ import { CtpropoComponent } from './components/ct/ctpropo/ctpropo.component';
 import { CtconsuComponent } from './components/ct/ctconsu/ctconsu.component';
 // Angular material
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule, MatFormFieldModule, MatInputModule, MatTableModule, MatPaginatorModule } from '@angular/material';
+import { MatNativeDateModule, MatFormFieldModule, MatInputModule, MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { TarjetasPipe } from './pipes/socoxcn/tarjetas.pipe';
 import { EnvServiceProvider } from './env.service.provider';
@@ -61,11 +61,11 @@ export const MY_FORMATS = {
     ConsultaComponent,
     CreacionComponent,
     AlertComponent,
+    ConfirmDialogComponent,
     EstadosPipe,
     EccotizComponent,
     SocoxcnComponent,
     TarjetasPipe,
-    ConfirmDialogComponent,
     ModalComponent,
     TableSearchComponent,
     AlertDialogComponent,
@@ -96,6 +96,7 @@ export const MY_FORMATS = {
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSortModule,
     FileUploadModule,
     BrowserModule
     // NgbModule

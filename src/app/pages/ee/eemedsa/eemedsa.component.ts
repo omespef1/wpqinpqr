@@ -48,6 +48,14 @@ export class EemedsaComponent implements OnInit {
     this._service.loadPorcentajeXServicio(this.ree_serv, moment(this.fechaIni).format('YYYY-MM-DD'),
     moment(this.fechaFin).format('YYYY-MM-DD')).subscribe(resp => {
       this.PorcXServicio = resp.objTransaction;
+
+      if (this.PorcXServicio === null)
+        this.showAlertMesssage('No se encontraron resultados');
+      else { 
+        this.showChart = true;
+        this.loadPorcXSeccion();
+        this.loadOportunidad();
+      }
     });
   }
 
@@ -71,11 +79,7 @@ export class EemedsaComponent implements OnInit {
       this.showAlertMesssage('Fecha final debe ser mayor');
       return;
     }
-
-    this.showChart = true;
     this.loadPorcXServicio();
-    this.loadPorcXSeccion();
-    this.loadOportunidad();
   }
 
   showAlertMesssage(msg: string) {
@@ -95,6 +99,7 @@ export class EemedsaComponent implements OnInit {
 
   returnView() {
     this.showChart = false;
+    this.showSubChart = false;
     this.PorcXServicio = [];
     this.Satisfaccion = [];
     this.Oportunidad = [];

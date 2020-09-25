@@ -30,7 +30,7 @@ export class CtpropoComponent implements OnInit {
   @ViewChild(TableSearchComponent) _table: TableSearchComponent;
   @ViewChild(AlertComponent) alert: AlertComponent;
   @ViewChild(ModalComponent) modal: ModalComponent;
-  @ViewChild(AddressToolComponent) address: AddressToolComponent;
+  @ViewChild('modalDireccion') _tableDireccion: AddressToolComponent;
   
   propo: Ctpropo = new Ctpropo();
   docpr: Ctdocpr = new Ctdocpr(0, '', null, null, '', null , '');
@@ -737,7 +737,7 @@ Aprobar() {
 
   async lupaDirecciones(type: string) {
     this.typeDir = type;
-    this.address.show();
+    this._tableDireccion.show();
   }
 
   getDireccionEmitt(mensaje) {

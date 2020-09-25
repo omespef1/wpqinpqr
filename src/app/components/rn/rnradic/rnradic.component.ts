@@ -26,6 +26,7 @@ import { ModalDoctosComponent } from './modal-doctos/modal-doctos.component';
 import { Suafili } from 'src/classes/su/suafili';
 import { AddressToolComponent } from '../../tools/address-tool/address-tool.component';
 import { FileUploader, FileLikeObject } from 'ng2-file-upload';
+import { RnAfili } from 'src/classes/rn/rnafili';
 
 @Component({
   selector: 'app-rnradic',
@@ -38,14 +39,17 @@ export class RnradicComponent implements OnInit {
   @ViewChild('modalAportant') _tableAportant: TableSearchGenericComponent;
   @ViewChild('modalTipDocto') _tableTipDocto: TableSearchGenericComponent;
   @ViewChild('modalTipDoctoEmpre') _tableTipDoctoEmpre: TableSearchGenericComponent;
+  @ViewChild('modalTipDoctoAfili') _tableTipDoctoAfili: TableSearchGenericComponent;
   @ViewChild('modalDocument') _tableDocument: TableSearchGenericComponent;
   @ViewChild('modalGruRadic') _tableGruRadic: TableSearchGenericComponent;
   @ViewChild('modalClasific') _tableClasific: TableSearchGenericComponent;
   @ViewChild('modalDocumento') _tableDocumento: TableSearchGenericComponent;
-  @ViewChild('modalDirecciones') _tableDireccion: AddressToolComponent;
+  @ViewChild('modalProfesion') _tableProfesion: TableSearchGenericComponent;
+  @ViewChild('modalCondicion') _tableCondicion: TableSearchGenericComponent;
+  @ViewChild('modalDireccion') _tableDireccion: AddressToolComponent;
+  @ViewChild('modalDireccionAfili') _tableDireccionAfili: AddressToolComponent;
 
   @ViewChild(AlertComponent) alert: AlertComponent;
-  @ViewChild(AddressToolComponent) address: AddressToolComponent;
   @ViewChild(ModalComponent) modal: ModalComponent;
   @ViewChild(ModalDoctosComponent) modalDoctos: ModalDoctosComponent;
 
@@ -54,6 +58,9 @@ export class RnradicComponent implements OnInit {
   @Input() artiapo: any[];
   @Input() arapovo: any[];
   @Input() rngrura: any[];
+  @Input() gnprofe: any[];
+  @Input() gnconde: any[];
+
   @Input() rncraco = new RnCraco();
   @Input() gnpaise: GnPais[];
   @Input() gnregio: GnRegio[] = [];
@@ -73,6 +80,8 @@ export class RnradicComponent implements OnInit {
   cra_prim = '';
   cra_clar = '';
   cra_dest = '';
+  cra_afiw = '';
+  apo_orig = '';
   client = '';
   radic: RnRadic = new RnRadic();
   SRN000001: string;
@@ -93,18 +102,21 @@ export class RnradicComponent implements OnInit {
   numeDocumento = false;
   tipDocTrabaja = false;
   numDocTrabaja = false;
-  
+  showAfiliacion = true;
+
   hasBaseDropZoneOver = false;
-  uploader: FileUploader = new FileUploader({});  
+  uploader: FileUploader = new FileUploader({});
   idoc: number;
   selectdperc: RnDperc = new RnDperc();
+  rnafili: RnAfili = new RnAfili();
+  rnsuafili: RnAfili[] = [];
 
   emp_codi = 0;
 
   constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, private sanitizer: DomSanitizer,
     private titleService: Title, private route: ActivatedRoute, private _confirm: ConfirmDialogComponent, private env: EnvService) {
    }
-   async ngOnInit() {    
+   async ngOnInit() {
 
     await this.GetParams();
 
@@ -247,6 +259,8 @@ export class RnradicComponent implements OnInit {
         this.arapovo = resp.objTransaction.arapovo;
         this.rngrura = resp.objTransaction.rngrura;
         this.sumpare = resp.objTransaction.SuMpare;
+        this.gnprofe = resp.objTransaction.gnprofe;
+        this.gnconde = resp.objTransaction.gnconde;
         this.SRN000001 = resp.objTransaction.SRN000001;
         this.SRN000002 = resp.objTransaction.SRN000002;
         this.radic.cen_codi = resp.objTransaction.cen_codi;
@@ -260,7 +274,6 @@ export class RnradicComponent implements OnInit {
         this.radic.rad_dire = '.';
         this.radic.rad_emai = '.';
       }
-
       this.spinner.hide();
     }, err => {
       console.log(err);
@@ -271,7 +284,7 @@ export class RnradicComponent implements OnInit {
 
   async LoadClasificacion() {
     // tslint:disable-next-line:max-line-length
-    const info: any = <any>await this._comu.Get(`api/RnRadic/RnCracoLoad?emp_codi=${this.emp_codi}&gru_cont=${this.radic.gru_cont}`).toPromise();
+    const info: any = <any>await this._comu.Get(`api/RnRadic/RnCracoLoad?emp_codi=${this.emp_codi}&gru_cont=${this.radic.gru_cont}&ter_coda=${this.radic.usu_codi}`).toPromise();
 
     if (info.retorno === 0) {
       this.rncraco = info.objTransaction;
@@ -307,6 +320,13 @@ export class RnradicComponent implements OnInit {
     this._tableTipDocto.ModalQb = 'modalTipDocto';
     this._tableTipDocto.render(this.gntipdo);
     this._tableTipDocto.show();
+  }
+
+  lupaTipoDocumentoAfili() {
+    this._tableTipDoctoAfili.btnModalQb = 'btnTipDoctoAfili';
+    this._tableTipDoctoAfili.ModalQb = 'modalTipDoctoAfili';
+    this._tableTipDoctoAfili.render(this.gntipdo);
+    this._tableTipDoctoAfili.show();
   }
 
   lupaTipoDocumentoEmpresa() {
@@ -346,8 +366,34 @@ export class RnradicComponent implements OnInit {
     this._tableClasific.show();
   }
 
+  lupaProfesion() {
+    this._tableProfesion.btnModalQb = 'btnProfesion';
+    this._tableProfesion.ModalQb = 'modalProfesion';
+    this._tableProfesion.render(this.gnprofe);
+    this._tableProfesion.show();
+  }
+
+  lupaCondicion() {
+    this._tableCondicion.btnModalQb = 'btnCondicion';
+    this._tableCondicion.ModalQb = 'modalCondicion';
+    this._tableCondicion.render(this.gnconde);
+    this._tableCondicion.show();
+  }
+
   async lupaDirecciones() {
-    this.address.show();
+    this._tableDireccion.show();
+  }
+
+  async lupaDireccionesAfili() {
+    this._tableDireccionAfili.show();
+  }
+
+  getDireccionEmitt(mensaje) {
+    this.radic.rad_dire = mensaje;
+  }
+
+  getDireccionEmittAfili(mensaje) {
+    this.rnafili.afi_dire = mensaje;
   }
 
   setAportant(rowSelected: any) {
@@ -361,9 +407,24 @@ export class RnradicComponent implements OnInit {
     this.radic.tip_nomb = rowSelected.TIP_NOMB;
   }
 
+  setTipDoctoAfili(rowSelected: any) {
+    this.rnafili.tip_codi = rowSelected.TIP_CODI;
+    this.rnafili.tip_nomb = rowSelected.TIP_NOMB;
+  }
+
   setTipDoctoEmpre(rowSelected: any) {
     this.radic.tip_coda = rowSelected.TIP_CODI;
     this.radic.tip_noma = rowSelected.TIP_NOMB;
+  }
+
+  setProfesion(rowSelected: any) {
+    this.rnafili.pro_cont = rowSelected.ite_cont;
+    this.rnafili.pro_nomb = rowSelected.ite_nomb;
+  }
+
+  setCondicion(rowSelected: any) {
+    this.rnafili.ite_cont = rowSelected.ite_cont;
+    this.rnafili.ite_nomb = rowSelected.ite_nomb;
   }
 
   setDoctoEmpre(rowSelected: any) {
@@ -406,10 +467,11 @@ export class RnradicComponent implements OnInit {
     this.radic.cra_cont = rowSelected.CRA_CONT;
     this.radic.cra_codi = rowSelected.CRA_CODI;
     this.radic.cra_nomb = rowSelected.CRA_NOMB;
-    this.ite_depe =  rowSelected.ITE_NOMB;
-    this.cra_prim =  rowSelected.CRA_PRIM;
-    this.cra_clar =   rowSelected.CRA_CLAR;
-    this.cra_dest =  rowSelected.CRA_DEST;
+    this.ite_depe = rowSelected.ITE_NOMB;
+    this.cra_prim = rowSelected.CRA_PRIM;
+    this.cra_clar = rowSelected.CRA_CLAR;
+    this.cra_dest = rowSelected.CRA_DEST;
+    this.cra_afiw = rowSelected.CRA_AFIW;
 
     if (this.SRN000002 === 'S') {
       this.radic.rad_obse = '.';
@@ -422,7 +484,7 @@ export class RnradicComponent implements OnInit {
   }
 
   setDocumento(rowSelected: any) {
-
+  
     this.radic.tip_codi = rowSelected.TIP_CODI;
     this.radic.tip_nomb = rowSelected.TIP_NOMB;
     this.radic.afi_cont = rowSelected.AFI_CONT;
@@ -435,7 +497,17 @@ export class RnradicComponent implements OnInit {
     this.radic.afi_tele = rowSelected.AFI_TELE;
     this.radic.tip_coda = rowSelected.TIP_CODA;
     this.radic.tip_noma = rowSelected.TIP_NOMA;
+    this.radic.apo_orig = rowSelected.APO_ORIG;
     this.getInfoxDocumento();
+
+    if (this.cra_afiw === 'S') {
+      this.showAfiliacion = true;
+      if (this.radic.apo_orig !== 'O') {
+        this.showAlertMesssage(`El aportante no pertenece al régimen obligatorio.`);
+      }
+    } else {
+      this.showAfiliacion = false;
+    }
   }
 
   async getInfoxDocumento() {
@@ -722,6 +794,7 @@ cleanDataForm() {
     this.numeDocumento = false;
     this.tipDocTrabaja = false;
     this.numDocTrabaja = false;
+    this.showAfiliacion = false;
   }
 
   numberOnly(event): boolean {
@@ -797,10 +870,13 @@ cleanDataForm() {
       this.tipDocTrabaja = true;
       this.numDocTrabaja = true;
     }
-  }
 
-  getDireccionEmitt(mensaje) {
-      this.radic.rad_dire = mensaje;
+    if (this.cra_afiw === 'S') {
+      this.showAfiliacion = true;
+    } else {
+      this.showAfiliacion = false;
+    }
+
   }
 
   fileOverBase(event): void {
@@ -814,4 +890,30 @@ cleanDataForm() {
   deleteFile(index: number) {
     this.uploader.queue[index].remove();
   }
+
+  addAfili() {
+
+    // tslint:disable-next-line:max-line-length
+    if (this.rnsuafili.indexOf(this.rnsuafili.filter(t => t.afi_docu === this.rnafili.afi_docu && t.tip_codi === this.rnafili.tip_codi)[0]) === -1)
+      this.rnsuafili.push(this.rnafili);
+    else
+      this.showAlertMesssage('El Documento: ' + this.rnafili.afi_docu + ' ya fue registrado.' );
+
+     this.rnafili = new RnAfili();
+
+  }
+
+  editarAfili(afili: RnAfili) {
+    this.rnafili = afili;
+    const i = this.rnsuafili.indexOf(afili);
+    this.rnsuafili.splice( i, 1 );
+  }
+
+  eliminarAfili(afili: RnAfili) {
+    this.rnafili = afili;
+    const i = this.rnsuafili.indexOf(afili);
+    this.rnsuafili.splice( i, 1 );
+    this.rnafili = new RnAfili();
+  }
+
 }

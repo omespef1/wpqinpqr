@@ -190,7 +190,7 @@
                             </div>
                             <select class="form-control" name="ree_more" [(ngModel)]="eereenc.ree_more" required #ree_more="ngModel">
                                 <option value=undefined>Seleccione</option>
-                                <option *ngFor="let fore of GnItemsIteFoRe" [value]="fore.ite_codi"  >{{fore.ite_codi + ' - ' + fore.ite_nomb | titlecase}}</option>                                
+                                <option *ngFor="let fore of GnItemsIteFoRe" [value]="fore.ite_cont"  >{{fore.ite_codi + ' - ' + fore.ite_nomb | titlecase}}</option>                                
                             </select>
                         </div>
                     </div>

@@ -14,6 +14,7 @@ export class RnRadic {
     public apo_coda: string;
     public apo_razs: string;
     public apo_tele: string;
+    public apo_orig: string;
     public gru_cont: number;
     public gru_codi: string;
     public gru_nomb: string;

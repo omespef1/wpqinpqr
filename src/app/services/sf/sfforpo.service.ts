@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ComunicationsService } from 'src/services/comunications.service';
-import { SfForpo } from 'src/classes/sf/sfforpo';
 import { ToTransaction } from 'src/classes/gn/toTransaction';
+import { SfFovis } from "src/classes/sf/sffovis";
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +12,6 @@ export class SfForpoService {
   constructor(private _comu: ComunicationsService) {
    }
 
-   loadInitInfo(emp_codi: number) {
-    return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoInitInfo?emp_codi=${emp_codi}`);
-  }
-
    loadInfoModalidad(emp_codi: number) {
     return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoInfoModalidad?emp_codi=${emp_codi}`);
   }
@@ -24,8 +20,8 @@ export class SfForpoService {
     return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoInfoRadicado?emp_codi=${emp_codi}`);
   }
 
-  loadInfoIdAfiliados(emp_codi: number) {
-    return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoIdPostulante?emp_codi=${emp_codi}`);
+  loadInfoIdAfiliados(emp_codi: number, usu_codi: string) {
+    return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoIdPostulante?emp_codi=${emp_codi}&afi_docu=${usu_codi}`);
   }
 
   loadInfoIdConyuge(emp_codi: number, afi_cont: number) {
@@ -41,23 +37,18 @@ export class SfForpoService {
     return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoOtrosM?emp_codi=${emp_codi}&afi_trab=${afi_trab}&afi_cont=${afi_cont}&afi_docu=${afi_docu}`);
   }
 
-  loadInfoAfiliados(emp_codi: number, afi_cont: number, valid: boolean) {
-    // tslint:disable-next-line:max-line-length
-    return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoInfoPostulante?emp_codi=${emp_codi}&afi_cont=${afi_cont}&validTope=${valid}`);
-  }
+  // loadInfoAfiliados(emp_codi: number, afi_cont: number, valid: boolean) {
+  //   // tslint:disable-next-line:max-line-length
+  //   return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoInfoPostulante?emp_codi=${emp_codi}&afi_cont=${afi_cont}&validTope=${valid}`);
+  // }
 
   loadValidInfoAfiliados(emp_codi: number, afi_cont: number) {
     return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoValidPostulante?emp_codi=${emp_codi}&afi_cont=${afi_cont}`);
   }
 
-  loadInfoAportante(emp_codi: number, rad_nume: number, for_cont: number) {
+  loadInfoOtros(emp_codi: number, afi_trab: number, afi_docu: string) {
     // tslint:disable-next-line:max-line-length
-    return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoGetInfo?emp_codi=${emp_codi}&rad_nume=${rad_nume}&for_cont=${for_cont}`);
-  }
-
-  loadInfoOtros(emp_codi: number, afi_trab: number, afi_cont: number, afi_docu: string) {
-    // tslint:disable-next-line:max-line-length
-    return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoOtrosM?emp_codi=${emp_codi}&afi_trab=${afi_trab}&afi_cont=${afi_cont}&afi_docu=${afi_docu}`);
+    return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoOtrosM?emp_codi=${emp_codi}&afi_trab=${afi_trab}&afi_docu=${afi_docu}`);
   }
 
   loadInfoGnItems(tit_cont: number) {
@@ -73,7 +64,7 @@ export class SfForpoService {
     return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoInfoModvi?emp_codi=${emp_codi}&mod_cont=${mod_cont}&for_sala=${for_sala}`);
   }
 
-  saveInfoFovis(forpo: SfForpo) {
+  saveInfoFovis(forpo: SfFovis) {
     // tslint:disable-next-line:max-line-length
     return this._comu.PostTransaction<ToTransaction>(`api/Fovis/SfForpoSaveInfo`, forpo);
   }
@@ -87,4 +78,44 @@ export class SfForpoService {
     // tslint:disable-next-line:max-line-length
     return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoGetParentesco`);
   }
+
+  loadInfoTratamiento(emp_codi: number) {
+    // tslint:disable-next-line:max-line-length
+    return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoGetTratamiento?emp_codi=${emp_codi}`);
+  }
+
+  loadSfparam(emp_codi: number) {
+    // tslint:disable-next-line:max-line-length
+    return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoGetSfParam?emp_codi=${emp_codi}`);
+  }
+
+  loadTipoDocumento(emp_codi: number) {
+    // tslint:disable-next-line:max-line-length
+    return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoGetTDocumento?emp_codi=${emp_codi}`);
+  }
+
+  loadValiNomenclatura() {
+    // tslint:disable-next-line:max-line-length
+    return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoGetNomencla`);
+  }
+
+  loadInfoConstructora(emp_codi: number) {
+    // tslint:disable-next-line:max-line-length
+    return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoGetConstructora?emp_codi=${emp_codi}`);
+  }
+
+  loadInfoFromForpo(emp_codi: number, afi_cont: number, for_cont: number) {
+    // tslint:disable-next-line:max-line-length
+    return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoGetInfoForpo?emp_codi=${emp_codi}&afi_cont=${afi_cont}&for_cont=${for_cont}`);
+  }
+
+  loadInfoFromAfili(emp_codi: number, afi_cont: number) {
+    // tslint:disable-next-line:max-line-length
+    return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoGetInfoPostulante?emp_codi=${emp_codi}&afi_cont=${afi_cont}`);
+  }
+
+  printReport() {
+    // tslint:disable-next-line:max-line-length
+    return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoPrintReporte`);
+}
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild , EventEmitter, Output} from '@angular/core';
+import { Component, OnInit, ViewChild , EventEmitter, Output, Input} from '@angular/core';
 import { ComunicationsService } from 'src/services/comunications.service';
 import { GnNomdi } from 'src/classes/gn/gnnomdi';
 
@@ -10,6 +10,8 @@ import { GnNomdi } from 'src/classes/gn/gnnomdi';
 export class AddressToolComponent implements OnInit {
 
   @Output() myAddress: EventEmitter<string>;
+  @Input() buttonModalId: string;
+  @Input() ModalId: string;
 
   dataTemp = [];
   element: HTMLElement;
@@ -45,7 +47,15 @@ export class AddressToolComponent implements OnInit {
     this.nom_edtn = '';
     this.dataTemp = [];
     this.direccion = '';
-    document.getElementById('btnmodalDirecciones').click();
+
+    if (this.ModalId === '' || this.ModalId === undefined || this.ModalId === null)
+      this.ModalId = 'modalDirecciones';
+
+    if (this.buttonModalId === '' || this.buttonModalId === undefined || this.buttonModalId === null)
+      document.getElementById('btnmodalDirecciones').click();
+    else
+      document.getElementById(this.buttonModalId).click();
+
   }
 
   setInfoNomdi(text: string, space: boolean, edtn: string) {

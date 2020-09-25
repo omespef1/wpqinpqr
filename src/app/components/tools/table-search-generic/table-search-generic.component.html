@@ -18,7 +18,7 @@
                 </mat-form-field>
 
                 <div class="mat-elevation-z8">
-                    <table id="GenericTable" mat-table [dataSource]="dataSource" matSort>{{dataSource}}
+                    <table id="GenericTable" mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">{{dataSource}}
                         <ng-template ngFor let-column [ngForOf]="displayedColumns" let-i="index">
                             <ng-container matColumnDef="{{column}}" class="invisible">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ getShowColumn(i) }}</th>

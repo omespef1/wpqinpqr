@@ -22,6 +22,7 @@ export class ConfirmDialogComponent implements OnInit {
   show(){
     document.getElementById("dialogButton").click();
   }
+
   executeAction(selection:string){
       this.buttonClick.emit(selection);
   }

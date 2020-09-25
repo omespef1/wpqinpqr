@@ -1,27 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SfforpoComponent } from './sfforpo.component';
-import { Routes, RouterModule } from '@angular/router';
+import { SuconsuRoutingModule } from './suconsu-routing-module';
+import { SuconsuComponent } from './suconsu.component';
 import { FormsModule } from '@angular/forms';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ModalModule } from 'src/app/shared/modal/modal.module';
 import { MatDatepickerModule, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 
-const routes: Routes = [
-  {
-    path: '',
-    component: SfforpoComponent,
-  }
-];
-
 @NgModule({
   imports: [
     CommonModule,
+    SuconsuRoutingModule,
     FormsModule,
-    RouterModule.forChild(routes),
-    NgxSpinnerModule,
     SharedModule,
     ModalModule,
     MatDatepickerModule,
@@ -44,10 +35,7 @@ const routes: Routes = [
     },
   ],
   declarations: [
-    SfforpoComponent
-  ],
-  exports: [
+    SuconsuComponent
   ]
 })
-export class SfforpoModule { }
-
+export class SuconsuModule { }

@@ -136,7 +136,7 @@ export class TrazabilidadComponent implements OnInit {
   }
 
   verAdjuntos(cas_cont: number) {
-
+  console.log(cas_cont);
     this.gnAdjunt = [];
     this.visibleEncabez = false;
     this.visibleDatGrid = false;

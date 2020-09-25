@@ -25,6 +25,7 @@ export class Suafili {
     public TIA_NOMB: string;
     public APO_CODA: string;
     public APO_RAZS: string;
+    public APO_ORIG: string;
     public DSU_TELE: string;
     public AFI_DIRE: string;
     public AFI_MAIL: string;

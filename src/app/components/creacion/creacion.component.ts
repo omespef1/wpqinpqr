@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { pqinpqr, companies, ToTransaction } from '../../../classes/models';
+import { Component, Input, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NgForm, FormGroup } from '@angular/forms';
 import { ComunicationsService } from '../../../services/comunications.service';
@@ -27,8 +27,8 @@ export class CreacionComponent implements OnInit {
 
   @ViewChild(TableSearchComponent) _table: TableSearchComponent;
   @ViewChild(AlertComponent) alert: AlertComponent;
-  @ViewChild(ModalComponent) modal: ModalComponent;
-  @ViewChild(AddressToolComponent) address: AddressToolComponent;
+  @ViewChild(ModalComponent) modal: ModalComponent;  
+  @ViewChild('modalDireccion') _tableDireccion: AddressToolComponent;
 
   pqr: pqinpqr = new pqinpqr();
   clienInfo: Faclien;
@@ -387,7 +387,7 @@ export class CreacionComponent implements OnInit {
  }
 
  async lupaDirecciones() {
-  this.address.show();
+  this._tableDireccion.show();
 }
 
 getDireccionEmitt(mensaje) {

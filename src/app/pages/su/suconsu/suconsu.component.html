@@ -1,0 +1,433 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Consultas Portal Afiliados.</h1>
+
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="accordion mb-5" id="accordionConsultas">
+        <div class="card">
+
+            <div class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#afiliatrab'" aria-expanded="false">
+                <h6>
+                    Consulta Afiliaciones Trabajador
+                </h6>
+            </div>
+            <div id="afiliatrab" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionConsultas">
+                <div class="card-body" style="border-bottom: 0.5px solid grey;">
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Nombre Completo</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="afi_noco" [(ngModel)]="infoafiliatrab.afi_noco" type="text" class="form-control" placeholder="Nombre Completo" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Dirección</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="afi_dire" [(ngModel)]="infoafiliatrab.afi_dire" type="text" class="form-control" placeholder="Dirección" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Teléfono</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="afi_tele" [(ngModel)]="infoafiliatrab.afi_tele" type="text" class="form-control" placeholder="Teléfono" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Celular</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="afi_celu" [(ngModel)]="infoafiliatrab.afi_celu" type="text" class="form-control" placeholder="Celular" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="afi_noco">País</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="pai_nomb" [(ngModel)]="infoafiliatrab.pai_nomb" type="text" class="form-control" placeholder="País" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Departamento</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="dep_nomb" [(ngModel)]="infoafiliatrab.dep_nomb" type="text" class="form-control" placeholder="Departamento" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Municipio</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="mun_nomb" [(ngModel)]="infoafiliatrab.mun_nomb" type="text" class="form-control" placeholder="Municipio" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Localidad</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="loc_nomb" [(ngModel)]="infoafiliatrab.loc_nomb" type="text" class="form-control" placeholder="Localidad" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Barrio</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="bar_nomb" [(ngModel)]="infoafiliatrab.bar_nomb" type="text" class="form-control" placeholder="Barrio" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <div class="table-responsive mt-3">
+                                <table class="table table-hover table-striped table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Tipo Documento</th>
+                                            <th scope="col">Número Documento</th>
+                                            <th scope="col">Razón Social</th>
+                                            <th scope="col">Fecha Ingreso</th>
+                                            <th scope="col">Fecha Afiliación</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let tray of infoafiliatrab.sutraye;let i = index">
+                                            <td>{{ tray.tip_abre }}</td>
+                                            <td>{{ tray.apo_coda }}</td>
+                                            <td>{{ tray.apo_razs }}</td>
+                                            <td>{{ tray.tra_fchi }}</td>
+                                            <td>{{ tray.tra_fcha }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#trabgrupofam'" aria-expanded="false">
+                <h6>
+                    Consulta Trabajador y grupo familiar
+                </h6>
+            </div>
+            <div id="trabgrupofam" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionConsultas">
+                <div class="card-body" style="border-bottom: 0.5px solid grey;">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Tipo Documento</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="tip_abre" [(ngModel)]="infoafiliatrab.tip_abre" type="text" class="form-control" placeholder="Tipo Documento" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Número Documento</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="afi_docu" [(ngModel)]="infoafiliatrab.afi_docu" type="text" class="form-control" placeholder="Número Documento" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Fecha Nacimiento</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="afi_docu" [(ngModel)]="infoafiliatrab.afi_fecn" type="text" class="form-control" placeholder="Fecha Nacimiento" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Nombre Completo</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="afi_noco" [(ngModel)]="infoafiliatrab.afi_noco" type="text" class="form-control" placeholder="Nombre Completo" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Dirección</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="afi_dire" [(ngModel)]="infoafiliatrab.afi_dire" type="text" class="form-control" placeholder="Dirección" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Teléfono</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="afi_tele" [(ngModel)]="infoafiliatrab.afi_tele" type="text" class="form-control" placeholder="Teléfono" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Celular</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="afi_celu" [(ngModel)]="infoafiliatrab.afi_celu" type="text" class="form-control" placeholder="Celular" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="afi_noco">País</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="pai_nomb" [(ngModel)]="infoafiliatrab.pai_nomb" type="text" class="form-control" placeholder="País" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Departamento</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="dep_nomb" [(ngModel)]="infoafiliatrab.dep_nomb" type="text" class="form-control" placeholder="Departamento" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Municipio</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="mun_nomb" [(ngModel)]="infoafiliatrab.mun_nomb" type="text" class="form-control" placeholder="Municipio" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Localidad</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="loc_nomb" [(ngModel)]="infoafiliatrab.loc_nomb" type="text" class="form-control" placeholder="Localidad" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Barrio</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="bar_nomb" [(ngModel)]="infoafiliatrab.bar_nomb" type="text" class="form-control" placeholder="Barrio" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <div class="table-responsive mt-3">
+                                <table class="table table-hover table-striped table-bordered" data-sort-class="table-active" data-sortable="true">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Tipo Documento</th>
+                                            <th scope="col">Documento</th>
+                                            <th scope="col">Nombre Completo</th>
+                                            <th scope="col">Fecha Nacimiento</th>
+                                            <th scope="col">Parentesco</th>
+                                            <th scope="col">Fecha Afiliación</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let perc of infoafiliatrab.superca; let i = index">
+                                            <td>{{ perc.tip_abre }}</td>
+                                            <td>{{ perc.afi_docu }}</td>
+                                            <td>{{ perc.afi_noco }}</td>
+                                            <td>{{ perc.afi_fecn }}</td>
+                                            <td>{{ perc.mpa_nomb }}</td>
+                                            <td>{{ perc.rad_fech }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#novedadesTrab'" aria-expanded="false">
+                <h6>
+                    Consulta Afiliaciones y Novedades Trabajador
+                </h6>
+            </div>
+            <div id="novedadesTrab" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionConsultas">
+                <div class="card-body" style="border-bottom: 0.5px solid grey;">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-5 col-xs-12 col-sm-12">
+                            <label for="dim_feci">Fecha Inicial Radicación</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="dim_feci"></mat-datepicker-toggle>
+                                <mat-datepicker #dim_feci touchUi></mat-datepicker>
+                                <input [(ngModel)]="rad_feci" matInput placeholder="Fecha Inicial" readonly [matDatepicker]="dim_feci" type="text" class="form-control" name="dim_feci">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-5 col-xs-12 col-sm-12">
+                            <label for="dim_fecf">Fecha Final Radicación</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="dim_fecf"></mat-datepicker-toggle>
+                                <mat-datepicker #dim_fecf touchUi></mat-datepicker>
+                                <input [(ngModel)]="rad_fecf" matInput placeholder="Fecha Final" readonly [matDatepicker]="dim_fecf" type="text" class="form-control" name="dim_fecf">
+                                <button (click)="getInfoNovedades()" type="button" class="btn btn-success btn-md ml-4">Consultar</button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <app-datagrid-tool #novedades pageSize="2" Title="Tipo Documento" [displayedColumns]="['rad_nume', 'rad_fech','cra_nomb', 'rad_esta', 'rad_fecc']" [showColumns]="['Número Radicado', 'Fecha Radicado','Tipo Solicitud', 'Estado', 'Fecha']"></app-datagrid-tool>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#pagoAportes'" aria-expanded="false">
+                <h6>
+                    Consulta Pago de Aportes del Trabajador
+                </h6>
+            </div>
+            <div id="pagoAportes" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionConsultas">
+                <div class="card-body" style="border-bottom: 0.5px solid grey;">
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-xs-12 col-sm-12">
+                            <label for="rpi_peri">Periodo Pago Inicial</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="rpi_peri"></mat-datepicker-toggle>
+                                <mat-datepicker #rpi_peri touchUi startView="multi-year" (monthSelected)="setPeriodoInicial($event, rpi_peri)"></mat-datepicker>
+                                <input hidden readonly [matDatepicker]="rpi_peri" type="text" class="form-control" name="peri">
+                                <input [(ngModel)]="rpiperi" type="text" autocomplete="off" readonly class="form-control" placeholder="P. Inicial" name="rpi_peri" id="rpi_peri">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-xs-12 col-sm-12">
+                            <label for="rpi_perf">Periodo Pago Final</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="rpi_perf"></mat-datepicker-toggle>
+                                <mat-datepicker #rpi_perf touchUi startView="multi-year" (monthSelected)="setPeriodoFinal($event, rpi_perf)"></mat-datepicker>
+                                <input hidden readonly [matDatepicker]="rpi_perf" type="text" class="form-control" name="perf">
+                                <input [(ngModel)]="rpiperf" type="text" autocomplete="off" readonly class="form-control" placeholder="P. Final" name="rpi_perf" id="rpi_perf">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Número de Documento</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="mun_nomb" [(ngModel)]="apo_coda" type="text" class="form-control" placeholder="Número de Documento" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Razón Social</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="apo_razs" [(ngModel)]="apo_razs" type="text" class="form-control" placeholder="Razón Social">
+                                <button (click)="getInfoAportes()" type="button" class="btn btn-success btn-md ml-4">Consultar</button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <app-datagrid-tool #aportes pageSize="5" [displayedColumns]="['apo_coda', 'apo_razs','rpi_peri', 'rpi_nura', 'rpi_fchp', 'dri_sapb','rde_esta','apo_valo']" [showColumns]="['Número Documento', 'Razón Social','Periodo', 'Planilla', 'Fecha de Pago','Valor Aporte', 'Devoluciones','Total Aporte']"></app-datagrid-tool>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#pagoSubsidio'" aria-expanded="false">
+                <h6>
+                    Consulta Pago Subsidio por Trabajador
+                </h6>
+            </div>
+            <div id="pagoSubsidio" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionConsultas">
+                <div class="card-body" style="border-bottom: 0.5px solid grey;">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<app-alert-message [message]="msg"></app-alert-message>

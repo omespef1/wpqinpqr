@@ -4,7 +4,7 @@
     </div>
 </div>
 
-<form #forpoForm="ngForm" (ngSubmit)="PostForpo(forpoForm)">
+<form #fovisForm="ngForm" (ngSubmit)="PostForpo(fovisForm)">
     <div class="container">
         <div class="card card-gray mb-5">
             <ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large" fullScreen="true">
@@ -14,16 +14,59 @@
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active" id="nav-basicos-tab" data-toggle="tab" href="#nav-basicos" role="tab" aria-controls="nav-basicos" aria-selected="true">Datos básicos</a>
-                        <a class="nav-item nav-link" (click)="ValidarDatos($event)" id="nav-miembros-tab" data-toggle="tab" href="#nav-miembros" role="tab" aria-controls="nav-miembros" aria-selected="false">Miembros del Hogar</a>
-                        <a class="nav-item nav-link" (click)="ValidarDatos($event)" id="nav-infoHogar-tab" data-toggle="tab" href="#nav-infoHogar" role="tab" aria-controls="nav-infoHogar" aria-selected="false">Información del Hogar Postulante</a>
-                        <a class="nav-item nav-link" (click)="ValidarDatos($event)" *ngIf="InfoDModv.mod_cspm == 'S'" id="nav-mejoramiento-tab" data-toggle="tab" href="#nav-mejoramiento" role="tab" aria-controls="nav-mejoramiento" aria-selected="false">CSP / Mejoramiento</a>
-                        <a class="nav-item nav-link" (click)="ValidarDatos($event)" id="nav-recursos-tab" data-toggle="tab" href="#nav-recursos" role="tab" aria-controls="nav-recursos" aria-selected="false">Recursos Económicos Y Financiacion</a>
+                        <a class="nav-item nav-link" (click)="ValidarDatos($event, 'miembros')" id="nav-miembros-tab" data-toggle="tab" href="#nav-miembros" role="tab" aria-controls="nav-miembros" aria-selected="false">Miembros del Hogar</a>
+                        <a class="nav-item nav-link" (click)="ValidarDatos($event, 'infoHogar')" id="nav-infoHogar-tab" data-toggle="tab" href="#nav-infoHogar" role="tab" aria-controls="nav-infoHogar" aria-selected="false">Información del Hogar Postulante</a>
+                        <a class="nav-item nav-link" (click)="ValidarDatos($event, 'mejoramiento')" *ngIf="fovis.infoHogar.mod_cspm == 'S'" id="nav-mejoramiento-tab" data-toggle="tab" href="#nav-mejoramiento" role="tab" aria-controls="nav-mejoramiento" aria-selected="false">CSP / Mejoramiento</a>
+                        <a class="nav-item nav-link" (click)="ValidarDatos($event, 'recursos')" id="nav-recursos-tab" data-toggle="tab" href="#nav-recursos" role="tab" aria-controls="nav-recursos" aria-selected="false">Recursos Económicos Y Financiacion</a>
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-basicos" role="tabpanel" aria-labelledby="nav-basicos-tab">
                         <div class="container mt-3">
                             <div class="row">
+
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <div class="card mt-2">
+                                        <div class="card-header bg-primary text-white">
+                                            Inscripción Fovis
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="custom-control custom-radio">
+                                                <input [(ngModel)]="fovis.for_insf" type="radio" class="custom-control-input" id="primera" name="groupInscripcion" value="P" disabled>
+                                                <label class="custom-control-label" for="primera">Primera Vez</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input [(ngModel)]="fovis.for_insf" type="radio" class="custom-control-input" id="actualiza" name="groupInscripcion" value="A" disabled>
+                                                <label class="custom-control-label" for="actualiza">Actualización</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                    <div class="card mt-2">
+                                        <div class="card-header bg-primary text-white">
+                                            Autoriza Tratamiento de Datos Personales
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="custom-control custom-radio ml-3">
+                                                <input [(ngModel)]="fovis.for_tdat" value="S" type="radio" checked class="custom-control-input" id="SSuCacAA" name="groupclap">
+                                                <label class="custom-control-label" for="SSuCacAA">Si</label>
+                                            </div>
+                                            <div class="custom-control custom-radio ml-3">
+                                                <input [(ngModel)]="fovis.for_tdat" value="N" type="radio" class="custom-control-input" id="SSuCacDT" name="groupclap">
+                                                <label class=" custom-control-label " for="SSuCacDT">No</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-3">
+                                    <div class="input-group">
+                                        <textarea style="height: 150px;" type="text" placeholder="Ley de Protección de Datos" class="form-control" multiple readonly name="par_ptda" [(ngModel)]="sfparam.par_ppdt"></textarea>
+                                    </div>
+                                </div>
+
                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                                     <label for="mod_cont">Modalidad de Vivienda</label>
                                     <div class="input-group">
@@ -58,22 +101,7 @@
                                         <div class="card-header bg-primary text-white">Datos Postulante</div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                                                    <label for="con_cont">Radicado</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <span><i class="fas fa-list-ol"></i></span>
-                                                            </div>
-                                                        </div>
-                                                        <input name="rad_nume" [(ngModel)]="fovis.rad_nume" type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
-                                                        <button type="button" class="btn btn-primary" (click)="getRadicado()" [disabled]='InfoModvi.mod_cont == undefined || InfoModvi.mod_cont == "0"'>
-                                                            <span><i class="fas fa-search"></i></span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                                                     <label for="con_cont">Tipo de Documento</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
@@ -81,12 +109,12 @@
                                                                 <span><i class="fas fa-id-card"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="tip_codi" [(ngModel)]="fovis.InfoAportante.tip_codi" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                                        <input name="tip_nomb" [(ngModel)]="fovis.InfoAportante.tip_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                        <input name="tip_codi" [(ngModel)]="fovis.postulante.tip_codi" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                        <input name="tip_nomb" [(ngModel)]="fovis.postulante.tip_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
                                                     </div>
                                                 </div>
 
-                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                                                     <label for="con_cont">Identificación del Postulante</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
@@ -94,10 +122,10 @@
                                                                 <span><i class="fas fa-hashtag"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="afi_docu_post" [(ngModel)]="fovis.InfoAportante.afi_docu" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Número Documento" readonly>
-                                                        <button type="button" class="btn btn-primary" (click)="getAfiliados()" [disabled]='InfoModvi.mod_cont == undefined || InfoModvi.mod_cont == "0"'>
+                                                        <input name="afi_docu_post" [(ngModel)]="fovis.postulante.afi_docu" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Número Documento" readonly>
+                                                        <!-- <button type="button" class="btn btn-primary" (click)="getAfiliados()" [disabled]='InfoModvi.mod_cont == undefined || InfoModvi.mod_cont == "0"'>
                                                             <span><i class="fas fa-search"></i></span>
-                                                        </button>
+                                                        </button> -->
                                                     </div>
                                                 </div>
 
@@ -109,7 +137,7 @@
                                                                 <span><i class="fas fa-calendar"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="afi_fecn" [(ngModel)]="fovis.InfoAportante.afi_fecn" type="text" class="form-control" placeholder="Fecha Nacimiento" readonly>
+                                                        <input name="afi_fecn" [(ngModel)]="fovis.postulante.afi_fecn" type="text" class="form-control" placeholder="Fecha Nacimiento" readonly>
                                                     </div>
                                                 </div>
 
@@ -121,7 +149,7 @@
                                                                 <span><i class="fab fa-audible"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="afi_cate" [(ngModel)]="fovis.InfoAportante.afi_cate" type="text" class="form-control" placeholder="Categoría" readonly>
+                                                        <input name="afi_cate" [(ngModel)]="fovis.postulante.afi_cate" type="text" class="form-control" placeholder="Categoría" readonly>
                                                     </div>
                                                 </div>
 
@@ -133,7 +161,7 @@
                                                                 <span><i class="fas fa-baby"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="afi_edad" type="text" [(ngModel)]="fovis.InfoAportante.afi_edad" class="form-control" placeholder="Edad" readonly>
+                                                        <input name="afi_edad" type="text" [(ngModel)]="fovis.postulante.afi_edad" class="form-control" placeholder="Edad" readonly>
                                                     </div>
                                                 </div>
 
@@ -145,7 +173,7 @@
                                                                 <span><i class="fas fa-user"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="afi_nom1" [(ngModel)]="fovis.InfoAportante.afi_nom1" type="text" class="form-control" placeholder="Primer Nombre" readonly>
+                                                        <input name="afi_nom1" [(ngModel)]="fovis.postulante.afi_nom1" type="text" class="form-control" placeholder="Primer Nombre" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
@@ -156,7 +184,7 @@
                                                                 <span><i class="fas fa-user"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="afi_nom2" [(ngModel)]="fovis.InfoAportante.afi_nom2" type="text" class="form-control" placeholder="Segundo Nombre" readonly>
+                                                        <input name="afi_nom2" [(ngModel)]="fovis.postulante.afi_nom2" type="text" class="form-control" placeholder="Segundo Nombre" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
@@ -167,7 +195,7 @@
                                                                 <span><i class="fas fa-user"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="afi_ape1" [(ngModel)]="fovis.InfoAportante.afi_ape1" type="text" class="form-control" placeholder="Primer Apellido" readonly>
+                                                        <input name="afi_ape1" [(ngModel)]="fovis.postulante.afi_ape1" type="text" class="form-control" placeholder="Primer Apellido" readonly>
                                                     </div>
                                                 </div>
 
@@ -179,41 +207,23 @@
                                                                 <span><i class="fas fa-user"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="afi_ape2" [(ngModel)]="fovis.InfoAportante.afi_ape2" type="text" class="form-control" placeholder="Segundo Apellido" readonly>
+                                                        <input name="afi_ape2" [(ngModel)]="fovis.postulante.afi_ape2" type="text" class="form-control" placeholder="Segundo Apellido" readonly>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                                                     <div class="card mt-2">
                                                         <div class="card-header bg-primary text-white">
                                                             Género
                                                         </div>
                                                         <div class="card-body">
                                                             <div class="custom-control custom-radio">
-                                                                <input [(ngModel)]="fovis.InfoAportante.afi_gene" disabled type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupGenero" value="M">
+                                                                <input [(ngModel)]="fovis.postulante.afi_gene" disabled type="radio" class="custom-control-input" id="defaultGroupExample1" name="groupGenero" value="M">
                                                                 <label class="custom-control-label" for="defaultGroupExample1">Masculino</label>
                                                             </div>
                                                             <div class="custom-control custom-radio">
-                                                                <input [(ngModel)]="fovis.InfoAportante.afi_gene" disabled type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupGenero" value="F">
+                                                                <input [(ngModel)]="fovis.postulante.afi_gene" disabled type="radio" class="custom-control-input" id="defaultGroupExample2" name="groupGenero" value="F">
                                                                 <label class="custom-control-label" for="defaultGroupExample2">Femenino</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
-                                                    <div class="card mt-2">
-                                                        <div class="card-header bg-primary text-white">
-                                                            Inscripción Fovis
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <div class="custom-control custom-radio">
-                                                                <input [(ngModel)]="fovis.for_insf" type="radio" class="custom-control-input" id="primera" name="groupInscripcion" value="P" disabled>
-                                                                <label class="custom-control-label" for="primera">Primera Vez</label>
-                                                            </div>
-                                                            <div class="custom-control custom-radio">
-                                                                <input [(ngModel)]="fovis.for_insf" type="radio" class="custom-control-input" id="actualiza" name="groupInscripcion" value="A" disabled>
-                                                                <label class="custom-control-label" for="actualiza">Actualización</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -229,31 +239,31 @@
                                                             <div class="row">
                                                                 <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
                                                                     <div class="custom-control custom-radio">
-                                                                        <input [(ngModel)]="fovis.InfoAportante.afi_esci" type="radio" disabled class="custom-control-input" id="Soltero" name="groupEsci" value="S">
+                                                                        <input [(ngModel)]="fovis.postulante.afi_esci" type="radio" disabled class="custom-control-input" id="Soltero" name="groupEsci" value="S">
                                                                         <label class="custom-control-label" for="Soltero">Soltero</label>
                                                                     </div>
                                                                     <div class="custom-control custom-radio">
-                                                                        <input [(ngModel)]="fovis.InfoAportante.afi_esci" type="radio" disabled class="custom-control-input" id="Casado" name="groupEsci" value="C">
+                                                                        <input [(ngModel)]="fovis.postulante.afi_esci" type="radio" disabled class="custom-control-input" id="Casado" name="groupEsci" value="C">
                                                                         <label class="custom-control-label" for="Casado">Casado</label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
                                                                     <div class="custom-control custom-radio">
-                                                                        <input [(ngModel)]="fovis.InfoAportante.afi_esci" type="radio" disabled class="custom-control-input" id="Separado" name="groupEsci" value="E">
+                                                                        <input [(ngModel)]="fovis.postulante.afi_esci" type="radio" disabled class="custom-control-input" id="Separado" name="groupEsci" value="E">
                                                                         <label class="custom-control-label" for="Separado">Separado</label>
                                                                     </div>
                                                                     <div class="custom-control custom-radio">
-                                                                        <input [(ngModel)]="fovis.InfoAportante.afi_esci" type="radio" disabled class="custom-control-input" id="Divorciado" name="groupEsci" value="D">
+                                                                        <input [(ngModel)]="fovis.postulante.afi_esci" type="radio" disabled class="custom-control-input" id="Divorciado" name="groupEsci" value="D">
                                                                         <label class="custom-control-label" for="Divorciado">Divorciado</label>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
                                                                     <div class="custom-control custom-radio">
-                                                                        <input [(ngModel)]="fovis.InfoAportante.afi_esci" type="radio" disabled class="custom-control-input" id="Viudo" name="groupEsci" value="V">
+                                                                        <input [(ngModel)]="fovis.postulante.afi_esci" type="radio" disabled class="custom-control-input" id="Viudo" name="groupEsci" value="V">
                                                                         <label class="custom-control-label" for="Viudo">Viudo</label>
                                                                     </div>
                                                                     <div class="custom-control custom-radio">
-                                                                        <input [(ngModel)]="fovis.InfoAportante.afi_esci" type="radio" disabled class="custom-control-input" id="union" name="groupEsci" value="U">
+                                                                        <input [(ngModel)]="fovis.postulante.afi_esci" type="radio" disabled class="custom-control-input" id="union" name="groupEsci" value="U">
                                                                         <label class="custom-control-label" for="union">Unión Libre</label>
                                                                     </div>
                                                                 </div>
@@ -270,7 +280,7 @@
                                                                 <span><i class="fas fa-wheelchair"></i></span>
                                                             </div>
                                                         </div>
-                                                        <select name="for_cond" class="form-control" required [(ngModel)]="fovis.InfoAportante.for_cond" (change)="ValidarConyuge($event.target.value)">
+                                                        <select name="for_cond" class="form-control" required [(ngModel)]="fovis.postulante.for_cond" (change)="ValidarConyuge($event.target.value)">
                                                             <option value="">Seleccione</option>
                                                             <option value="N">No aplica</option>
                                                             <option value="M">Madre Cabeza de Hogar </option>
@@ -285,22 +295,6 @@
                                                 </div>
 
                                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-                                                    <label for="con_cont">Tipo Postulante</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <span><i class="fas fa-running"></i></span>
-                                                            </div>
-                                                        </div>
-                                                        <input name="ite_codi_tp" [(ngModel)]="fovis.InfoAportante.ite_codi_tp" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
-                                                        <input name="ite_nomb_tp" [(ngModel)]="fovis.InfoAportante.ite_nomb_tp" type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
-                                                        <button type="button" class="btn btn-primary" (click)="getTpostulante()">
-                                                            <span><i class="fas fa-search"></i></span> 
-                                                            </button>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                                                     <label for="con_cont">Ocupación</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
@@ -308,15 +302,15 @@
                                                                 <span><i class="fas fa-briefcase"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="ite_codi_oc" [(ngModel)]="fovis.InfoAportante.ite_codi_oc" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
-                                                        <input name="ite_nomb_oc" [(ngModel)]="fovis.InfoAportante.ite_nomb_oc" type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                                        <input name="ite_codi" [(ngModel)]="fovis.postulante.ite_codi" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
+                                                        <input name="ite_nomb" [(ngModel)]="fovis.postulante.ite_nomb" type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
                                                         <button type="button" class="btn btn-primary" (click)="getOcupacion()">
                                                             <span><i class="fas fa-search"></i></span> 
                                                             </button>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                                                     <label for="pro_codi">Ingreso Pila</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
@@ -324,19 +318,7 @@
                                                                 <span><i class="fas fa-hand-holding-usd"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="afi_ipil" [(ngModel)]="fovis.InfoAportante.afi_ipil" readonly type="text" class="form-control" placeholder="Ingreso Pila" autocomplete="off">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
-                                                    <label for="pro_codi"># Postulaciones</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <span><i class="fas fa-hashtag"></i></span>
-                                                            </div>
-                                                        </div>
-                                                        <input name="for_post" [(ngModel)]="fovis.InfoAportante.for_post" readonly type="text" class="form-control" placeholder="# Postulaciones" autocomplete="off">
+                                                        <input name="for_ipil" [(ngModel)]="fovis.postulante.for_ipil" readonly type="text" class="form-control" placeholder="Ingreso Pila" autocomplete="off">
                                                     </div>
                                                 </div>
 
@@ -348,18 +330,7 @@
                                                                 <span><i class="fas fa-money-bill"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="for_sala" required [disabled]='fovis.InfoAportante.afi_cont == undefined' [(ngModel)]="fovis.InfoAportante.for_sala" (keypress)="numberOnly($event)" (keyup)="TotalIngresos()" type="text" class="form-control" placeholder="Salario Constancia"
-                                                            autocomplete="off">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-                                                    <label for="for_tdat"> </label>
-                                                    <div class="input-group mt-2">
-                                                        <span class="switch">
-                                                            <input type="checkbox" name="for_tdat" [(checked)]="fovis.val_tdat"  (change)= "fovis.val_tdat=!fovis.val_tdat" class="switch switch-sm disabled" id="switch-id">
-                                                            <label for="switch-id">Autoriza Tratamiento de Datos Personales.</label>
-                                                        </span>
+                                                        <input name="for_sala" required [disabled]='fovis.postulante.afi_cont == undefined' [(ngModel)]="fovis.postulante.for_sala" (keypress)="numberOnly($event)" type="text" class="form-control" placeholder="Salario Constancia" autocomplete="off">
                                                     </div>
                                                 </div>
                                             </div>
@@ -385,6 +356,7 @@
                                 <div class="tab-pane fade show active" id="nav-conyuge" role="tabpanel" aria-labelledby="nav-conyuge-tab">
                                     <div class="container mt-3">
                                         <div class="row">
+
                                             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
                                                 <label for="con_cont">Identificación del Conyuge</label>
                                                 <div class="input-group">
@@ -393,7 +365,7 @@
                                                             <span><i class="fas fa-hashtag"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input name="afi_docu_cony" [(ngModel)]="fovis.InfoConyuge.afi_docu" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Número Documento">
+                                                    <input name="afi_docu_cony" [(ngModel)]="fovis.conyuge.afi_docu" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Número Documento">
                                                 </div>
                                             </div>
 
@@ -405,7 +377,7 @@
                                                             <span><i class="fas fa-calendar"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input name="afi_fecn_cy" [(ngModel)]="fovis.InfoConyuge.afi_fecn" type="text" class="form-control" placeholder="Fecha Nacimiento" readonly>
+                                                    <input name="afi_fecn_cy" [(ngModel)]="fovis.conyuge.afi_fecn" type="text" class="form-control" placeholder="Fecha Nacimiento" readonly>
                                                 </div>
                                             </div>
 
@@ -417,7 +389,7 @@
                                                             <span><i class="fas fa-baby"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input name="afi_edad_cy" type="text" class="form-control" placeholder="Edad" autocomplete="off" [(ngModel)]="fovis.InfoConyuge.afi_edad">
+                                                    <input name="afi_edad_cy" type="text" class="form-control" placeholder="Edad" autocomplete="off" [(ngModel)]="fovis.conyuge.afi_edad">
                                                 </div>
                                             </div>
 
@@ -429,7 +401,7 @@
                                                             <span><i class="fas fa-user"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input name="afi_nom1_cy" [(ngModel)]="fovis.InfoConyuge.afi_nom1" type="text" class="form-control" placeholder="Primer Nombre" autocomplete="off">
+                                                    <input name="afi_nom1_cy" [(ngModel)]="fovis.conyuge.afi_nom1" type="text" class="form-control" placeholder="Primer Nombre" autocomplete="off">
                                                 </div>
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
@@ -440,7 +412,7 @@
                                                             <span><i class="fas fa-user"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input name="afi_nom2_cy" [(ngModel)]="fovis.InfoConyuge.afi_nom2" type="text" class="form-control" placeholder="Segundo Nombre" autocomplete="off">
+                                                    <input name="afi_nom2_cy" [(ngModel)]="fovis.conyuge.afi_nom2" type="text" class="form-control" placeholder="Segundo Nombre" autocomplete="off">
                                                 </div>
                                             </div>
                                             <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
@@ -451,7 +423,7 @@
                                                             <span><i class="fas fa-user"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input name="afi_ape1_cy" [(ngModel)]="fovis.InfoConyuge.afi_ape1" type="text" class="form-control" placeholder="Primer Apellido" autocomplete="off">
+                                                    <input name="afi_ape1_cy" [(ngModel)]="fovis.conyuge.afi_ape1" type="text" class="form-control" placeholder="Primer Apellido" autocomplete="off">
                                                 </div>
                                             </div>
 
@@ -463,7 +435,7 @@
                                                             <span><i class="fas fa-user"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input name="afi_ape2_cy" [(ngModel)]="fovis.InfoConyuge.afi_ape2" type="text" class="form-control" placeholder="Segundo Apellido" autocomplete="off">
+                                                    <input name="afi_ape2_cy" [(ngModel)]="fovis.conyuge.afi_ape2" type="text" class="form-control" placeholder="Segundo Apellido" autocomplete="off">
                                                 </div>
                                             </div>
 
@@ -474,11 +446,11 @@
                                                     </div>
                                                     <div class="card-body">
                                                         <div class="custom-control custom-radio">
-                                                            <input [(ngModel)]="fovis.InfoConyuge.afi_gene" disabled type="radio" class="custom-control-input" id="mascul" name="groupGnero" value="M">
+                                                            <input [(ngModel)]="fovis.conyuge.afi_gene" disabled type="radio" class="custom-control-input" id="mascul" name="groupGnero" value="M">
                                                             <label class="custom-control-label" for="mascul">Masculino</label>
                                                         </div>
                                                         <div class="custom-control custom-radio">
-                                                            <input [(ngModel)]="fovis.InfoConyuge.afi_gene" disabled type="radio" class="custom-control-input" id="femin" name="groupGnero" value="F">
+                                                            <input [(ngModel)]="fovis.conyuge.afi_gene" disabled type="radio" class="custom-control-input" id="femin" name="groupGnero" value="F">
                                                             <label class="custom-control-label" for="defaultGroupExample2">Femenino</label>
                                                         </div>
                                                     </div>
@@ -492,11 +464,11 @@
                                                     </div>
                                                     <div class="card-body">
                                                         <div class="custom-control custom-radio">
-                                                            <input [(ngModel)]="fovis.InfoConyuge.afi_cond" disabled type="radio" class="custom-control-input" id="normal" name="groupCondic" value="N">
+                                                            <input [(ngModel)]="fovis.conyuge.for_cond" disabled type="radio" class="custom-control-input" id="normal" name="groupCondic" value="N">
                                                             <label class="custom-control-label" for="normal">Normal</label>
                                                         </div>
                                                         <div class="custom-control custom-radio">
-                                                            <input [(ngModel)]="fovis.InfoConyuge.afi_cond" disabled type="radio" class="custom-control-input" id="discapa" name="groupCondic" value="D">
+                                                            <input [(ngModel)]="fovis.conyuge.for_cond" disabled type="radio" class="custom-control-input" id="discapa" name="groupCondic" value="D">
                                                             <label class="custom-control-label" for="discapa">Discapacitado</label>
                                                         </div>
                                                     </div>
@@ -513,52 +485,36 @@
                                                         <div class="row">
                                                             <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
                                                                 <div class="custom-control custom-radio">
-                                                                    <input [(ngModel)]="fovis.InfoConyuge.afi_esci" disabled type="radio" class="custom-control-input" id="conySolt" name="groupEstCiv" value="S">
+                                                                    <input [(ngModel)]="fovis.conyuge.afi_esci" disabled type="radio" class="custom-control-input" id="conySolt" name="groupEstCiv" value="S">
                                                                     <label class="custom-control-label" for="conySolt">Soltero</label>
                                                                 </div>
                                                                 <div class="custom-control custom-radio">
-                                                                    <input [(ngModel)]="fovis.InfoConyuge.afi_esci" disabled type="radio" class="custom-control-input" id="conyCasad" name="groupEstCiv" value="C">
+                                                                    <input [(ngModel)]="fovis.conyuge.afi_esci" disabled type="radio" class="custom-control-input" id="conyCasad" name="groupEstCiv" value="C">
                                                                     <label class="custom-control-label" for="conyCasad">Casado</label>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
                                                                 <div class="custom-control custom-radio">
-                                                                    <input [(ngModel)]="fovis.InfoConyuge.afi_esci" disabled type="radio" class="custom-control-input" id="conySepa" name="groupEstCiv" value="E">
+                                                                    <input [(ngModel)]="fovis.conyuge.afi_esci" disabled type="radio" class="custom-control-input" id="conySepa" name="groupEstCiv" value="E">
                                                                     <label class="custom-control-label" for="conySepa">Separado</label>
                                                                 </div>
                                                                 <div class="custom-control custom-radio">
-                                                                    <input [(ngModel)]="fovis.InfoConyuge.afi_esci" disabled type="radio" class="custom-control-input" id="conyDivo" name="groupEstCiv" value="D">
+                                                                    <input [(ngModel)]="fovis.conyuge.afi_esci" disabled type="radio" class="custom-control-input" id="conyDivo" name="groupEstCiv" value="D">
                                                                     <label class="custom-control-label" for="conyDivo">Divorciado</label>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
                                                                 <div class="custom-control custom-radio">
-                                                                    <input [(ngModel)]="fovis.InfoConyuge.afi_esci" disabled type="radio" class="custom-control-input" id="conyViudo" name="groupEstCiv" value="V">
+                                                                    <input [(ngModel)]="fovis.conyuge.afi_esci" disabled type="radio" class="custom-control-input" id="conyViudo" name="groupEstCiv" value="V">
                                                                     <label class="custom-control-label" for="conyViudo">Viudo</label>
                                                                 </div>
                                                                 <div class="custom-control custom-radio">
-                                                                    <input [(ngModel)]="fovis.InfoConyuge.afi_esci" disabled type="radio" class="custom-control-input" id="conyUnion" name="groupEstCiv" value="U">
+                                                                    <input [(ngModel)]="fovis.conyuge.afi_esci" disabled type="radio" class="custom-control-input" id="conyUnion" name="groupEstCiv" value="U">
                                                                     <label class="custom-control-label" for="conyUnion">Unión Libre</label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-                                                <label for="ite_codi_tp">Tipo Postulante</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">
-                                                            <span><i class="fas fa-running"></i></span>
-                                                        </div>
-                                                    </div>
-                                                    <input name="ite_codi_tp_cony" [(ngModel)]="fovis.InfoConyuge.ite_codi_tp" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
-                                                    <input name="ite_nomb_tp_cony" [(ngModel)]="fovis.InfoConyuge.ite_nomb_tp" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
-                                                    <button type="button" class="btn btn-primary" (click)="getTpostulanteCony()">
-                                                            <span><i class="fas fa-search"></i></span>
-                                                        </button>
                                                 </div>
                                             </div>
 
@@ -570,8 +526,8 @@
                                                             <span><i class="fas fa-briefcase"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input name="ite_codi_oc_cony" [(ngModel)]="fovis.InfoConyuge.ite_codi_oc" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
-                                                    <input name="ite_nomb_oc_cony" [(ngModel)]="fovis.InfoConyuge.ite_nomb_oc" type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                                    <input name="ite_codi_cony" [(ngModel)]="fovis.conyuge.ite_codi" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
+                                                    <input name="ite_nomb_cony" [(ngModel)]="fovis.conyuge.ite_nomb" type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
                                                     <button type="button" class="btn btn-primary" (click)="getOcupacionConyuge()">
                                                         <span><i class="fas fa-search"></i></span> 
                                                         </button>
@@ -586,11 +542,11 @@
                                                             <span><i class="fas fa-building"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input name="apo_razs" [(ngModel)]="fovis.InfoConyuge.apo_razs" type="text" class="form-control" placeholder="Empresa" autocomplete="off">
+                                                    <input name="apo_razs" [(ngModel)]="fovis.conyuge.apo_razs" type="text" class="form-control" placeholder="Empresa" autocomplete="off">
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                            <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                                                 <label for="afi_ipil">Ingreso Pila</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
@@ -598,11 +554,11 @@
                                                             <span><i class="fas fa-hand-holding-usd"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input name="afi_ipiC" [(ngModel)]="fovis.InfoConyuge.afi_ipil" type="text" class="form-control" placeholder="Ingreso Pila" readonly>
+                                                    <input name="afi_ipiC" [(ngModel)]="fovis.conyuge.for_ipil" type="text" class="form-control" placeholder="Ingreso Pila" readonly>
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                            <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                                                 <label for="afi_sala">Salario Constancia</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
@@ -610,7 +566,7 @@
                                                             <span><i class="fas fa-money-bill"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input name="for_sala" required [(ngModel)]="fovis.InfoConyuge.for_sala" (keypress)="numberOnly($event)" (keyup)="TotalIngresos()" type="text" class="form-control" placeholder="Salario Constancia" autocomplete="off">
+                                                    <input name="for_sala" required [(ngModel)]="fovis.conyuge.for_sala" (keypress)="numberOnly($event)" type="text" class="form-control" placeholder="Salario Constancia" autocomplete="off">
                                                 </div>
                                             </div>
 
@@ -631,7 +587,7 @@
                                                         </div>
                                                     </div>
                                                     <input readonly type="text" name="afi_docu_perc" [(ngModel)]="InfoSuPerca.afi_docu" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Número Documento">
-                                                    <button type="button" class="btn btn-primary" (click)="getPerca()" [disabled]='fovis.InfoAportante.afi_cont == undefined || fovis.InfoAportante.afi_cont ==0'>
+                                                    <button type="button" class="btn btn-primary" (click)="getPerca()" [disabled]='fovis.postulante.afi_cont == undefined || fovis.postulante.afi_cont ==0'>
                                                             <span><i class="fas fa-search"></i></span>
                                                         </button>
                                                 </div>
@@ -745,7 +701,7 @@
                                                             <span><i class="fas fa-wheelchair"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input readonly type="text" class="form-control" placeholder="Condición" name="afi_cond_perc" [(ngModel)]="InfoSuPerca.afi_cond">
+                                                    <input readonly type="text" class="form-control" placeholder="Condición" name="for_cond_perc" [(ngModel)]="InfoSuPerca.for_cond">
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -759,22 +715,8 @@
                                                     <input type="text" class="form-control" (keypress)="numberOnly($event)" placeholder="Salario Constancia" name="for_sala_perc" [(ngModel)]="InfoSuPerca.for_sala" autocomplete="off">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-5 col-md-5 col-xs-12 col-sm-12">
-                                                <label for="con_cont">Tipo de Postulante</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">
-                                                            <span><i class="fas fa-running"></i></span>
-                                                        </div>
-                                                    </div>
-                                                    <input readonly type="text" name="ite_codi_tp_perc" [(ngModel)]="InfoSuPerca.ite_codi_tp" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                                    <input readonly type="text" name="ite_nomb_tp_perc" [(ngModel)]="InfoSuPerca.ite_nomb_tp" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                                    <button type="button" class="btn btn-primary" (click)="getTpostulantePerc()">
-                                                        <span><i class="fas fa-search"></i></span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-7 col-md-5 col-xs-12 col-sm-12">
+
+                                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                                                 <label for="con_cont">Ocupación</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
@@ -782,9 +724,9 @@
                                                             <span><i class="fas fa-briefcase"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input name="ite_codi_oc_perc" [(ngModel)]="InfoSuPerca.ite_codi_oc" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                                    <input name="ite_nomb_oc_perc" [(ngModel)]="InfoSuPerca.ite_nomb_oc" readonly type="text" style="width: 45%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                                    <button (click)="getOcupacionPerc()" type="button" class="btn btn-primary" [disabled]='fovis.InfoAportante.afi_cont == undefined || fovis.InfoAportante.afi_cont ==0'>
+                                                    <input name="ite_codi_perc" [(ngModel)]="InfoSuPerca.ite_codi" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                    <input name="ite_nomb_perc" [(ngModel)]="InfoSuPerca.ite_nomb" readonly type="text" style="width: 70%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                    <button (click)="getOcupacionPerc()" type="button" class="btn btn-primary" [disabled]='fovis.postulante.afi_cont == undefined || fovis.postulante.afi_cont ==0'>
                                                             <span><i class="fas fa-search"></i></span>
                                                         </button>
                                                     <button type="button" (click)="addPerca()" class="btn btn-secondary btn-md ml-2" [disabled]='InfoSuPerca.afi_cont == undefined || InfoSuPerca.afi_cont ==0'>Agregar</button>
@@ -792,10 +734,11 @@
                                             </div>
 
                                             <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                                <div class="table-responsive mt-3" *ngIf="forpo.InfoSfDfomhP?.length">
+                                                <div class="table-responsive mt-3" *ngIf="fovis.InfoSfDfomhP?.length">
                                                     <table class="table table-hover table-striped table-bordered">
                                                         <thead class="thead-light">
                                                             <tr>
+                                                                <th></th>
                                                                 <th scope="col">Documento</th>
                                                                 <th scope="col">Primer Nombre</th>
                                                                 <th scope="col">Segundo Nombre</th>
@@ -805,15 +748,18 @@
                                                                 <th scope="col">Fec. Nacimiento</th>
                                                                 <th scope="col">Edad</th>
                                                                 <th scope="col">Parentesco</th>
-                                                                <th scope="col">Estado Civil</th>
-                                                                <th scope="col">Condición</th>
-                                                                <th scope="col">Tipo Postulante</th>
                                                                 <th scope="col">Ocupación</th>
                                                                 <th scope="col">Salario Constancia</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let perc of forpo.InfoSfDfomhP | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                                            <tr *ngFor="let perc of fovis.InfoSfDfomhP | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                                                <td>
+                                                                    <button (click)="editarPercaP(perc)" type="button" class="btn btn-link btn-sm btn-block">
+                                                                        <span><i class="fas fa-edit" title="Editar Datos"></i>                                                                                                                                                                                                         
+                                                                        </span>
+                                                                     </button>
+                                                                </td>
                                                                 <td>{{ perc.afi_docu }}</td>
                                                                 <td>{{ perc.afi_nom1 }}</td>
                                                                 <td>{{ perc.afi_nom2 }}</td>
@@ -823,10 +769,7 @@
                                                                 <td>{{ perc.afi_fecn }}</td>
                                                                 <td>{{ perc.afi_edad }}</td>
                                                                 <td>{{ perc.mpa_nomb }}</td>
-                                                                <td>{{ perc.afi_esci }}</td>
-                                                                <td>{{ perc.afi_cond }}</td>
-                                                                <td>{{ perc.ite_nomb_tp }}</td>
-                                                                <td>{{ perc.ite_nomb_oc }}</td>
+                                                                <td>{{ perc.ite_nomb }}</td>
                                                                 <td>{{ perc.for_sala }}</td>
                                                             </tr>
                                                         </tbody>
@@ -842,7 +785,23 @@
                                     <div class="container mt-3">
                                         <div class="row">
 
-                                            <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                            <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                                <label for="con_cont">Tipo de Documento</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <div class="input-group-text">
+                                                            <span><i class="fas fa-id-card"></i></span>
+                                                        </div>
+                                                    </div>
+                                                    <input name="infoOtros_tip_codi" [(ngModel)]="InfoOtrosMiembros.tip_codi" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                    <input name="infoOtros_tip_nomb" [(ngModel)]="InfoOtrosMiembros.tip_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                    <button (click)="lupaTipoDocumento()" type="button" class="btn btn-primary">
+                                                            <span><i class="fas fa-search"></i></span>
+                                                        </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                                                 <label for="con_cont">Documento</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
@@ -850,10 +809,10 @@
                                                             <span><i class="fas fa-hashtag"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input readonly type="text" name="afi_docu_otro" [(ngModel)]="InfoOtrosMiembros.afi_docu" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Número Documento">
-                                                    <button type="button" class="btn btn-primary" (click)="getOtrosM()" [disabled]='fovis.InfoAportante.afi_cont == undefined || fovis.InfoAportante.afi_cont ==0'>
+                                                    <input type="text" name="afi_docu_otro" (blur)="setOtrosM()" [(ngModel)]="InfoOtrosMiembros.afi_docu" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Número Documento" autocomplete="off">
+                                                    <!-- <button type="button" class="btn btn-primary" (click)="getOtrosM()" [disabled]='fovis.postulante.afi_cont == undefined || fovis.postulante.afi_cont ==0'>
                                                             <span><i class="fas fa-search"></i></span>
-                                                        </button>
+                                                        </button> -->
                                                 </div>
                                             </div>
 
@@ -865,7 +824,7 @@
                                                             <span><i class="fas fa-user"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input readonly type="text" name="afi_nom1_otro" [(ngModel)]="InfoOtrosMiembros.afi_nom1" class="form-control" placeholder="Primer Nombre">
+                                                    <input type="text" name="afi_nom1_otro" [(ngModel)]="InfoOtrosMiembros.afi_nom1" class="form-control" placeholder="Primer Nombre">
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -876,7 +835,7 @@
                                                             <span><i class="fas fa-user"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input readonly type="text" name="afi_nom2_otro" [(ngModel)]="InfoOtrosMiembros.afi_nom2" class="form-control" placeholder="Segundo Nombre">
+                                                    <input type="text" name="afi_nom2_otro" [(ngModel)]="InfoOtrosMiembros.afi_nom2" class="form-control" placeholder="Segundo Nombre">
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -887,7 +846,7 @@
                                                             <span><i class="fas fa-user"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input readonly type="text" name="afi_ape1_otro" [(ngModel)]="InfoOtrosMiembros.afi_ape1" class="form-control" placeholder="Primer Apellido">
+                                                    <input type="text" name="afi_ape1_otro" [(ngModel)]="InfoOtrosMiembros.afi_ape1" class="form-control" placeholder="Primer Apellido">
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -898,7 +857,7 @@
                                                             <span><i class="fas fa-user"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input readonly type="text" name="afi_ape2_otro" [(ngModel)]="InfoOtrosMiembros.afi_ape2" class="form-control" placeholder="Segundo Apellido">
+                                                    <input type="text" name="afi_ape2_otro" [(ngModel)]="InfoOtrosMiembros.afi_ape2" class="form-control" placeholder="Segundo Apellido">
                                                 </div>
                                             </div>
 
@@ -910,20 +869,24 @@
                                                             <span><i class="fas fa-venus-mars"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input readonly type="text" class="form-control" placeholder="Género" name="afi_gene_otro" [(ngModel)]="InfoOtrosMiembros.afi_gene">
+                                                    <!-- <input type="text" class="form-control" placeholder="Género" name="afi_gene_otro" [(ngModel)]="InfoOtrosMiembros.afi_gene"> -->
+                                                    <select name="afi_gene_O" class="form-control" [(ngModel)]="InfoOtrosMiembros.afi_gene">
+                                                        <option value="">Seleccione</option>                                                        
+                                                        <option value="M">Masculino</option>
+                                                        <option value="F">Femenino</option>
+                                                    </select>
                                                 </div>
                                             </div>
+
                                             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                                                <label for="pro_codi">Fecha de Nacimiento</label>
+                                                <label for="afi_fecn_otro">Fecha de Nacimiento</label>
                                                 <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">
-                                                            <span><i class="fas fa-calendar"></i></span>
-                                                        </div>
-                                                    </div>
-                                                    <input readonly type="text" class="form-control" placeholder="Fecha de Nacimiento" name="afi_fecn_otro" [(ngModel)]="InfoOtrosMiembros.afi_fecn">
+                                                    <mat-datepicker-toggle [for]="afi_fecn_otro"></mat-datepicker-toggle>
+                                                    <mat-datepicker #afi_fecn_otro touchUi></mat-datepicker>
+                                                    <input (dateChange)="calcularEdad($event)" [max]="minDate" [(ngModel)]="InfoOtrosMiembros.afi_fecn" matInput readonly [matDatepicker]="afi_fecn_otro" type="text" class="form-control" name="afi_fecn_otro">
                                                 </div>
                                             </div>
+
                                             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
                                                 <label for="pro_codi">Edad</label>
                                                 <div class="input-group">
@@ -932,7 +895,7 @@
                                                             <span><i class="fas fa-baby"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input readonly type="text" class="form-control" placeholder="Edad" name="afi_edad_otro" [(ngModel)]="InfoOtrosMiembros.afi_edad">
+                                                    <input type="text" readonly class="form-control" placeholder="Edad" name="afi_edad_otro" [(ngModel)]="InfoOtrosMiembros.afi_edad">
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -958,7 +921,17 @@
                                                             <span><i class="fab fa-black-tie"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input readonly type="text" class="form-control" placeholder="Estado Civil" name="afi_esci_otro" [(ngModel)]="InfoOtrosMiembros.afi_esci">
+                                                    <!-- <input type="text" class="form-control" placeholder="Estado Civil" name="afi_esci_otro" [(ngModel)]="InfoOtrosMiembros.afi_esci"> -->
+                                                    <select name="afi_esci_otro" class="form-control" [(ngModel)]="InfoOtrosMiembros.afi_esci">
+                                                        <option value="">Seleccione</option>                                                        
+                                                        <option value="S">Soltero</option>
+                                                        <option value="C">Casado</option>
+                                                        <option value="E">Separado</option>
+                                                        <option value="V">Viudo</option>
+                                                        <option value="D">Divorciado</option>
+                                                        <option value="U">Unión Libre</option>
+
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -969,7 +942,12 @@
                                                             <span><i class="fas fa-wheelchair"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input readonly type="text" class="form-control" placeholder="Condición" name="afi_cond_otro" [(ngModel)]="InfoOtrosMiembros.afi_cond">
+                                                    <!-- <input type="text" class="form-control" placeholder="Condición" name="for_cond_otro" [(ngModel)]="InfoOtrosMiembros.for_cond"> -->
+                                                    <select name="for_cond_otro" class="form-control" [(ngModel)]="InfoOtrosMiembros.for_cond">
+                                                        <option value="">Seleccione</option>                                                        
+                                                        <option value="N">Normal</option>
+                                                        <option value="D">Discapacitado</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -983,22 +961,8 @@
                                                     <input type="text" class="form-control" (keypress)="numberOnly($event)" placeholder="Salario Constancia" name="for_sala_otro" [(ngModel)]="InfoOtrosMiembros.for_sala" autocomplete="off">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-5 col-md-5 col-xs-12 col-sm-12">
-                                                <label for="con_cont">Tipo de Postulante</label>
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <div class="input-group-text">
-                                                            <span><i class="fas fa-align-justify"></i></span>
-                                                        </div>
-                                                    </div>
-                                                    <input readonly type="text" name="ite_codi_tp_otro" [(ngModel)]="InfoOtrosMiembros.ite_codi_tp" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                                    <input readonly type="text" name="ite_nomb_tp_otro" [(ngModel)]="InfoOtrosMiembros.ite_nomb_tp" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                                    <button type="button" class="btn btn-primary" (click)="getTpostulanteOtrosM()">
-                                                            <span><i class="fas fa-search"></i></span>
-                                                        </button>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-7 col-md-5 col-xs-12 col-sm-12">
+
+                                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                                                 <label for="con_cont">Ocupación</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
@@ -1006,51 +970,50 @@
                                                             <span><i class="fas fa-align-justify"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input name="ite_codi_oc_otro" [(ngModel)]="InfoOtrosMiembros.ite_codi_oc" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                                    <input name="ite_nomb_oc_otro" [(ngModel)]="InfoOtrosMiembros.ite_nomb_oc" readonly type="text" style="width: 45%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                                    <button (click)="getOcupacionOtrosM()" type="button" class="btn btn-primary" [disabled]='fovis.InfoAportante.afi_cont == undefined || fovis.InfoAportante.afi_cont ==0'>
+                                                    <input name="ite_codi_otro" [(ngModel)]="InfoOtrosMiembros.ite_codi" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                    <input name="ite_nomb_otro" [(ngModel)]="InfoOtrosMiembros.ite_nomb" readonly type="text" style="width: 70%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                    <button (click)="getOcupacionOtrosM()" type="button" class="btn btn-primary" [disabled]='fovis.postulante.afi_cont == undefined || fovis.postulante.afi_cont ==0'>
                                                             <span><i class="fas fa-search"></i></span>
                                                         </button>
-                                                    <button type="button" (click)="addOtrosM()" class="btn btn-secondary btn-md ml-2" [disabled]='InfoOtrosMiembros.afi_cont == undefined || InfoOtrosMiembros.afi_cont ==0'>Agregar</button>
+                                                    <button type="button" (click)="addOtrosM()" class="btn btn-secondary btn-md ml-2">Agregar</button>
                                                 </div>
                                             </div>
 
                                             <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                                <div class="table-responsive mt-3" *ngIf="forpo.InfoSfDfomhO?.length">
+                                                <div class="table-responsive mt-3" *ngIf="fovis.InfoSfDfomhO?.length">
                                                     <table class="table table-hover table-striped table-bordered">
                                                         <thead class="thead-light">
                                                             <tr>
+                                                                <th></th>
                                                                 <th scope="col">Documento</th>
                                                                 <th scope="col">Primer Nombre</th>
                                                                 <th scope="col">Segundo Nombre</th>
                                                                 <th scope="col">Primer Apellido</th>
                                                                 <th scope="col">Segundo Apellido</th>
-                                                                <th scope="col">Genero</th>
                                                                 <th scope="col">Fec. Nacimiento</th>
                                                                 <th scope="col">Edad</th>
                                                                 <th scope="col">Parentesco</th>
-                                                                <th scope="col">Estado Civil</th>
-                                                                <th scope="col">Condición</th>
-                                                                <th scope="col">Tipo Postulante</th>
                                                                 <th scope="col">Ocupación</th>
                                                                 <th scope="col">Salario Constancia</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr *ngFor="let perc of forpo.InfoSfDfomhO | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                                            <tr *ngFor="let perc of fovis.InfoSfDfomhO | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                                                <td>
+                                                                    <button (click)="editarPercaO(perc)" type="button" class="btn btn-link btn-sm btn-block">
+                                                                        <span><i class="fas fa-edit" title="Editar Datos"></i>                                                                                                                                                                                                         
+                                                                        </span>
+                                                                     </button>
+                                                                </td>
                                                                 <td>{{ perc.afi_docu }}</td>
                                                                 <td>{{ perc.afi_nom1 }}</td>
                                                                 <td>{{ perc.afi_nom2 }}</td>
                                                                 <td>{{ perc.afi_ape1 }}</td>
                                                                 <td>{{ perc.afi_ape2 }}</td>
-                                                                <td>{{ perc.afi_gene }}</td>
-                                                                <td>{{ perc.afi_fecn }}</td>
+                                                                <td>{{ perc.afi_fecn | date: 'dd/MM/yyyy' }}</td>
                                                                 <td>{{ perc.afi_edad }}</td>
                                                                 <td>{{ perc.mpa_nomb }}</td>
-                                                                <td>{{ perc.afi_esci }}</td>
-                                                                <td>{{ perc.afi_cond }}</td>
-                                                                <td>{{ perc.ite_nomb_tp }}</td>
-                                                                <td>{{ perc.ite_nomb_oc }}</td>
+                                                                <td>{{ perc.ite_nomb }}</td>
                                                                 <td>{{ perc.for_sala }}</td>
                                                             </tr>
                                                         </tbody>
@@ -1076,7 +1039,7 @@
                                                 <span><i class="fas fa-users"></i></span>
                                             </div>
                                         </div>
-                                        <input name="for_nmie" [(ngModel)]="fovis.InfoAportante.for_nmie" type="text" class="form-control" placeholder="# Miembros del Hogar" readonly>
+                                        <input name="for_nmie" [(ngModel)]="fovis.infoHogar.for_nmie" type="text" class="form-control" placeholder="# Miembros del Hogar" readonly>
                                     </div>
                                 </div>
 
@@ -1088,7 +1051,7 @@
                                                 <span><i class="fas fa-hand-holding-usd"></i></span>
                                             </div>
                                         </div>
-                                        <input name="for_timh" type="text" [(ngModel)]="fovis.InfoAportante.for_timh" class="form-control" placeholder="Total Ingresos Miembros del Hogar" readonly>
+                                        <input name="for_timh" type="text" [(ngModel)]="fovis.infoHogar.for_timh" class="form-control" placeholder="Total Ingresos Miembros del Hogar" readonly>
                                     </div>
                                 </div>
 
@@ -1100,7 +1063,7 @@
                                                 <span><i class="fas fa-coins"></i></span>
                                             </div>
                                         </div>
-                                        <input name="for_ting" [(ngModel)]="fovis.InfoAportante.for_ting" type="text" class="form-control" placeholder="Total Ingresos" readonly>
+                                        <input name="for_ting" [(ngModel)]="fovis.infoHogar.for_ting" type="text" class="form-control" placeholder="Total Ingresos" readonly>
                                     </div>
                                 </div>
 
@@ -1112,7 +1075,7 @@
                                                 <span><i class="fas fa-file-invoice-dollar"></i></span>
                                             </div>
                                         </div>
-                                        <input name="num_sala" [(ngModel)]="fovis.num_sala" type="text" class="form-control" placeholder="# Salarios" readonly>
+                                        <input name="num_sala" [(ngModel)]="fovis.infoHogar.num_sala" type="text" class="form-control" placeholder="# Salarios" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -1131,7 +1094,7 @@
                                                 <span><i class="fas fa-qrcode"></i></span>
                                             </div>
                                         </div>
-                                        <input name="num_sala" [(ngModel)]="fovis.num_sala" type="text" class="form-control" placeholder="# Salarios" readonly>
+                                        <input name="num_sala" type="text" class="form-control" placeholder="# Salarios" readonly>
                                     </div>
                                 </div>
 
@@ -1143,8 +1106,8 @@
                                                 <span><i class="fas fa-id-card"></i></span>
                                             </div>
                                         </div>
-                                        <input name="dmo_rsmd" readonly type="text" [(ngModel)]="InfoDModv.dmo_rsmd" placeholder="Desde" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                        <input name="dmo_rsmh" readonly type="text" [(ngModel)]="InfoDModv.dmo_rsmh" placeholder="Hasta" style="width: 15%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                        <input name="dmo_rsmd" readonly type="text" [(ngModel)]="fovis.infoHogar.dmo_rsmd" placeholder="Desde" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                        <input name="dmo_rsmh" readonly type="text" [(ngModel)]="fovis.infoHogar.dmo_rsmh" placeholder="Hasta" style="width: 15%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
                                     </div>
                                 </div>
 
@@ -1156,7 +1119,7 @@
                                                 <span><i class="fas fa-money-bill"></i></span>
                                             </div>
                                         </div>
-                                        <input name="dmo_fsvs" readonly type="text" [(ngModel)]="InfoDModv.dmo_fsvs" type="text" class="form-control" placeholder="Valor SFV" autocomplete="off">
+                                        <input name="dmo_fsvs" readonly type="text" [(ngModel)]="fovis.infoHogar.dmo_fsvs" type="text" class="form-control" placeholder="Valor SFV" autocomplete="off">
                                     </div>
                                 </div>
 
@@ -1168,7 +1131,7 @@
                                                 <span><i class="fas fa-money-check-alt"></i></span>
                                             </div>
                                         </div>
-                                        <input type="text" name="dfo_vsol" [(ngModel)]="forpo.InfoHogar.dfo_vsol" [disabled]="!mod_valo" class="form-control" placeholder="Valor Solicitado" autocomplete="off">
+                                        <input type="text" name="dfo_vsol" [(ngModel)]="fovis.infoHogar.dfo_vsol" [disabled]="!mod_valo" class="form-control" placeholder="Valor Solicitado" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -1177,117 +1140,7 @@
                                 <div class="col-lg-12 col-md-12 col-xs-6 col-sm-12">
                                     <div class="card mt-2">
                                         <div class="card-header bg-primary text-white">
-                                            Ubicación Vivienda Aplicación
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                                                    <label for="pro_pais">País</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <span><i class="fas fa-globe-americas"></i></span>
-                                                            </div>
-                                                        </div>
-                                                        <select class="form-control" [value]="" name="pai_codi" [(ngModel)]="forpo.InfoHogar.pai_codi" required #pai_codi="ngModel" (change)="filtrarRegion()">
-                                                            <option *ngFor="let pais of gnpaise" [value]="pais.pai_codi">{{pais.pai_nomb | titlecase}}</option>
-                                                            <option value="">Seleccione</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                                                    <label for="reg_codi">Región</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <span><i class="fas fa-flag"></i></span>
-                                                            </div>
-                                                        </div>
-                                                        <select [disabled]="gnregio==undefined || gnregio.length == 0" [value]="" class="form-control" id="pro_regi" name="pro_regi" [(ngModel)]="forpo.InfoHogar.reg_codi" (change)="filtrarDeptos()" required="" #pro_regi="ngModel">
-                                                            <option *ngFor="let region of gnregio" [value]="region.reg_codi">{{region.reg_nomb | titlecase}}</option>                                                            
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                                                    <label for="dep_codi">Departamento</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <span><i class="fas fa-map-marked-alt"></i></span>
-                                                            </div>
-                                                        </div>
-                                                        <select [disabled]="gndepar==undefined" [value]="" class="form-control" name="dep_codi" [(ngModel)]="forpo.InfoHogar.dep_codi" (change)="filtrarMunic()" required #dep_codi="ngModel">
-                                                            <option *ngFor="let depto of gndepar" [value]="depto.dep_codi">{{depto.dep_nomb | titlecase}}</option>                                                            
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                                                    <label for="mun_codi">Municipio</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <span><i class="fas fa-map-pin"></i></span>
-                                                            </div>
-                                                        </div>
-                                                        <select [disabled]="gnmunic==undefined" [value]="" class="form-control" name="mun_codi" [(ngModel)]="forpo.InfoHogar.mun_codi" (change)="filtrarLocal()" required #mun_codi="ngModel">
-                                                            <option *ngFor="let munic of gnmunic" [value]="munic.mun_codi">{{munic.mun_nomb | titlecase}}</option>                                                            
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                                                    <label for="loc_codi">Localidad</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <span><i class="fas fa-map-marker"></i></span>
-                                                            </div>
-                                                        </div>
-                                                        <select [disabled]="gnlocal==undefined" [value]="" class="form-control" name="loc_codi" [(ngModel)]="forpo.InfoHogar.loc_codi" (change)="filtrarBarri()" required #loc_codi="ngModel">
-                                                            <option *ngFor="let local of gnlocal" [value]="local.loc_codi">{{local.loc_nomb | titlecase}}</option>                                                            
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
-                                                    <label for="bar_codi">Barrio</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <span><i class="fas fa-location-arrow"></i></span>
-                                                            </div>
-                                                        </div>
-                                                        <select [disabled]="gnbarri==undefined" [value]="" class="form-control" name="bar_codi" [(ngModel)]="forpo.InfoHogar.bar_codi" required #bar_codi="ngModel">
-                                                            <option *ngFor="let barri of gnbarri" [value]="barri.bar_codi">{{barri.bar_nomb | titlecase}}</option>                                                            
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                                    <label for="pro_codi">Dirección</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <span><i class="fas fa-map-marker-alt"></i></span>
-                                                            </div>
-                                                        </div>
-                                                        <input type="text" name="dfo_dire" [(ngModel)]="forpo.InfoHogar.dfo_dire" class="form-control" placeholder="Dirección" autocomplete="off">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-xs-6 col-sm-12">
-                                    <div class="card mt-2">
-                                        <div class="card-header bg-primary text-white">
-                                            Ubicación Postulante
+                                            Dirección Postulante
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
@@ -1300,8 +1153,8 @@
                                                                 <span><i class="fas fa-map-marked-alt"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="dep_codp" readonly [(ngModel)]="fovis.InfoAportante.dep_codi" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                                        <input name="dep_nomp" readonly [(ngModel)]="fovis.InfoAportante.dep_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                        <input name="dep_codp" readonly [(ngModel)]="fovis.infoHogar.dep_codi" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                        <input name="dep_nomp" readonly [(ngModel)]="fovis.infoHogar.dep_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
                                                     </div>
                                                 </div>
 
@@ -1313,8 +1166,8 @@
                                                                 <span><i class="fas fa-map-pin"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="mun_codp" readonly [(ngModel)]="fovis.InfoAportante.mun_codi" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                                        <input name="mun_nomp" readonly [(ngModel)]="fovis.InfoAportante.mun_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                        <input name="mun_codp" readonly [(ngModel)]="fovis.infoHogar.mun_codi" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                        <input name="mun_nomp" readonly [(ngModel)]="fovis.infoHogar.mun_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
                                                     </div>
                                                 </div>
 
@@ -1326,8 +1179,8 @@
                                                                 <span><i class="fas fa-location-arrow"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="bar_codp" readonly [(ngModel)]="fovis.InfoAportante.bar_codi" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                                        <input name="bar_nomp" readonly [(ngModel)]="fovis.InfoAportante.bar_nomb" type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                        <input name="bar_codp" readonly [(ngModel)]="fovis.infoHogar.bar_codi" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                        <input name="bar_nomp" readonly [(ngModel)]="fovis.infoHogar.bar_nomb" type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -1338,7 +1191,10 @@
                                                                 <span><i class="fas fa-map-marker-alt"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="afi_dire" type="text" [(ngModel)]="fovis.InfoAportante.afi_dire" readonly class="form-control" placeholder="Dirección" autocomplete="off">
+                                                        <input name="afi_dire" type="text" [(ngModel)]="fovis.postulante.afi_dire" [disabled]="SGN000008 === 'S'" class="form-control" placeholder="Dirección" autocomplete="off">
+                                                        <button *ngIf="SGN000008 === 'S'" type="button" class="btn btn-primary" (click)="lupaDirecciones()">
+                                                            <span><i class="fas fa-search"></i></span>
+                                                        </button>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -1349,7 +1205,7 @@
                                                                 <span><i class="fas fa-at"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="afi_mail" [(ngModel)]="fovis.InfoAportante.afi_mail" type="text" readonly class="form-control" placeholder="Email  " autocomplete="off">
+                                                        <input name="afi_mail" [(ngModel)]="fovis.postulante.afi_mail" type="text" class="form-control" placeholder="Email  " autocomplete="off">
                                                     </div>
                                                 </div>
 
@@ -1361,7 +1217,7 @@
                                                                 <span><i class="fas fa-phone"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="afi_tele" [(ngModel)]="fovis.InfoAportante.afi_tele" type="text" readonly class="form-control" placeholder="Teléfono 1" autocomplete="off">
+                                                        <input name="afi_tele" [(ngModel)]="fovis.postulante.afi_tele" type="text" class="form-control" placeholder="Teléfono 1" autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
@@ -1372,7 +1228,7 @@
                                                                 <span><i class="fas fa-phone-volume"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="dfo_tele" [(ngModel)]="forpo.InfoHogar.dfo_tele" type="text" class="form-control" placeholder="Teléfono 2" autocomplete="off">
+                                                        <input name="dfo_tele" [(ngModel)]="fovis.infoHogar.dfo_tele" type="text" class="form-control" placeholder="Teléfono 2" autocomplete="off">
                                                     </div>
                                                 </div>
 
@@ -1386,70 +1242,36 @@
                                 <div class="col-lg-12 col-md-12 col-xs-6 col-sm-12">
                                     <div class="card mt-2">
                                         <div class="card-header bg-primary text-white">
-                                            Empresa Aplicación
+                                            Datos Empresa
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
 
-                                                <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
-                                                    <label for="con_cont">Empresa</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <span><i class="fas fa-align-justify"></i></span>
-                                                            </div>
-                                                        </div>
-                                                        <input name="apo_codE" readonly [(ngModel)]='fovis.InfoEmpresa.apo_coda' type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
-                                                        <input name="apo_razE" readonly [(ngModel)]='fovis.InfoEmpresa.apo_razs' type="text" style="width: 35%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-                                                    <label for="con_cont">Tipo Aportante</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <span><i class="fas fa-id-card"></i></span>
-                                                            </div>
-                                                        </div>
-                                                        <input name="tia_codi" [(ngModel)]='fovis.InfoEmpresa.tia_codi' readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                                        <input name="tia_nomb" [(ngModel)]='fovis.InfoEmpresa.tia_nomb' readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-6 col-md-12 col-xs-6 col-sm-12">
-                                                    <label for="pro_codi">Departamento</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <span><i class="fas fa-map-marker-alt"></i></span>
-                                                            </div>
-                                                        </div>
-                                                        <input name="dep_nome" [(ngModel)]='fovis.InfoEmpresa.dep_nomb' type="text" class="form-control" placeholder="Departamento" readonly>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-lg-6 col-md-12 col-xs-6 col-sm-12">
-                                                    <label for="pro_codi">Municipio</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <span><i class="fas fa-map-marker-alt"></i></span>
-                                                            </div>
-                                                        </div>
-                                                        <input name="mun_nome" [(ngModel)]='fovis.InfoEmpresa.mun_nomb' type="text" class="form-control" placeholder="Municipio" readonly>
-                                                    </div>
-                                                </div>
-
                                                 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                                    <label for="pro_codi">Dirección</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <div class="input-group-text">
-                                                                <span><i class="fas fa-map-marker-alt"></i></span>
-                                                            </div>
-                                                        </div>
-                                                        <input name="dsu_dire" [(ngModel)]='fovis.InfoEmpresa.dsu_dire' type="text" class="form-control" placeholder="Dirección" readonly>
+                                                    <div class="table-responsive mt-3" *ngIf="fovis.InfoEmpresa?.length">
+                                                        <table class="table table-hover table-striped table-bordered">
+                                                            <thead class="thead-light">
+                                                                <tr>
+                                                                    <th scope="col">NIT</th>
+                                                                    <th scope="col">Nombre Empresa</th>
+                                                                    <th scope="col">Tipo Aportante</th>
+                                                                    <th scope="col">Departamento</th>
+                                                                    <th scope="col">Municipio</th>
+                                                                    <th scope="col">Dirección</th>
+
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr *ngFor="let emp of fovis.InfoEmpresa | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                                                    <td>{{ emp.apo_coda }}</td>
+                                                                    <td>{{ emp.apo_razs }}</td>
+                                                                    <td>{{ emp.tia_nomb }}</td>
+                                                                    <td>{{ emp.dep_nomb }}</td>
+                                                                    <td>{{ emp.mun_nomb }}</td>
+                                                                    <td>{{ emp.dsu_dire }}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1474,6 +1296,7 @@
                                             <div class="row">
 
                                                 <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+
                                                     <label>Recurso</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
@@ -1496,7 +1319,7 @@
                                                             <span><i class="fas fa-hand-holding-usd"></i></span>
                                                         </div>
                                                         <input name="dfo_sald" [(ngModel)]="sfdforeA.dfo_sald" type="text" class="form-control" placeholder="Saldo" (keypress)="numberOnly($event)" autocomplete="off">
-                                                        <button type="button" (click)="addDforeA()" class="btn btn-secondary btn-md ml-2" [disabled]='sfdforeA.con_cont == undefined'>Agregar</button>
+                                                        <button type="button" (click)="addDforeA()" class="btn btn-secondary btn-md ml-2" [disabled]='sfdforeA.con_codi == undefined || sfdforeA.dfo_sald == undefined'>Agregar</button>
                                                     </div>
                                                 </div>
 
@@ -1505,13 +1328,20 @@
                                                         <table class="table table-hover table-striped table-bordered">
                                                             <thead class="thead-light">
                                                                 <tr>
+                                                                    <th scope="col"></th>
                                                                     <th scope="col">Código</th>
                                                                     <th scope="col">Nombre Ahorro</th>
                                                                     <th scope="col">Saldo</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr *ngFor="let dfor of InfodforeFilter('A') | paginate: { itemsPerPage: 5, currentPage: p };let i = index" (click)="emitInfo(dfor, 'A')">
+                                                                <tr *ngFor="let dfor of InfodforeFilter('A') | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                                                    <td>
+                                                                        <button (click)="emitInfo(dfor, 'A')" type="button" class="btn btn-link btn-sm btn-block">
+                                                                            <span><i class="fas fa-plus" title="Adicionar Detalle"></i>
+                                                                            </span>
+                                                                        </button>
+                                                                    </td>
                                                                     <td>{{ dfor.con_codi }}</td>
                                                                     <td>{{ dfor.con_nomb }}</td>
                                                                     <td>{{ dfor.dfo_sald }}</td>
@@ -1530,7 +1360,7 @@
                                                                     <th scope="col">Entidad Depositaria</th>
                                                                     <th scope="col">Número Cuenta</th>
                                                                     <th scope="col">Fecha Apertura</th>
-                                                                    <th scope="col">Fecha Inmobilización</th>
+                                                                    <th scope="col">Fecha Inmovilización</th>
                                                                     <th scope="col">Fecha Cuota Inicial</th>
                                                                 </tr>
                                                             </thead>
@@ -1594,11 +1424,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
-                                                    <label for="ddf_feci">Fecha Inmobilización</label>
+                                                    <label for="ddf_feci">Fecha Inmovilización</label>
                                                     <div class="input-group">
                                                         <mat-datepicker-toggle [for]="ddf_feci"></mat-datepicker-toggle>
                                                         <mat-datepicker #ddf_feci touchUi></mat-datepicker>
-                                                        <input name="ddf_feci" [(ngModel)]="sfddforA.ddf_feci" readonly matInput placeholder="  Fecha Inmobilización" [matDatepicker]="ddf_feci" type="text" class="form-control">
+                                                        <input name="ddf_feci" [(ngModel)]="sfddforA.ddf_feci" readonly matInput placeholder="  Fecha Inmovilización" [matDatepicker]="ddf_feci" type="text" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -1659,13 +1489,20 @@
                                                         <table class="table table-hover table-striped table-bordered">
                                                             <thead class="thead-light">
                                                                 <tr>
+                                                                    <th></th>
                                                                     <th scope="col">Código</th>
                                                                     <th scope="col">Nombre Ahorro</th>
                                                                     <th scope="col">Saldo</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr *ngFor="let dfor of InfodforeFilter('R') | paginate: { itemsPerPage: 5, currentPage: p };let i = index" (click)="emitInfo(dfor, 'R')">
+                                                                <tr *ngFor="let dfor of InfodforeFilter('R') | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                                                    <td>
+                                                                        <button (click)="emitInfo(dfor, 'R')" type="button" class="btn btn-link btn-sm btn-block">
+                                                                            <span><i class="fas fa-plus" title="Adicionar Detalle"></i>
+                                                                            </span>
+                                                                        </button>
+                                                                    </td>
                                                                     <td>{{ dfor.con_codi }}</td>
                                                                     <td>{{ dfor.con_nomb }}</td>
                                                                     <td>{{ dfor.dfo_sald }}</td>
@@ -1697,7 +1534,7 @@
                                             </div>
                                             <div class="row" *ngIf="viewDdforR">
 
-                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
                                                     <label for="ddf_entR">Nombre Entidad</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
@@ -1709,7 +1546,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+                                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
                                                     <div class="input-group">
                                                         <label for="ddf_fecR">Fecha Apertura</label>
                                                         <div class="input-group">
@@ -1734,15 +1571,20 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
+
+
                                                 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                                    <label for="dfo_nitc">NIT</label>
+                                                    <label for="mod_cont">NIT</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <div class="input-group-text">
-                                                                <span><i class="fas fa-building"></i></span>
+                                                                <span><i class="fas fa-home"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="dfo_nitc" [(ngModel)]="forpo.InfoHogar.dfo_nitc" type="text" class="form-control" placeholder="NIT" autocomplete="off">
+                                                        <input name="dfo_nitc" [(ngModel)]="fovis.infoHogar.dfo_nitc" readonly type="text" placeholder="NIT" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                        <button type="button" class="btn btn-primary" (click)="getConstructora()">
+                                                            <span><i class="fas fa-search"></i></span>
+                                                        </button>
                                                     </div>
                                                 </div>
 
@@ -1754,7 +1596,7 @@
                                                                 <span><i class="fas fa-hard-hat"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="dfo_nomc" [(ngModel)]="forpo.InfoHogar.dfo_nomc" type="text" class="form-control" placeholder="Nombre Constructora" autocomplete="off">
+                                                        <input name="dfo_nomc" readonly [(ngModel)]="fovis.infoHogar.dfo_nomc" type="text" class="form-control" placeholder="Nombre Constructora" autocomplete="off">
                                                     </div>
                                                 </div>
 
@@ -1766,7 +1608,7 @@
                                                                 <span><i class="fas fa-city"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="dfo_nomp" [(ngModel)]="forpo.InfoHogar.dfo_nomp" type="text" class="form-control" placeholder="Nombre Proyecto" autocomplete="off">
+                                                        <input name="dfo_nomp" [(ngModel)]="fovis.infoHogar.dfo_nomp" type="text" class="form-control" placeholder="Nombre Proyecto" autocomplete="off">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1789,7 +1631,7 @@
                                                                 <span><i class="fas fa-money-check-alt"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input type="text" name="dfo_vtvi" [(ngModel)]="forpo.InfoHogar.dfo_vtvi" class="form-control" placeholder="Valor Total Vivienda" autocomplete="off">
+                                                        <input type="text" name="dfo_vtvi" readonly [(ngModel)]="tValorViviend" class="form-control" placeholder="Valor Total Vivienda" autocomplete="off">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1839,7 +1681,7 @@
                                                                 <span><i class="fas fa-hand-holding-usd"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input type="text" name="dfo_vsol" [(ngModel)]="forpo.InfoHogar.dfo_vsol" readonly class="form-control" placeholder="Valor Total Solución" autocomplete="off">
+                                                        <input type="text" name="dfo_vsol" [(ngModel)]="fovis.infoHogar.dfo_vsol" readonly class="form-control" placeholder="Valor Total Solución" autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
@@ -1881,7 +1723,7 @@
                                                                 <span><i class="fas fa-hand-holding-usd"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input type="text" name="dfo_vpre" [(ngModel)]="forpo.InfoHogar.dfo_vpre" (keyup)="valorTotal()" class="form-control" placeholder="Valor presupuesto" autocomplete="off">
+                                                        <input type="text" name="dfo_vpre" [(ngModel)]="fovis.infoHogar.dfo_vpre" (keyup)="valorTotal()" class="form-control" placeholder="Valor presupuesto" autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -1892,7 +1734,7 @@
                                                                 <span><i class="fas fa-comment-dollar"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input type="text" name="dfo_vlot" [(ngModel)]="forpo.InfoHogar.dfo_vlot" (keyup)="valorTotal()" class="form-control" placeholder="Valor Lote" autocomplete="off">
+                                                        <input type="text" name="dfo_vlot" [(ngModel)]="fovis.infoHogar.dfo_vlot" (keyup)="valorTotal()" class="form-control" placeholder="Valor Lote" autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -1903,7 +1745,7 @@
                                                                 <span><i class="fas fa-money-check-alt"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="dfo_tota" type="text" class="form-control" readonly placeholder="Valor Total" [(ngModel)]="forpo.InfoHogar.dfo_tota">
+                                                        <input name="dfo_tota" type="text" class="form-control" readonly placeholder="Valor Total" [(ngModel)]="fovis.infoHogar.dfo_tota">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1925,7 +1767,7 @@
                                                     <div class="input-group">
                                                         <mat-datepicker-toggle [for]="dfo_fesc"></mat-datepicker-toggle>
                                                         <mat-datepicker #dfo_fesc touchUi></mat-datepicker>
-                                                        <input name="dfo_fesc" [(ngModel)]="forpo.InfoHogar.dfo_fesc" readonly matInput placeholder="  Fecha Registro" [matDatepicker]="dfo_fesc" type="text" class="form-control">
+                                                        <input name="dfo_fesc" [(ngModel)]="fovis.infoHogar.dfo_fesc" readonly matInput placeholder="  Fecha Registro" [matDatepicker]="dfo_fesc" type="text" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -1936,7 +1778,7 @@
                                                                 <span><i class="fas fa-hashtag"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input type="text" name="dfo_matr" [(ngModel)]="forpo.InfoHogar.dfo_matr" class="form-control" placeholder="Número de Matricula" autocomplete="off">
+                                                        <input type="text" name="dfo_matr" [(ngModel)]="fovis.infoHogar.dfo_matr" class="form-control" placeholder="Número de Matricula" autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -1947,18 +1789,18 @@
                                                                 <span><i class="fas fa-receipt"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input type="text" name="dfo_escr" [(ngModel)]="forpo.InfoHogar.dfo_escr" class="form-control" placeholder="Escritura Pública" autocomplete="off">
+                                                        <input type="text" name="dfo_escr" [(ngModel)]="fovis.infoHogar.dfo_escr" class="form-control" placeholder="Escritura Pública" autocomplete="off">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                                                     <label for="pro_clap">Lote Urbanizado</label>
                                                     <div class="input-group mt-2">
                                                         <div class="custom-control custom-radio">
-                                                            <input type="radio" checked class="custom-control-input" id="pro_clan" name="groupLurb" value="S" [(ngModel)]="forpo.InfoHogar.dfo_lurb" required>
+                                                            <input type="radio" checked class="custom-control-input" id="pro_clan" name="groupLurb" value="S" [(ngModel)]="fovis.infoHogar.dfo_lurb" required>
                                                             <label class="custom-control-label" for="pro_clan">Si</label>
                                                         </div>
                                                         <div class="custom-control custom-radio ml-3">
-                                                            <input type="radio" class="custom-control-input" id="pro_clae" name="groupLurb" value="N" [(ngModel)]="forpo.InfoHogar.dfo_lurb" required>
+                                                            <input type="radio" class="custom-control-input" id="pro_clae" name="groupLurb" value="N" [(ngModel)]="fovis.infoHogar.dfo_lurb" required>
                                                             <label class="custom-control-label" for="pro_clae">No</label>
                                                         </div>
                                                     </div>
@@ -1989,7 +1831,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let tray of forpo.InfoTrayectoria | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                                <tr *ngFor="let tray of fovis.InfoTrayectoria | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
                                                     <td>{{ tray.rad_nume }}</td>
                                                     <td>{{ tray.rad_fech | date: 'dd/MM/yyyy'}}</td>
                                                     <td>{{ tray.cra_codi }}</td>
@@ -2023,7 +1865,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let nov of forpo.InfoNovedades | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                                <tr *ngFor="let nov of fovis.InfoNovedades | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
                                                     <td>{{ nov.codigo }}</td>
                                                     <td>{{ nov.programa }}</td>
                                                     <td>{{ nov.top_codi }}</td>
@@ -2045,7 +1887,7 @@
                 </div>
 
                 <div class="container mb-1 mt-4">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!forpoForm.form.valid || emp_codi == 0" *ngIf="emp_codi != 0">Guardar Postulación</button>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!fovisForm.form.valid || emp_codi == 0" *ngIf="emp_codi != 0">Guardar Postulación</button>
                 </div>
             </div>
         </div>
@@ -2054,15 +1896,11 @@
 
 <app-alert-message [message]="msg"></app-alert-message>
 
+<app-result-dialog id="ingreso" leftButton="NO ACEPTO" (buttonClick)="setOptionConfirm($event)" rightButton="ACEPTO" [modalBody]="sfparam.par_jura" modalTitle="Declaración Juramentada"></app-result-dialog>
+
+<app-new-table-search Title="Tipo Documento" [displayedColumns]="['TIP_CODI', 'TIP_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setTipDocto($event)" btnModalQb="btnTipDocto" ModalQb="modalTipDocto" #modalTipDocto></app-new-table-search>
+
 <app-new-table-search Title="Modalidad Vivienda" [displayedColumns]="['MOD_CONT', 'MOD_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setModalidad($event)" btnModalQb="btnModalidad" ModalQb="modalModalidad" #modalModalidad></app-new-table-search>
-
-<app-new-table-search Title="Radicados" [displayedColumns]="['RAD_NUME', 'RAD_FECH', 'AFI_DOCU', 'AFI_NOM1', 'AFI_NOM2', 'AFI_APE1', 'AFI_APE2']" [showColumns]="['Número', 'Fecha', 'Documento', 'Primer Nombre', 'Segundo Nombre', 'Primer Apellido', 'Segundo Apellido']"
-    (rowCLick)="setRadicado($event)" btnModalQb="btnRadicado" ModalQb="modalRadicados" #modalRadicados></app-new-table-search>
-
-<app-new-table-search Title="Afiliados" [displayedColumns]="['TIP_CODI', 'TIP_NOMB', 'AFI_DOCU', 'AFI_NOM1', 'AFI_NOM2', 'AFI_APE1', 'AFI_APE2']" [showColumns]="['Cod. Tipo Doc', 'Tipo Documento', 'Documento', 'Primer Nombre', 'Segundo Nombre', 'Primer Apellido', 'Segundo Apellido']"
-    (rowCLick)="setAfiliados($event)" btnModalQb="btnAfiliados" ModalQb="modalAfiliados" #modalAfiliados></app-new-table-search>
-
-<app-new-table-search Title="Tipo de Postulante" [displayedColumns]="['ITE_CODI', 'ITE_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setTpostulante($event)" btnModalQb="btnTpostulante" ModalQb="modalTpostulante" #modalTpostulante></app-new-table-search>
 
 <app-new-table-search Title="Ocupación" [displayedColumns]="['ITE_CODI', 'ITE_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setOcupacion($event)" btnModalQb="btnOcupacion" ModalQb="modalOcupacion" #modalOcupacion></app-new-table-search>
 
@@ -2072,9 +1910,6 @@
 
 <app-new-table-search Title="Ocupación" [displayedColumns]="['ITE_CODI', 'ITE_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setOcupacionConyuge($event)" btnModalQb="btnOcupacionConyuge" ModalQb="modalOcupacionConyuge" #modalOcupacionConyuge></app-new-table-search>
 
-<app-new-table-search Title="Conyuge" [displayedColumns]="['TIP_CODI', 'TIP_NOMB', 'AFI_DOCU', 'AFI_NOM1', 'AFI_NOM2', 'AFI_APE1', 'AFI_APE2']" [showColumns]="['Cod. Tipo Doc', 'Tipo Documento', 'Documento', 'Primer Nombre', 'Segundo Nombre', 'Primer Apellido', 'Segundo Apellido']"
-    (rowCLick)="setConyuge($event)" btnModalQb="btnConyuge" ModalQb="modalConyuge" #modalConyuge></app-new-table-search>
-
 <app-new-table-search Title="Tipo de Postulante" [displayedColumns]="['ITE_CODI', 'ITE_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setTpostulanteCony($event)" btnModalQb="btnTpostulanteCony" ModalQb="modalTpostulanteCony" #modalTpostulanteCony></app-new-table-search>
 
 <app-new-table-search Title="Personas A Cargo" [displayedColumns]="['TIP_CODI', 'TIP_NOMB', 'AFI_DOCU', 'AFI_NOM1', 'AFI_NOM2', 'AFI_APE1', 'AFI_APE2']" [showColumns]="['Cod. Tipo Doc', 'Tipo Documento', 'Documento', 'Primer Nombre', 'Segundo Nombre', 'Primer Apellido', 'Segundo Apellido']"
@@ -2083,7 +1918,7 @@
 <app-new-table-search Title="Tipo de Postulante" [displayedColumns]="['ITE_CODI', 'ITE_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setTpostulantePerc($event)" btnModalQb="btnTpostulantePerc" ModalQb="modalTpostulantePerc" #modalTpostulantePerc></app-new-table-search>
 
 <app-new-table-search Title="Otros Miembros del Hogar" [displayedColumns]="['TIP_CODI', 'TIP_NOMB', 'AFI_DOCU', 'AFI_NOM1', 'AFI_NOM2', 'AFI_APE1', 'AFI_APE2']" [showColumns]="['Cod. Tipo Doc', 'Tipo Documento', 'Documento', 'Primer Nombre', 'Segundo Nombre', 'Primer Apellido', 'Segundo Apellido']"
-    (rowCLick)="setOtrosM($event)" btnModalQb="btnOtrosM" ModalQb="modalOtrosM" #modalOtrosM></app-new-table-search>
+    (rowCLick)="setOtrosM()" btnModalQb="btnOtrosM" ModalQb="modalOtrosM" #modalOtrosM></app-new-table-search>
 
 <app-new-table-search Title="Tipo de Postulante" [displayedColumns]="['ITE_CODI', 'ITE_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setTpostulanteOtrosM($event)" btnModalQb="btnTpostulanteOtrosM" ModalQb="modalTpostulanteOtrosM" #modalTpostulanteOtrosM></app-new-table-search>
 
@@ -2092,6 +1927,8 @@
 <app-new-table-search Title="Conceptos Recursos" [displayedColumns]="['CON_CODI', 'CON_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setConceptoR($event)" btnModalQb="btnConceptoR" ModalQb="modalConceptoR" #modalConceptoR></app-new-table-search>
 
 <app-new-table-search Title="Parentesco" [displayedColumns]="['ITE_CODI', 'ITE_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setParentescoOtrosM($event)" btnModalQb="btnParentesco" ModalQb="modalParentesco" #modalParentesco></app-new-table-search>
+
+<app-new-table-search Title="Constructora" [displayedColumns]="['pvd_coda', 'pvr_noco']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setConstructora($event)" btnModalQb="btnConstructora" ModalQb="modalConstructora" #modalConstructora></app-new-table-search>
 
 <app-gnempre title="Seleccione empresa" (accept)="_EmpreModal.dismiss();load()">
     <form>
@@ -2105,3 +1942,5 @@
         </div>
     </form>
 </app-gnempre>
+
+<app-address-tool-generic #modalAfiDire buttonModalId="btnModalRefFami" ModalId="modalRefFami" (myAddress)="getDireccionEmitt($event)"></app-address-tool-generic>

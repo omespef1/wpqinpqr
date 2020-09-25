@@ -1,6 +1,6 @@
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
-        <h1 class="display-4">Formulario de Encuesta de Satisfacción del Servicio.</h1>
+        <h1 class="display-4">{{ reles.rel_nomb }}</h1>
 
     </div>
 </div>
@@ -87,11 +87,11 @@
         </div>
 
         <div class="card">
-            <div class="card-header bg-light text-dark font-weight-bold text-center">
+            <!-- <div class="card-header bg-light text-dark font-weight-bold text-center">
                 <h4>
                     {{ reles.rel_nomb }}
                 </h4>
-            </div>
+            </div> -->
 
             <div id="accordion">
                 <ng-template ngFor let-seccion [ngForOf]="reles.Secciones" let-Iseccion="index">
@@ -122,9 +122,9 @@
                                                     </td>
                                                     <td *ngFor="let number of [1,2,3,4,5]; let j = index;" class="text-center">
                                                         <div class="custom-control custom-radio custom-control-inline m-auto">
-                                                            <input required type="radio" class="custom-control-input" (change)="setInfoResen(j+1 , reles.rel_cont, pregunta.drs_cont, pregunta.rse_cont, pregunta.drs_clas, 'Puntuacion' + i.toString() + j.toString(), pregunta.drs_preg)" id="{{'Puntuacion' + i.toString() + j.toString() + pregunta.drs_cont.toString() }}"
-                                                                name="{{'groupPuntuacion' + pregunta.drs_cont.toString() }}">
-                                                            <label class="custom-control-label" for="{{'Puntuacion' + i.toString() + j.toString() + pregunta.drs_cont.toString()}}"></label>
+                                                            <input required type="radio" class="custom-control-input" (change)="setInfoResen(j+1 , reles.rel_cont, pregunta.drs_cont, pregunta.rse_cont, pregunta.drs_clas, 'Puntuacion' + i.toString() + j.toString(), pregunta.drs_preg)" id="{{'Puntuacion' + i.toString() + j.toString() + pregunta.drs_cont.toString() + pregunta.rse_cont.toString()}}"
+                                                                name="{{'groupPuntuacion' + pregunta.drs_cont.toString() + pregunta.rse_cont.toString() }}">
+                                                            <label class="custom-control-label" for="{{'Puntuacion' + i.toString() + j.toString() + pregunta.drs_cont.toString() + pregunta.rse_cont.toString()}}"></label>
                                                         </div>
                                                     </td>
                                                 </tr>
