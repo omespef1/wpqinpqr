@@ -19,12 +19,17 @@ export class SfFovis {
     public InfoEmpresa: InfoEmpresa[] = [];
     public InfoGnmasal: Gnmasal = new Gnmasal();
 
-    public Infodfore: SfDfore[] = [];
-    public Infoddfor: SfDdfor[] = [];
+    public InfodforeA: SfDfore[] = [];
+    public InfodforeR: SfDfore[] = [];
+   
+    constructor() {
+        this.for_tdat = 'N';
+    }
 }
 
 export class InfoAportante {
 
+    public dfo_cont: number;
     public afi_edad: number;
     public for_sala = 0;
     public for_cond = '';
@@ -51,6 +56,18 @@ export class InfoAportante {
     public ite_pare: number;
     public mpa_codi: string;
     public mpa_nomb: string;
+    public ite_codi_tp: number;
+
+    public dep_codi: string;
+    public dep_nomb: string;
+    public mun_codi: string;
+    public mun_nomb: string;
+    public bar_codi: string;
+    public bar_nomb: string;
+
+    constructor() {
+        this.afi_cont = 0;
+    }
 }
 
 export class InfoEmpresa {
@@ -111,14 +128,17 @@ export class Gnmasal {
 }
 
 export class SfDfore {
+    public dfo_cont: number;
     public dfo_tipo: string;
     public dfo_sald: number;
     public con_cont: number;
     public con_codi: number;
     public con_nomb: string;
+    public Infoddfor: SfDdfor[];
 }
 
 export class SfDdfor {
+    public dfo_cont: number;
     public dfo_tipo: string;
     public con_codi: number;
     public ddf_entc: string;

@@ -37,11 +37,6 @@ export class SfForpoService {
     return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoOtrosM?emp_codi=${emp_codi}&afi_trab=${afi_trab}&afi_cont=${afi_cont}&afi_docu=${afi_docu}`);
   }
 
-  // loadInfoAfiliados(emp_codi: number, afi_cont: number, valid: boolean) {
-  //   // tslint:disable-next-line:max-line-length
-  //   return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoInfoPostulante?emp_codi=${emp_codi}&afi_cont=${afi_cont}&validTope=${valid}`);
-  // }
-
   loadValidInfoAfiliados(emp_codi: number, afi_cont: number) {
     return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoValidPostulante?emp_codi=${emp_codi}&afi_cont=${afi_cont}`);
   }
@@ -67,6 +62,11 @@ export class SfForpoService {
   saveInfoFovis(forpo: SfFovis) {
     // tslint:disable-next-line:max-line-length
     return this._comu.PostTransaction<ToTransaction>(`api/Fovis/SfForpoSaveInfo`, forpo);
+  }
+
+  updateInfoFovis(forpo: SfFovis) {
+    // tslint:disable-next-line:max-line-length
+    return this._comu.PostTransaction<ToTransaction>(`api/Fovis/SfForpoUpdateAllInfo`, forpo);
   }
 
   loadInfoConcepto(emp_codi: number, con_tipo: string) {
@@ -116,6 +116,6 @@ export class SfForpoService {
 
   printReport() {
     // tslint:disable-next-line:max-line-length
-    return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoPrintReporte`);
+    return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoPrintReporte?ter_coda=${0}&emp_codi=${0}&reporte=${0}`);
 }
 }

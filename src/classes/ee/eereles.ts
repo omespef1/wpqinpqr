@@ -1,8 +1,13 @@
 export class EeReles {
+    public red_encu: string;
     public num_preg: number;
     public rel_cont: number;
     public rel_nomb: string;
     public Secciones: EeDrele[];
+
+    constructor() {
+        this.red_encu = 'S';
+    }
 }
 
 export class EeDrele {

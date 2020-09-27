@@ -42,14 +42,15 @@ export class EerelesComponent implements OnInit {
   countEerelesMult = 0;
   uploader: FileUploader = new FileUploader({});
   hasBaseDropZoneOver = false;
+  DisabledButton = false;
 
   public rel_serv = 0;
   public rem_cont = 0;
   ok = '';
 
   // tslint:disable-next-line:max-line-length
-  constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService, 
-    private sanitizer: DomSanitizer, private titleService: Title, private route: ActivatedRoute, 
+  constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService,
+    private sanitizer: DomSanitizer, private titleService: Title, private route: ActivatedRoute,
     private env: EnvService, private router: Router) {
   }
 
@@ -57,19 +58,20 @@ export class EerelesComponent implements OnInit {
     try {
       this.setTitle('Encuesta de Satisfacción');
       this.spinner.show();
-      
+
       await this.GetParams();
 
       if (this.inp_cont !== 0) {
         await this.LoadPqParam();
         await this.LoadInfoPqr();
-
-        if (this.pqpar.rel_cont) {
+        this.DisabledButton = false;
+        if (this.pqpar.rel_cont)
           this.GetEeReles();
-        }
+
       } else {
           await this.getRelContFromService();
           await this.GetEeReles();
+          await this.validEncuesta();
       }
     } catch (err) {
       this.showAlertMesssage(err);
@@ -130,9 +132,18 @@ export class EerelesComponent implements OnInit {
       this.reles = info.objTransaction;
     else
       this.showAlertMesssage(info.txtRetorno);
-
-      console.log(this.reles);
   }
+
+
+  async validEncuesta() {
+    console.log('aqui');
+    const info: any = <any>await this._comu.Get(`api/EeReles/EeRelesValid?rem_cont=${this.rem_cont}&rel_serv=${this.rel_serv}`).toPromise();
+    if (info.retorno === 0)
+      this.DisabledButton = true;
+    else
+      this.showAlertMesssage(info.txtRetorno);
+  }
+
 
   showAlertMesssage(msg: string) {
     this.msg = msg;
@@ -248,12 +259,13 @@ export class EerelesComponent implements OnInit {
   async saveUnique() {
 
     const promise = new Promise((resolve, reject) => {
+      
       this._comu.Post('api/EeReles/insertEreles', this.eeresen).subscribe(async (resp: ToTransaction) => {
         if (resp.retorno !== undefined) {
           if (resp.retorno === 0) {
             this.spinner.hide();
             await this.saveMultiple();
-            await this.saveAdjuntos(this.resem.rem_cont);
+            await this.saveAdjuntos(this.rem_cont);
             resolve();
             this.showAlertMesssage('Encuesta enviada correctamente.');
             this.clear();
@@ -268,17 +280,20 @@ export class EerelesComponent implements OnInit {
   }
 
   async saveMultiple() {
-    const promise: Promise<any> = new Promise((resolve, reject) => {
-      this._comu.Post('api/EeReles/insertErelem', this.eeresem).subscribe((resp: ToTransaction) => {
-        if (resp.retorno !== undefined) {
-          if (resp.retorno !== 0) {
-            this.showAlertMesssage(resp.txtRetorno);
+
+    if (this.eeresem.length > 0) {
+      const promise: Promise<any> = new Promise((resolve, reject) => {
+        this._comu.Post('api/EeReles/insertErelem', this.eeresem).subscribe((resp: ToTransaction) => {
+          if (resp.retorno !== undefined) {
+            if (resp.retorno !== 0) {
+              this.showAlertMesssage(resp.txtRetorno);
+            }
           }
-        }
-        resolve();
+          resolve();
+        });
       });
-    });
-    return promise;
+      return promise;
+    }
   }
 
   topFunction() {
@@ -308,7 +323,8 @@ export class EerelesComponent implements OnInit {
   }
 
   alertEmitt(event) {
-    this.router.navigate(['eeremes']);
+    if (this.reles.red_encu === 'S') {
+      this.router.navigate(['eeremes']);
+    }
   }
-
 }

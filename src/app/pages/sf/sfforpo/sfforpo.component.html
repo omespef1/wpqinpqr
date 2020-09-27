@@ -559,14 +559,14 @@
                                             </div>
 
                                             <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
-                                                <label for="afi_sala">Salario Constancia</label>
+                                                <label for="for_sala_cony">Salario Constancia</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <div class="input-group-text">
                                                             <span><i class="fas fa-money-bill"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input name="for_sala" required [(ngModel)]="fovis.conyuge.for_sala" (keypress)="numberOnly($event)" type="text" class="form-control" placeholder="Salario Constancia" autocomplete="off">
+                                                    <input name="for_sala_cony" required [(ngModel)]="fovis.conyuge.for_sala" (keypress)="numberOnly($event)" (blur)="TotalIngresos()" type="text" class="form-control" placeholder="Salario Constancia" autocomplete="off">
                                                 </div>
                                             </div>
 
@@ -1094,7 +1094,7 @@
                                                 <span><i class="fas fa-qrcode"></i></span>
                                             </div>
                                         </div>
-                                        <input name="num_sala" type="text" class="form-control" placeholder="# Salarios" readonly>
+                                        <input name="num_sala" [(ngModel)]="fovis.infoHogar.num_sala" type="text" class="form-control" placeholder="# Salarios" readonly>
                                     </div>
                                 </div>
 
@@ -1153,8 +1153,8 @@
                                                                 <span><i class="fas fa-map-marked-alt"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="dep_codp" readonly [(ngModel)]="fovis.infoHogar.dep_codi" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                                        <input name="dep_nomp" readonly [(ngModel)]="fovis.infoHogar.dep_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                        <input name="dep_codp" readonly [(ngModel)]="fovis.postulante.dep_codi" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                        <input name="dep_nomp" readonly [(ngModel)]="fovis.postulante.dep_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
                                                     </div>
                                                 </div>
 
@@ -1166,8 +1166,8 @@
                                                                 <span><i class="fas fa-map-pin"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="mun_codp" readonly [(ngModel)]="fovis.infoHogar.mun_codi" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                                        <input name="mun_nomp" readonly [(ngModel)]="fovis.infoHogar.mun_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                        <input name="mun_codp" readonly [(ngModel)]="fovis.postulante.mun_codi" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                        <input name="mun_nomp" readonly [(ngModel)]="fovis.postulante.mun_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
                                                     </div>
                                                 </div>
 
@@ -1179,8 +1179,8 @@
                                                                 <span><i class="fas fa-location-arrow"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="bar_codp" readonly [(ngModel)]="fovis.infoHogar.bar_codi" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                                        <input name="bar_nomp" readonly [(ngModel)]="fovis.infoHogar.bar_nomb" type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                        <input name="bar_codp" readonly [(ngModel)]="fovis.postulante.bar_codi" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                                        <input name="bar_nomp" readonly [(ngModel)]="fovis.postulante.bar_nomb" type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
@@ -1324,10 +1324,11 @@
                                                 </div>
 
                                                 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                                    <div class="table-responsive mt-3" *ngIf="InfodforeFilter('A')?.length">
+                                                    <div class="table-responsive mt-3" *ngIf="fovis.InfodforeA?.length">
                                                         <table class="table table-hover table-striped table-bordered">
                                                             <thead class="thead-light">
                                                                 <tr>
+                                                                    <th scope="col"></th>
                                                                     <th scope="col"></th>
                                                                     <th scope="col">Código</th>
                                                                     <th scope="col">Nombre Ahorro</th>
@@ -1335,10 +1336,16 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr *ngFor="let dfor of InfodforeFilter('A') | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                                                <tr *ngFor="let dfor of fovis.InfodforeA | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
                                                                     <td>
                                                                         <button (click)="emitInfo(dfor, 'A')" type="button" class="btn btn-link btn-sm btn-block">
                                                                             <span><i class="fas fa-plus" title="Adicionar Detalle"></i>
+                                                                            </span>
+                                                                        </button>
+                                                                    </td>
+                                                                    <td>
+                                                                        <button (click)="InfoDdforFilter(dfor)" type="button" class="btn btn-link btn-sm btn-block">
+                                                                            <span><i class="fas fa-search-plus" title="Ver Detalle"></i>
                                                                             </span>
                                                                         </button>
                                                                     </td>
@@ -1351,11 +1358,12 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                                    <div class="table-responsive mt-3" *ngIf="InfoDdforFilter(con_codi, 'A')?.length">
+                                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" *ngIf="listsfddforA?.length">
+                                                    <div class="table-responsive mt-3">
                                                         <table class="table table-hover table-striped table-bordered">
                                                             <thead class="thead-light">
                                                                 <tr>
+                                                                    <th></th>
                                                                     <th scope="col">Entidad Captadora</th>
                                                                     <th scope="col">Entidad Depositaria</th>
                                                                     <th scope="col">Número Cuenta</th>
@@ -1365,7 +1373,13 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr *ngFor="let ddf of InfoDdforFilter(con_codi, 'A') | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                                                <tr *ngFor="let ddf of listsfddforA | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                                                    <td>
+                                                                        <button (click)="editarDdforA(ddf)" type="button" class="btn btn-link btn-sm btn-block">
+                                                                            <span><i class="fas fa-edit" title="Editar Datos"></i>                                                                                                                                                                                                         
+                                                                            </span>
+                                                                         </button>
+                                                                    </td>
                                                                     <td>{{ ddf.ddf_entc }}</td>
                                                                     <td>{{ ddf.ddf_entd }}</td>
                                                                     <td>{{ ddf.ddf_numc }}</td>
@@ -1485,10 +1499,11 @@
                                                 </div>
 
                                                 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                                    <div class="table-responsive mt-3" *ngIf="InfodforeFilter('R')?.length">
+                                                    <div class="table-responsive mt-3" *ngIf="fovis.InfodforeR?.length">
                                                         <table class="table table-hover table-striped table-bordered">
                                                             <thead class="thead-light">
                                                                 <tr>
+                                                                    <th></th>
                                                                     <th></th>
                                                                     <th scope="col">Código</th>
                                                                     <th scope="col">Nombre Ahorro</th>
@@ -1496,10 +1511,16 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr *ngFor="let dfor of InfodforeFilter('R') | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                                                <tr *ngFor="let dfor of fovis.InfodforeR | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
                                                                     <td>
                                                                         <button (click)="emitInfo(dfor, 'R')" type="button" class="btn btn-link btn-sm btn-block">
                                                                             <span><i class="fas fa-plus" title="Adicionar Detalle"></i>
+                                                                            </span>
+                                                                        </button>
+                                                                    </td>
+                                                                    <td>
+                                                                        <button (click)="InfoDdforFilter(dfor)" type="button" class="btn btn-link btn-sm btn-block">
+                                                                            <span><i class="fas fa-search-plus" title="Ver Detalle"></i>
                                                                             </span>
                                                                         </button>
                                                                     </td>
@@ -1513,16 +1534,23 @@
                                                 </div>
 
                                                 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                                    <div class="table-responsive mt-3" *ngIf="InfoDdforFilter(con_codi, 'R')?.length">
+                                                    <div class="table-responsive mt-3" *ngIf="listsfddforR?.length">
                                                         <table class="table table-hover table-striped table-bordered">
                                                             <thead class="thead-light">
                                                                 <tr>
+                                                                    <th></th>
                                                                     <th scope="col">Nombre Entidad</th>
                                                                     <th scope="col">Fecha Apertura</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr *ngFor="let ddf of InfoDdforFilter(con_codi, 'R') | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                                                <tr *ngFor="let ddf of listsfddforR | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
+                                                                    <td>
+                                                                        <button (click)="editarDdforR(ddf)" type="button" class="btn btn-link btn-sm btn-block">
+                                                                            <span><i class="fas fa-edit" title="Editar Datos"></i>                                                                                                                                                                                                         
+                                                                            </span>
+                                                                         </button>
+                                                                    </td>
                                                                     <td>{{ ddf.ddf_entc }}</td>
                                                                     <td>{{ ddf.ddf_feca | date: 'dd/MM/yyyy'}}</td>
                                                                 </tr>
