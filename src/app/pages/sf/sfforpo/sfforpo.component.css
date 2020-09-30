@@ -167,3 +167,22 @@ body {
 .label-button {
     margin-bottom: 0px;
 }
+
+.disable-whole-div__myDIV {
+    overflow: scroll;
+    height: 600px;
+    border: 1px solid #ccc;
+    margin: 10px;
+    width: 300px;
+    cursor: pointer;
+    position: relative;
+}
+
+.disable-whole-div__cover {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    background-color: #ddd;
+    opacity: 0.3;
+}

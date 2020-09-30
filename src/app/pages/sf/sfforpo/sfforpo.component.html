@@ -137,7 +137,7 @@
                                                                 <span><i class="fas fa-calendar"></i></span>
                                                             </div>
                                                         </div>
-                                                        <input name="afi_fecn" [(ngModel)]="fovis.postulante.afi_fecn" type="text" class="form-control" placeholder="Fecha Nacimiento" readonly>
+                                                        <input name="afi_fecn" [value]="fovis.postulante.afi_fecn | date:'dd/MM/yyyy'" type="text" class="form-control" placeholder="Fecha Nacimiento" readonly>
                                                     </div>
                                                 </div>
 
@@ -377,7 +377,7 @@
                                                             <span><i class="fas fa-calendar"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input name="afi_fecn_cy" [(ngModel)]="fovis.conyuge.afi_fecn" type="text" class="form-control" placeholder="Fecha Nacimiento" readonly>
+                                                    <input name="afi_fecn_cy" [value]="fovis.conyuge.afi_fecn | date:'dd/MM/yyyy'" type="text" class="form-control" placeholder="Fecha Nacimiento" readonly>
                                                 </div>
                                             </div>
 
@@ -446,12 +446,12 @@
                                                     </div>
                                                     <div class="card-body">
                                                         <div class="custom-control custom-radio">
-                                                            <input [(ngModel)]="fovis.conyuge.afi_gene" disabled type="radio" class="custom-control-input" id="mascul" name="groupGnero" value="M">
+                                                            <input [(ngModel)]="fovis.conyuge.afi_gene" type="radio" class="custom-control-input" id="mascul" name="groupGnero" value="M">
                                                             <label class="custom-control-label" for="mascul">Masculino</label>
                                                         </div>
                                                         <div class="custom-control custom-radio">
-                                                            <input [(ngModel)]="fovis.conyuge.afi_gene" disabled type="radio" class="custom-control-input" id="femin" name="groupGnero" value="F">
-                                                            <label class="custom-control-label" for="defaultGroupExample2">Femenino</label>
+                                                            <input [(ngModel)]="fovis.conyuge.afi_gene" type="radio" class="custom-control-input" id="femin" name="groupGnero" value="F">
+                                                            <label class="custom-control-label" for="femin">Femenino</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -464,11 +464,11 @@
                                                     </div>
                                                     <div class="card-body">
                                                         <div class="custom-control custom-radio">
-                                                            <input [(ngModel)]="fovis.conyuge.for_cond" disabled type="radio" class="custom-control-input" id="normal" name="groupCondic" value="N">
+                                                            <input [(ngModel)]="fovis.conyuge.for_cond" type="radio" class="custom-control-input" id="normal" name="groupCondic" value="N">
                                                             <label class="custom-control-label" for="normal">Normal</label>
                                                         </div>
                                                         <div class="custom-control custom-radio">
-                                                            <input [(ngModel)]="fovis.conyuge.for_cond" disabled type="radio" class="custom-control-input" id="discapa" name="groupCondic" value="D">
+                                                            <input [(ngModel)]="fovis.conyuge.for_cond" type="radio" class="custom-control-input" id="discapa" name="groupCondic" value="D">
                                                             <label class="custom-control-label" for="discapa">Discapacitado</label>
                                                         </div>
                                                     </div>
@@ -485,31 +485,31 @@
                                                         <div class="row">
                                                             <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
                                                                 <div class="custom-control custom-radio">
-                                                                    <input [(ngModel)]="fovis.conyuge.afi_esci" disabled type="radio" class="custom-control-input" id="conySolt" name="groupEstCiv" value="S">
+                                                                    <input [(ngModel)]="fovis.conyuge.afi_esci" type="radio" class="custom-control-input" id="conySolt" name="groupEstCiv" value="S">
                                                                     <label class="custom-control-label" for="conySolt">Soltero</label>
                                                                 </div>
                                                                 <div class="custom-control custom-radio">
-                                                                    <input [(ngModel)]="fovis.conyuge.afi_esci" disabled type="radio" class="custom-control-input" id="conyCasad" name="groupEstCiv" value="C">
+                                                                    <input [(ngModel)]="fovis.conyuge.afi_esci" type="radio" class="custom-control-input" id="conyCasad" name="groupEstCiv" value="C">
                                                                     <label class="custom-control-label" for="conyCasad">Casado</label>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
                                                                 <div class="custom-control custom-radio">
-                                                                    <input [(ngModel)]="fovis.conyuge.afi_esci" disabled type="radio" class="custom-control-input" id="conySepa" name="groupEstCiv" value="E">
+                                                                    <input [(ngModel)]="fovis.conyuge.afi_esci" type="radio" class="custom-control-input" id="conySepa" name="groupEstCiv" value="E">
                                                                     <label class="custom-control-label" for="conySepa">Separado</label>
                                                                 </div>
                                                                 <div class="custom-control custom-radio">
-                                                                    <input [(ngModel)]="fovis.conyuge.afi_esci" disabled type="radio" class="custom-control-input" id="conyDivo" name="groupEstCiv" value="D">
+                                                                    <input [(ngModel)]="fovis.conyuge.afi_esci" type="radio" class="custom-control-input" id="conyDivo" name="groupEstCiv" value="D">
                                                                     <label class="custom-control-label" for="conyDivo">Divorciado</label>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
                                                                 <div class="custom-control custom-radio">
-                                                                    <input [(ngModel)]="fovis.conyuge.afi_esci" disabled type="radio" class="custom-control-input" id="conyViudo" name="groupEstCiv" value="V">
+                                                                    <input [(ngModel)]="fovis.conyuge.afi_esci" type="radio" class="custom-control-input" id="conyViudo" name="groupEstCiv" value="V">
                                                                     <label class="custom-control-label" for="conyViudo">Viudo</label>
                                                                 </div>
                                                                 <div class="custom-control custom-radio">
-                                                                    <input [(ngModel)]="fovis.conyuge.afi_esci" disabled type="radio" class="custom-control-input" id="conyUnion" name="groupEstCiv" value="U">
+                                                                    <input [(ngModel)]="fovis.conyuge.afi_esci" type="radio" class="custom-control-input" id="conyUnion" name="groupEstCiv" value="U">
                                                                     <label class="custom-control-label" for="conyUnion">Unión Libre</label>
                                                                 </div>
                                                             </div>
@@ -646,7 +646,12 @@
                                                             <span><i class="fas fa-venus-mars"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input readonly type="text" class="form-control" placeholder="Género" name="afi_gene_perc" [(ngModel)]="InfoSuPerca.afi_gene">
+                                                    <!-- <input readonly type="text" class="form-control" placeholder="Género" name="afi_gene_perc" [(ngModel)]="InfoSuPerca.afi_gene"> -->
+                                                    <select disabled name="afi_gene_perc" class="form-control" [(ngModel)]="InfoSuPerca.afi_gene">
+                                                        <option value="">Seleccione</option>                                                        
+                                                        <option value="M">Masculino</option>
+                                                        <option value="F">Femenino</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -657,7 +662,7 @@
                                                             <span><i class="fas fa-calendar"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input readonly type="text" class="form-control" placeholder="Fecha de Nacimiento" name="afi_fecn_perc" [(ngModel)]="InfoSuPerca.afi_fecn">
+                                                    <input readonly type="text" class="form-control" placeholder="Fecha de Nacimiento" name="afi_fecn_perc" [value]="InfoSuPerca.afi_fecn | date:'dd/MM/yyyy'">
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -690,7 +695,16 @@
                                                             <span><i class="fab fa-black-tie"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input readonly type="text" class="form-control" placeholder="Estado Civil" name="afi_esci_perc" [(ngModel)]="InfoSuPerca.afi_esci">
+                                                    <!-- <input readonly type="text" class="form-control" placeholder="Estado Civil" name="afi_esci_perc" [(ngModel)]="InfoSuPerca.afi_esci"> -->
+                                                    <select disabled name="afi_esci_perc" class="form-control" [(ngModel)]="InfoSuPerca.afi_esci">
+                                                        <option value="">Seleccione</option>                                                        
+                                                        <option value="S">Soltero</option>
+                                                        <option value="C">Casado</option>
+                                                        <option value="E">Separado</option>
+                                                        <option value="V">Viudo</option>
+                                                        <option value="D">Divorciado</option>
+                                                        <option value="U">Unión Libre</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -701,7 +715,12 @@
                                                             <span><i class="fas fa-wheelchair"></i></span>
                                                         </div>
                                                     </div>
-                                                    <input readonly type="text" class="form-control" placeholder="Condición" name="for_cond_perc" [(ngModel)]="InfoSuPerca.for_cond">
+                                                    <!-- <input readonly type="text" class="form-control" placeholder="Condición" name="for_cond_perc" [(ngModel)]="InfoSuPerca.for_cond"> -->
+                                                    <select disabled name="for_cond_perc" class="form-control" [(ngModel)]="InfoSuPerca.for_cond">
+                                                        <option value="">Seleccione</option>                                                        
+                                                        <option value="N">Normal</option>
+                                                        <option value="D">Discapacitado</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
@@ -930,7 +949,6 @@
                                                         <option value="V">Viudo</option>
                                                         <option value="D">Divorciado</option>
                                                         <option value="U">Unión Libre</option>
-
                                                     </select>
                                                 </div>
                                             </div>
@@ -1131,7 +1149,7 @@
                                                 <span><i class="fas fa-money-check-alt"></i></span>
                                             </div>
                                         </div>
-                                        <input type="text" name="dfo_vsol" [(ngModel)]="fovis.infoHogar.dfo_vsol" [disabled]="!mod_valo" class="form-control" placeholder="Valor Solicitado" autocomplete="off">
+                                        <input type="text" name="dfo_vsol" readonly [(ngModel)]="fovis.infoHogar.dfo_vsol" [disabled]="!mod_valo" class="form-control" placeholder="Valor Solicitado" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -1726,6 +1744,9 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="container mb-1 mt-4" *ngIf="viewBtnSaveRecursos">
+                                        <input type="button" (click)="actualizarRecursos()" class="btn btn-primary btn-lg btn-block" value="Actualizar Recursos Económicos">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1914,7 +1935,7 @@
                     </div> -->
                 </div>
 
-                <div class="container mb-1 mt-4">
+                <div class="container mb-1 mt-4" *ngIf="viewBtnSave">
                     <button type="submit" class="btn btn-primary btn-lg btn-block" [disabled]="!fovisForm.form.valid || emp_codi == 0" *ngIf="emp_codi != 0">Guardar Postulación</button>
                 </div>
             </div>

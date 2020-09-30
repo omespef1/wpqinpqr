@@ -127,29 +127,56 @@ export class EerelesComponent implements OnInit {
   }
 
   async GetEeReles() {
-    const info: any = <any>await this._comu.Get(`api/EeReles/EeRelesLoad?rel_cont=${this.pqpar.rel_cont}`).toPromise();
+    // tslint:disable-next-line:max-line-length
+    const info: any = <any>await this._comu.Get(`api/EeReles/EeRelesLoad?rel_cont=${this.pqpar.rel_cont}&rem_cont=${this.rem_cont}&rel_serv=${this.rel_serv}`).toPromise();
     if (info.retorno === 0)
       this.reles = info.objTransaction;
     else
       this.showAlertMesssage(info.txtRetorno);
+
+      console.log(this.reles);
   }
 
 
   async validEncuesta() {
-    console.log('aqui');
+ 
     const info: any = <any>await this._comu.Get(`api/EeReles/EeRelesValid?rem_cont=${this.rem_cont}&rel_serv=${this.rel_serv}`).toPromise();
     if (info.retorno === 0)
       this.DisabledButton = true;
-    else
+    else {
       this.showAlertMesssage(info.txtRetorno);
+      // this.loadInfoEncDilig();
+    }
+
   }
 
+  loadInfoEncDilig() {
+    this.getInfoeeresen();
+    this.getInfoeeresem();
+  }
 
   showAlertMesssage(msg: string) {
     this.msg = msg;
     this.alert.show();
   }
 
+  async getInfoeeresen() {
+    // tslint:disable-next-line:max-line-length
+    const info: any = <any>await this._comu.Get(`api/EeReles/getInfoEeresen?rem_cont=${this.rem_cont}&emp_codi=${this.emp_codi}`).toPromise();
+    if (info.retorno === 0)
+      this.eeresen = info.objTransaction;
+    console.log(info.objTransaction);
+    console.log(this.eeresen);
+  }
+
+  async getInfoeeresem() {
+    // tslint:disable-next-line:max-line-length
+    const info: any = <any>await this._comu.Get(`api/EeReles/getInfoEeresem?rem_cont=${this.rem_cont}&emp_codi=${this.emp_codi}`).toPromise();
+    if (info.retorno === 0)
+      this.eeresem = info.objTransaction;
+
+      
+  }
 
   public setTitle(newTitle: string) {
     this.titleService.setTitle(newTitle);
@@ -218,6 +245,7 @@ export class EerelesComponent implements OnInit {
       }
     }
     this.countEerelesMult = this.arrElements.length;
+    console.log(this.eeresem);
   }
 
   async PostEereles(form: NgForm) {

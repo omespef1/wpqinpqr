@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ComunicationsService } from 'src/services/comunications.service';
 import { ToTransaction } from 'src/classes/gn/toTransaction';
 import { SfFovis } from "src/classes/sf/sffovis";
+import { SfPrint } from "src/classes/sf/sfprint";
 
 @Injectable({
   providedIn: 'root'
@@ -66,7 +67,12 @@ export class SfForpoService {
 
   updateInfoFovis(forpo: SfFovis) {
     // tslint:disable-next-line:max-line-length
-    return this._comu.PostTransaction<ToTransaction>(`api/Fovis/SfForpoUpdateAllInfo`, forpo);
+    return this._comu.PostTransaction<ToTransaction>(`api/Fovis/SfForpoUpdateInfo`, forpo);
+  }
+
+  updateInfoFovisRecursos(forpo: SfFovis) {
+    // tslint:disable-next-line:max-line-length
+    return this._comu.PostTransaction<ToTransaction>(`api/Fovis/SfForpoUpdateInfoRecursos`, forpo);
   }
 
   loadInfoConcepto(emp_codi: number, con_tipo: string) {
@@ -114,8 +120,8 @@ export class SfForpoService {
     return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoGetInfoPostulante?emp_codi=${emp_codi}&afi_cont=${afi_cont}`);
   }
 
-  printReport() {
+  printReport(forpo: SfPrint) {
     // tslint:disable-next-line:max-line-length
-    return this._comu.GetTransaction<ToTransaction>(`api/Fovis/SfForpoPrintReporte?ter_coda=${0}&emp_codi=${0}&reporte=${0}`);
-}
+    return this._comu.PostTransaction<ToTransaction>(`api/Fovis/SfForpoPrintReporte`, forpo);
+  }
 }

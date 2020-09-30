@@ -122,8 +122,8 @@
                                                     </td>
                                                     <td *ngFor="let number of [1,2,3,4,5]; let j = index;" class="text-center">
                                                         <div class="custom-control custom-radio custom-control-inline m-auto">
-                                                            <input required type="radio" class="custom-control-input" (change)="setInfoResen(j+1 , reles.rel_cont, pregunta.drs_cont, pregunta.rse_cont, pregunta.drs_clas, 'Puntuacion' + i.toString() + j.toString(), pregunta.drs_preg)" id="{{'Puntuacion' + i.toString() + j.toString() + pregunta.drs_cont.toString() + pregunta.rse_cont.toString()}}"
-                                                                name="{{'groupPuntuacion' + pregunta.drs_cont.toString() + pregunta.rse_cont.toString() }}">
+                                                            <input [disabled]="!DisabledButton" [checked]="number == pregunta.res_valo ? true : false" required type="radio" class="custom-control-input" (change)="setInfoResen(j+1 , reles.rel_cont, pregunta.drs_cont, pregunta.rse_cont, pregunta.drs_clas, 'Puntuacion' + i.toString() + j.toString(), pregunta.drs_preg)"
+                                                                id="{{'Puntuacion' + i.toString() + j.toString() + pregunta.drs_cont.toString() + pregunta.rse_cont.toString()}}" name="{{'groupPuntuacion' + pregunta.drs_cont.toString() + pregunta.rse_cont.toString() }}">
                                                             <label class="custom-control-label" for="{{'Puntuacion' + i.toString() + j.toString() + pregunta.drs_cont.toString() + pregunta.rse_cont.toString()}}"></label>
                                                         </div>
                                                     </td>
@@ -141,7 +141,7 @@
                                                     {{pregunta.drs_preg}}
                                                 </div>
                                                 <div style="width: 49%">
-                                                    <input type="text" class="form-control" (keyup)="setInfoText($event, reles.rel_cont, pregunta.drs_cont,  pregunta.rse_cont)">
+                                                    <input [disabled]="!DisabledButton" [value]="pregunta.res_valo" type="text" class="form-control" (keyup)="setInfoText($event, reles.rel_cont, pregunta.drs_cont,  pregunta.rse_cont)">
                                                 </div>
                                             </div>
                                         </div>
@@ -161,7 +161,8 @@
                                                         <ng-template ngFor let-preguntaMult [ngForOf]="pregunta.Respuestas" let-i="index">
                                                             <div class="col-auto my-1">
                                                                 <div class="form-group custom-checkbox mr-sm-2">
-                                                                    <input (change)="setInfoResem(preguntaMult.ddp_opci , reles.rel_cont, preguntaMult.ddp_cont, preguntaMult.drp_cont, 'M', 'chk' + preguntaMult.ddp_cont + preguntaMult.drp_cont + i.toString())" type="checkbox" class="custom-control-input" id="{{'chk' + preguntaMult.ddp_cont + preguntaMult.drp_cont + i.toString()}}">
+                                                                    <input [disabled]="!DisabledButton" [checked]="pregunta.res_valo === preguntaMult.ddp_opci" (change)="setInfoResem(preguntaMult.ddp_opci , reles.rel_cont, preguntaMult.ddp_cont, preguntaMult.drp_cont, 'M', 'chk' + preguntaMult.ddp_cont + preguntaMult.drp_cont + i.toString())"
+                                                                        type="checkbox" class="custom-control-input" id="{{'chk' + preguntaMult.ddp_cont + preguntaMult.drp_cont + i.toString()}}">
                                                                     <label class="custom-control-label" for="{{'chk' + preguntaMult.ddp_cont + preguntaMult.drp_cont + i.toString()}}">{{preguntaMult.ddp_opci}}</label>
                                                                 </div>
                                                             </div>

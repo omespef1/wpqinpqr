@@ -16,6 +16,7 @@ import { ResultDialogComponent } from 'src/app/components/dialogs/result-dialog/
 import { Sfparam } from 'src/classes/sf/sfparam';
 import * as _moment from 'moment';
 import { Moment } from 'moment';
+import { SfPrint } from 'src/classes/sf/sfprint';
 
 @Component({
   selector: 'app-sfforpo',
@@ -59,6 +60,7 @@ export class SfforpoComponent implements OnInit {
   sfddforA: SfDdfor = new SfDdfor();
   sfddforR: SfDdfor = new SfDdfor();
   sfparam: Sfparam = new Sfparam();
+  sfprint: SfPrint = new SfPrint();
   companies: companies[];
 
   listsfddforA: SfDdfor[] = [];
@@ -89,6 +91,8 @@ export class SfforpoComponent implements OnInit {
 
   mod_valo = true;
   minDate: Date;
+  viewBtnSave = true;
+  viewBtnSaveRecursos = false;
 
   constructor(private spinner: NgxSpinnerService, private sanitizer: DomSanitizer, private titleService: Title,
     private route: ActivatedRoute, private _gnempre: GnempreService, private _service: SfForpoService) {
@@ -125,7 +129,7 @@ export class SfforpoComponent implements OnInit {
   }
 
   load() {
-      this.loadSfparam();
+     this.loadSfparam();
       this.getIdAfiliado();
       this.loadValiNomenclatura();
   }
@@ -152,7 +156,10 @@ export class SfforpoComponent implements OnInit {
 
 
   PostForpo(form: NgForm) {
-    this.showResultMesssage();
+
+    if (this.validSmlv()) {
+      this.showResultMesssage();
+    }    
   }
 
   public setTitle(newTitle: string) {
@@ -202,8 +209,6 @@ export class SfforpoComponent implements OnInit {
       this.mod_valo = false;
     else
       this.mod_valo = true;
-
-      console.log(this.fovis);
   }
 
   getIdAfiliado() {
@@ -219,45 +224,59 @@ export class SfforpoComponent implements OnInit {
 
   ValidInfoAfiliado(afi_cont: number) {
     this.spinner.show();
+    this.viewBtnSave = true;
+    this.viewBtnSaveRecursos = false;
     this._service.loadValidInfoAfiliados(this.emp_codi, afi_cont).subscribe(resp => {
       if (resp.objTransaction.for_esta === 'I' )
         this.loadInfoFromForpo(afi_cont, resp.objTransaction.for_cont);
       // tslint:disable-next-line:max-line-length
       else if (resp.objTransaction.for_esta === '' || resp.objTransaction.for_esta === 'V' || resp.objTransaction.for_esta === 'U' || resp.objTransaction.for_esta === 'N')
         this.loadInfoFromAfili(afi_cont, resp.objTransaction.for_cont);
+      else if (resp.objTransaction.for_esta === 'S' || resp.objTransaction.for_esta === 'F' || resp.objTransaction.for_esta === 'D') {
+        this.viewBtnSave = false;
+        this.loadInfoFromForpo(afi_cont, resp.objTransaction.for_cont);
+      } else if (resp.objTransaction.for_esta === 'A' || resp.objTransaction.for_esta === 'C') {
+        this.loadInfoFromForpo(afi_cont, resp.objTransaction.for_cont);
+        this.viewBtnSave = false;
+        this.viewBtnSaveRecursos = true;
+      }
     });
     this.spinner.hide();
   }
 
   loadInfoFromForpo(afi_cont: number, for_cont: number) {
+
     this.spinner.show();
     this._service.loadInfoFromForpo(this.emp_codi, afi_cont, for_cont).subscribe(resp => {
 
-      this.fovis = new SfFovis();
-      this.fovis = resp.objTransaction;
-      this.fovis.emp_codi = this.emp_codi;
-      this.fovis.infoHogar.for_nmie += 1;
-      this.fovis.postulante.ite_codi_tp = this.sfparam.ite_cont;
-      this.fovis.conyuge.ite_codi_tp = this.sfparam.ite_cont;
-
-      if (this.fovis.conyuge.afi_cont !== 0)
+      if (resp.retorno === 0) {
+        this.fovis = new SfFovis();
+        this.fovis = resp.objTransaction;
+        this.fovis.emp_codi = this.emp_codi;
         this.fovis.infoHogar.for_nmie += 1;
+        this.fovis.postulante.ite_tipp = this.sfparam.ite_cont;
+        this.fovis.conyuge.ite_tipp = this.sfparam.ite_cont;
 
-      if (this.fovis.InfoSfDfomhP.length !== 0)
-        this.fovis.infoHogar.for_nmie += this.fovis.InfoSfDfomhP.length;
+        if (this.fovis.conyuge.afi_cont !== 0)
+          this.fovis.infoHogar.for_nmie += 1;
 
-      if (this.fovis.InfoSfDfomhO.length !== 0)
-        this.fovis.infoHogar.for_nmie += this.fovis.InfoSfDfomhO.length;
+        if (this.fovis.InfoSfDfomhP.length !== 0)
+          this.fovis.infoHogar.for_nmie += this.fovis.InfoSfDfomhP.length;
 
-      this.setTotal();
+        if (this.fovis.InfoSfDfomhO.length !== 0)
+          this.fovis.infoHogar.for_nmie += this.fovis.InfoSfDfomhO.length;
 
-      this.InfoModvi.mod_cont = this.fovis.mod_cont;
-      this.InfoModvi.mod_nomb = this.fovis.mod_nomb;
-      this.InfoModvi.tco_codi = this.fovis.tco_codi;
-      this.InfoModvi.tco_nomb = this.fovis.tco_nomb;
+        this.setTotal();
+        this.TotalIngresos();
+        this.InfoModvi.mod_cont = this.fovis.mod_cont;
+        this.InfoModvi.mod_nomb = this.fovis.mod_nomb;
+        this.InfoModvi.tco_codi = this.fovis.tco_codi;
+        this.InfoModvi.tco_nomb = this.fovis.tco_nomb;
 
-      console.log(this.fovis);
-
+        console.log(this.fovis);
+      } else {
+        this.showAlertMesssage(resp.txtRetorno);
+      }
     });
     this.spinner.hide();
   }
@@ -269,11 +288,13 @@ export class SfforpoComponent implements OnInit {
       this.fovis = resp.objTransaction;
       this.fovis.emp_codi = this.emp_codi;
       this.fovis.infoHogar.for_nmie += 1;
-      this.fovis.postulante.ite_codi_tp = this.sfparam.ite_cont;
-      this.fovis.conyuge.ite_codi_tp = this.sfparam.ite_cont;
+      this.fovis.postulante.ite_tipp = this.sfparam.ite_cont;
+      this.fovis.conyuge.ite_tipp = this.sfparam.ite_cont;
 
       if (this.fovis.conyuge.afi_cont !== 0)
         this.fovis.infoHogar.for_nmie += 1;
+
+      console.log(this.fovis);
     });
     this.spinner.hide();
   }
@@ -292,6 +313,7 @@ export class SfforpoComponent implements OnInit {
   }
 
   setOcupacion(rowSelected: any) {
+    this.fovis.postulante.ite_ocup = rowSelected.ITE_CONT;
     this.fovis.postulante.ite_codi = rowSelected.ITE_CODI;
     this.fovis.postulante.ite_nomb = rowSelected.ITE_NOMB;
   }
@@ -310,6 +332,7 @@ export class SfforpoComponent implements OnInit {
   }
 
   setOcupacionPerc(rowSelected: any) {
+    this.InfoSuPerca.ite_ocup = rowSelected.ITE_CONT;
     this.InfoSuPerca.ite_codi = rowSelected.ITE_CODI;
     this.InfoSuPerca.ite_nomb = rowSelected.ITE_NOMB;
   }
@@ -425,6 +448,7 @@ export class SfforpoComponent implements OnInit {
   }
 
   setOcupacionOtrosM(rowSelected: any) {
+    this.InfoOtrosMiembros.ite_ocup = rowSelected.ITE_CONT;
     this.InfoOtrosMiembros.ite_codi = rowSelected.ITE_CODI;
     this.InfoOtrosMiembros.ite_nomb = rowSelected.ITE_NOMB;
   }
@@ -443,12 +467,14 @@ export class SfforpoComponent implements OnInit {
   }
 
   setOcupacionConyuge(rowSelected: any) {
+     this.fovis.conyuge.ite_ocup = rowSelected.ITE_CONT;
      this.fovis.conyuge.ite_codi = rowSelected.ITE_CODI;
      this.fovis.conyuge.ite_nomb = rowSelected.ITE_NOMB;
   }
 
   GetConcepto(con_tipo: string) {
     this.spinner.show();
+    this.sfdforeA = new SfDfore();
     this._service.loadInfoConcepto(this.emp_codi, con_tipo).subscribe(resp => {
       if (resp.retorno === 0) {
         this._tableConcepto.btnModalQb = 'btnConcepto';
@@ -469,6 +495,7 @@ export class SfforpoComponent implements OnInit {
 
   GetConceptoR(con_tipo: string) {
     this.spinner.show();
+    this.sfdforeR = new SfDfore();
     this._service.loadInfoConcepto(this.emp_codi, con_tipo).subscribe(resp => {
       if (resp.retorno === 0) {
         this._tableConceptoR.btnModalQb = 'btnConceptoR';
@@ -520,8 +547,11 @@ export class SfforpoComponent implements OnInit {
   }
 
   setConstructora(rowSelected: any) {
+    console.log(rowSelected);
+    this.fovis.infoHogar.pvd_codi = rowSelected.pvd_codi;
     this.fovis.infoHogar.dfo_nitc = rowSelected.pvd_coda;
     this.fovis.infoHogar.dfo_nomc = rowSelected.pvr_noco;
+    console.log(this.fovis.infoHogar);
   }
 
   numberOnly(event): boolean {
@@ -543,7 +573,7 @@ export class SfforpoComponent implements OnInit {
   }
 
   TotalIngresos() {
-    
+
     let for_timh = 0;
 
     for (let j = 0; j < this.fovis.InfoSfDfomhP.length; j++)
@@ -560,7 +590,7 @@ export class SfforpoComponent implements OnInit {
                                       + Number(for_timh);
 
     if (this.fovis.InfoGnmasal.mas_vrsm !== 0) {
-      this.fovis.infoHogar.num_sala = (Number(this.fovis.infoHogar.for_ting) / Number(this.fovis.InfoGnmasal.mas_vrsm)).toFixed(4);
+      this.fovis.infoHogar.num_sala = Number((Number(this.fovis.infoHogar.for_ting) / Number(this.fovis.InfoGnmasal.mas_vrsm)).toFixed(4));
       this.GetInfoIngresosMensuales();
     }
 
@@ -600,7 +630,7 @@ export class SfforpoComponent implements OnInit {
 
   addPerca() {
     if (this.fovis.InfoSfDfomhP.indexOf(this.fovis.InfoSfDfomhP.filter(t => t.afi_cont === this.InfoSuPerca.afi_cont)[0]) === -1) {
-      this.InfoSuPerca.ite_codi_tp = this.sfparam.ite_cont;
+      this.InfoSuPerca.ite_tipp = this.sfparam.ite_cont;
       this.fovis.InfoSfDfomhP.push(this.InfoSuPerca);
       this.fovis.infoHogar.for_nmie += 1;
       this.TotalIngresos();
@@ -612,7 +642,7 @@ export class SfforpoComponent implements OnInit {
 
   addOtrosM() {
     if (this.fovis.InfoSfDfomhO.indexOf(this.fovis.InfoSfDfomhO.filter(t => t.afi_docu === this.InfoOtrosMiembros.afi_docu)[0]) === -1) {
-      this.InfoSuPerca.ite_codi_tp = this.sfparam.ite_cont;
+      this.InfoOtrosMiembros.ite_tipp = this.sfparam.ite_cont;
       this.fovis.InfoSfDfomhO.push(this.InfoOtrosMiembros);
       this.fovis.infoHogar.for_nmie += 1;
       this.TotalIngresos();
@@ -624,7 +654,7 @@ export class SfforpoComponent implements OnInit {
   }
 
   GetInfoIngresosMensuales() {
-    if (this.fovis.infoHogar.num_sala !== undefined && this.InfoModvi.mod_cont !== null) {
+    if (this.fovis.infoHogar.num_sala !== undefined && this.InfoModvi.mod_cont !== null && this.InfoModvi.mod_cont !== undefined) {
       this.spinner.show();
       // tslint:disable-next-line:max-line-length
       this._service.loadInfoModvi(this.emp_codi, this.InfoModvi.mod_cont, Number(this.fovis.infoHogar.num_sala)).subscribe(resp => {
@@ -632,6 +662,9 @@ export class SfforpoComponent implements OnInit {
           this.fovis.infoHogar.dmo_rsmd = resp.objTransaction.dmo_rsmd;
           this.fovis.infoHogar.dmo_rsmh = resp.objTransaction.dmo_rsmh;
           this.fovis.infoHogar.dmo_fsvs = resp.objTransaction.dmo_fsvs;
+          this.fovis.infoHogar.tco_zona = resp.objTransaction.tco_zona;
+          this.fovis.infoHogar.mod_cspm = resp.objTransaction.mod_cspm;
+          this.fovis.infoHogar.dfo_vsol = resp.objTransaction.dfo_vsol;
         } else
           this.showAlertMesssage(resp.txtRetorno);
       });
@@ -659,9 +692,9 @@ export class SfforpoComponent implements OnInit {
     if (this.sfdforeR.dfo_sald === undefined)
       this.showAlertMesssage('Digite el saldo');
     else
+      this.sfdforeR.Infoddfor = [];
       this.fovis.InfodforeR.push(this.sfdforeR);
       this.sfdforeR = new SfDfore();
-      this.sfdforeA.Infoddfor = this.listsfddforA;
       this.viewDdforR = false;
 
     this.setTotal();
@@ -679,6 +712,9 @@ export class SfforpoComponent implements OnInit {
       if (this.fovis.for_insf === 'P')
         this.sfddforA.con_codi = this.con_codi;
 
+      if (this.fovis.for_insf === 'A' && this.sfddforA.dfo_cont === 0)
+        this.sfddforA.con_codi = this.con_codi;
+
       this.fovis.InfodforeA[this.indexddforA].Infoddfor.push(this.sfddforA);
       this.sfddforA = new SfDdfor();
       this.InfoDdforFilter(this.fovis.InfodforeA[this.indexddforA]);
@@ -686,41 +722,70 @@ export class SfforpoComponent implements OnInit {
   }
 
   addDdforR() {
-    this.sfddforR.dfo_tipo = 'R';
+    this.sfddforA.dfo_tipo = 'R';
+
     if (this.sfddforR.ddf_entc === undefined)
       this.showAlertMesssage('Ingrese el nombre de la entidad captadora');
     else {
-
       this.viewDdforR = false;
 
       if (this.fovis.for_insf === 'P')
         this.sfddforR.con_codi = this.con_codi;
 
-        this.fovis.InfodforeR[this.indexddforR].Infoddfor.push(this.sfddforR);
-        this.sfddforR = new SfDdfor();
-        this.InfoDdforFilter(this.fovis.InfodforeR[this.indexddforR]);
+      if (this.fovis.for_insf === 'A' && this.sfddforR.dfo_cont === 0)
+        this.sfddforR.con_codi = this.con_codi;
+
+      this.fovis.InfodforeR[this.indexddforR].Infoddfor.push(this.sfddforR);
+      this.sfddforR = new SfDdfor();
+      this.InfoDdforFilter(this.fovis.InfodforeR[this.indexddforR]);
     }
   }
 
   InfoDdforFilter(dfore: SfDfore) {
-debugger;
-    if (dfore.dfo_tipo === 'A') {
-      this.listsfddforA = [];
-      this.sfdforeA = dfore;
-      for (let i = 0; i <  this.fovis.InfodforeA.length; i++) {
-         if (this.fovis.InfodforeA[i].dfo_tipo === dfore.dfo_tipo && this.fovis.InfodforeA[i].dfo_cont === dfore.dfo_cont) {
-          for (let j = 0; j <  this.fovis.InfodforeA[i].Infoddfor.length; j++) {
-              this.listsfddforA.push(this.fovis.InfodforeA[i].Infoddfor[j]);
+
+    if (this.fovis.for_insf === 'P') {
+      if (dfore.dfo_tipo === 'A') {
+        this.listsfddforA = [];
+        this.sfdforeA = dfore;
+
+        for (let i = 0; i <  this.fovis.InfodforeA.length; i++) {
+           if (this.fovis.InfodforeA[i].dfo_tipo === dfore.dfo_tipo && this.fovis.InfodforeA[i].con_codi === dfore.con_codi) {
+            for (let j = 0; j <  this.fovis.InfodforeA[i].Infoddfor.length; j++) {
+                this.listsfddforA.push(this.fovis.InfodforeA[i].Infoddfor[j]);
+            }
+           }
+        }
+      } else if (dfore.dfo_tipo === 'R') {
+        this.listsfddforR = [];
+        this.sfdforeR = dfore;
+
+        for (let i = 0; i < this.fovis.InfodforeR.length; i++) {
+          if (this.fovis.InfodforeR[i].dfo_tipo === dfore.dfo_tipo  && this.fovis.InfodforeR[i].con_codi === dfore.con_codi) {
+            for (let j = 0; j < this.fovis.InfodforeR[i].Infoddfor.length; j++) {
+              this.listsfddforR.push(this.fovis.InfodforeR[i].Infoddfor[j]);
+            }
           }
-         }
+        }
       }
-    } else if (dfore.dfo_tipo === 'R') {
-      this.listsfddforR = [];
-      this.sfdforeR = dfore;
-      for (let i = 0; i < this.fovis.InfodforeR.length; i++) {
-        if (this.fovis.InfodforeR[i].dfo_tipo === dfore.dfo_tipo && this.fovis.InfodforeR[i].dfo_cont === dfore.dfo_cont) {
-          for (let j = 0; j < this.fovis.InfodforeR[i].Infoddfor.length; j++) {
-            this.listsfddforR.push(this.fovis.InfodforeR[i].Infoddfor[j]);
+    } else {
+      if (dfore.dfo_tipo === 'A') {
+        this.listsfddforA = [];
+        this.sfdforeA = dfore;
+        for (let i = 0; i <  this.fovis.InfodforeA.length; i++) {
+           if (this.fovis.InfodforeA[i].dfo_tipo === dfore.dfo_tipo && this.fovis.InfodforeA[i].dfo_cont === dfore.dfo_cont) {
+            for (let j = 0; j <  this.fovis.InfodforeA[i].Infoddfor.length; j++) {
+                this.listsfddforA.push(this.fovis.InfodforeA[i].Infoddfor[j]);
+            }
+           }
+        }
+      } else if (dfore.dfo_tipo === 'R') {
+        this.listsfddforR = [];
+        this.sfdforeR = dfore;
+        for (let i = 0; i < this.fovis.InfodforeR.length; i++) {
+          if (this.fovis.InfodforeR[i].dfo_tipo === dfore.dfo_tipo && this.fovis.InfodforeR[i].dfo_cont === dfore.dfo_cont) {
+            for (let j = 0; j < this.fovis.InfodforeR[i].Infoddfor.length; j++) {
+              this.listsfddforR.push(this.fovis.InfodforeR[i].Infoddfor[j]);
+            }
           }
         }
       }
@@ -767,7 +832,6 @@ debugger;
 // -------------------------------------------------------------
 
   setTotal() {
-
     this.tAhorroPrevio = 0;
     this.tRecursosComp = 0;
     this.tValorViviend = 0;
@@ -778,7 +842,12 @@ debugger;
     for (let i = 0; i < this.fovis.InfodforeR.length; i++)
       this.tRecursosComp += Number(this.fovis.InfodforeR[i].dfo_sald);
 
-    this.tValorViviend =  Number(this.tAhorroPrevio) + Number(this.tRecursosComp) + Number(this.fovis.infoHogar.dfo_vsol);
+    this.tValorViviend =  Number(this.tAhorroPrevio) + Number(this.tRecursosComp);
+
+    if (this.fovis.infoHogar.dfo_vsol !== undefined)
+      this.tValorViviend += + Number(this.fovis.infoHogar.dfo_vsol);
+
+      this.fovis.infoHogar.dfo_vtvi = this.tValorViviend;
   }
 
   valorTotal() {
@@ -835,6 +904,17 @@ debugger;
      this.fovis.postulante.afi_dire = mensaje;
   }
 
+  validSmlv(): boolean  {
+    if (  Number(this.fovis.infoHogar.num_sala) > Number(this.sfparam.par_smvr)) {
+      if (this.fovis.InfodforeA.length === 0 && this.fovis.InfodforeR.length === 0) {
+        this.showAlertMesssage('Se debe ingresar información en la sección Ahorro Previo');
+        this.spinner.hide();
+        return false;
+      }
+    }
+    return true;
+  }
+
   setOptionConfirm(option: string) {
     switch (option) {
       case 'RIGHT':
@@ -848,20 +928,19 @@ debugger;
             if (resp.retorno === 0) {
               this.fovis = new SfFovis();
               this.BuildPrint();
+              this.load();
             } else
               this.showAlertMesssage(resp.txtRetorno);
           });
         } else {
-
-          console.log(this.fovis);
-
-          // this._service.updateInfoFovis(this.fovis).subscribe(resp => {
-          //   this.spinner.hide();
-          //   if (resp.retorno === 0) {
-          //     this.BuildPrint();
-          //   } else
-          //     this.showAlertMesssage(resp.txtRetorno);
-          // });
+          this._service.updateInfoFovis(this.fovis).subscribe(resp => {
+            this.spinner.hide();
+            if (resp.retorno === 0) {
+              this.showAlertMesssage('Información Actualizada Correctamente.');
+              this.load();
+            } else
+              this.showAlertMesssage(resp.txtRetorno);
+          });
         }
         this.spinner.hide();
         break;
@@ -870,7 +949,16 @@ debugger;
 
   BuildPrint() {
     try {
-       this._service.printReport().subscribe(resp => {
+
+      this.sfprint.emp_codi = this.fovis.emp_codi;
+      this.sfprint.emp_nomb = '';
+      this.sfprint.dmo_rsmd = this.fovis.infoHogar.dmo_rsmd;
+      this.sfprint.dmo_rsmh = this.fovis.infoHogar.dmo_rsmh;
+      this.sfprint.dmo_fsvs = this.fovis.infoHogar.dmo_fsvs;
+      this.sfprint.dfo_vsol = this.fovis.infoHogar.dfo_vsol;
+      this.sfprint.for_cont = this.fovis.for_cont;
+
+       this._service.printReport(this.sfprint).subscribe(resp => {
          if (resp.retorno === 0) {
            window.open(resp.objTransaction, '_blank');
          } else
@@ -910,5 +998,22 @@ debugger;
     }
 
     this.InfoOtrosMiembros.afi_edad = edad;
-  } 
+  }
+
+  calcularValorSolic() {
+    this.fovis.infoHogar.dfo_vsol = 0;
+  }
+
+  actualizarRecursos() {
+    console.log(this.fovis);
+    this._service.updateInfoFovisRecursos(this.fovis).subscribe(resp => {
+      this.spinner.hide();
+      if (resp.retorno === 0) {
+        this.showAlertMesssage('Recursos Económicos Actualizados Correctamente.');
+        this.load();
+      } else
+        this.showAlertMesssage(resp.txtRetorno);
+    });
+  }
 }
+

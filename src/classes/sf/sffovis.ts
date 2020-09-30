@@ -21,7 +21,7 @@ export class SfFovis {
 
     public InfodforeA: SfDfore[] = [];
     public InfodforeR: SfDfore[] = [];
-   
+
     constructor() {
         this.for_tdat = 'N';
     }
@@ -46,6 +46,7 @@ export class InfoAportante {
     public afi_cate: string;
     public afi_dire: string;
     public afi_gene = '';
+    public ite_ocup: number;
     public ite_codi: string;
     public ite_nomb: string;
     public afi_mail: string;
@@ -56,8 +57,7 @@ export class InfoAportante {
     public ite_pare: number;
     public mpa_codi: string;
     public mpa_nomb: string;
-    public ite_codi_tp: number;
-
+    public ite_tipp: number;
     public dep_codi: string;
     public dep_nomb: string;
     public mun_codi: string;
@@ -115,11 +115,12 @@ export class InfoDfoih {
     public dfo_tota = 0;
     public mod_cspm = '';
     public tco_zona: string;
-    public num_sala: string;
+    public num_sala: number;
 
     public for_ting: number;
     public for_timh: number;
     public for_nmie: number;
+    public pvd_codi = 0;
 }
 
 export class Gnmasal {
@@ -138,6 +139,7 @@ export class SfDfore {
 }
 
 export class SfDdfor {
+    public ddf_cont: number;
     public dfo_cont: number;
     public dfo_tipo: string;
     public con_codi: number;
