@@ -129,9 +129,9 @@ export class SfforpoComponent implements OnInit {
   }
 
   load() {
-     this.loadSfparam();
-      this.getIdAfiliado();
-      this.loadValiNomenclatura();
+    this.loadSfparam();
+    this.getIdAfiliado();
+    this.loadValiNomenclatura();
   }
 
   async GetParams() {
@@ -227,6 +227,7 @@ export class SfforpoComponent implements OnInit {
     this.viewBtnSave = true;
     this.viewBtnSaveRecursos = false;
     this._service.loadValidInfoAfiliados(this.emp_codi, afi_cont).subscribe(resp => {
+      console.log(resp);
       if (resp.objTransaction.for_esta === 'I' )
         this.loadInfoFromForpo(afi_cont, resp.objTransaction.for_cont);
       // tslint:disable-next-line:max-line-length
@@ -239,7 +240,8 @@ export class SfforpoComponent implements OnInit {
         this.loadInfoFromForpo(afi_cont, resp.objTransaction.for_cont);
         this.viewBtnSave = false;
         this.viewBtnSaveRecursos = true;
-      }
+      } else
+        this.loadInfoFromAfili(afi_cont, resp.objTransaction.for_cont);
     });
     this.spinner.hide();
   }
@@ -926,7 +928,7 @@ export class SfforpoComponent implements OnInit {
             this.spinner.hide();
             this.showAlertMesssage(resp.txtRetorno);
             if (resp.retorno === 0) {
-              this.fovis = new SfFovis();
+              this.fovis.for_cont = resp.objTransaction.for_cont;
               this.BuildPrint();
               this.load();
             } else
@@ -942,7 +944,7 @@ export class SfforpoComponent implements OnInit {
               this.showAlertMesssage(resp.txtRetorno);
           });
         }
-        this.spinner.hide();
+       
         break;
     }
   }

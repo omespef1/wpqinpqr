@@ -181,6 +181,12 @@
             </div>
         </div>
 
+        <div class="row" *ngIf="reles.par_rein !== ''">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-4">
+                <label for="pro_obse">Condiciones y Restricciones de Ingreso</label>
+                <textarea disabled type="text" class="form-control" name="par_rein" [(ngModel)]="reles.par_rein" #par_rein="ngModel" readonly></textarea>
+            </div>
+        </div>
 
         <div class="row">
             <div class="row mt-2" *ngIf=" uploader.queue.length > 0">

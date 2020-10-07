@@ -1,4 +1,5 @@
 export class EeReles {
+    public par_rein: string;
     public red_encu: string;
     public num_preg: number;
     public rel_cont: number;

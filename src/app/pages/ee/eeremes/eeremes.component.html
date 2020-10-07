@@ -59,7 +59,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf="redEnc === 'S'">
                         <label for="rad_nomr">Edad</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -71,7 +71,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf="redEnc === 'S'">
                         <label for="rad_nomr">Género</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -82,7 +82,7 @@
                             <input id="cli_gene" name="cli_gene" [(ngModel)]="faclien.cli_gene" type="text" class="form-control" placeholder="Género" readonly>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf="redEnc === 'S'">
                         <label for="rad_nomr">Teléfono</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -104,7 +104,7 @@
                             <input id="ter_mail" name="ter_mail" [(ngModel)]="faclien.ter_mail" type="text" class="form-control" placeholder="Correo Electrónico" readonly>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf="redEnc === 'S'">
                         <label for="rad_nomr">Categoría</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -126,7 +126,7 @@
                             <input id="ter_celu" name="ter_celu" [(ngModel)]="faclien.ter_celu" type="text" class="form-control" placeholder="Celular" readonly>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12" *ngIf="redEnc === 'S'">
                         <label for="rad_nomr">Afiliado</label>
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -138,13 +138,13 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-3">
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-3" *ngIf="redEnc === 'S'">
                         <div class="input-group">
                             <textarea style="height: 200px;" type="text" placeholder="Ley de Protección de Datos" class="form-control" multiple readonly name="par_ptda" id="par_ptda" [(ngModel)]="faclien.par_ptda"></textarea>
                         </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12 mt-2">
+                    <div class="col-lg-4 col-md-6 col-xs-12 col-sm-12 mt-2" *ngIf="redEnc === 'S'">
                         <div class="input-group mt-2">
                             <span class="switch">                                
                                 <input type="checkbox" [disabled]="faclien.cli_coda === ''" [(checked)]="faclien.ter_audp"  (change)= "actualizarPolitica();faclien.ter_audp=!faclien.ter_audp" name="chkAutoriza" class="switch switch-sm disabled" id="switch-id-autoriza">
@@ -180,7 +180,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 mt-2">
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 mt-2" *ngIf="redEnc === 'S'">
                         <label for="pro_locr">Modo Recolección</label>
                         <div class="input-group">
                             <div class="input-group-prepend">

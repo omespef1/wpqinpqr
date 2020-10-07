@@ -39,6 +39,7 @@ export class TrazabilidadComponent implements OnInit {
   visibleDetalle = false;
   visibleAdjunto = false;
   gnAdjunt: any[];
+  gnAllAdjunt: any[];
   SPQ000003 = false;
 
   constructor(private spinner: NgxSpinnerService, private sanitizer: DomSanitizer, private titleService: Title,
@@ -135,9 +136,10 @@ export class TrazabilidadComponent implements OnInit {
     });
   }
 
-  verAdjuntos(cas_cont: number) {
-  console.log(cas_cont);
+  verAdjuntos(cas_cont: number, inp_cont: number) {
+    this.spinner.show();
     this.gnAdjunt = [];
+    this.gnAllAdjunt = [];
     this.visibleEncabez = false;
     this.visibleDatGrid = false;
     this.visibleDetalle = false;
@@ -146,7 +148,26 @@ export class TrazabilidadComponent implements OnInit {
     this._service.loadInfoAdjuntosPqr(cas_cont, this.emp_codi).subscribe(resp => {
       if (resp.retorno === 0)
         this.gnAdjunt = resp.objTransaction;
+
+      for (let i = 0; i < this.gnAdjunt.length; i++) {
+        this.gnAllAdjunt.push(this.gnAdjunt[i]);
+      }
     });
+
+    let rad_llav = '';
+    rad_llav = this.emp_codi.toString() + inp_cont.toString();
+
+    this._service.loadInfoAdjunPqr(rad_llav, this.emp_codi).subscribe(resp => {
+      if (resp.retorno === 0) {
+        this.gnAdjunt = resp.objTransaction;
+      }
+
+      for (let i = 0; i < this.gnAdjunt.length; i++) {
+        this.gnAllAdjunt.push(this.gnAdjunt[i]);
+      }
+    });
+
+    this.spinner.hide();
   }
 
   returnConsulta() {
@@ -206,6 +227,7 @@ export class TrazabilidadComponent implements OnInit {
  }
 
   download(fileName: string) {
+    console.log(fileName);
     this._conmu.open(`download/${fileName}`);
   }
 }

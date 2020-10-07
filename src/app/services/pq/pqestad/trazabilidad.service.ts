@@ -29,4 +29,9 @@ export class TrazabilidadService {
     return this._comu.GetTransaction<ToTransaction>(`api/download?consecutivo=${cas_cont}&pro_codi=SPQINPQR&tableName=PQ_INPQR&emp_codi=${emp_codi}`);
   }
 
+  loadInfoAdjunPqr(rad_llav: string, emp_codi: number ) {
+    // tslint:disable-next-line:max-line-length
+    return this._comu.GetTransaction<ToTransaction>(`api/download/loadInfoAdjunPqr?consecutivo=${rad_llav}&pro_codi=SPQINPQR&tableName=PQ_INPQR&emp_codi=${emp_codi}`);
+  }
+
 }

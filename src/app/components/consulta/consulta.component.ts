@@ -23,6 +23,7 @@ export class ConsultaComponent implements OnInit {
   pqr: pqinpqr = new pqinpqr();
   encuesta: pqEncue[] = [];
   gnAdjunt: any[];
+  gnAllAdjunt: any[];
   ocultarEncuesta = false;
   pqrIn: any = {};
   preguntas: string[] = [];
@@ -103,6 +104,9 @@ export class ConsultaComponent implements OnInit {
   }
 
   async GetAttchment() {
+
+    this.gnAllAdjunt = [];
+
     // Descarga los adjuntos asociados a la pqr
     this.spinner.show();
     let url = `api/download?consecutivo=${this.pqr.cas_cont}&pro_codi=SPQINPQR&tableName=PQ_INPQR&emp_codi=${this.pqr.emp_codi}`;
@@ -111,7 +115,29 @@ export class ConsultaComponent implements OnInit {
       if (resp.retorno === 0) {
         this.gnAdjunt = resp.objTransaction;
       }
+
+      for (let i = 0; i < this.gnAdjunt.length; i++) {
+        this.gnAllAdjunt.push(this.gnAdjunt[i]);
+      }
     });
+
+
+    let rad_llav = '';
+    rad_llav = this.pqr.emp_codi.toString() + this.pqr.inp_cont.toString();
+
+    url = `api/download/loadInfoAdjunPqr?consecutivo=${rad_llav}&pro_codi=SPQINPQR&tableName=PQ_INPQR&emp_codi=${this.pqr.emp_codi}`;
+
+    await this._conmu.Get(url).subscribe((resp: any) => {
+      if (resp.retorno === 0) {
+        this.gnAdjunt = resp.objTransaction;
+      }
+
+      for (let i = 0; i < this.gnAdjunt.length; i++) {
+        this.gnAllAdjunt.push(this.gnAdjunt[i]);
+      }
+    });
+
+
   }
   // Abre el navegador para visualizar el archivo
   download(fileName: string) {

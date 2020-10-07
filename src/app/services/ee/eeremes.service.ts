@@ -39,4 +39,8 @@ export class EeremesService {
   validarEncuestaUsuario(cli_coda: string, ite_serv: number) {
     return this._comu.GetTransaction<any>(`api/EeRemes/loadValidInfoEnc?cli_coda=${cli_coda}&ite_serv=${ite_serv}`);
   }
+
+  loadParamEncuesta() {
+    return this._comu.GetTransaction<ToTransaction>(`api/EeRemes/loadParamEncuesta`);
+  }
 }

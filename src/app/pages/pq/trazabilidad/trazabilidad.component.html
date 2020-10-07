@@ -321,14 +321,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let adjunto of gnAdjunt; let i=index">
+                    <tr *ngFor="let adjunto of gnAllAdjunt; let i=index">
                         <td>{{ i + 1 }}</td>
-                        <td>{{adjunto.doc_desc}}</td>
+                        <td>{{ adjunto.doc_desc !== undefined ? adjunto.doc_desc : adjunto.Adj_Nomb }}</td>
                         <td>
-                            <button (click)="download(adjunto.doc_desc)" type="button" class="btn btn-link btn-sm btn-block">
-                                        <span><i class="fas fa-download"></i>
-                                        </span>
-                                    </button>
+                            <button (click)="download(adjunto.doc_desc !== undefined ? adjunto.doc_desc : adjunto.Adj_Nomb)" type="button" class="btn btn-link btn-sm btn-block">
+                                <span><i class="fas fa-download"></i>
+                                </span>
+                            </button>
                         </td>
                     </tr>
                 </tbody>
@@ -397,7 +397,7 @@
                                     </button>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-link btn-sm btn-block" data-toggle="tooltip" data-placement="top" title="Ver Adjuntos" (click)="verAdjuntos(info.Caso_Wf)">
+                                    <button type="button" class="btn btn-link btn-sm btn-block" data-toggle="tooltip" data-placement="top" title="Ver Adjuntos" (click)="verAdjuntos(info.Caso_Wf, info.Numero_PQR)">
                                         <span><i class="fas fa-paperclip"></i>
                                         </span>
                                     </button>

@@ -18,6 +18,7 @@ import {Router} from '@angular/router';
 export class EeremesComponent implements OnInit {
 
   msg = '';
+  redEnc = '';
 
   @ViewChild('modalTipoDocto') _tableTipoDocto: NewTableSearchComponent;
   @ViewChild(AlertMessageComponent) alert: AlertMessageComponent;
@@ -32,6 +33,7 @@ export class EeremesComponent implements OnInit {
 
   ngOnInit() {
     this.loadItems();
+    this.loadParam();
   }
 
   getTipoDocumento() {
@@ -41,6 +43,16 @@ export class EeremesComponent implements OnInit {
         this._tableTipoDocto.render(resp);
         this._tableTipoDocto.show();
     });
+  }
+
+  loadParam() {
+    this.spinner.show();
+    this._service.loadParamEncuesta().subscribe(resp => {
+      this.redEnc = resp.txtRetorno;
+      if (this.redEnc === 'N')
+        this.eereenc.ree_more = 0;
+    });
+    this.spinner.hide();
   }
 
   getInfoClien() {
@@ -116,7 +128,7 @@ export class EeremesComponent implements OnInit {
             this.showAlertMesssage(resp.txtRetorno);
         });
       else
-        this.showAlertMesssage('Ya se registró la encuesta de satisfacción y no es permitido volver a diligenciarla.');
+        this.showAlertMesssage('Ya se registró la encuesta y no es permitido volver a diligenciarla.');
     });
 
     this.spinner.hide();
