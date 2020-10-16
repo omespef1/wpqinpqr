@@ -145,14 +145,14 @@ export class TrazabilidadComponent implements OnInit {
     this.visibleDetalle = false;
     this.visibleAdjunto = true;
 
-    this._service.loadInfoAdjuntosPqr(cas_cont, this.emp_codi).subscribe(resp => {
-      if (resp.retorno === 0)
-        this.gnAdjunt = resp.objTransaction;
+    // this._service.loadInfoAdjuntosPqr(cas_cont, this.emp_codi).subscribe(resp => {
+    //   if (resp.retorno === 0)
+    //     this.gnAdjunt = resp.objTransaction;
 
-      for (let i = 0; i < this.gnAdjunt.length; i++) {
-        this.gnAllAdjunt.push(this.gnAdjunt[i]);
-      }
-    });
+    //   for (let i = 0; i < this.gnAdjunt.length; i++) {
+    //     this.gnAllAdjunt.push(this.gnAdjunt[i]);
+    //   }
+    // });
 
     let rad_llav = '';
     rad_llav = this.emp_codi.toString() + inp_cont.toString();

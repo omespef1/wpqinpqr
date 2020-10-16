@@ -1,6 +1,6 @@
 {
     "name": "wpqinpqr",
-    "version": "20.0.10.4",
+    "version": "20.0.10.7",
     "scripts": {
         "ng": "ng",
         "start": "ng serve",

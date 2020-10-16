@@ -19,6 +19,7 @@ export class EeremesComponent implements OnInit {
 
   msg = '';
   redEnc = '';
+  titEnc = '';
 
   @ViewChild('modalTipoDocto') _tableTipoDocto: NewTableSearchComponent;
   @ViewChild(AlertMessageComponent) alert: AlertMessageComponent;
@@ -48,9 +49,13 @@ export class EeremesComponent implements OnInit {
   loadParam() {
     this.spinner.show();
     this._service.loadParamEncuesta().subscribe(resp => {
-      this.redEnc = resp.txtRetorno;
-      if (this.redEnc === 'N')
+      this.redEnc = resp.objTransaction.red_encu;
+      if (this.redEnc === 'N') {
         this.eereenc.ree_more = 0;
+        this.titEnc = resp.objTransaction.tit_reme;
+      } else
+        this.titEnc = 'Medición de Satisfacción al Usuario';
+
     });
     this.spinner.hide();
   }
@@ -86,6 +91,7 @@ export class EeremesComponent implements OnInit {
     this.spinner.show();
     this._service.loadServiciosEncuesta().subscribe(resp => {
       this.GnItemsIteServ = resp.ObjTransaction;
+      this.GnItemsIteServ = this.GnItemsIteServ.filter(t => t.ite_codi !== '0');
     });
     this.spinner.hide();
   }

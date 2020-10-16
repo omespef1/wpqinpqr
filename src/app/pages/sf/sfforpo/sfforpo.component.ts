@@ -226,8 +226,7 @@ export class SfforpoComponent implements OnInit {
     this.spinner.show();
     this.viewBtnSave = true;
     this.viewBtnSaveRecursos = false;
-    this._service.loadValidInfoAfiliados(this.emp_codi, afi_cont).subscribe(resp => {
-      console.log(resp);
+    this._service.loadValidInfoAfiliados(this.emp_codi, afi_cont).subscribe(resp => {     
       if (resp.objTransaction.for_esta === 'I' )
         this.loadInfoFromForpo(afi_cont, resp.objTransaction.for_cont);
       // tslint:disable-next-line:max-line-length
@@ -274,8 +273,6 @@ export class SfforpoComponent implements OnInit {
         this.InfoModvi.mod_nomb = this.fovis.mod_nomb;
         this.InfoModvi.tco_codi = this.fovis.tco_codi;
         this.InfoModvi.tco_nomb = this.fovis.tco_nomb;
-
-        console.log(this.fovis);
       } else {
         this.showAlertMesssage(resp.txtRetorno);
       }
@@ -295,8 +292,7 @@ export class SfforpoComponent implements OnInit {
 
       if (this.fovis.conyuge.afi_cont !== 0)
         this.fovis.infoHogar.for_nmie += 1;
-
-      console.log(this.fovis);
+    
     });
     this.spinner.hide();
   }
@@ -513,7 +509,7 @@ export class SfforpoComponent implements OnInit {
     this.sfdforeR.con_cont = rowSelected.CON_CONT;
     this.sfdforeR.con_codi = rowSelected.CON_CODI;
     this.sfdforeR.con_nomb = rowSelected.CON_NOMB;
-    this.sfdforeA.dfo_tipo = 'R';
+    this.sfdforeR.dfo_tipo = 'R';
   }
 
   getParentescoOtrosM() {
@@ -548,12 +544,10 @@ export class SfforpoComponent implements OnInit {
     this.spinner.hide();
   }
 
-  setConstructora(rowSelected: any) {
-    console.log(rowSelected);
+  setConstructora(rowSelected: any) {   
     this.fovis.infoHogar.pvd_codi = rowSelected.pvd_codi;
     this.fovis.infoHogar.dfo_nitc = rowSelected.pvd_coda;
-    this.fovis.infoHogar.dfo_nomc = rowSelected.pvr_noco;
-    console.log(this.fovis.infoHogar);
+    this.fovis.infoHogar.dfo_nomc = rowSelected.pvr_noco;   
   }
 
   numberOnly(event): boolean {
@@ -676,7 +670,7 @@ export class SfforpoComponent implements OnInit {
 
   // -----------------------------------------------------
 
-  addDforeA() {
+  addDforeA() {    
     this.sfdforeA.dfo_tipo = 'A';
     if (this.sfdforeA.dfo_sald === undefined)
       this.showAlertMesssage('Digite el saldo');
@@ -744,7 +738,7 @@ export class SfforpoComponent implements OnInit {
   }
 
   InfoDdforFilter(dfore: SfDfore) {
-
+debugger;
     if (this.fovis.for_insf === 'P') {
       if (dfore.dfo_tipo === 'A') {
         this.listsfddforA = [];
@@ -815,7 +809,7 @@ export class SfforpoComponent implements OnInit {
   }
 
   emitInfo(dfor: any, type: string) {
-
+debugger;
     this.con_codi = dfor.con_codi;
     this.rowCLick.emit();
 
@@ -1007,7 +1001,6 @@ export class SfforpoComponent implements OnInit {
   }
 
   actualizarRecursos() {
-    console.log(this.fovis);
     this._service.updateInfoFovisRecursos(this.fovis).subscribe(resp => {
       this.spinner.hide();
       if (resp.retorno === 0) {

@@ -65,7 +65,8 @@ export class ConsultaComponent implements OnInit {
     const pqr = <any>await this.GetInfoPqr();
 
     if (pqr.retorno === 0) {
-      this.GetAttchment();
+      // this.GetAttchment();
+      this.GetAttchmentRadju();
       this.GetInfoEncuesta();
       this.submitted = true;
     } else {
@@ -103,15 +104,15 @@ export class ConsultaComponent implements OnInit {
     this._alert.show();
   }
 
-  async GetAttchment() {
+  GetAttchment() {
 
     this.gnAllAdjunt = [];
 
     // Descarga los adjuntos asociados a la pqr
     this.spinner.show();
-    let url = `api/download?consecutivo=${this.pqr.cas_cont}&pro_codi=SPQINPQR&tableName=PQ_INPQR&emp_codi=${this.pqr.emp_codi}`;
+    const url = `api/download?consecutivo=${this.pqr.cas_cont}&pro_codi=SPQINPQR&tableName=PQ_INPQR&emp_codi=${this.pqr.emp_codi}`;
 
-    await this._conmu.Get(url).subscribe((resp: any) => {
+    this._conmu.Get(url).subscribe((resp: any) => {
       if (resp.retorno === 0) {
         this.gnAdjunt = resp.objTransaction;
       }
@@ -120,25 +121,26 @@ export class ConsultaComponent implements OnInit {
         this.gnAllAdjunt.push(this.gnAdjunt[i]);
       }
     });
+  }
 
-
+  GetAttchmentRadju() {
     let rad_llav = '';
     rad_llav = this.pqr.emp_codi.toString() + this.pqr.inp_cont.toString();
+    this.gnAllAdjunt = [];
 
-    url = `api/download/loadInfoAdjunPqr?consecutivo=${rad_llav}&pro_codi=SPQINPQR&tableName=PQ_INPQR&emp_codi=${this.pqr.emp_codi}`;
+    const url = `api/download/loadInfoAdjunPqr?consecutivo=${rad_llav}&pro_codi=SPQINPQR&tableName=PQ_INPQR&emp_codi=${this.pqr.emp_codi}`;
 
-    await this._conmu.Get(url).subscribe((resp: any) => {
-      if (resp.retorno === 0) {
-        this.gnAdjunt = resp.objTransaction;
-      }
-
-      for (let i = 0; i < this.gnAdjunt.length; i++) {
-        this.gnAllAdjunt.push(this.gnAdjunt[i]);
+     this._conmu.Get(url).subscribe((resp2: any) => {
+      if (resp2.retorno === 0) {
+        this.gnAdjunt = resp2.objTransaction;
+        console.log(this.gnAdjunt);
+        for (let i = 0; i < this.gnAdjunt.length; i++) {
+          this.gnAllAdjunt.push(this.gnAdjunt[i]);
+        }
       }
     });
-
-
   }
+
   // Abre el navegador para visualizar el archivo
   download(fileName: string) {
     this._conmu.open(`download/${fileName}`);
