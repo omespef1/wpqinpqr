@@ -41,7 +41,7 @@ export class InfoAportante {
     public afi_nom2: string;
     public afi_ape1: string;
     public afi_ape2: string;
-    public afi_fecn: Date;
+    public afi_fecn: string;
     public afi_esci = '';
     public afi_cate: string;
     public afi_dire: string;
@@ -155,5 +155,8 @@ export class SfDdfor {
         this.ddf_entc = '';
         this.ddf_entd = '';
         this.ddf_numc = '';
+        this.ddf_feca = null;
+        this.ddf_feci = null;
+        this.ddf_fecc = null;
     }
 }

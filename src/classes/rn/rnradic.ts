@@ -1,3 +1,4 @@
+import { RnAfili } from "./rnafili";
 import { RnDperc } from './rndperc';
 import { Rnradtd } from './rnradtd';
 
@@ -59,4 +60,7 @@ export class RnRadic {
 
     // Tratamiento de Datos
     public radtdat: Rnradtd[] = [];
+
+    // Afiliacion Automatica
+    public rnafili: RnAfili[] = [];
 }

@@ -9,7 +9,7 @@ export class RnAfili {
     public afi_ape2: string;
     public afi_fecn: Date;
     public afi_esci = '';
-    public afi_cate: string;
+    public afi_cate = 'D';
     public afi_gene = '';
     public pro_cont: number;
     public pro_nomb: string;
@@ -35,6 +35,26 @@ export class RnAfili {
     public afi_face: string;
     public afi_tele: string;
     public afi_celu: string;
+
+    public apo_cont: number;
+    public apo_coda: string;
+    public apo_razs: string;
+    public suc_cont: number;
+    public suc_codi: number;
+    public suc_nomb: string;
+    public tra_salb: number;
+    public tia_cont: number;
+    public tia_codi: number;
+    public tia_nomb: string;
+    public ite_clat: number; // clase trabajador
+    public ite_cod1: number;
+    public ite_nom1: string;
+    public ite_tipv: number; // Tipo Vinculacion
+    public ite_cod2: number;
+    public ite_nom2: string;
+    public tra_ubla: string;
+    public car_codi: number;
+    public car_nomb: string;
 
     // constructor()  {
     // this.afi_ape1 = 'morales';

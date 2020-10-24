@@ -48,6 +48,11 @@ export class RnradicComponent implements OnInit {
   @ViewChild('modalCondicion') _tableCondicion: TableSearchGenericComponent;
   @ViewChild('modalDireccion') _tableDireccion: AddressToolComponent;
   @ViewChild('modalDireccionAfili') _tableDireccionAfili: AddressToolComponent;
+  @ViewChild('modalDocAportante') _tableDocAportante: TableSearchGenericComponent;
+  @ViewChild('modalSucursal') _tableSucursal: TableSearchGenericComponent;
+  @ViewChild('modalClaseTrab') _tableClaseTrab: TableSearchGenericComponent;
+  @ViewChild('modalTipoVinc') _tableTipoVinc: TableSearchGenericComponent;
+  @ViewChild('modalCargo') _tableCargo: TableSearchGenericComponent;
 
   @ViewChild(AlertComponent) alert: AlertComponent;
   @ViewChild(ModalComponent) modal: ModalComponent;
@@ -60,6 +65,10 @@ export class RnradicComponent implements OnInit {
   @Input() rngrura: any[];
   @Input() gnprofe: any[];
   @Input() gnconde: any[];
+  @Input() arsucur: any[];
+  @Input() clastra: any[];
+  @Input() tipvinc: any[];
+  @Input() cartrab: any[];
 
   @Input() rncraco = new RnCraco();
   @Input() gnpaise: GnPais[];
@@ -68,6 +77,14 @@ export class RnradicComponent implements OnInit {
   @Input() gnmunic: GnMunic[] = [];
   @Input() gnlocal: GnLocal[] = [];
   @Input() gnbarri: GnBarri[] = [];
+
+  @Input() gnpaiseA: GnPais[];
+  @Input() gnregioA: GnRegio[] = [];
+  @Input() gndeparA: GnDepar[] = [];
+  @Input() gnmunicA: GnMunic[] = [];
+  @Input() gnlocalA: GnLocal[] = [];
+  @Input() gnbarriA: GnBarri[] = [];
+
   @Input() sumpare: SumPare[] = new Array();
   @Input() rnddocu: RnDdocu[] = [];
 
@@ -102,7 +119,7 @@ export class RnradicComponent implements OnInit {
   numeDocumento = false;
   tipDocTrabaja = false;
   numDocTrabaja = false;
-  showAfiliacion = true;
+  showAfiliacion = false;
 
   hasBaseDropZoneOver = false;
   uploader: FileUploader = new FileUploader({});
@@ -143,11 +160,15 @@ export class RnradicComponent implements OnInit {
     });
   }
 
-   PostRnRadic(form: NgForm) {
+  PostRnRadic(form: NgForm) {
     this.topFunction();
     this.spinner.show();
+
+    if (this.rnsuafili.length > 0)
+      this.radic.rnafili = this.rnsuafili;
+
     this.saveRadic(form);
-   }
+  }
 
    clear() {
 
@@ -162,6 +183,7 @@ export class RnradicComponent implements OnInit {
    }
 
    async saveRadic(form: NgForm) {
+    console.log(this.radic);
     await this._comu.Post('api/RnRadic/InserRnRadic', this.radic).subscribe((resp: ToTransaction) => {
       if (resp.retorno !== undefined) {
         if (resp.retorno === 0) {
@@ -192,24 +214,22 @@ export class RnradicComponent implements OnInit {
     const files = this.getFiles();
     let filesCount = 1;
 
-    if (files.length > 0) {
-      files.forEach((file) => {
-        formData.append(`fileUpload${filesCount}`, file.rawFile, file.name);
-        filesCount += 1;
-      });
+     if (files.length > 0) {
+       files.forEach((file) => {
+         formData.append(`fileUpload${filesCount}`, file.rawFile, file.name);
+         filesCount += 1;
+       });
 
-      formData.append('EMP_CODI', this.radic.emp_codi.toString());
-      formData.append('VAR_CONT', rad_cont.toString());
-      formData.append('VAR_TABL', 'RN_RADIC');
-      formData.append('VAR_PROG', 'SRNRADIC');
+       formData.append('EMP_CODI', this.radic.emp_codi.toString());
+       formData.append('VAR_CONT', rad_cont.toString());
+       formData.append('VAR_TABL', 'RN_RADIC');
+       formData.append('VAR_PROG', 'SRNRADIC');
 
-      this._comu.Post('api/uploadAttachment/subirArchivoAdjunto', formData).subscribe((respAdj: any) => {
-        if (respAdj.retorno === 1)
-          this.showAlertMesssage(`Se produjo un error subiendo el archivo. Intentelo nuevamente : ${respAdj.txtRetorno}`);
-      }, err => { console.log(err); });
-    }
-
-
+       this._comu.Post('api/uploadAttachment/subirArchivoAdjunto', formData).subscribe((respAdj: any) => {
+         if (respAdj.retorno === 1)
+           this.showAlertMesssage(`Se produjo un error subiendo el archivo. Intentelo nuevamente : ${respAdj.txtRetorno}`);
+       }, err => { console.log(err); });
+     }
    }
 
    getFiles(): FileLikeObject[] {
@@ -254,6 +274,7 @@ export class RnradicComponent implements OnInit {
       if (resp.retorno === 0) {
         this.artiapo = resp.objTransaction.artiapo;
         this.gnpaise = resp.objTransaction.GnPaise;
+        this.gnpaiseA = resp.objTransaction.GnPaise;
         this.gntipdo = resp.objTransaction.GnTipdo;
         this.gntipdE = resp.objTransaction.GnTipdo;
         this.arapovo = resp.objTransaction.arapovo;
@@ -261,10 +282,13 @@ export class RnradicComponent implements OnInit {
         this.sumpare = resp.objTransaction.SuMpare;
         this.gnprofe = resp.objTransaction.gnprofe;
         this.gnconde = resp.objTransaction.gnconde;
+        this.clastra = resp.objTransaction.clastra;
+        this.tipvinc = resp.objTransaction.tipvinc;
+        this.cartrab = resp.objTransaction.cartrab;
         this.SRN000001 = resp.objTransaction.SRN000001;
         this.SRN000002 = resp.objTransaction.SRN000002;
         this.radic.cen_codi = resp.objTransaction.cen_codi;
-
+        console.log(this.tipvinc);
       } else
         this.showAlertMesssage(`${resp.txtRetorno}`);
 
@@ -288,7 +312,20 @@ export class RnradicComponent implements OnInit {
 
     if (info.retorno === 0) {
       this.rncraco = info.objTransaction;
-      this.lupaClasificacion();
+      if (this.rncraco === null)
+        this.showAlertMesssage(`No se encontraron clasificaciones asociadas al grupo de radicación seleccionado.`);
+      else
+        this.lupaClasificacion();
+    }
+  }
+
+  async LoadSucursal() {
+    // tslint:disable-next-line:max-line-length
+    const info: any = <any>await this._comu.Get(`api/RnRadic/ArSucur?emp_codi=${this.emp_codi}&apo_cont=${this.rnafili.apo_cont}`).toPromise();
+
+    if (info.retorno === 0) {
+      this.arsucur = info.objTransaction;
+      this.lupaSucursal();
     }
   }
 
@@ -343,8 +380,17 @@ export class RnradicComponent implements OnInit {
     this._tableDocument.show();
   }
 
+  lupaDocAportante() {
+    this._tableDocAportante.btnModalQb = 'btnDocAportante';
+    this._tableDocAportante.ModalQb = 'modalDocAportante';
+    this._tableDocAportante.render(this.arapovo);
+    this._tableDocAportante.show();
+  }
+
   lupaDocumentoTrabajador() {
-    this.loadAfiliados();
+    
+    // this.loadAfiliados();
+    console.log(this.suafiliInit);
     this._tableDocumento.btnModalQb = 'btnDocumento';
     this._tableDocumento.ModalQb = 'modalDocumento';
     this._tableDocumento.render(this.suafiliInit);
@@ -378,6 +424,34 @@ export class RnradicComponent implements OnInit {
     this._tableCondicion.ModalQb = 'modalCondicion';
     this._tableCondicion.render(this.gnconde);
     this._tableCondicion.show();
+  }
+
+  lupaSucursal() {
+    this._tableSucursal.btnModalQb = 'btnSucursal';
+    this._tableSucursal.ModalQb = 'modalSucursal';
+    this._tableSucursal.render(this.arsucur);
+    this._tableSucursal.show();
+  }
+
+  lupaClaseTrab() {
+    this._tableClaseTrab.btnModalQb = 'btnClaseTrab';
+    this._tableClaseTrab.ModalQb = 'modalClaseTrab';
+    this._tableClaseTrab.render(this.clastra);
+    this._tableClaseTrab.show();
+  }
+
+  lupaCargo() {
+    this._tableCargo.btnModalQb = 'btnCargo';
+    this._tableCargo.ModalQb = 'modalCargo';
+    this._tableCargo.render(this.cartrab);
+    this._tableCargo.show();
+  }
+
+  lupTipoVinc() {
+    this._tableTipoVinc.btnModalQb = 'btnTipVinc';
+    this._tableTipoVinc.ModalQb = 'modalTipVinc';
+    this._tableTipoVinc.render(this.tipvinc);
+    this._tableTipoVinc.show();
   }
 
   async lupaDirecciones() {
@@ -427,6 +501,12 @@ export class RnradicComponent implements OnInit {
     this.rnafili.ite_nomb = rowSelected.ite_nomb;
   }
 
+  setSucursal(rowSelected: any) {
+    this.rnafili.suc_cont = rowSelected.suc_cont;
+    this.rnafili.suc_codi = rowSelected.suc_codi;
+    this.rnafili.suc_nomb = rowSelected.suc_desc;
+  }
+
   setDoctoEmpre(rowSelected: any) {
     this.radic.tia_cont = rowSelected.TIA_CONT;
     this.radic.tia_codi = rowSelected.TIA_CODI;
@@ -450,6 +530,35 @@ export class RnradicComponent implements OnInit {
       this.filtrarBarri('', 0, 0, 0, 0, 0);
       this.radic.rad_barr = 0;
     }
+  }
+
+  setDocAportante(rowSelected: any) {
+    this.rnafili.tia_cont = rowSelected.TIA_CONT;
+    this.rnafili.tia_codi = rowSelected.TIA_CODI;
+    this.rnafili.tia_nomb = rowSelected.TIA_NOMB;
+    this.rnafili.apo_cont = rowSelected.APO_CONT;
+    this.rnafili.apo_coda = rowSelected.APO_CODA;
+    this.rnafili.apo_razs = rowSelected.APO_RAZS;
+    this.rnafili.suc_cont = undefined;
+    this.rnafili.suc_codi = undefined;
+    this.rnafili.suc_nomb = undefined;
+  }
+
+  setClaseTrab(rowSelected: any) {
+    this.rnafili.ite_clat = rowSelected.ite_cont;
+    this.rnafili.ite_cod1 = rowSelected.ite_codi;
+    this.rnafili.ite_nom1 = rowSelected.ite_nomb;
+  }
+
+  setTipVinc(rowSelected: any) {
+    this.rnafili.ite_tipv = rowSelected.ite_cont;
+    this.rnafili.ite_cod2 = rowSelected.ite_codi;
+    this.rnafili.ite_nom2 = rowSelected.ite_nomb;
+  }
+
+  setCargo(rowSelected: any) {
+    this.rnafili.car_codi = rowSelected.ite_codi;
+    this.rnafili.car_nomb = rowSelected.ite_nomb;
   }
 
   setGruRadic(rowSelected: any) {
@@ -897,10 +1006,9 @@ cleanDataForm() {
     if (this.rnsuafili.indexOf(this.rnsuafili.filter(t => t.afi_docu === this.rnafili.afi_docu && t.tip_codi === this.rnafili.tip_codi)[0]) === -1)
       this.rnsuafili.push(this.rnafili);
     else
-      this.showAlertMesssage('El Documento: ' + this.rnafili.afi_docu + ' ya fue registrado.' );
+      this.showAlertMesssage('El Documento: ' + this.rnafili.afi_docu + ' ya se adicionó.' );
 
-     this.rnafili = new RnAfili();
-
+    this.rnafili = new RnAfili();
   }
 
   editarAfili(afili: RnAfili) {
@@ -914,6 +1022,133 @@ cleanDataForm() {
     const i = this.rnsuafili.indexOf(afili);
     this.rnsuafili.splice( i, 1 );
     this.rnafili = new RnAfili();
+  }
+
+  filtrarRegionesA(type: string, _pai_codi: number) {
+
+    let query = 'api/CtPropo/LoadRegiones?';
+    query += `pai_codi=${_pai_codi}`;
+
+    this._comu.Get(query, this.radic.emp_codi).subscribe((resp: any) => {
+
+      this.gnregioA = [];
+      this.gndeparA = [];
+      this.gnmunicA = [];
+      this.gnlocalA = [];
+      this.gnbarriA = [];
+
+      if (resp.retorno === 0) {
+        this.gnregioA = resp.objTransaction.GnRegio;
+        this.rnafili.reg_codi = undefined;
+      } else {
+        this.showAlertMesssage(`${resp.txtRetorno}`);
+      }
+    }, err => {
+      this.showAlertMesssage(`Error conectando con el servidor, verfique que el servidor configurado esté escrito correctamente`);
+    });
+  }
+
+  filtrarDeptosA(type: string, _pai_codi: number, _reg_codi: number) {
+
+    let query = 'api/CtPropo/LoadDeptos?';
+    query += `pai_codi=${_pai_codi}`;
+    query += `&reg_codi=${_reg_codi}`;
+
+    this._comu.Get(query, this.radic.emp_codi).subscribe((resp: any) => {
+
+      this.gndeparA = [];
+      this.gnmunicA = [];
+      this.gnlocalA = [];
+      this.gnbarriA = [];
+
+      if (resp.retorno === 0) {
+        this.gndeparA = resp.objTransaction.GnDepar;
+      } else {
+        this.showAlertMesssage(`${resp.txtRetorno}`);
+      }
+    }, err => {
+      console.log(err);
+      // this.spinner.hide();
+      this.showAlertMesssage(`Error conectando con el servidor, verfique que el servidor configurado esté escrito correctamente`);
+    });
+  }
+
+  filtrarMunicA(type: string, _pai_codi: number, _reg_codi: number, _dep_codi: number) {
+
+    let query = 'api/CtPropo/LoadMunic?';
+    query += `pai_codi=${_pai_codi}`;
+    query += `&reg_codi=${_reg_codi}`;
+    query += `&dep_codi=${_dep_codi}`;
+
+    this._comu.Get(query, this.radic.emp_codi).subscribe((resp: any) => {
+
+      this.gnmunicA = [];
+      this.gnlocalA = [];
+      this.gnbarriA = [];
+
+      if (resp.retorno === 0) {
+        this.gnmunicA = resp.objTransaction.GnMunic;
+      } else {
+        // this.spinner.hide();
+        this.showAlertMesssage(`${resp.txtRetorno}`);
+      }
+    }, err => {
+      console.log(err);
+      // this.spinner.hide();
+      this.showAlertMesssage(`Error conectando con el servidor, verfique que el servidor configurado esté escrito correctamente`);
+    });
+  }
+
+  filtrarLocalA(type: string, _pai_codi: number, _reg_codi: number, _dep_codi: number, _mun_codi: number) {
+
+    let query = 'api/CtPropo/LoadLocal?';
+    query += `pai_codi=${_pai_codi}`;
+    query += `&reg_codi=${_reg_codi}`;
+    query += `&dep_codi=${_dep_codi}`;
+    query += `&mun_codi=${_mun_codi}`;
+
+    this._comu.Get(query, this.radic.emp_codi).subscribe((resp: any) => {
+
+      this.gnlocalA = [];
+      this.gnbarriA = [];
+
+      if (resp.retorno === 0) {
+        this.gnlocalA = resp.objTransaction.GnLocal;
+      } else {
+       // this.spinner.hide();
+        this.showAlertMesssage(`${resp.txtRetorno}`);
+      }
+    }, err => {
+      console.log(err);
+      // this.spinner.hide();
+      this.showAlertMesssage(`Error conectando con el servidor, verfique que el servidor configurado esté escrito correctamente`);
+    });
+  }
+
+  filtrarBarriA(type: string, _pai_codi: number, _reg_codi: number, _dep_codi: number, _mun_codi: number, _loc_codi: number) {
+
+    let query = 'api/CtPropo/LoadBarri?';
+    query += `pai_codi=${_pai_codi}`;
+    query += `&reg_codi=${_reg_codi}`;
+    query += `&dep_codi=${_dep_codi}`;
+    query += `&mun_codi=${_mun_codi}`;
+    query += `&loc_codi=${_loc_codi}`;
+
+    this._comu.Get(query, this.radic.emp_codi).subscribe((resp: any) => {
+
+      this.gnbarri = [];
+
+      if (resp.retorno === 0) {
+        this.gnbarriA = resp.objTransaction.GnBarri;
+      } else {
+       // this.spinner.hide();
+        this.showAlertMesssage(`${resp.txtRetorno}`);
+      }
+    }, err => {
+      console.log(err);
+     // this.spinner.hide();
+      this.showAlertMesssage(`Error conectando con el servidor, verfique que el servidor configurado esté escrito correctamente`);
+    });
   }
 
 }

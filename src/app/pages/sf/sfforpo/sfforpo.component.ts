@@ -17,6 +17,7 @@ import { Sfparam } from 'src/classes/sf/sfparam';
 import * as _moment from 'moment';
 import { Moment } from 'moment';
 import { SfPrint } from 'src/classes/sf/sfprint';
+import { SsuconctRoutingModule } from "../../su/ssuconct/ssuconct-routing.module";
 
 @Component({
   selector: 'app-sfforpo',
@@ -63,6 +64,9 @@ export class SfforpoComponent implements OnInit {
   sfprint: SfPrint = new SfPrint();
   companies: companies[];
 
+  indexDforA = 0;
+  indexDforR = 0;
+
   listsfddforA: SfDdfor[] = [];
   indexddforA = 0;
   listsfddforR: SfDdfor[] = [];
@@ -81,6 +85,8 @@ export class SfforpoComponent implements OnInit {
   NumPerca = 0;
   viewDdforA = false;
   viewDdforR = false;
+  newDdforA = false;
+  newDdforR = false;
   con_codi = 0;
   afi_cont = 0;
   SGN000008 = '';
@@ -273,6 +279,13 @@ export class SfforpoComponent implements OnInit {
         this.InfoModvi.mod_nomb = this.fovis.mod_nomb;
         this.InfoModvi.tco_codi = this.fovis.tco_codi;
         this.InfoModvi.tco_nomb = this.fovis.tco_nomb;
+
+        if (this.fovis.infoHogar.mod_cspm === 'S') {
+          this.mod_valo = false;
+          this.valorTotal();
+        }
+
+        console.log(this.fovis);
       } else {
         this.showAlertMesssage(resp.txtRetorno);
       }
@@ -670,7 +683,8 @@ export class SfforpoComponent implements OnInit {
 
   // -----------------------------------------------------
 
-  addDforeA() {    
+  addDforeA() {
+
     this.sfdforeA.dfo_tipo = 'A';
     if (this.sfdforeA.dfo_sald === undefined)
       this.showAlertMesssage('Digite el saldo');
@@ -700,10 +714,19 @@ export class SfforpoComponent implements OnInit {
 
     this.sfddforA.dfo_tipo = 'A';
 
-    if (this.sfddforA.ddf_entc === undefined)
+    if (this.sfddforA.ddf_entc === undefined || this.sfddforA.ddf_entc === '')
       this.showAlertMesssage('Ingrese el nombre de la entidad captadora');
     else {
       this.viewDdforA = false;
+
+      if (this.sfddforA.ddf_feca === null)
+        this.sfddforA.ddf_feca = this.sfparam.dat_null;
+
+      if (this.sfddforA.ddf_fecc === null)
+        this.sfddforA.ddf_fecc = this.sfparam.dat_null;
+
+      if (this.sfddforA.ddf_feci === null)
+        this.sfddforA.ddf_feci = this.sfparam.dat_null;
 
       if (this.fovis.for_insf === 'P')
         this.sfddforA.con_codi = this.con_codi;
@@ -711,19 +734,29 @@ export class SfforpoComponent implements OnInit {
       if (this.fovis.for_insf === 'A' && this.sfddforA.dfo_cont === 0)
         this.sfddforA.con_codi = this.con_codi;
 
-      this.fovis.InfodforeA[this.indexddforA].Infoddfor.push(this.sfddforA);
+      this.fovis.InfodforeA[this.indexDforA].Infoddfor.push(this.sfddforA);
       this.sfddforA = new SfDdfor();
-      this.InfoDdforFilter(this.fovis.InfodforeA[this.indexddforA]);
+      this.InfoDdforFilter(this.fovis.InfodforeA[this.indexDforA]);
+      this.newDdforA = false;
     }
   }
 
   addDdforR() {
     this.sfddforA.dfo_tipo = 'R';
 
-    if (this.sfddforR.ddf_entc === undefined)
+    if (this.sfddforR.ddf_entc === undefined || this.sfddforR.ddf_entc === '')
       this.showAlertMesssage('Ingrese el nombre de la entidad captadora');
     else {
       this.viewDdforR = false;
+
+      if (this.sfddforA.ddf_feca === null)
+        this.sfddforA.ddf_feca = this.sfparam.dat_null;
+
+      if (this.sfddforA.ddf_fecc === null)
+        this.sfddforA.ddf_fecc = this.sfparam.dat_null;
+
+      if (this.sfddforA.ddf_feci === null)
+        this.sfddforA.ddf_feci = this.sfparam.dat_null;
 
       if (this.fovis.for_insf === 'P')
         this.sfddforR.con_codi = this.con_codi;
@@ -731,19 +764,19 @@ export class SfforpoComponent implements OnInit {
       if (this.fovis.for_insf === 'A' && this.sfddforR.dfo_cont === 0)
         this.sfddforR.con_codi = this.con_codi;
 
-      this.fovis.InfodforeR[this.indexddforR].Infoddfor.push(this.sfddforR);
+      this.fovis.InfodforeR[this.indexDforR].Infoddfor.push(this.sfddforR);
       this.sfddforR = new SfDdfor();
-      this.InfoDdforFilter(this.fovis.InfodforeR[this.indexddforR]);
+      this.InfoDdforFilter(this.fovis.InfodforeR[this.indexDforR]);
+      this.newDdforR = false;
     }
   }
 
   InfoDdforFilter(dfore: SfDfore) {
-debugger;
     if (this.fovis.for_insf === 'P') {
       if (dfore.dfo_tipo === 'A') {
         this.listsfddforA = [];
-        this.sfdforeA = dfore;
-
+        this.viewDdforA = false;
+        this.indexDforA = this.fovis.InfodforeA.indexOf(dfore);
         for (let i = 0; i <  this.fovis.InfodforeA.length; i++) {
            if (this.fovis.InfodforeA[i].dfo_tipo === dfore.dfo_tipo && this.fovis.InfodforeA[i].con_codi === dfore.con_codi) {
             for (let j = 0; j <  this.fovis.InfodforeA[i].Infoddfor.length; j++) {
@@ -753,7 +786,8 @@ debugger;
         }
       } else if (dfore.dfo_tipo === 'R') {
         this.listsfddforR = [];
-        this.sfdforeR = dfore;
+        this.viewDdforR = false;
+        this.indexDforR = this.fovis.InfodforeR.indexOf(dfore);
 
         for (let i = 0; i < this.fovis.InfodforeR.length; i++) {
           if (this.fovis.InfodforeR[i].dfo_tipo === dfore.dfo_tipo  && this.fovis.InfodforeR[i].con_codi === dfore.con_codi) {
@@ -766,7 +800,8 @@ debugger;
     } else {
       if (dfore.dfo_tipo === 'A') {
         this.listsfddforA = [];
-        this.sfdforeA = dfore;
+        this.viewDdforA = false;
+        this.indexDforA = this.fovis.InfodforeA.indexOf(dfore);
         for (let i = 0; i <  this.fovis.InfodforeA.length; i++) {
            if (this.fovis.InfodforeA[i].dfo_tipo === dfore.dfo_tipo && this.fovis.InfodforeA[i].dfo_cont === dfore.dfo_cont) {
             for (let j = 0; j <  this.fovis.InfodforeA[i].Infoddfor.length; j++) {
@@ -776,7 +811,8 @@ debugger;
         }
       } else if (dfore.dfo_tipo === 'R') {
         this.listsfddforR = [];
-        this.sfdforeR = dfore;
+        this.viewDdforR = false;
+        this.indexDforR = this.fovis.InfodforeR.indexOf(dfore);
         for (let i = 0; i < this.fovis.InfodforeR.length; i++) {
           if (this.fovis.InfodforeR[i].dfo_tipo === dfore.dfo_tipo && this.fovis.InfodforeR[i].dfo_cont === dfore.dfo_cont) {
             for (let j = 0; j < this.fovis.InfodforeR[i].Infoddfor.length; j++) {
@@ -790,34 +826,74 @@ debugger;
     this.setTotal();
   }
 
-  editarDdforA(ddfor: SfDdfor) {
-    this.sfddforA = ddfor;
-    this.indexddforA =  this.fovis.InfodforeA.indexOf(this.sfdforeA);
-    const i = this.fovis.InfodforeA[this.indexddforA].Infoddfor.indexOf(ddfor);
-    this.fovis.InfodforeA[this.indexddforA].Infoddfor.splice( i, 1 );
-    this.viewDdforA = true;
-    this.InfoDdforFilter(this.fovis.InfodforeA[this.indexddforA]);
+  editarDdforA(ddfor: SfDdfor, indexDdfor: number) {
+    if (this.newDdforA === false) {
+
+      if (ddfor.ddf_feca !== null) {
+        if (ddfor.ddf_feca.toString() === '0001-01-01T00:00:00' || ddfor.ddf_feca.toString() === '1899-12-30T00:00:00')
+          ddfor.ddf_feca = null;
+      }
+
+      if (ddfor.ddf_feci !== null) {
+        if (ddfor.ddf_feci.toString() === '0001-01-01T00:00:00' || ddfor.ddf_feci.toString() === '1899-12-30T00:00:00')
+          ddfor.ddf_feci = null;
+      }
+
+      if (ddfor.ddf_fecc !== null) {
+        if (ddfor.ddf_fecc.toString() === '0001-01-01T00:00:00' || ddfor.ddf_fecc.toString() === '1899-12-30T00:00:00')
+          ddfor.ddf_fecc = null;
+      }
+
+      this.sfddforA = ddfor;
+      this.newDdforA = true;
+      this.fovis.InfodforeA[this.indexDforA].Infoddfor.splice( indexDdfor, 1 );
+      this.listsfddforA.splice( indexDdfor, 1 );
+      this.viewDdforA = true;
+      this.indexddforA = indexDdfor;
+      this.InfoDdforFilter(this.fovis.InfodforeA[this.indexDforA]);
+
+    }
   }
 
-  editarDdforR(ddfor: SfDdfor) {
-    this.sfddforR = ddfor;
-    this.indexddforR =  this.fovis.InfodforeR.indexOf(this.sfdforeR);
-    const i = this.fovis.InfodforeR[this.indexddforR].Infoddfor.indexOf(ddfor);
-    this.fovis.InfodforeR[this.indexddforR].Infoddfor.splice( i, 1 );
-    this.viewDdforR = true;
-    this.InfoDdforFilter(this.fovis.InfodforeR[this.indexddforR]);
+  editarDdforR(ddfor: SfDdfor, indexDdfor: number) {
+    if (this.newDdforR === false) {
+
+      if (ddfor.ddf_feca !== null) {
+        if (ddfor.ddf_feca.toString() === '0001-01-01T00:00:00')
+          ddfor.ddf_feca = null;
+      }
+
+      if (ddfor.ddf_feci !== null) {
+        if (ddfor.ddf_feci.toString() === '0001-01-01T00:00:00')
+          ddfor.ddf_feci = null;
+      }
+
+      if (ddfor.ddf_fecc !== null) {
+        if (ddfor.ddf_fecc.toString() === '0001-01-01T00:00:00')
+          ddfor.ddf_fecc = null;
+      }
+
+      this.sfddforR = ddfor;
+      this.newDdforR = true;
+      this.fovis.InfodforeR[this.indexDforR].Infoddfor.splice(indexDdfor, 1 );
+      this.listsfddforR.splice(indexDdfor, 1 );
+      this.viewDdforR = true;
+      this.indexddforR = indexDdfor;
+      this.InfoDdforFilter(this.fovis.InfodforeR[this.indexDforR]);
+    }
   }
 
-  emitInfo(dfor: any, type: string) {
-debugger;
+  emitInfo(dfor: any, type: SsuconctRoutingModule, indexDfore: number) {
     this.con_codi = dfor.con_codi;
     this.rowCLick.emit();
 
     if (type === 'A') {
-      this.viewDdforA = true;
+      this.indexDforA = indexDfore;
+      this.newDdforA = true;
       this.indexddforA =  this.fovis.InfodforeA.indexOf(dfor);
     } else {
-      this.viewDdforR = true;
+      this.indexDforR = indexDfore;
+      this.newDdforR = true;
       this.indexddforR =  this.fovis.InfodforeR.indexOf(dfor);
     }
 
@@ -853,6 +929,8 @@ debugger;
 
     if (dfo_tota.toString() !== 'NaN')
       this.fovis.infoHogar.dfo_tota  = dfo_tota;
+
+    console.log('valorTotal');
   }
 
   loadSfparam() {

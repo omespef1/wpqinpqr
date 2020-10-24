@@ -4,4 +4,5 @@ export class Sfparam {
     ite_cont: number;
     SGN000008: string;
     par_smvr: number;
+    dat_null: Date;
 }

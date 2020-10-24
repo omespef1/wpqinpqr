@@ -125,8 +125,8 @@
             <div class="container mt-3 mb-3">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a *ngIf="showAfiliacion" class="nav-item nav-link" id="nav-afiliacion-tab" data-toggle="tab" href="#nav-afiliacion" role="tab" aria-controls="nav-afiliacion" aria-selected="false">Afiliación</a>
-                        <a class="nav-item nav-link active" id="nav-basicos-tab" data-toggle="tab" href="#nav-basicos" role="tab" aria-controls="nav-basicos" aria-selected="true">Datos Empresa</a>
+                        <a *ngIf="showAfiliacion" class="nav-item nav-link" id="nav-afiliacion-tab" data-toggle="tab" href="#nav-afiliacion" role="tab" aria-controls="nav-afiliacion" aria-selected="true">Afiliación</a>
+                        <a class="nav-item nav-link active" id="nav-basicos-tab" data-toggle="tab" href="#nav-basicos" role="tab" aria-controls="nav-basicos" aria-selected="false">Datos Empresa</a>
                         <a *ngIf="datTrabajador" class="nav-item nav-link" id="nav-solicitud-tab" data-toggle="tab" href="#nav-solicitud" role="tab" aria-controls="nav-solicitud" aria-selected="false">Datos Trabajador</a>
                         <a class="nav-item nav-link" id="nav-contacto-tab" data-toggle="tab" href="#nav-contacto" role="tab" aria-controls="nav-contacto" aria-selected="false">Datos de Contacto</a>
                         <a *ngIf="nucleoFamilia" class="nav-item nav-link" id="nav-nucleo-tab" data-toggle="tab" href="#nav-nucleo" role="tab" aria-controls="nav-nucleo" aria-selected="false">Núcleo Familiar</a>
@@ -147,8 +147,8 @@
                                                 <span><i class="fas fa-id-card"></i></span>
                                             </div>
                                         </div>
-                                        <input name="tip_codi" [(ngModel)]="rnafili.tip_codi" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                        <input name="tip_nomb" [(ngModel)]="rnafili.tip_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                        <input name="rnafili_tip_codi" [(ngModel)]="rnafili.tip_codi" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                        <input name="rnafili_tip_nomb" [(ngModel)]="rnafili.tip_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
                                         <button type="button" class="btn btn-primary" (click)='lupaTipoDocumentoAfili()'>
                                             <span><i class="fas fa-search"></i></span>
                                         </button>
@@ -163,7 +163,7 @@
                                                 <span><i class="fas fa-hashtag"></i></span>
                                             </div>
                                         </div>
-                                        <input name="afi_docu" [(ngModel)]="rnafili.afi_docu" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Número Documento">
+                                        <input name="rnafili_afi_docu" [(ngModel)]="rnafili.afi_docu" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Número Documento">
                                     </div>
                                 </div>
 
@@ -226,7 +226,7 @@
                                     <div class="input-group">
                                         <mat-datepicker-toggle [for]="afi_fecn"></mat-datepicker-toggle>
                                         <mat-datepicker #afi_fecn touchUi></mat-datepicker>
-                                        <input [(ngModel)]="rnafili.afi_fecn" matInput readonly [matDatepicker]="afi_fecn" type="text" class="form-control" name="afi_fecn">
+                                        <input [(ngModel)]="rnafili.afi_fecn" matInput readonly [matDatepicker]="afi_fecn" type="text" class="form-control" name="rnafili_afi_fecn">
                                     </div>
                                 </div>
 
@@ -281,6 +281,20 @@
                                         </button>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                    <label for="afi_cate">Categoria</label>
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text">
+                                                <span><i class="fas fa-user"></i></span>
+                                            </div>
+                                        </div>
+                                        <input type="text" name="rnafili_afi_cate" [(ngModel)]="rnafili.afi_cate" class="form-control" placeholder="Categoria" readonly>
+                                    </div>
+                                </div>
+
+
                                 <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
                                     <label for="pro_cont">Condición Especial</label>
                                     <div class="input-group">
@@ -304,7 +318,7 @@
                                                 <span><i class="fas fa-wheelchair"></i></span>
                                             </div>
                                         </div>
-                                        <select name="for_cond" class="form-control" required [(ngModel)]="rnafili.afi_cond">
+                                        <select name="for_cond" class="form-control" [(ngModel)]="rnafili.afi_cond">
                                             <option value="">Seleccione</option>
                                             <option value="N">Normal</option>
                                             <option value="D">Discapacitado</option>
@@ -319,8 +333,8 @@
                                                 <span><i class="fas fa-globe-americas"></i></span>
                                             </div>
                                         </div>
-                                        <select class="form-control" id="rad_pais" [value]="" name="rad_pais" [(ngModel)]="rnafili.pai_codi" (change)="filtrarRegiones('',rnafili.pai_codi)" required="0" #rad_pais="ngModel">                                            
-                                            <option *ngFor="let pais of gnpaise" [value]="pais.pai_codi">{{pais.pai_nomb | titlecase}}</option>
+                                        <select class="form-control" [value]="" name="rnafili_pai_codi" [(ngModel)]="rnafili.pai_codi" (change)="filtrarRegionesA('',rnafili.pai_codi)" #rad_pais="ngModel">                                            
+                                            <option *ngFor="let pais of gnpaiseA" [value]="pais.pai_codi">{{pais.pai_nomb | titlecase}}</option>
                                             <option value="">Seleccione</option>
                                           </select>
                                     </div>
@@ -333,9 +347,9 @@
                                                 <span><i class="fas fa-flag"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnregio.length == 0" [value]="" class="form-control" id="rad_regi" name="rad_regi" [(ngModel)]="rnafili.reg_codi" (change)="filtrarDeptos('',rnafili.pai_codi,rnafili.reg_codi)" required #rad_regi="ngModel">
+                                        <select [disabled]="gnregioA.length == 0" [value]="" class="form-control" name="rnafili_reg_codi" [(ngModel)]="rnafili.reg_codi" (change)="filtrarDeptosA('',rnafili.pai_codi,rnafili.reg_codi)" #rad_regi="ngModel">
                                             <option [value]="">Seleccione</option>
-                                            <option *ngFor="let region of gnregio" [value]="region.reg_codi">{{region.reg_nomb | titlecase}}</option>                                           
+                                            <option *ngFor="let region of gnregioA" [value]="region.reg_codi">{{region.reg_nomb | titlecase}}</option>                                           
                                         </select>
                                     </div>
                                 </div>
@@ -347,8 +361,8 @@
                                                 <span><i class="far fa-flag"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gndepar.length == 0" [value]="" class="form-control" id="rad_depa" name="rad_depa" [(ngModel)]="rnafili.dep_codi" (change)="filtrarMunic('',rnafili.pai_codi,rnafili.reg_codi,rnafili.dep_codi)" required #rad_depa="ngModel">                                                
-                                                <option *ngFor="let depto of gndepar" [value]="depto.dep_codi">{{depto.dep_nomb | titlecase}}</option>
+                                        <select [disabled]="gndeparA.length == 0" [value]="" class="form-control" name="rnafili_dep_codi" [(ngModel)]="rnafili.dep_codi" (change)="filtrarMunicA('',rnafili.pai_codi,rnafili.reg_codi,rnafili.dep_codi)" #rad_depa="ngModel">                                                
+                                                <option *ngFor="let depto of gndeparA" [value]="depto.dep_codi">{{depto.dep_nomb | titlecase}}</option>
                                                 <option value="">Seleccione</option>
                                         </select>
                                     </div>
@@ -361,8 +375,8 @@
                                                 <span><i class="fas fa-city"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnmunic.length == 0" [value]="" class="form-control" id="rad_muni" name="rad_muni" [(ngModel)]="rnafili.mun_codi" (change)="filtrarLocal('',rnafili.pai_codi,rnafili.reg_codi,rnafili.dep_codi,rnafili.mun_codi)" required #rad_muni="ngModel">                                       
-                                            <option *ngFor="let munic of gnmunic" [value]="munic.mun_codi">{{munic.mun_nomb | titlecase}}</option>
+                                        <select [disabled]="gnmunicA.length == 0" [value]="" class="form-control" name="rnafili_mun_codi" [(ngModel)]="rnafili.mun_codi" (change)="filtrarLocalA('',rnafili.pai_codi,rnafili.reg_codi,rnafili.dep_codi,rnafili.mun_codi)" #rad_muni="ngModel">                                       
+                                            <option *ngFor="let munic of gnmunicA" [value]="munic.mun_codi">{{munic.mun_nomb | titlecase}}</option>
                                             <option value="">Seleccione</option>
                                         </select>
                                     </div>
@@ -375,9 +389,8 @@
                                                 <span><i class="fas fa-map-pin"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnlocal.length == 0" [value]="" class="form-control" id="rad_loca" name="rad_loca" [(ngModel)]="rnafili.loc_codi" (change)="filtrarBarri('',rnafili.pai_codi,rnafili.reg_codi,rnafili.dep_codi,rnafili.mun_codi,rnafili.loc_codi)" required
-                                            #rad_loca="ngModel">
-                                                <option *ngFor="let local of gnlocal" [value]="local.loc_codi">{{local.loc_nomb | titlecase}}</option>
+                                        <select [disabled]="gnlocalA.length == 0" [value]="" class="form-control" name="rnafili_loc_codi" [(ngModel)]="rnafili.loc_codi" (change)="filtrarBarriA('',rnafili.pai_codi,rnafili.reg_codi,rnafili.dep_codi,rnafili.mun_codi,rnafili.loc_codi)" #rad_loca="ngModel">
+                                                <option *ngFor="let local of gnlocalA" [value]="local.loc_codi">{{local.loc_nomb | titlecase}}</option>
                                                 <option value="">Seleccione</option>
                                         </select>
                                     </div>
@@ -390,8 +403,8 @@
                                                 <span><i class="fas fa-map-signs"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnbarri.length == 0" [value]="" class="form-control" id="rad_barr" name="rad_barr" [(ngModel)]="rnafili.bar_codi" required #rad_loca="ngModel">                                                
-                                                <option *ngFor="let barri of gnbarri" [value]="barri.bar_codi">{{barri.bar_nomb | titlecase}}</option>
+                                        <select [disabled]="gnbarriA.length == 0" [value]="" class="form-control" name="rnafili_bar_codi" [(ngModel)]="rnafili.bar_codi" #rad_loca="ngModel">                                                
+                                                <option *ngFor="let barri of gnbarriA" [value]="barri.bar_codi">{{barri.bar_nomb | titlecase}}</option>
                                                 <option value="">Seleccione</option>
                                         </select>
                                     </div>
@@ -457,7 +470,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                                     <label for="rad_nomr">Teléfono</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -465,11 +478,11 @@
                                                 <span><i class="fas fa-phone"></i></span>
                                             </div>
                                         </div>
-                                        <input name="afi_tele" [(ngModel)]="rnafili.afi_tele" type="text" class="form-control" placeholder="Teléfono">
+                                        <input name="rnafili_afi_tele" [(ngModel)]="rnafili.afi_tele" type="text" class="form-control" placeholder="Teléfono">
                                     </div>
                                 </div>
 
-                                <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
                                     <label for="con_cont">Celular</label>
                                     <div class="input-group">
                                         <div class="input-group-prepend">
@@ -477,11 +490,145 @@
                                                 <span><i class="fas fa-mobile-alt"></i></span>
                                             </div>
                                         </div>
-                                        <input name="afi_celu" [(ngModel)]="rnafili.afi_celu" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
-                                        <button type="button" class="btn btn-secondary btn-md ml-2" (click)="addAfili()">Agregar</button>
+                                        <input name="rnafili_afi_celu" [(ngModel)]="rnafili.afi_celu" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
                                     </div>
                                 </div>
 
+                                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-4">
+                                    <div class="card">
+                                        <div class="card-header bg-primary text-white">Trayectoria</div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                                    <label for="apo_coda">Documento Aportante</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-hashtag"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input name="rnafili_apo_coda" [(ngModel)]="rnafili.apo_coda" #apo_coda="ngModel" readonly type="text" class="form-control" placeholder="Documento Aportante">
+                                                        <button type="button" class="btn btn-primary" (click)="lupaDocAportante()">
+                                                            <span><i class="fas fa-search"></i></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                                    <label for="con_cont">Razón Social</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-building"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input name="rnafili_apo_razs" [(ngModel)]="rnafili.apo_razs" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Razón Social" readonly>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
+                                                    <label for="con_cont">Tipo de Aportante</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-chalkboard-teacher"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input name="rnafili_tia_codi" [(ngModel)]="rnafili.tia_codi" readonly #tia_codi="ngModel" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
+                                                        <input name="rnafili_tia_nomb" [(ngModel)]="rnafili.tia_nomb" readonly #tia_nomb="ngModel" type="text" style="width: 70%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
+                                                    <label for="con_cont">Sucursal</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-hotel"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input name="rnafili_suc_codi" [(ngModel)]="rnafili.suc_codi" readonly #rnafili_suc_codi="ngModel" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
+                                                        <input name="rnafili.suc_nomb" [(ngModel)]="rnafili.suc_nomb" readonly #suc_nomb="ngModel" type="text" style="width: 63%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                                        <button type="button" class="btn btn-primary" (click)="LoadSucursal()" [disabled]="rnafili.apo_cont === 0 || rnafili.apo_cont === undefined">
+                                                                <span><i class="fas fa-search"></i></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
+                                                    <label for="con_cont">Clase Trabajador</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-user"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input id="ite_cod1" name="ite_cod1" [(ngModel)]="rnafili.ite_cod1" readonly #ite_cod1="ngModel" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
+                                                        <input id="ite_nom1" name="ite_nom1" [(ngModel)]="rnafili.ite_nom1" readonly #ite_nom1="ngModel" type="text" style="width: 63%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                                        <button type="button" class="btn btn-primary" (click)="lupaClaseTrab()">
+                                                                <span><i class="fas fa-search"></i></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-12 col-xs-12 col-sm-12">
+                                                    <label for="ite_tipv">Tipo Vinculación</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-link"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input id="ite_cod2" name="ite_cod2" [(ngModel)]="rnafili.ite_cod2" readonly #ite_cod2="ngModel" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
+                                                        <input id="ite_nom2" name="ite_nom2" [(ngModel)]="rnafili.ite_nom2" readonly #ite_nom2="ngModel" type="text" style="width: 63%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                                        <button type="button" class="btn btn-primary" (click)="lupTipoVinc()">
+                                                                <span><i class="fas fa-search"></i></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                                    <label for="pro_pais">Ubicación Laboral</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-map-marker"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <select name="tra_ubla" class="form-control" [(ngModel)]="rnafili.tra_ubla">
+                                                            <option value="">Seleccione</option>
+                                                            <option value="U">Urbano</option>
+                                                            <option value="R">Rural</option>
+                                                          </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                                    <label for="con_cont">Cargo</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-briefcase"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input id="car_codi" name="car_codi" [(ngModel)]="rnafili.car_codi" readonly #car_codi="ngModel" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" readonly>
+                                                        <input id="car_nomb" name="car_nomb" [(ngModel)]="rnafili.car_nomb" readonly #ite_nom1="ngModel" type="text" style="width: 63%;" data-toggle="tooltip" data-placement="bottom" readonly class="form-control">
+                                                        <button type="button" class="btn btn-primary" (click)="lupaCargo()">
+                                                                <span><i class="fas fa-search"></i></span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                                    <label for="con_cont">Salario Básico</label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <div class="input-group-text">
+                                                                <span><i class="fas fa-hand-holding-usd"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <input name="tra_salb" [(ngModel)]="rnafili.tra_salb" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Salario Básico">
+                                                        <button type="button" class="btn btn-secondary btn-md ml-2" (click)="addAfili()">Agregar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                                     <div class="table-responsive mt-3" *ngIf="rnsuafili?.length">
@@ -1011,6 +1158,10 @@
 
 <app-table-search-generic Title="Número de Documento" [displayedColumns]="['TIA_NOMB', 'TIP_NOMB', 'APO_CODA' , 'APO_RAZS']" [showColumns]="['Tipo Aportante', 'Tipo Documento', 'Documento', 'Razón Social']" (rowCLick)="setDoctoEmpre($event)" btnModalQb="btnDocument"
     ModalQb="modalDocument" #modalDocument></app-table-search-generic>
+
+<app-table-search-generic Title="Número de Documento" [displayedColumns]="['TIP_NOMB', 'AFI_DOCU' , 'AFI_NOM1', 'AFI_NOM2', 'AFI_APE1', 'AFI_APE2']" [showColumns]="['Tipo Documento', 'Documento', 'Nombre 1', 'Nombre 2', 'Apellido 1', 'Apellido 2']" (rowCLick)="setDocumento($event)"
+    btnModalQb="btnDocumento" ModalQb="modalDocumento" #modalDocumento></app-table-search-generic>
+
 <app-table-search-generic Title="Grupo de Radicación" [displayedColumns]="['GRU_CODI', 'GRU_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setGruRadic($event)" btnModalQb="btnGruRadic" ModalQb="modalGruRadic" #modalGruRadic></app-table-search-generic>
 <app-table-search-generic Title="Clasificación" [displayedColumns]="['CRA_CODI', 'CRA_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setClasificacion($event)" btnModalQb="btnClasific" ModalQb="modalClasific" #modalClasific></app-table-search-generic>
 
@@ -1018,6 +1169,14 @@
 
 <app-table-search-generic Title="Condición Especial" [displayedColumns]="['ite_codi','ite_nomb']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setCondicion($event)" btnModalQb="btnCondicion" ModalQb="modalCondicion" #modalCondicion></app-table-search-generic>
 
+<app-table-search-generic Title="Número de Documento" [displayedColumns]="['TIA_NOMB', 'TIP_NOMB', 'APO_CODA' , 'APO_RAZS']" [showColumns]="['Tipo Aportante', 'Tipo Documento', 'Documento', 'Razón Social']" (rowCLick)="setDocAportante($event)" btnModalQb="btnDocAportante"
+    ModalQb="modalDocAportante" #modalDocAportante></app-table-search-generic>
+
+<app-table-search-generic Title="Sucursal" [displayedColumns]="['suc_codi','suc_desc']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setSucursal($event)" btnModalQb="btnSucursal" ModalQb="modalSucursal" #modalSucursal></app-table-search-generic>
+
+<app-table-search-generic Title="Clase Trabajador" [displayedColumns]="['ite_codi','ite_nomb']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setClaseTrab($event)" btnModalQb="btnClaseTrab" ModalQb="modalClaseTrab" #modalClaseTrab></app-table-search-generic>
+<app-table-search-generic Title="Tipo Vinculación" [displayedColumns]="['ite_codi','ite_nomb']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setTipVinc($event)" btnModalQb="btnTipVinc" ModalQb="modalTipoVinc" #modalTipoVinc></app-table-search-generic>
+<app-table-search-generic Title="Cargo" [displayedColumns]="['ite_codi','ite_nomb']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setCargo($event)" btnModalQb="btnCargo" ModalQb="modalCargo" #modalCargo></app-table-search-generic>
 
 
 <app-modal title="Seleccione empresa" (accept)="modal.dismiss();Load();loadAfiliados();">

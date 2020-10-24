@@ -112,6 +112,9 @@ export class XbauliqComponent implements OnInit {
   }
 
   loadCompanies() {
+
+  console.log('aqui');
+
     this.spinner.show();
     this._gnempre.GetGnEmpre(this.usu_codi).subscribe((resp: any) => {
       this.companies = resp.objTransaction;
