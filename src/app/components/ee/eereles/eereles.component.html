@@ -147,7 +147,6 @@
                                         </div>
                                     </ng-template>
                                     <ng-template [ngSwitchCase]="'M'">
-
                                         <div class="alert alert-light mb-0 text-dark">
                                             <div class="row">
                                                 <div class="text-center" style="width: 4%">
@@ -173,6 +172,43 @@
                                             <hr>
                                         </div>
                                     </ng-template>
+
+                                    <ng-template [ngSwitchCase]="'U'">
+                                        <div class="alert alert-light mb-0 text-dark">
+                                            <div class="row">
+                                                <div class="text-center" style="width: 4%">
+                                                    {{ i+ 1 }}
+                                                </div>
+                                                <div style="width: 45%">
+                                                    {{pregunta.drs_preg}}
+                                                </div>
+                                                <div style="width: 49%">
+                                                    <form class="form">
+                                                        <ng-template ngFor let-preguntaMult [ngForOf]="pregunta.Respuestas" let-i="index">
+
+                                                            <!-- <div class="col-auto my-1">
+                                                                <div class="form-group custom-checkbox mr-sm-2">
+                                                                    <input [disabled]="!DisabledButton" [checked]="pregunta.res_valo === preguntaMult.ddp_opci" (change)="setInfoResem(preguntaMult.ddp_opci , reles.rel_cont, preguntaMult.ddp_cont, preguntaMult.drp_cont, 'U', 'chk' + preguntaMult.ddp_cont + preguntaMult.drp_cont + i.toString())"
+                                                                        type="checkbox" class="custom-control-input" id="{{'chk' + preguntaMult.ddp_cont + preguntaMult.drp_cont + i.toString()}}">
+                                                                    <label class="custom-control-label" for="{{'chk' + preguntaMult.ddp_cont + preguntaMult.drp_cont + i.toString()}}">{{preguntaMult.ddp_opci}}</label>
+                                                                </div>
+                                                            </div> -->
+
+                                                            <div class="input-group mt-2">
+                                                                <div class="custom-control custom-radio">
+                                                                    <input [disabled]="!DisabledButton" [checked]="pregunta.res_valo === preguntaMult.ddp_opci" type="radio" class="custom-control-input" id="{{'rdb' + preguntaMult.ddp_cont + preguntaMult.drp_cont + i.toString()}}" name="grouptdat" (change)="setInfoResem(preguntaMult.ddp_opci , reles.rel_cont, preguntaMult.ddp_cont, preguntaMult.drp_cont, 'U', 'rdb' + preguntaMult.ddp_cont + preguntaMult.drp_cont + i.toString())">
+                                                                    <label class="custom-control-label" for="{{'rdb' + preguntaMult.ddp_cont + preguntaMult.drp_cont + i.toString()}}">{{preguntaMult.ddp_opci}}</label>
+                                                                </div>
+                                                            </div>
+
+                                                        </ng-template>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div>
+                                    </ng-template>
+
                                 </ng-container>
                             </ng-template>
                         </div>
@@ -181,7 +217,7 @@
             </div>
         </div>
 
-        <div class="row" *ngIf="reles.par_rein !== ''">
+        <div class="row" *ngIf="reles.par_rein !== '' && reles.red_encu === 'N'">
             <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-4">
                 <label for="pro_obse">Condiciones y Restricciones de Ingreso</label>
                 <textarea disabled type="text" class="form-control" name="par_rein" [(ngModel)]="reles.par_rein" #par_rein="ngModel" readonly></textarea>

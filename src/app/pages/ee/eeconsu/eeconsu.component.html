@@ -1,0 +1,199 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
+</ngx-spinner>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Consulta Encuestas de Medición</h1>
+
+    </div>
+</div>
+<div class="container">
+    <div class="card card-gray">
+        <div class="card-header bg-primary text-white">Consultar postulación</div>
+        <div class="card-body">
+            <form #consuForm="ngForm">
+                <div class="row" *ngIf="!showDetail">
+
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="fec_fini">Fecha Inicial</label>
+                        <div class="input-group">
+                            <mat-datepicker-toggle [for]="pro_fent"></mat-datepicker-toggle>
+                            <mat-datepicker #pro_fent touchUi></mat-datepicker>
+                            <input matInput placeholder="  Fecha Inicial" [(ngModel)]="fechaIni" readonly [matDatepicker]="pro_fent" type="text" class="form-control" name="pro_fent" id="pro_fent">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="pro_fven">Fecha Final</label>
+                        <div class="input-group">
+                            <mat-datepicker-toggle [for]="pro_fven"></mat-datepicker-toggle>
+                            <mat-datepicker #pro_fven touchUi></mat-datepicker>
+                            <input [min]="fechaIni" matInput placeholder="  Fecha Final" [(ngModel)]="fechaFin" readonly [matDatepicker]="pro_fven" type="text" class="form-control" name="pro_fven" id="pro_fven">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="mod_cont">Servicio</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-server"></i></span>
+                                </div>
+                            </div>
+                            <input name="ite_codi" [(ngModel)]="ite_codi" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                            <input name="ite_nomb" [(ngModel)]="ite_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                            <button type="button" class="btn btn-primary" (click)="getServicio()">
+                        <span><i class="fas fa-search"></i></span>
+                    </button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="mod_cont">Cliente</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <span><i class="fas fa-briefcase"></i></span>
+                                </div>
+                            </div>
+                            <input name="cli_codi" [(ngModel)]="cli_coda" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                            <input name="cli_nomb" [(ngModel)]="cli_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                            <button type="button" class="btn btn-primary" (click)="getCliente()">
+                          <span><i class="fas fa-search"></i></span>
+                        </button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="for_td"> </label>
+                        <div class="input-group mt-2">
+                            <button (click)="limpiarFiltro()" class="btn btn-secondary btn-md btn-block">
+                          <span><i class="fas fa-brush"></i> &nbsp;Limpiar</span>
+                      </button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                        <label for="for_td"> </label>
+                        <div class="input-group mt-2">
+                            <button (click)="getEeConsu()" class="btn btn-primary btn-md btn-block">
+                          <span><i class="fas fa-search"></i> &nbsp;Consultar</span>
+                      </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row" *ngIf="showDetail">
+
+
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-2" *ngIf="eeconsu?.length">
+                        <div class="card-gray">
+                            <div class="card-header bg-primary text-white">
+                                Detalles de Encuestas
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover table-striped table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Número</th>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Código del Servicio</th>
+                                            <th scope="col">Nombre del Servicio</th>
+                                            <th scope="col">Código Cliente</th>
+                                            <th scope="col">Nombre Cliente</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let consu of eeconsu | paginate: { itemsPerPage: 5, currentPage: p }">
+                                            <td>{{ consu.rem_cont }}</td>
+                                            <td>{{ consu.rem_fech | date : "dd/MM/yyyy" }}</td>
+                                            <td>{{ consu.ite_codi }}</td>
+                                            <td>{{ consu.ite_nomb }}</td>
+                                            <td>{{ consu.cli_coda }}</td>
+                                            <td>{{ consu.cli_noco }}</td>
+                                            <td>
+                                                <button (click)="open(consu.ite_cont, consu.rem_cont, consu.emp_codi)" type="button" class="btn btn-link btn-sm btn-block">
+                                                <span><i class="fas fa-eye" title="Ver Encuesta"></i>
+                                                </span>
+                                              </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-link btn-sm btn-block" (click)="verAdjuntos( consu.rem_cont, consu.emp_codi)">
+                                                <span><i class="fas fa-paperclip" title="Ver Adjunto"></i>
+                                                </span>
+                                              </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <pagination-controls (pageChange)="p = $event" maxSize="10" autoHide="true" previousLabel="Anterior" nextLabel="Siguiente">
+                                </pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center pt-4 pb-3">
+                        <button type="button" class="btn btn-primary btn-md btn-block" (click)="volver()">
+                        <span>Volver</span>
+                    </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<button id="btnModalProductos" hidden type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalProductos">
+    Launch demo modal
+    </button>
+<!-- Modal -->
+<div class="modal fade" id="modalProductos" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="card card-gray m-2">
+                    <div class="card-header bg-primary text-white">Documentos adjuntos</div>
+                    <div class="card-body">
+                        <table class="table table-hover table-striped table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Item</th>
+                                    <th scope="col">Archivo</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let adjunto of gnAdjunt; let i=index">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>{{ adjunto.doc_desc !== undefined ? adjunto.doc_desc : adjunto.Adj_Nomb }}</td>
+                                    <td>
+                                        <button (click)="download(adjunto.doc_desc !== undefined ? adjunto.doc_desc : adjunto.Adj_Nomb)" type="button" class="btn btn-link btn-sm btn-block">
+                                                <span><i class="fas fa-download"></i>
+                                                </span>
+                                            </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<app-alert-message [message]="msg"></app-alert-message>
+
+<app-new-table-search Title="Servicio" [displayedColumns]="['ite_codi','ite_nomb']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setServicio($event)" btnModalQb="btnServicio" ModalQb="modalServicio" #modalServicio></app-new-table-search>
+<app-new-table-search Title="Cliente" [displayedColumns]="['cli_coda','cli_nomb']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setCliente($event)" btnModalQb="btnCliente" ModalQb="modalCliente" #modalCliente></app-new-table-search>

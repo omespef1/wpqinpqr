@@ -33,6 +33,7 @@ const app_routes: Routes = [
    { path: 'sarcacea' , loadChildren : './pages/ar/sarcacea/sarcacea.module#SarcaceaModule'},
    { path: 'sucacer' , loadChildren : './pages/su/sucacer/sucacer.module#SucacerModule'},
    { path: 'suconsu' , loadChildren : './pages/su/suconsu/suconsu.module#SuconsuModule'},
+   { path: 'eeconsu' , loadChildren : './pages/ee/eeconsu/eeconsu.module#EeconsuModule'},
    { path: '**', pathMatch: 'full', redirectTo: 'wgnmenus' }
 ];
 

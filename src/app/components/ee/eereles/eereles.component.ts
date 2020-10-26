@@ -47,6 +47,7 @@ export class EerelesComponent implements OnInit {
   public rel_serv = 0;
   public rem_cont = 0;
   ok = '';
+  public red_encu = ''; // --> parametro enviado unicamente desde el modulo eeconsu
 
   // tslint:disable-next-line:max-line-length
   constructor(private spinner: NgxSpinnerService, private _comu: ComunicationsService,
@@ -64,7 +65,8 @@ export class EerelesComponent implements OnInit {
       if (this.inp_cont !== 0) {
         await this.LoadPqParam();
         await this.LoadInfoPqr();
-        this.DisabledButton = false;
+        await this.validEncuestaPQ();
+
         if (this.pqpar.rel_cont)
           this.GetEeReles();
 
@@ -83,6 +85,9 @@ export class EerelesComponent implements OnInit {
     try {
 
       this.route.queryParamMap.subscribe(queryParams => {
+
+        if (queryParams.get('red_encu') != null)
+          this.red_encu = atob(queryParams.get('red_encu'));
 
         if (queryParams.get('inp_cont') != null)
           this.inp_cont = Number(atob(queryParams.get('inp_cont')));
@@ -127,14 +132,13 @@ export class EerelesComponent implements OnInit {
   }
 
   async GetEeReles() {
+ 
     // tslint:disable-next-line:max-line-length
     const info: any = <any>await this._comu.Get(`api/EeReles/EeRelesLoad?rel_cont=${this.pqpar.rel_cont}&rem_cont=${this.rem_cont}&rel_serv=${this.rel_serv}`).toPromise();
     if (info.retorno === 0)
       this.reles = info.objTransaction;
     else
       this.showAlertMesssage(info.txtRetorno);
-
-      console.log(this.reles);
   }
 
 
@@ -146,6 +150,17 @@ export class EerelesComponent implements OnInit {
     else {
       this.showAlertMesssage(info.txtRetorno);
       // this.loadInfoEncDilig();
+    }
+
+  }
+
+  async validEncuestaPQ() {
+ 
+    const info: any = <any>await this._comu.Get(`api/EeReles/EeRelesValidPQ?inp_cont=${this.inp_cont}`).toPromise();
+    if (info.retorno === 0)
+      this.DisabledButton = true;
+    else {
+      this.showAlertMesssage(info.txtRetorno);
     }
 
   }
@@ -221,7 +236,7 @@ export class EerelesComponent implements OnInit {
       this.countEereles = this.eeresen.length;
   }
 
-  public setInfoResem(_res_valo: string, _rel_cont: number, _ddp_cont: number, _drp_cont) {
+  public setInfoResem(_res_valo: string, _rel_cont: number, _ddp_cont: number, _drp_cont, _drp_clas: string) {
 
     this.resem = new EeResem();
     this.resem.res_valo = _res_valo;
@@ -231,12 +246,27 @@ export class EerelesComponent implements OnInit {
     this.resem.inp_cont = this.inp_cont;
     this.resem.rem_cont = this.rem_cont;
     this.arrElements = [];
-    const i = this.eeresem.indexOf(this.eeresem.filter(t => t.ddp_cont === _ddp_cont && t.drp_cont === _drp_cont)[0]);
+    let i: number;
 
-    if (this.eeresem.indexOf(this.eeresem.filter(t => t.ddp_cont === _ddp_cont && t.drp_cont === _drp_cont)[0]) === -1) {
-      this.eeresem.push(this.resem);
+    // debugger;
+
+    if (_drp_clas === 'U') {
+      i = this.eeresem.indexOf(this.eeresem.filter(t => t.drp_cont === _drp_cont)[0]);
+
+      if (this.eeresem.indexOf(this.eeresem.filter(t => t.drp_cont === _drp_cont)[0]) === -1)
+        this.eeresem.push(this.resem);
+      else {
+        this.eeresem.splice(i, 1);
+        this.eeresem.push(this.resem);
+      }
+
     } else {
-      this.eeresem.splice(i, 1);
+      i = this.eeresem.indexOf(this.eeresem.filter(t => t.ddp_cont === _ddp_cont && t.drp_cont === _drp_cont)[0]);
+
+      if (this.eeresem.indexOf(this.eeresem.filter(t => t.ddp_cont === _ddp_cont && t.drp_cont === _drp_cont)[0]) === -1)
+        this.eeresem.push(this.resem);
+      else
+        this.eeresem.splice(i, 1);
     }
 
     for (let j = 0; j < this.eeresem.length; j++) {
@@ -351,7 +381,8 @@ export class EerelesComponent implements OnInit {
   }
 
   alertEmitt(event) {
-    if (this.reles.red_encu === 'S') {
+
+    if (this.reles.red_encu === 'S' && this.inp_cont === 0 && this.red_encu === '') {
       this.router.navigate(['eeremes']);
     }
   }
