@@ -24,7 +24,7 @@ export class NewTableSearchComponent {
 
   constructor() {
     this.dataSource = new MatTableDataSource();
-    this.rowCLick = new EventEmitter();
+    this.rowCLick = new EventEmitter();   
   }
 
   render(source: any) {

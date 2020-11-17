@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SuconsuRoutingModule } from './suconsu-routing-module';
-import { SuconsuComponent } from './suconsu.component';
+import { SuconapRoutingModule } from './suconap-routing-module';
+import { SuconapComponent } from './suconap.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ModalModule } from 'src/app/shared/modal/modal.module';
@@ -12,7 +12,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   imports: [
     CommonModule,
-    SuconsuRoutingModule,
+    SuconapRoutingModule,
     FormsModule,
     SharedModule,
     ModalModule,
@@ -37,7 +37,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     },
   ],
   declarations: [
-    SuconsuComponent
+    SuconapComponent
   ]
 })
-export class SuconsuModule { }
+export class SuconapModule { }

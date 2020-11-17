@@ -124,7 +124,8 @@ export class EeconsuComponent implements OnInit {
   }
 
   open(rel_serv: number, rem_cont: number, emp_codi: number) {
-    let url = window.location.origin + '/eereles';
+    console.log(window.location);
+    let url = window.location.origin + '/dwapps/eereles';
     // tslint:disable-next-line:max-line-length
     url += '?rel_serv=' + this.revEncode(rel_serv) + '&emp_codi=' +  this.revEncode(emp_codi) + '&rem_cont=' +  this.revEncode(rem_cont) + '&red_encu=' +  this.revEncode('N');
     window.open(url, '_blank');
@@ -150,8 +151,12 @@ export class EeconsuComponent implements OnInit {
     this.ite_codi = '';
     this.ite_nomb = '';
     this.ite_cont = 0;
-    this.ite_codi = '';
-    this.ite_nomb = '';
+    this.cli_coda = '';
+    this.cli_nomb = '';
+  }
+
+  limpiarfechaFinal() {
+    this.fechaFin = this.fechaIni;
   }
 
 }

@@ -1,5 +1,30 @@
-export class AfiliTrab {
+export class ArApovoInfo {
+    public apo_cont: number;
+    public apo_coda: string;
+    public apo_razs: string;
+    public apo_fcha: string;
+    public tip_abre: string;
+    public tip_abrr: string;
+    public ter_coda: string;
+    public ter_noco: string;
+    public arsucurinfo: ArSucurInfo[];
+}
 
+export class ArSucurInfo {
+    public tip_desc: string;
+    public dsu_dire: string;
+    public pai_nomb: string;
+    public dep_nomb: string;
+    public mun_nomb: string;
+    public loc_nomb: string;
+    public bar_nomb: string;
+    public dsu_tele: string;
+    public dsu_celu: string;
+}
+
+export class AfiliTrab {
+    public tip_codi: number;
+    public tip_nomb: string;
     public afi_cont: number;
     public afi_docu: string;
     public afi_fecn: string;
@@ -13,16 +38,7 @@ export class AfiliTrab {
     public mun_nomb: string;
     public loc_nomb: string;
     public bar_nomb: string;
-    public sutraye: Sutraye[];
     public superca: Superca[];
-}
-
-export class Sutraye {
-    tip_abre: string;
-    apo_coda: string;
-    apo_razs: string;
-    tra_fchi: string;
-    tra_fcha: string;
 }
 
 export class Superca {
@@ -35,6 +51,7 @@ export class Superca {
 }
 
 export class RnRadic {
+    public rad_cont: number;
     public rad_nume: number;
     public rad_fech: string;
     public cra_nomb: string;
@@ -51,6 +68,9 @@ export class ArDpil {
     public dri_sapb: number;
     public rde_esta: string;
     public apo_valo: number;
+    public rpi_mora: number;
+    public dri_sibc: number;
+    public afi_noco: string;
 }
 
 export class SuHgicm {
@@ -59,4 +79,16 @@ export class SuHgicm {
     public hgi_valg: number;
     public afi_docu: string;
     public afi_noco: string;
+    public hgi_esta: string;
+    public hgi_nutr: number;
+    public hgi_nube: number;
+}
+
+export class ArRdevo {
+    public rpi_peri: number;
+    public rpi_nura: string;
+    public rde_tipo: string;
+    public ter_noco: string;
+    public ter_coda: string;
+    public rde_devo: number;
 }

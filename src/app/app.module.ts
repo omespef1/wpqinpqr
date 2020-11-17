@@ -22,6 +22,7 @@ import { CtpropoComponent } from './components/ct/ctpropo/ctpropo.component';
 import { CtconsuComponent } from './components/ct/ctconsu/ctconsu.component';
 // Angular material
 import { MatDatepickerModule } from '@angular/material/datepicker';
+// tslint:disable-next-line:max-line-length
 import { MatNativeDateModule, MatFormFieldModule, MatInputModule, MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { TarjetasPipe } from './pipes/socoxcn/tarjetas.pipe';
@@ -41,7 +42,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AddressToolComponent } from './components/tools/address-tool/address-tool.component';
 import { RnradicComponent } from './components/rn/rnradic/rnradic.component';
 import { PagesComponent } from './pages/pages.component';
-import { EeconsuComponent } from './pages/ee/eeconsu/eeconsu.component';
+import { SuconapComponent } from './pages/su/suconap/suconap.component';
 
 // import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 

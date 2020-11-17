@@ -9,7 +9,6 @@ import { EerelesComponent } from './components/ee/eereles/eereles.component';
 import { WgnfpassComponent } from './pages/gn/wgnfpass/wgnfpass.component';
 import { RnradicComponent } from './components/rn/rnradic/rnradic.component';
 
-
 const app_routes: Routes = [
    { path: 'consulta', component: ConsultaComponent },
    { path: 'creacion', component: CreacionComponent },
@@ -34,6 +33,7 @@ const app_routes: Routes = [
    { path: 'sucacer' , loadChildren : './pages/su/sucacer/sucacer.module#SucacerModule'},
    { path: 'suconsu' , loadChildren : './pages/su/suconsu/suconsu.module#SuconsuModule'},
    { path: 'eeconsu' , loadChildren : './pages/ee/eeconsu/eeconsu.module#EeconsuModule'},
+   { path: 'suconap' , loadChildren : './pages/su/suconap/suconap.module#SuconapModule'},
    { path: '**', pathMatch: 'full', redirectTo: 'wgnmenus' }
 ];
 

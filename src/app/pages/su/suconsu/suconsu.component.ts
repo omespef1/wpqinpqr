@@ -3,9 +3,8 @@ import { DomSanitizer, Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertMessageComponent } from 'src/app/components/dialogs/alert-message/alert-message.component';
-import { GnempreService } from 'src/app/services/gn/gnempre.service';
 import { SuconsuService } from 'src/app/services/su/suconsu.service';
-import { AfiliTrab, RnRadic, ArDpil } from 'src/classes/su/suconsu';
+import { AfiliTrab, RnRadic, ArDpil, SuHgicm } from 'src/classes/su/suconsu';
 import * as moment from 'moment';
 import { DatagridToolComponent } from 'src/app/components/tools/datagrid-tool/datagrid-tool.component';
 
@@ -19,6 +18,7 @@ export class SuconsuComponent implements OnInit {
   @ViewChild(AlertMessageComponent) alert: AlertMessageComponent;
   @ViewChild('novedades') gridNoved: DatagridToolComponent;
   @ViewChild('aportes') gridAport: DatagridToolComponent;
+  @ViewChild('subsidios') gridSubsi: DatagridToolComponent;
 
   ter_coda = '';
   emp_codi = 0;
@@ -27,17 +27,19 @@ export class SuconsuComponent implements OnInit {
   rad_fecf: Date;
   rpiperi: string;
   rpiperf: string;
-  apo_coda: string;
-  apo_razs: string;
+  hgiperi: string;
+  hgiperf: string;
+  apo_coda = '';
+  apo_razs = '';
 
   infoafiliatrab: AfiliTrab = new AfiliTrab();
   infoNovedades: RnRadic[] = [];
   infoAportes: ArDpil[] = [];
+  infoSubsidios: SuHgicm[] = [];
   element: HTMLElement;
 
   constructor(private spinner: NgxSpinnerService, private sanitizer: DomSanitizer, private titleService: Title,
-    private route: ActivatedRoute, private _gnempre: GnempreService, private _service: SuconsuService) {
-
+    private route: ActivatedRoute, private _service: SuconsuService) {
   }
 
   async ngOnInit() {
@@ -66,6 +68,17 @@ export class SuconsuComponent implements OnInit {
   }
 
   getInfoNovedades() {
+
+    if (this.rad_feci === undefined) {
+      this.showAlertMesssage('Seleccione la Fecha Inicial de Radicación');
+      return;
+    }
+
+    if (this.rad_fecf === undefined) {
+      this.showAlertMesssage('Seleccione la Fecha Final de Radicación');
+      return;
+    }
+
     this.infoNovedades = [];
     this.spinner.show();
     // tslint:disable-next-line:max-line-length
@@ -82,10 +95,21 @@ export class SuconsuComponent implements OnInit {
   }
 
   getInfoAportes() {
+
+    if (this.rpiperi === undefined || this.rpiperi === '') {
+      this.showAlertMesssage('Seleccione Periodo Pago Inicial');
+      return;
+    }
+
+    if (this.rpiperf === undefined || this.rpiperf === '') {
+      this.showAlertMesssage('Seleccione Periodo Pago Final');
+      return;
+    }
+
     this.infoAportes = [];
     this.spinner.show();
     // tslint:disable-next-line:max-line-length
-    this._service.getInfoAportes(this.emp_codi, this.infoafiliatrab.afi_cont, this.rpiperi, this.rpiperf).subscribe(resp => {
+    this._service.getInfoAportes(this.emp_codi, this.infoafiliatrab.afi_cont, this.rpiperi, this.rpiperf, this.apo_coda, this.apo_razs).subscribe(resp => {
       if (resp.retorno === 0) {
         this.infoAportes = resp.objTransaction;
         this.gridAport.render(this.infoAportes);
@@ -95,6 +119,61 @@ export class SuconsuComponent implements OnInit {
       }
     });
     this.spinner.hide();
+  }
+
+  getInfoSubsidios() {
+
+    if (this.hgiperi === undefined || this.hgiperi === '') {
+      this.showAlertMesssage('Seleccione Periodo Pago Inicial');
+      return;
+    }
+
+    if (this.hgiperf === undefined || this.hgiperf === '') {
+      this.showAlertMesssage('Seleccione Periodo Pago Final');
+      return;
+    }
+
+    this.infoSubsidios = [];
+    this.spinner.show();
+    // tslint:disable-next-line:max-line-length
+    this._service.getInfoSubsidios(this.emp_codi, this.hgiperi, this.hgiperf, this.infoafiliatrab.afi_docu).subscribe(resp => {
+      if (resp.retorno === 0) {
+        this.infoSubsidios = resp.objTransaction;
+        this.gridSubsi.render(this.infoSubsidios);
+      } else {
+        this.showAlertMesssage(resp.txtRetorno);
+        this.gridSubsi.render(this.infoSubsidios);
+      }
+    });
+    this.spinner.hide();
+  }
+
+  printReportAportes() {
+    try {
+      this._service.printAportes(this.emp_codi, this.rpiperi, this.rpiperf, this.infoafiliatrab.afi_docu).subscribe(resp => {
+        if (resp.retorno === 0) {
+         window.open(resp.objTransaction, '_blank');
+        } else
+          this.showAlertMesssage(`Error generando reporte : ${resp.txtRetorno}`);
+        }
+      );
+    } catch (error) {
+      this.showAlertMesssage(`Error generando reporte : ${error}`);
+    }
+  }
+
+  printReportSubsidios() {
+    try {
+       this._service.printSubsidio(this.emp_codi, this.hgiperi, this.hgiperf, this.infoafiliatrab.afi_docu).subscribe(resp => {
+         if (resp.retorno === 0) {
+          window.open(resp.objTransaction, '_blank');
+         } else
+           this.showAlertMesssage(`Error generando reporte : ${resp.txtRetorno}`);
+         }
+       );
+     } catch (error) {
+       this.showAlertMesssage(`Error generando reporte : ${error}`);
+     }
   }
 
   GetParams() {
@@ -126,7 +205,7 @@ export class SuconsuComponent implements OnInit {
     dp.close();
     this.rpiperi = event;
     this.rpiperi  = moment(this.rpiperi).format('YYYY-MM');
-    this.element = document.getElementById('rpi_perf') as HTMLElement;
+    this.element = document.getElementById('rpi_peri') as HTMLElement;
     this.element.focus();
   }
 
@@ -135,6 +214,21 @@ export class SuconsuComponent implements OnInit {
     this.rpiperf = event;
     this.rpiperf  = moment(this.rpiperf).format('YYYY-MM');
     document.getElementById('rpi_perf').focus();
+  }
+
+  setPeriodoInici(event, dp: any) {
+    dp.close();
+    this.hgiperi = event;
+    this.hgiperi  = moment(this.hgiperi).format('YYYY-MM');
+    this.element = document.getElementById('hgi_peri') as HTMLElement;
+    this.element.focus();
+  }
+
+  setPeriodoFin(event, dp: any) {
+    dp.close();
+    this.hgiperf = event;
+    this.hgiperf  = moment(this.hgiperf).format('YYYY-MM');
+    document.getElementById('hgi_perf').focus();
   }
 
 }

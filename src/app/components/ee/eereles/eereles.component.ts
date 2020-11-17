@@ -134,11 +134,13 @@ export class EerelesComponent implements OnInit {
   async GetEeReles() {
  
     // tslint:disable-next-line:max-line-length
-    const info: any = <any>await this._comu.Get(`api/EeReles/EeRelesLoad?rel_cont=${this.pqpar.rel_cont}&rem_cont=${this.rem_cont}&rel_serv=${this.rel_serv}`).toPromise();
+    const info: any = <any>await this._comu.Get(`api/EeReles/EeRelesLoad?rel_cont=${this.pqpar.rel_cont}&rem_cont=${this.rem_cont}&rel_serv=${this.rel_serv}&inp_cont=${this.inp_cont}`).toPromise();
     if (info.retorno === 0)
       this.reles = info.objTransaction;
     else
       this.showAlertMesssage(info.txtRetorno);
+
+      console.log(this.reles);
   }
 
 

@@ -19,7 +19,7 @@
                         <div class="input-group">
                             <mat-datepicker-toggle [for]="pro_fent"></mat-datepicker-toggle>
                             <mat-datepicker #pro_fent touchUi></mat-datepicker>
-                            <input matInput placeholder="  Fecha Inicial" [(ngModel)]="fechaIni" readonly [matDatepicker]="pro_fent" type="text" class="form-control" name="pro_fent" id="pro_fent">
+                            <input matInput placeholder="  Fecha Inicial" (dateChange)="limpiarfechaFinal()" [(ngModel)]="fechaIni" readonly [matDatepicker]="pro_fent" type="text" class="form-control" name="pro_fent" id="pro_fent">
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">

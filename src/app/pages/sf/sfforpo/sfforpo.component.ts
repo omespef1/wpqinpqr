@@ -17,7 +17,6 @@ import { Sfparam } from 'src/classes/sf/sfparam';
 import * as _moment from 'moment';
 import { Moment } from 'moment';
 import { SfPrint } from 'src/classes/sf/sfprint';
-import { SsuconctRoutingModule } from "../../su/ssuconct/ssuconct-routing.module";
 
 @Component({
   selector: 'app-sfforpo',
@@ -742,21 +741,16 @@ export class SfforpoComponent implements OnInit {
   }
 
   addDdforR() {
-    this.sfddforA.dfo_tipo = 'R';
+
+    this.sfddforR.dfo_tipo = 'R';
 
     if (this.sfddforR.ddf_entc === undefined || this.sfddforR.ddf_entc === '')
       this.showAlertMesssage('Ingrese el nombre de la entidad captadora');
     else {
       this.viewDdforR = false;
 
-      if (this.sfddforA.ddf_feca === null)
-        this.sfddforA.ddf_feca = this.sfparam.dat_null;
-
-      if (this.sfddforA.ddf_fecc === null)
-        this.sfddforA.ddf_fecc = this.sfparam.dat_null;
-
-      if (this.sfddforA.ddf_feci === null)
-        this.sfddforA.ddf_feci = this.sfparam.dat_null;
+      if (this.sfddforR.ddf_feca === null)
+        this.sfddforR.ddf_feca = this.sfparam.dat_null;
 
       if (this.fovis.for_insf === 'P')
         this.sfddforR.con_codi = this.con_codi;
@@ -883,7 +877,7 @@ export class SfforpoComponent implements OnInit {
     }
   }
 
-  emitInfo(dfor: any, type: SsuconctRoutingModule, indexDfore: number) {
+  emitInfo(dfor: any, type: string, indexDfore: number) {
     this.con_codi = dfor.con_codi;
     this.rowCLick.emit();
 
@@ -1016,7 +1010,6 @@ export class SfforpoComponent implements OnInit {
               this.showAlertMesssage(resp.txtRetorno);
           });
         }
-       
         break;
     }
   }
@@ -1044,7 +1037,8 @@ export class SfforpoComponent implements OnInit {
      }
   }
 
-  editarPercaP(perca: InfoAportante) {
+  editarPercaP(perca: InfoAportante) {    
+    perca.ite_tipp = this.sfparam.ite_cont;
     this.InfoSuPerca = perca;
     const i = this.fovis.InfoSfDfomhP.indexOf(perca);
     this.fovis.InfoSfDfomhP.splice( i, 1 );
@@ -1053,6 +1047,7 @@ export class SfforpoComponent implements OnInit {
   }
 
   editarPercaO(perca: InfoAportante) {
+    perca.ite_tipp =  this.sfparam.ite_cont;
     this.InfoOtrosMiembros = perca;
     const i = this.fovis.InfoSfDfomhO.indexOf(perca);
     this.fovis.InfoSfDfomhO.splice( i, 1 );

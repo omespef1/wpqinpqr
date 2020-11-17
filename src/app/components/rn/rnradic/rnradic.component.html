@@ -347,9 +347,9 @@
                                                 <span><i class="fas fa-flag"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnregioA.length == 0" [value]="" class="form-control" name="rnafili_reg_codi" [(ngModel)]="rnafili.reg_codi" (change)="filtrarDeptosA('',rnafili.pai_codi,rnafili.reg_codi)" #rad_regi="ngModel">
-                                            <option [value]="">Seleccione</option>
+                                        <select [disabled]="rnafili.pai_codi === ''" [value]="" class="form-control" name="rnafili_reg_codi" [(ngModel)]="rnafili.reg_codi" (change)="filtrarDeptosA('',rnafili.pai_codi,rnafili.reg_codi)" #rad_regi="ngModel">                                           
                                             <option *ngFor="let region of gnregioA" [value]="region.reg_codi">{{region.reg_nomb | titlecase}}</option>                                           
+                                            <option value="">Seleccione</option>
                                         </select>
                                     </div>
                                 </div>
@@ -361,7 +361,7 @@
                                                 <span><i class="far fa-flag"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gndeparA.length == 0" [value]="" class="form-control" name="rnafili_dep_codi" [(ngModel)]="rnafili.dep_codi" (change)="filtrarMunicA('',rnafili.pai_codi,rnafili.reg_codi,rnafili.dep_codi)" #rad_depa="ngModel">                                                
+                                        <select [disabled]="rnafili.reg_codi === ''" [value]="" class="form-control" name="rnafili_dep_codi" [(ngModel)]="rnafili.dep_codi" (change)="filtrarMunicA('',rnafili.pai_codi,rnafili.reg_codi,rnafili.dep_codi)" #rad_depa="ngModel">                                                
                                                 <option *ngFor="let depto of gndeparA" [value]="depto.dep_codi">{{depto.dep_nomb | titlecase}}</option>
                                                 <option value="">Seleccione</option>
                                         </select>
@@ -375,7 +375,7 @@
                                                 <span><i class="fas fa-city"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnmunicA.length == 0" [value]="" class="form-control" name="rnafili_mun_codi" [(ngModel)]="rnafili.mun_codi" (change)="filtrarLocalA('',rnafili.pai_codi,rnafili.reg_codi,rnafili.dep_codi,rnafili.mun_codi)" #rad_muni="ngModel">                                       
+                                        <select [disabled]="rnafili.dep_codi === ''" [value]="" class="form-control" name="rnafili_mun_codi" [(ngModel)]="rnafili.mun_codi" (change)="filtrarLocalA('',rnafili.pai_codi,rnafili.reg_codi,rnafili.dep_codi,rnafili.mun_codi)" #rad_muni="ngModel">                                       
                                             <option *ngFor="let munic of gnmunicA" [value]="munic.mun_codi">{{munic.mun_nomb | titlecase}}</option>
                                             <option value="">Seleccione</option>
                                         </select>
@@ -389,7 +389,7 @@
                                                 <span><i class="fas fa-map-pin"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnlocalA.length == 0" [value]="" class="form-control" name="rnafili_loc_codi" [(ngModel)]="rnafili.loc_codi" (change)="filtrarBarriA('',rnafili.pai_codi,rnafili.reg_codi,rnafili.dep_codi,rnafili.mun_codi,rnafili.loc_codi)" #rad_loca="ngModel">
+                                        <select [disabled]="rnafili.mun_codi === ''" [value]="" class="form-control" name="rnafili_loc_codi" [(ngModel)]="rnafili.loc_codi" (change)="filtrarBarriA('',rnafili.pai_codi,rnafili.reg_codi,rnafili.dep_codi,rnafili.mun_codi,rnafili.loc_codi)" #rad_loca="ngModel">
                                                 <option *ngFor="let local of gnlocalA" [value]="local.loc_codi">{{local.loc_nomb | titlecase}}</option>
                                                 <option value="">Seleccione</option>
                                         </select>
@@ -403,7 +403,7 @@
                                                 <span><i class="fas fa-map-signs"></i></span>
                                             </div>
                                         </div>
-                                        <select [disabled]="gnbarriA.length == 0" [value]="" class="form-control" name="rnafili_bar_codi" [(ngModel)]="rnafili.bar_codi" #rad_loca="ngModel">                                                
+                                        <select [disabled]="rnafili.loc_codi === ''" [value]="" class="form-control" name="rnafili_bar_codi" [(ngModel)]="rnafili.bar_codi" #rad_loca="ngModel">                                                
                                                 <option *ngFor="let barri of gnbarriA" [value]="barri.bar_codi">{{barri.bar_nomb | titlecase}}</option>
                                                 <option value="">Seleccione</option>
                                         </select>
@@ -490,7 +490,7 @@
                                                 <span><i class="fas fa-mobile-alt"></i></span>
                                             </div>
                                         </div>
-                                        <input name="rnafili_afi_celu" [(ngModel)]="rnafili.afi_celu" type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                        <input name="rnafili_afi_celu" [(ngModel)]="rnafili.afi_celu" type="text" data-toggle="tooltip" placeholder="Celular" data-placement="bottom" class="form-control">
                                     </div>
                                 </div>
 
@@ -649,7 +649,7 @@
                                                 <tr *ngFor="let afili of rnsuafili | paginate: { itemsPerPage: 5, currentPage: p };let i = index">
                                                     <td>
                                                         <button (click)="editarAfili(afili)" type="button" class="btn btn-link btn-sm btn-block">
-                                                            <span><i class="fas fa-edit" title="Edita"></i>                                                                                                                                                                                                         
+                                                            <span><i class="fas fa-edit" title="Editar"></i>                                                                                                                                                                                                         
                                                             </span>
                                                          </button>
                                                     </td>

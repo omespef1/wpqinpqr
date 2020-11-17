@@ -41,7 +41,7 @@ export class InfoAportante {
     public afi_nom2: string;
     public afi_ape1: string;
     public afi_ape2: string;
-    public afi_fecn: string;
+    public afi_fecn = '';
     public afi_esci = '';
     public afi_cate: string;
     public afi_dire: string;

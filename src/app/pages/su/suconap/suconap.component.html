@@ -1,0 +1,843 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.3)" size="large">
+</ngx-spinner>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Consultas Portal Aportantes.</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="accordion mb-5" id="accordionConsultas">
+        <div class="card">
+            <div class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#empresa'" aria-expanded="false">
+                <h6>
+                    Datos Básicos Empresa
+                </h6>
+            </div>
+            <div id="empresa" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionConsultas">
+                <div class="card m-3">
+                    <div class="card-header text-white bg-primary text-left font-weight-bold">
+                        Aportante
+                    </div>
+                    <div class="card-block m-3">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                <label for="tip_abre">Tipo Documento</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <span><i class="fas fa-user"></i></span>
+                                        </div>
+                                    </div>
+                                    <input name="tip_abre" [(ngModel)]="arapovoinfo.tip_abre" type="text" class="form-control" placeholder="Tipo Documento" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                                <label for="apo_coda">Número Documento</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <span><i class="fas fa-user"></i></span>
+                                        </div>
+                                    </div>
+                                    <input name="apo_coda" [(ngModel)]="arapovoinfo.apo_coda" type="text" class="form-control" placeholder="Número Documento" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-xs-12 col-sm-12">
+                                <label for="apo_razs">Razón Social</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <span><i class="fas fa-user"></i></span>
+                                        </div>
+                                    </div>
+                                    <input name="apo_razs" [(ngModel)]="arapovoinfo.apo_razs" type="text" class="form-control" placeholder="Razón Social" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                <label for="apo_fcha">Fecha Afiliación</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <span><i class="fas fa-user"></i></span>
+                                        </div>
+                                    </div>
+                                    <input name="apo_fcha" [(ngModel)]="arapovoinfo.apo_fcha" type="text" class="form-control" placeholder="Fecha Afiliación" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card m-3">
+                    <div class="card-header text-white bg-primary text-left font-weight-bold">
+                        Representante Legal
+                    </div>
+                    <div class="card-block m-3">
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-xs-12 col-sm-12">
+                                <label for="tip_abrr">Tipo Documento</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <span><i class="fas fa-user"></i></span>
+                                        </div>
+                                    </div>
+                                    <input name="tip_abrr" [(ngModel)]="arapovoinfo.tip_abrr" type="text" class="form-control" placeholder="Tipo Doc." readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                <label for="ter_coda">Número Documento</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <span><i class="fas fa-user"></i></span>
+                                        </div>
+                                    </div>
+                                    <input name="ter_coda" [(ngModel)]="arapovoinfo.ter_coda" type="text" class="form-control" placeholder="Número Documento" readonly>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-7 col-xs-12 col-sm-12">
+                                <label for="ter_noco">Nombre Completo</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <span><i class="fas fa-user"></i></span>
+                                        </div>
+                                    </div>
+                                    <input name="ter_noco" [(ngModel)]="arapovoinfo.ter_noco" type="text" class="form-control" placeholder="Nombre Completo" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mb-3">
+                    <app-datagrid-tool #sucursal pageSize="5" [displayedColumns]="['tip_desc', 'dsu_dire','pai_nomb', 'dep_nomb', 'mun_nomb','loc_nomb','bar_nomb','dsu_tele','dsu_celu']" [showColumns]="['Tipo Dirección', 'Dirección','País', 'Departamento', 'Municipio','Localidad','Barrio','Teléfono','Celular']"></app-datagrid-tool>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#trabajador'" aria-expanded="false">
+                <h6>
+                    Trabajador Y Grupo Familiar
+                </h6>
+            </div>
+            <div id="trabajador" class="collapse" aria-labelledby="headingOne" data-parent="#accordionConsultas">
+                <div class="container mt-3 mb-3">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                            <label for="con_cont">Tipo de Documento</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-id-card"></i></span>
+                                    </div>
+                                </div>
+                                <input name="infoOtros_tip_codi" [(ngModel)]="infoafiliatrab.tip_codi" required readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                <input name="infoOtros_tip_nomb" [(ngModel)]="infoafiliatrab.tip_nomb" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                <button (click)="lupaTipoDocumento()" type="button" class="btn btn-primary">
+                            <span><i class="fas fa-search"></i></span>
+                          </button>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                            <label for="afi_docu_otro">Número Documento</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-hashtag"></i></span>
+                                    </div>
+                                </div>
+                                <input type="text" name="afi_docu_otro" required [(ngModel)]="infoafiliatrab.afi_docu" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Número Documento" autocomplete="off">
+                                <button (click)="getInfoAfilitrab()" type="button" class="btn btn-success btn-md ml-4">Consultar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Nombre Completo</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="afi_noco" [(ngModel)]="infoafiliatrab.afi_noco" type="text" class="form-control" placeholder="Nombre Completo" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Fecha Nacimiento</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="afi_docu" [(ngModel)]="infoafiliatrab.afi_fecn" type="text" class="form-control" placeholder="Fecha Nacimiento" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Fecha Ingreso</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="afi_docu" [(ngModel)]="infoafiliatrab.afi_fecn" type="text" class="form-control" placeholder="Fecha Ingreso" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Fecha Afiliación</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="afi_docu" [(ngModel)]="infoafiliatrab.afi_fecn" type="text" class="form-control" placeholder="Fecha Afiliación" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Dirección</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="afi_dire" [(ngModel)]="infoafiliatrab.afi_dire" type="text" class="form-control" placeholder="Dirección" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Teléfono</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="afi_tele" [(ngModel)]="infoafiliatrab.afi_tele" type="text" class="form-control" placeholder="Teléfono" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                            <label for="afi_noco">País</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="pai_nomb" [(ngModel)]="infoafiliatrab.pai_nomb" type="text" class="form-control" placeholder="País" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Departamento</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="dep_nomb" [(ngModel)]="infoafiliatrab.dep_nomb" type="text" class="form-control" placeholder="Departamento" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Municipio</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="mun_nomb" [(ngModel)]="infoafiliatrab.mun_nomb" type="text" class="form-control" placeholder="Municipio" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Localidad</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="loc_nomb" [(ngModel)]="infoafiliatrab.loc_nomb" type="text" class="form-control" placeholder="Localidad" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
+                            <label for="afi_noco">Barrio</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input name="bar_nomb" [(ngModel)]="infoafiliatrab.bar_nomb" type="text" class="form-control" placeholder="Barrio" readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <app-datagrid-tool #grupoFam pageSize="5" [displayedColumns]="['tip_abre', 'afi_docu','afi_noco', 'mpa_nomb', 'afi_fecn', 'afi_feca']" [showColumns]="['Tipo Documento', 'Número Documento','Nombre Completo', 'Parentesco', 'Fecha Nacimiento', 'Fecha Afiliación']"></app-datagrid-tool>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#novedades'" aria-expanded="false">
+                <h6>
+                    Solicitudes y Novedades Empresa
+                </h6>
+            </div>
+            <div id="novedades" class="collapse" aria-labelledby="headingOne" data-parent="#accordionConsultas">
+                <div class="card-body" style="border-bottom: 0.5px solid grey;">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-5 col-xs-12 col-sm-12">
+                            <label for="dim_feci">Fecha Inicial Radicación</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="dim_feci"></mat-datepicker-toggle>
+                                <mat-datepicker #dim_feci touchUi></mat-datepicker>
+                                <input [(ngModel)]="rad_feci" matInput placeholder="  Fecha Inicial" required readonly [matDatepicker]="dim_feci" type="text" class="form-control" name="dim_feci">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-5 col-xs-12 col-sm-12">
+                            <label for="dim_fecf">Fecha Final Radicación</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="dim_fecf"></mat-datepicker-toggle>
+                                <mat-datepicker #dim_fecf touchUi></mat-datepicker>
+                                <input [(ngModel)]="rad_fecf" matInput placeholder="  Fecha Final" required readonly [matDatepicker]="dim_fecf" type="text" class="form-control" name="dim_fecf">
+                                <button (click)="getInfoNovedades()" type="button" class="btn btn-success btn-md ml-4">Consultar</button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-2">
+                            <app-datagrid-tool #novedades pageSize="5" [displayedColumns]="['rad_nume', 'rad_fech','cra_nomb', 'rad_esta', 'rad_fecc']" [showColumns]="['Número Radicado', 'Fecha Radicado','Tipo Solicitud', 'Estado', 'Fecha']"></app-datagrid-tool>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#novedadesTrab'" aria-expanded="false">
+                <h6>
+                    Afiliaciones y Novedades Trabajador
+                </h6>
+            </div>
+            <div id="novedadesTrab" class="collapse" aria-labelledby="headingOne" data-parent="#accordionConsultas">
+                <div class="card-body" style="border-bottom: 0.5px solid grey;">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                            <label for="con_cont">Tipo de Documento</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-id-card"></i></span>
+                                    </div>
+                                </div>
+                                <input name="tip_codi_trab" [(ngModel)]="tip_codi_trab" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                <input name="tip_nomb_trab" [(ngModel)]="tip_nomb_trab" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                <button (click)="lupaTipoDocumentoTra()" type="button" class="btn btn-primary">
+                            <span><i class="fas fa-search"></i></span>
+                          </button>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                            <label for="afi_docu_trab">Número Documento</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-hashtag"></i></span>
+                                    </div>
+                                </div>
+                                <input type="text" name="afi_docu_trab" [(ngModel)]="afi_docu_trab" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Número Documento" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-5 col-xs-12 col-sm-12">
+                            <label for="dim_feci_trab">Fecha Inicial Radicación</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="dim_feci_trab"></mat-datepicker-toggle>
+                                <mat-datepicker #dim_feci_trab touchUi></mat-datepicker>
+                                <input [(ngModel)]="rad_feci_trab" matInput placeholder="  Fecha Inicial" readonly [matDatepicker]="dim_feci_trab" type="text" class="form-control" name="dim_feci">
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-5 col-xs-12 col-sm-12">
+                            <label for="dim_fecf_trab">Fecha Final Radicación</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="dim_fecf_trab"></mat-datepicker-toggle>
+                                <mat-datepicker #dim_fecf_trab touchUi></mat-datepicker>
+                                <input [(ngModel)]="rad_fecf_trab" matInput placeholder="  Fecha Final" readonly [matDatepicker]="dim_fecf_trab" type="text" class="form-control" name="dim_fecf">
+                                <button (click)="getInfoNovedadesTrab()" type="button" class="btn btn-success btn-md ml-4">Consultar</button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-2">
+                            <app-datagrid-tool #novedadesTrab pageSize="5" [displayedColumns]="['rad_nume', 'rad_fech','cra_nomb', 'rad_esta', 'rad_fecc']" [showColumns]="['Número Radicado', 'Fecha Radicado','Tipo Solicitud', 'Estado', 'Fecha']"></app-datagrid-tool>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#aportesTrab'" aria-expanded="false">
+                <h6>
+                    Pago de Aportes Trabajador
+                </h6>
+            </div>
+            <div id="aportesTrab" class="collapse" aria-labelledby="headingOne" data-parent="#accordionConsultas">
+                <div class="card-body" style="border-bottom: 0.5px solid grey;">
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                            <label for="con_cont">Tipo de Documento</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-id-card"></i></span>
+                                    </div>
+                                </div>
+                                <input required name="tip_codi_apor_trab" [(ngModel)]="tip_codi_apor_trab" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                <input name="tip_nomb_apor_trab" [(ngModel)]="tip_nomb_apor_trab" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                <button (click)="lupaTipoDocumentoApoTra()" type="button" class="btn btn-primary">
+                            <span><i class="fas fa-search"></i></span>
+                          </button>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                            <label for="afi_docu_trab">Número Documento</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-hashtag"></i></span>
+                                    </div>
+                                </div>
+                                <input required type="text" name="afi_docu_apor_trab" [(ngModel)]="afi_docu_apor_trab" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Número Documento" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" *ngIf="infoAportes?.length">
+                            <label for="afi_noco">Nombre Trabajador</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-user"></i></span>
+                                    </div>
+                                </div>
+                                <input required type="text" name="afi_noco" [(ngModel)]="infoAportes[0].afi_noco" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Número Documento" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-xs-12 col-sm-12">
+                            <label for="rpi_peri">Periodo Pago Inicial</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="rpi_peri"></mat-datepicker-toggle>
+                                <mat-datepicker #rpi_peri touchUi startView="multi-year" (monthSelected)="setPeriodoInicial($event, rpi_peri)"></mat-datepicker>
+                                <input hidden readonly [matDatepicker]="rpi_peri" type="text" class="form-control" name="peri">
+                                <input required [(ngModel)]="rpiperi" type="text" autocomplete="off" readonly class="form-control" placeholder="P. Inicial" name="rpi_peri" id="rpi_peri">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                            <label for="rpi_perf">Periodo Pago Final</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="rpi_perf"></mat-datepicker-toggle>
+                                <mat-datepicker #rpi_perf touchUi startView="multi-year" (monthSelected)="setPeriodoFinal($event, rpi_perf)"></mat-datepicker>
+                                <input hidden readonly [matDatepicker]="rpi_perf" type="text" class="form-control" name="perf">
+                                <input required [(ngModel)]="rpiperf" type="text" autocomplete="off" readonly class="form-control" placeholder="P. Final" name="rpi_perf" id="rpi_perf">
+                                <button (click)="getInfoAportes()" type="button" class="btn btn-success btn-md ml-4">Consultar</button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <app-datagrid-tool #aportes [pageSize]="5" [displayedColumns]="['rpi_peri', 'rpi_nura', 'rpi_fchp', 'dri_sapb']" [showColumns]="['Periodo', 'Planilla', 'Fecha de Pago','Valor Aporte']"></app-datagrid-tool>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" *ngIf="infoAportes?.length">
+                            <label for="for_td"> </label>
+                            <div class="input-group mt-2">
+                                <button (click)="printReportAportes()" class="btn btn-secondary btn-md btn-block">
+                              <span><i class="fas fa-print"></i> &nbsp;Generar Certificado Pago Aportes</span>
+                          </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#pagoSubsidios'" aria-expanded="false">
+                <h6>
+                    Pago Subsidio Trabajador
+                </h6>
+            </div>
+            <div id="pagoSubsidios" class="collapse" aria-labelledby="headingOne" data-parent="#accordionConsultas">
+                <div class="card-body" style="border-bottom: 0.5px solid grey;">
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                            <label for="con_cont">Tipo de Documento</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-id-card"></i></span>
+                                    </div>
+                                </div>
+                                <input required name="tip_codi_subs_trab" [(ngModel)]="tip_codi_subs_trab" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                <input name="tip_nomb_subs_trab" [(ngModel)]="tip_nomb_subs_trab" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                <button (click)="lupaTipoDocumentoSubTra()" type="button" class="btn btn-primary">
+                            <span><i class="fas fa-search"></i></span>
+                          </button>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+                            <label for="afi_docu_trab">Número Documento</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">
+                                        <span><i class="fas fa-hashtag"></i></span>
+                                    </div>
+                                </div>
+                                <input required type="text" name="afi_docu_subs_trab" [(ngModel)]="afi_docu_subs_trab" data-toggle="tooltip" data-placement="bottom" class="form-control" placeholder="Número Documento" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="hgi_peri">Periodo Pago Inicial</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="hgi_peri"></mat-datepicker-toggle>
+                                <mat-datepicker #hgi_peri touchUi startView="multi-year" (monthSelected)="sethgiperi($event, hgi_peri)"></mat-datepicker>
+                                <input hidden readonly [matDatepicker]="hgi_peri" type="text" class="form-control" name="peri">
+                                <input required [(ngModel)]="hgiperi" type="text" autocomplete="off" readonly class="form-control" placeholder="P. Inicial" name="hgi_peri" id="hgi_peri">
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-xs-12 col-sm-12">
+                            <label for="hgi_perf">Periodo Pago Final</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="hgi_perf"></mat-datepicker-toggle>
+                                <mat-datepicker #hgi_perf touchUi startView="multi-year" (monthSelected)="sethgiperf($event, hgi_perf)"></mat-datepicker>
+                                <input hidden readonly [matDatepicker]="hgi_perf" type="text" class="form-control" name="perf">
+                                <input required [(ngModel)]="hgiperf" type="text" autocomplete="off" readonly class="form-control" placeholder="P. Final" name="hgi_perf" id="hgi_perf">
+                                <button (click)="getInfoSubsidios()" type="button" class="btn btn-success btn-md ml-4">Consultar</button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <app-datagrid-tool #subsidios [pageSize]="5" [displayedColumns]="['hgi_perp', 'hgi_fech','hgi_valg']" [showColumns]="['Periodo Pago', 'Fecha de Liquidación','Valor Subsidio']"></app-datagrid-tool>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" *ngIf="infoSubsidios?.length">
+                            <label for="for_td"> </label>
+                            <div class="input-group mt-2">
+                                <button (click)="printReportSubsidio()" class="btn btn-secondary btn-md btn-block">
+                              <span><i class="fas fa-print"></i> &nbsp;Generar Certificado Liquidación de Subsidio</span>
+                          </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#pagoAportesEmpresa'" aria-expanded="false">
+                <h6>
+                    Pago de Aportes Empresa
+                </h6>
+            </div>
+            <div id="pagoAportesEmpresa" class="collapse" aria-labelledby="headingOne" data-parent="#accordionConsultas">
+                <div class="card-body" style="border-bottom: 0.5px solid grey;">
+                    <div class="row">
+
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="rpi_peri_emp">Periodo Pago Inicial</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="rpi_peri_emp"></mat-datepicker-toggle>
+                                <mat-datepicker #rpi_peri_emp touchUi startView="multi-year" (monthSelected)="setPeriodoInicialEmp($event, rpi_peri_emp)"></mat-datepicker>
+                                <input hidden readonly [matDatepicker]="rpi_peri_emp" type="text" class="form-control" name="peri">
+                                <input required [(ngModel)]="rpiperiemp" type="text" autocomplete="off" readonly class="form-control" placeholder="P. Inicial" name="rpi_peri_emp" id="rpi_peri_emp">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-5 col-md-5 col-xs-12 col-sm-12">
+                            <label for="rpi_perf_emp">Periodo Pago Final</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="rpi_perf_emp"></mat-datepicker-toggle>
+                                <mat-datepicker #rpi_perf_emp touchUi startView="multi-year" (monthSelected)="setPeriodoFinalEmp($event, rpi_perf_emp)"></mat-datepicker>
+                                <input hidden readonly [matDatepicker]="rpi_perf_emp" type="text" class="form-control" name="perf">
+                                <input required [(ngModel)]="rpiperfemp" type="text" autocomplete="off" readonly class="form-control" placeholder="P. Final" name="rpi_perf_emp" id="rpi_perf_emp">
+                                <button (click)="getInfoAportesEmpresa()" type="button" class="btn btn-success btn-md ml-4">Consultar</button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <app-datagrid-tool #aportesEmpresa [pageSize]="5" [displayedColumns]="['rpi_peri', 'rpi_fchp', 'dri_sapb', 'rpi_mora','rpi_devo','tot_apor']" [showColumns]="['Periodo', 'Fecha de Pago','Valor Aporte', 'Valor Intereses', 'Devoluciones', 'Total Aporte']"></app-datagrid-tool>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" *ngIf="infoAportesEmp?.length">
+                            <label for="for_td"> </label>
+                            <div class="input-group mt-2">
+                                <button (click)="printReportAportesEmpresa()" class="btn btn-secondary btn-md btn-block">
+                              <span><i class="fas fa-print"></i> &nbsp;Generar Certificado Aportes</span>
+                          </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#aporteFiscal'" aria-expanded="false">
+                <h6>
+                    Aporte Año Fiscal
+                </h6>
+            </div>
+            <div id="aporteFiscal" class="collapse" aria-labelledby="headingOne" data-parent="#accordionConsultas">
+                <div class="card-body" style="border-bottom: 0.5px solid grey;">
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                            <label for="rpi_peri_fis">Año Fiscal</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="rpi_peri_fis"></mat-datepicker-toggle>
+                                <mat-datepicker #rpi_peri_fis touchUi startView="multi-year" (yearSelected)="setPeriodoFiscal($event, rpi_peri_fis)"></mat-datepicker>
+                                <input hidden readonly [matDatepicker]="rpi_peri_fis" type="text" class="form-control" name="perf">
+                                <input required [(ngModel)]="rpiperifis" type="text" autocomplete="off" readonly class="form-control" placeholder="P. Final" name="rpi_peri_fis" id="rpi_peri_fis">
+                                <button (click)="getInfoAportesFiscal()" type="button" class="btn btn-success btn-md ml-4">Consultar</button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <app-datagrid-tool #aportesFiscal [pageSize]="5" [displayedColumns]="['rpi_peri', 'dri_sibc', 'dri_sapb', 'rpi_devo','tot_apor']" [showColumns]="['Periodo', 'Nomina IBC','Valor Aporte', 'Devoluciones', 'Total Aporte']"></app-datagrid-tool>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" *ngIf="infoAportesFis?.length">
+                            <label for="for_td"> </label>
+                            <div class="input-group mt-2">
+                                <button (click)="printReportAportesFiscal()" class="btn btn-secondary btn-md btn-block">
+                              <span><i class="fas fa-print"></i> &nbsp;Generar Certificado Pago Aportes</span>
+                          </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#devoluciones'" aria-expanded="false">
+                <h6>
+                    Devoluciones
+                </h6>
+            </div>
+            <div id="devoluciones" class="collapse" aria-labelledby="headingOne" data-parent="#accordionConsultas">
+                <div class="card-body" style="border-bottom: 0.5px solid grey;">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="rad_feci_dev">Fecha Inicial Radicación</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="rad_feci_dev"></mat-datepicker-toggle>
+                                <mat-datepicker #rad_feci_dev touchUi></mat-datepicker>
+                                <input [(ngModel)]="radfecidev" matInput placeholder="  Fecha Inicial" required readonly [matDatepicker]="rad_feci_dev" type="text" class="form-control" name="rad_feci_dev">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                            <label for="rad_fecf_dev">Fecha Final Radicación</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="rad_fecf_dev"></mat-datepicker-toggle>
+                                <mat-datepicker #rad_fecf_dev touchUi></mat-datepicker>
+                                <input [(ngModel)]="radfecfdev" matInput placeholder="  Fecha Final" required readonly [matDatepicker]="rad_fecf_dev" type="text" class="form-control" name="rad_fecf_dev">
+                                <button (click)="getInfoDevoluciones()" type="button" class="btn btn-success btn-md ml-4">Consultar</button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <div class="table-responsive mt-3" *ngIf="infoDevoluciones?.length">
+                                <table class="table table-hover table-striped table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">Número Radicado</th>
+                                            <th scope="col">Fecha Radicado</th>
+                                            <th scope="col">Tipo Solicitud</th>
+                                            <th scope="col">Estado</th>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let devo of infoDevoluciones;let j = index;">
+                                            <td>{{ devo.rad_nume }}</td>
+                                            <td>{{ devo.rad_fech }}</td>
+                                            <td>{{ devo.cra_nomb }}</td>
+                                            <td>{{ devo.rad_esta }}</td>
+                                            <td>{{ devo.rad_fecc }}</td>
+                                            <td>
+                                                <button (click)="showDetalleDevo(devo.rad_cont)" type="button" class="btn btn-link btn-sm btn-block">
+                                                    <span><i class="fas fa-search" title="Ver Devolución"></i>
+                                                    </span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header text-white bg-primary text-left font-weight-bold" data-toggle="collapse" [attr.data-target]="'#subsidioEmpresa'" aria-expanded="false">
+                <h6>
+                    Pago Subsidio Empresa
+                </h6>
+            </div>
+            <div id="subsidioEmpresa" class="collapse" aria-labelledby="headingOne" data-parent="#accordionConsultas">
+                <div class="card-body" style="border-bottom: 0.5px solid grey;">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                            <label for="hgi_peri_sub">Periodo Pago Inicial</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="hgi_peri_sub"></mat-datepicker-toggle>
+                                <mat-datepicker #hgi_peri_sub touchUi startView="multi-year" (monthSelected)="sethgiperiSub($event, hgi_peri_sub)"></mat-datepicker>
+                                <input hidden readonly [matDatepicker]="hgi_peri_sub" type="text" class="form-control" name="peri">
+                                <input required [(ngModel)]="hgiperisub" type="text" autocomplete="off" readonly class="form-control" placeholder="P. Inicial" name="hgi_peri_sub" id="hgi_peri_sub">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                            <label for="hgi_perf_sub">Periodo Pago Final</label>
+                            <div class="input-group">
+                                <mat-datepicker-toggle [for]="hgi_perf_sub"></mat-datepicker-toggle>
+                                <mat-datepicker #hgi_perf_sub touchUi startView="multi-year" (monthSelected)="sethgiperfSub($event, hgi_perf_sub)"></mat-datepicker>
+                                <input hidden readonly [matDatepicker]="hgi_perf_sub" type="text" class="form-control" name="perf">
+                                <input required [(ngModel)]="hgiperfsub" type="text" autocomplete="off" readonly class="form-control" placeholder="P. Final" name="hgi_perf_sub" id="hgi_perf_sub">
+                                <button (click)="getInfoSubsidiosEmp()" type="button" class="btn btn-success btn-md ml-4">Consultar</button>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12 mt-2">
+                            <app-datagrid-tool #subsidiosEmp pageSize="5" [displayedColumns]="['hgi_perp','hgi_valg','hgi_esta','hgi_fech','hgi_nutr','hgi_nube']" [showColumns]="['Periodo Pago', 'Valor Subsidio','Estado','Fecha Liquidación', 'Nro. Trabajadores', 'Nro. Beneficiarios']"></app-datagrid-tool>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12" *ngIf="infoSubsidiosEmp?.length">
+                            <label for="for_td"> </label>
+                            <div class="input-group mt-2">
+                                <button (click)="printReportSubsidioEmpresa()" class="btn btn-secondary btn-md btn-block">
+                              <span><i class="fas fa-print"></i> &nbsp;Generar Certificado Pago Aportes</span>
+                          </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button id="btnModalDevoluciones" hidden type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalDevoluciones">
+    Launch demo modal
+</button>
+<div class="modal fade" id="modalDevoluciones" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="card card-gray m-2">
+                    <div class="card-header bg-primary text-white">Información Devolución</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-xs-12 col-sm-12">
+                                <label for="rpi_peri_dev">Periodo</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <span><i class="fas fa-user"></i></span>
+                                        </div>
+                                    </div>
+                                    <input name="rpi_peri_dev" [(ngModel)]="detalleDevolucion.rpi_peri" type="text" class="form-control" placeholder="Periodo" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-5 col-md-5 col-xs-12 col-sm-12">
+                                <label for="rpi_nura_dev">Número de Planilla</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <span><i class="fas fa-hashtag"></i></span>
+                                        </div>
+                                    </div>
+                                    <input name="rpi_nura_dev" [(ngModel)]="detalleDevolucion.rpi_nura" type="text" class="form-control" placeholder="Número de Planilla" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                <label for="rde_tipo_dev">Tipo</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <span><i class="fas fa-user"></i></span>
+                                        </div>
+                                    </div>
+                                    <input name="rde_tipo_dev" [(ngModel)]="detalleDevolucion.rde_tipo" type="text" class="form-control" placeholder="Tipo" readonly>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <label for="con_cont">Beneficiario</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <span><i class="fas fa-id-card"></i></span>
+                                        </div>
+                                    </div>
+                                    <input name="ter_coda" [(ngModel)]="detalleDevolucion.ter_coda" readonly type="text" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                    <input name="ter_noco" [(ngModel)]="detalleDevolucion.ter_noco" readonly type="text" style="width: 65%;" data-toggle="tooltip" data-placement="bottom" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-xs-12 col-sm-12">
+                                <label for="rde_tipo_dev">Valor Devolución</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <span><i class="fas fa-dollar-sign"></i></span>
+                                        </div>
+                                    </div>
+                                    <input name="rde_devo_dev" [(ngModel)]="detalleDevolucion.rde_devo" type="text" class="form-control" placeholder="Valor Devolución" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-alert-message [message]="msg"></app-alert-message>
+<app-new-table-search Title="Tipo Documento" [displayedColumns]="['TIP_CODI', 'TIP_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setTipDocto($event)" btnModalQb="btnTipDocu" ModalQb="modalTipDocu" #modalTipDocu></app-new-table-search>
+<app-new-table-search Title="Tipo Documento" [displayedColumns]="['TIP_CODI', 'TIP_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setTipDoctoTra($event)" btnModalQb="btnTipDocuTra" ModalQb="modalTipDocuTra" #modalTipDocuTra></app-new-table-search>
+<app-new-table-search Title="Tipo Documento" [displayedColumns]="['TIP_CODI', 'TIP_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setTipDoctoApoTra($event)" btnModalQb="btnTipDocuApoTra" ModalQb="modalTipDocuApoTra" #modalTipDocuApoTra></app-new-table-search>
+<app-new-table-search Title="Tipo Documento" [displayedColumns]="['TIP_CODI', 'TIP_NOMB']" [showColumns]="['Código', 'Nombre']" (rowCLick)="setTipDoctoSubTra($event)" btnModalQb="btnTipDocuSubTra" ModalQb="modalTipDocuSubTra" #modalTipDocuSubTra></app-new-table-search>

@@ -288,7 +288,6 @@ export class RnradicComponent implements OnInit {
         this.SRN000001 = resp.objTransaction.SRN000001;
         this.SRN000002 = resp.objTransaction.SRN000002;
         this.radic.cen_codi = resp.objTransaction.cen_codi;
-        console.log(this.tipvinc);
       } else
         this.showAlertMesssage(`${resp.txtRetorno}`);
 
@@ -298,6 +297,9 @@ export class RnradicComponent implements OnInit {
         this.radic.rad_dire = '.';
         this.radic.rad_emai = '.';
       }
+
+      this.LoadActualAportante();
+
       this.spinner.hide();
     }, err => {
       console.log(err);
@@ -318,6 +320,28 @@ export class RnradicComponent implements OnInit {
         this.lupaClasificacion();
     }
   }
+
+  LoadActualAportante() {
+
+    let query = 'api/RnRadic/RnRadicLoadAportante?';
+    query += `usu_codi=${this.radic.usu_codi}`;
+
+    this._comu.Get(query, this.radic.emp_codi).subscribe((resp: ToTransaction) => {
+      if (resp.retorno === 0) {
+        this.rnafili.tia_cont = resp.objTransaction.TIA_CONT;
+        this.rnafili.tia_codi = resp.objTransaction.TIA_CODI;
+        this.rnafili.tia_nomb = resp.objTransaction.TIA_NOMB;
+        this.rnafili.apo_cont = resp.objTransaction.APO_CONT;
+        this.rnafili.apo_coda = resp.objTransaction.APO_CODA;
+        this.rnafili.apo_razs = resp.objTransaction.APO_RAZS;
+      }
+    }, err => {
+      console.log(err);
+
+      this.showAlertMesssage(`Error conectando con el servidor, verfique que el servidor configurado esté escrito correctamente`);
+    });
+  }
+
 
   async LoadSucursal() {
     // tslint:disable-next-line:max-line-length
@@ -388,9 +412,6 @@ export class RnradicComponent implements OnInit {
   }
 
   lupaDocumentoTrabajador() {
-    
-    // this.loadAfiliados();
-    console.log(this.suafiliInit);
     this._tableDocumento.btnModalQb = 'btnDocumento';
     this._tableDocumento.ModalQb = 'modalDocumento';
     this._tableDocumento.render(this.suafiliInit);
@@ -1009,12 +1030,15 @@ cleanDataForm() {
       this.showAlertMesssage('El Documento: ' + this.rnafili.afi_docu + ' ya se adicionó.' );
 
     this.rnafili = new RnAfili();
+    this.LoadActualAportante();
   }
 
-  editarAfili(afili: RnAfili) {
+ async editarAfili(afili: RnAfili) {
+    console.log(afili);
     this.rnafili = afili;
     const i = this.rnsuafili.indexOf(afili);
     this.rnsuafili.splice( i, 1 );
+    await this.filtrarRegionesA('', afili.pai_codi);
   }
 
   eliminarAfili(afili: RnAfili) {
@@ -1024,7 +1048,7 @@ cleanDataForm() {
     this.rnafili = new RnAfili();
   }
 
-  filtrarRegionesA(type: string, _pai_codi: number) {
+  filtrarRegionesA(type: string, _pai_codi: string) {
 
     let query = 'api/CtPropo/LoadRegiones?';
     query += `pai_codi=${_pai_codi}`;
@@ -1039,7 +1063,8 @@ cleanDataForm() {
 
       if (resp.retorno === 0) {
         this.gnregioA = resp.objTransaction.GnRegio;
-        this.rnafili.reg_codi = undefined;
+        if (this.rnafili.pai_codi !== '' && this.rnafili.reg_codi !== '')
+          this.filtrarDeptosA('', this.rnafili.pai_codi, this.rnafili.reg_codi);
       } else {
         this.showAlertMesssage(`${resp.txtRetorno}`);
       }
@@ -1048,7 +1073,7 @@ cleanDataForm() {
     });
   }
 
-  filtrarDeptosA(type: string, _pai_codi: number, _reg_codi: number) {
+  filtrarDeptosA(type: string, _pai_codi: string, _reg_codi: string) {
 
     let query = 'api/CtPropo/LoadDeptos?';
     query += `pai_codi=${_pai_codi}`;
@@ -1063,9 +1088,10 @@ cleanDataForm() {
 
       if (resp.retorno === 0) {
         this.gndeparA = resp.objTransaction.GnDepar;
-      } else {
+        if (this.rnafili.pai_codi !== '' && this.rnafili.reg_codi !== '' && this.rnafili.dep_codi !== '')
+          this.filtrarMunicA('', this.rnafili.pai_codi, this.rnafili.reg_codi, this.rnafili.dep_codi);
+      } else
         this.showAlertMesssage(`${resp.txtRetorno}`);
-      }
     }, err => {
       console.log(err);
       // this.spinner.hide();
@@ -1073,7 +1099,7 @@ cleanDataForm() {
     });
   }
 
-  filtrarMunicA(type: string, _pai_codi: number, _reg_codi: number, _dep_codi: number) {
+  filtrarMunicA(type: string, _pai_codi: string, _reg_codi: string, _dep_codi: string) {
 
     let query = 'api/CtPropo/LoadMunic?';
     query += `pai_codi=${_pai_codi}`;
@@ -1088,6 +1114,8 @@ cleanDataForm() {
 
       if (resp.retorno === 0) {
         this.gnmunicA = resp.objTransaction.GnMunic;
+        if (this.rnafili.pai_codi !== '' && this.rnafili.reg_codi !== '' && this.rnafili.dep_codi !== '' &&  this.rnafili.mun_codi !== '')
+          this.filtrarLocalA('', this.rnafili.pai_codi, this.rnafili.reg_codi, this.rnafili.dep_codi, this.rnafili.mun_codi);
       } else {
         // this.spinner.hide();
         this.showAlertMesssage(`${resp.txtRetorno}`);
@@ -1099,7 +1127,7 @@ cleanDataForm() {
     });
   }
 
-  filtrarLocalA(type: string, _pai_codi: number, _reg_codi: number, _dep_codi: number, _mun_codi: number) {
+  filtrarLocalA(type: string, _pai_codi: string, _reg_codi: string, _dep_codi: string, _mun_codi: string) {
 
     let query = 'api/CtPropo/LoadLocal?';
     query += `pai_codi=${_pai_codi}`;
@@ -1114,6 +1142,10 @@ cleanDataForm() {
 
       if (resp.retorno === 0) {
         this.gnlocalA = resp.objTransaction.GnLocal;
+        // tslint:disable-next-line:max-line-length
+        if (this.rnafili.pai_codi !== '' && this.rnafili.reg_codi !== '' && this.rnafili.dep_codi !== '' &&  this.rnafili.mun_codi !== '' && this.rnafili.loc_codi !== '')
+        // tslint:disable-next-line:max-line-length
+        this.filtrarBarriA('', this.rnafili.pai_codi, this.rnafili.reg_codi, this.rnafili.dep_codi, this.rnafili.mun_codi, this.rnafili.loc_codi);
       } else {
        // this.spinner.hide();
         this.showAlertMesssage(`${resp.txtRetorno}`);
@@ -1125,7 +1157,7 @@ cleanDataForm() {
     });
   }
 
-  filtrarBarriA(type: string, _pai_codi: number, _reg_codi: number, _dep_codi: number, _mun_codi: number, _loc_codi: number) {
+  filtrarBarriA(type: string, _pai_codi: string, _reg_codi: string, _dep_codi: string, _mun_codi: string, _loc_codi: string) {
 
     let query = 'api/CtPropo/LoadBarri?';
     query += `pai_codi=${_pai_codi}`;
@@ -1136,7 +1168,7 @@ cleanDataForm() {
 
     this._comu.Get(query, this.radic.emp_codi).subscribe((resp: any) => {
 
-      this.gnbarri = [];
+      this.gnbarriA = [];
 
       if (resp.retorno === 0) {
         this.gnbarriA = resp.objTransaction.GnBarri;
