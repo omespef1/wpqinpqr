@@ -62,6 +62,7 @@ export class RnradicComponent implements OnInit {
   @Input() gntipdE: any[];
   @Input() artiapo: any[];
   @Input() arapovo: any[];
+  @Input() arapovoafil: any[];
   @Input() rngrura: any[];
   @Input() gnprofe: any[];
   @Input() gnconde: any[];
@@ -278,6 +279,7 @@ export class RnradicComponent implements OnInit {
         this.gntipdo = resp.objTransaction.GnTipdo;
         this.gntipdE = resp.objTransaction.GnTipdo;
         this.arapovo = resp.objTransaction.arapovo;
+        this.arapovoafil = resp.objTransaction.arapovoafil;
         this.rngrura = resp.objTransaction.rngrura;
         this.sumpare = resp.objTransaction.SuMpare;
         this.gnprofe = resp.objTransaction.gnprofe;
@@ -298,7 +300,7 @@ export class RnradicComponent implements OnInit {
         this.radic.rad_emai = '.';
       }
 
-      this.LoadActualAportante();
+     // this.LoadActualAportante();
 
       this.spinner.hide();
     }, err => {
@@ -407,7 +409,7 @@ export class RnradicComponent implements OnInit {
   lupaDocAportante() {
     this._tableDocAportante.btnModalQb = 'btnDocAportante';
     this._tableDocAportante.ModalQb = 'modalDocAportante';
-    this._tableDocAportante.render(this.arapovo);
+    this._tableDocAportante.render(this.arapovoafil);
     this._tableDocAportante.show();
   }
 
@@ -1030,7 +1032,7 @@ cleanDataForm() {
       this.showAlertMesssage('El Documento: ' + this.rnafili.afi_docu + ' ya se adicionó.' );
 
     this.rnafili = new RnAfili();
-    this.LoadActualAportante();
+    // this.LoadActualAportante();
   }
 
  async editarAfili(afili: RnAfili) {

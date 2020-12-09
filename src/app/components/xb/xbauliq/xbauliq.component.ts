@@ -72,7 +72,7 @@ export class XbauliqComponent implements OnInit {
     this.loadCompanies();
   }
 
-  GetSettings() {
+  GetSettings() {    
     this.GetFaclien();
     this.GetXbPceca();
     this.GetFaddina();
@@ -81,7 +81,6 @@ export class XbauliqComponent implements OnInit {
   }
   GetXbPceca() {
     this._xbpceca.GetXbPceca(this.emp_codi).subscribe(resp => {
-      console.log(resp);
       if (resp.Retorno == 0) {
         this.xbpceca = resp.ObjTransaction;
       }
@@ -103,7 +102,6 @@ export class XbauliqComponent implements OnInit {
       )
       .subscribe(resp => {
         this.loading = false;
-        console.log(resp);
         if (resp.Retorno === 0) {
           this.cacxcob = resp.ObjTransaction;
          
@@ -112,9 +110,6 @@ export class XbauliqComponent implements OnInit {
   }
 
   loadCompanies() {
-
-  console.log('aqui');
-
     this.spinner.show();
     this._gnempre.GetGnEmpre(this.usu_codi).subscribe((resp: any) => {
       this.companies = resp.objTransaction;
@@ -129,7 +124,6 @@ export class XbauliqComponent implements OnInit {
     this.spinner.show();
     this._terce.GetGnTerce(this.usu_codi).subscribe(resp => {
       this.spinner.hide();
-      console.log(resp);
       if (resp.Retorno === 0) {
         this.ter_noco = resp.ObjTransaction.ter_noco;
       }
@@ -146,7 +140,6 @@ export class XbauliqComponent implements OnInit {
   async GetUrlParams() {
     try {
       this.route.queryParamMap.subscribe(queryParams => {
-        console.log(queryParams.get("client"));
         if (queryParams.get("client") == null)
           throw new error("Acceso no autorizado");
         this.client = atob(queryParams.get("client"));
