@@ -156,8 +156,15 @@ export class RnradicComponent implements OnInit {
     this.spinner.show();
     this._comu.Get(`api/gnempre?usu_codi=${this.radic.usu_codi}`).subscribe((resp: any) => {
       this.companies = resp.objTransaction;
-      this.spinner.hide();
-      this.modal.present();
+
+      if (this.companies !== null && this.companies.length === 1) {
+        this.emp_codi = this.companies[0].emp_codi;
+        this.Load();
+        this.loadAfiliados();
+      } else {
+        this.spinner.hide();
+        this.modal.present();
+      }
     });
   }
 
@@ -172,15 +179,22 @@ export class RnradicComponent implements OnInit {
   }
 
    clear() {
-
     this.radic = new RnRadic();
     this.uploader.clearQueue();
+    this.ite_depe = '';
     this.radic.emp_codi = this.emp_codi;
     this.gnregio = [];
     this.gndepar = [];
     this.gnmunic = [];
     this.gnlocal = [];
     this.gnbarri = [];
+    this.gnregioA = [];
+    this.gndeparA = [];
+    this.gnmunicA = [];
+    this.gnlocalA = [];
+    this.gnbarriA = [];
+    this.rnafili = new RnAfili();
+    this.rnsuafili = [];
    }
 
    async saveRadic(form: NgForm) {
@@ -416,7 +430,13 @@ export class RnradicComponent implements OnInit {
   lupaDocumentoTrabajador() {
     this._tableDocumento.btnModalQb = 'btnDocumento';
     this._tableDocumento.ModalQb = 'modalDocumento';
-    this._tableDocumento.render(this.suafiliInit);
+
+    // if (this.cra_clar === 'T' || this.cra_clar === 'A') {
+    //   const suafiliInitFilter = this.suafiliInit.filter(t => t.AFI_DOCU === this.radic.usu_codi);
+    //   this._tableDocumento.render(suafiliInitFilter);
+    // } else
+      this._tableDocumento.render(this.suafiliInit);
+
     this._tableDocumento.show();
   }
 
@@ -494,6 +514,7 @@ export class RnradicComponent implements OnInit {
   }
 
   setAportant(rowSelected: any) {
+
     this.radic.tia_cont = rowSelected.TIA_CONT;
     this.radic.tia_codi = rowSelected.TIA_CODI;
     this.radic.tia_nomb = rowSelected.TIA_NOMB;
@@ -539,20 +560,28 @@ export class RnradicComponent implements OnInit {
     this.radic.apo_coda = rowSelected.APO_CODA;
     this.radic.apo_razs = rowSelected.APO_RAZS;
     this.radic.afi_tele = rowSelected.AFI_TELE;
+    this.radic.rad_pais = rowSelected.RAD_PAIS;
+    this.radic.rad_regi = rowSelected.RAD_REGI;
+    this.radic.rad_depa = rowSelected.RAD_DEPA;
+    this.radic.rad_muni = rowSelected.RAD_MUNI;
+    this.radic.rad_loca = rowSelected.RAD_LOCA;
+    this.radic.rad_barr = rowSelected.RAD_BARR;
 
-    if (this.cra_prim !== 'S') {
-      this.radic.rad_pais = 0;
-      this.filtrarRegiones('', 0);
-      this.radic.rad_regi = 0;
-      this.filtrarDeptos('', 0, 0);
-      this.radic.rad_depa = 0;
-      this.filtrarMunic('', 0, 0, 0);
-      this.radic.rad_muni = 0;
-      this.filtrarLocal('', 0, 0, 0, 0);
-      this.radic.rad_loca = 0;
-      this.filtrarBarri('', 0, 0, 0, 0, 0);
-      this.radic.rad_barr = 0;
-    }
+    this.filtrarRegiones('', this.radic.rad_pais);
+
+    // if (this.cra_prim !== 'S') {
+    //   this.radic.rad_pais = 0;
+    //   this.filtrarRegiones('', 0);
+    //   this.radic.rad_regi = 0;
+    //   this.filtrarDeptos('', 0, 0);
+    //   this.radic.rad_depa = 0;
+    //   this.filtrarMunic('', 0, 0, 0);
+    //   this.radic.rad_muni = 0;
+    //   this.filtrarLocal('', 0, 0, 0, 0);
+    //   this.radic.rad_loca = 0;
+    //   this.filtrarBarri('', 0, 0, 0, 0, 0);
+    //   this.radic.rad_barr = 0;
+    // }
   }
 
   setDocAportante(rowSelected: any) {
@@ -627,19 +656,7 @@ export class RnradicComponent implements OnInit {
     this.radic.afi_ape2 = rowSelected.AFI_APE2;
     this.radic.afi_fecn = rowSelected.AFI_FECN;
     this.radic.afi_tele = rowSelected.AFI_TELE;
-    this.radic.tip_coda = rowSelected.TIP_CODA;
-    this.radic.tip_noma = rowSelected.TIP_NOMA;
-    this.radic.apo_orig = rowSelected.APO_ORIG;
     this.getInfoxDocumento();
-
-    if (this.cra_afiw === 'S') {
-      this.showAfiliacion = true;
-      if (this.radic.apo_orig !== 'O') {
-        this.showAlertMesssage(`El aportante no pertenece al régimen obligatorio.`);
-      }
-    } else {
-      this.showAfiliacion = false;
-    }
   }
 
   async getInfoxDocumento() {
@@ -656,36 +673,46 @@ export class RnradicComponent implements OnInit {
       this.radic.rad_emai = this.suafiliInfo.AFI_MAIL;
       this.radic.tip_coda = this.suafiliInfo.TIP_CODA;
       this.radic.tip_noma = this.suafiliInfo.TIP_NOMA;
-      this.radic.rad_pais = this.suafiliInfo.PAI_CODI;
-      this.paise.pai_codi = this.radic.rad_pais;
+      this.radic.rad_pais = this.suafiliInfo.PAI_CODI.toString();
+      this.paise.pai_codi = Number(this.radic.rad_pais);
       this.radic.pai_nomb = this.suafiliInfo.PAI_NOMB;
       this.paise.pai_nomb = this.suafiliInfo.PAI_NOMB;
       this.gnpaise.push(this.paise);
-      this.radic.rad_regi = this.suafiliInfo.REG_CODI;
-      this.regio.reg_codi = this.radic.rad_regi;
+      this.radic.rad_regi = this.suafiliInfo.REG_CODI.toString();
+      this.regio.reg_codi = Number(this.radic.rad_regi);
       this.radic.reg_nomb = this.suafiliInfo.REG_NOMB;
       this.regio.reg_nomb = this.suafiliInfo.REG_NOMB;
       this.gnregio.push(this.regio);
-      this.radic.rad_depa = this.suafiliInfo.DEP_CODI;
-      this.depar.dep_codi = this.radic.rad_depa;
+      this.radic.rad_depa = this.suafiliInfo.DEP_CODI.toString();
+      this.depar.dep_codi = Number(this.radic.rad_depa);
       this.radic.dep_nomb = this.suafiliInfo.DEP_NOMB;
       this.depar.dep_nomb = this.suafiliInfo.DEP_NOMB;
       this.gndepar.push(this.depar);
-      this.radic.rad_muni = this.suafiliInfo.MUN_CODI;
-      this.munic.mun_codi = this.radic.rad_muni;
+      this.radic.rad_muni = this.suafiliInfo.MUN_CODI.toString();
+      this.munic.mun_codi = Number(this.radic.rad_muni);
       this.radic.mun_nomb = this.suafiliInfo.MUN_NOMB;
       this.munic.mun_nomb = this.suafiliInfo.MUN_NOMB;
       this.gnmunic.push(this.munic);
-      this.radic.rad_loca = this.suafiliInfo.LOC_CODI;
-      this.local.loc_codi = this.radic.rad_loca;
+      this.radic.rad_loca = this.suafiliInfo.LOC_CODI.toString();
+      this.local.loc_codi = Number(this.radic.rad_loca);
       this.radic.loc_nomb = this.suafiliInfo.LOC_NOMB;
       this.local.loc_nomb = this.suafiliInfo.LOC_NOMB;
       this.gnlocal.push(this.local);
-      this.radic.rad_barr = this.suafiliInfo.BAR_CODI;
-      this.barri.bar_codi = this.radic.rad_barr;
+      this.radic.rad_barr = this.suafiliInfo.BAR_CODI.toString();
+      this.barri.bar_codi = Number(this.radic.rad_barr);
       this.radic.bar_nomb = this.suafiliInfo.BAR_NOMB;
       this.barri.bar_nomb = this.suafiliInfo.BAR_NOMB;
       this.gnbarri.push(this.barri);
+      this.radic.apo_orig = this.suafiliInfo.APO_ORIG;
+
+      if (this.cra_afiw === 'S') {
+        this.showAfiliacion = true;
+        if (this.radic.apo_orig !== 'O') {
+          this.showAlertMesssage(`El aportante no pertenece al régimen obligatorio.`);
+        }
+      } else {
+        this.showAfiliacion = false;
+      }
     }
   }
 
@@ -708,19 +735,19 @@ cleanDataForm() {
   this.radic.dsu_tele = '';
   this.radic.rad_dire = '';
   this.radic.rad_emai = '';
-  this.radic.rad_pais = undefined;
-  this.radic.rad_regi = undefined;
-  this.radic.rad_depa = undefined;
-  this.radic.rad_muni = undefined;
-  this.radic.rad_loca = undefined;
-  this.radic.rad_barr = undefined;
+  this.radic.rad_pais = '';
+  this.radic.rad_regi = '';
+  this.radic.rad_depa = '';
+  this.radic.rad_muni = '';
+  this.radic.rad_loca = '';
+  this.radic.rad_barr = '';
 }
   showAlertMesssage(msg: string) {
     this.msg = msg;
     this.alert.show();
   }
 
-  filtrarRegiones(type: string, _pai_codi: number) {
+  filtrarRegiones(type: string, _pai_codi: string) {
 
     let query = 'api/CtPropo/LoadRegiones?';
     query += `pai_codi=${_pai_codi}`;
@@ -735,16 +762,24 @@ cleanDataForm() {
 
       if (resp.retorno === 0) {
         this.gnregio = resp.objTransaction.GnRegio;
-        this.radic.rad_regi = undefined;
-      } else {
+        if (this.radic.rad_regi !== undefined && type === '')
+          this.filtrarDeptos('', this.radic.rad_pais, this.radic.rad_regi);
+        else {
+          this.radic.rad_regi = '';
+          this.radic.rad_depa = '';
+          this.radic.rad_muni = '';
+          this.radic.rad_loca = '';
+          this.radic.rad_barr = '';
+        }
+
+      } else
         this.showAlertMesssage(`${resp.txtRetorno}`);
-      }
     }, err => {
       this.showAlertMesssage(`Error conectando con el servidor, verfique que el servidor configurado esté escrito correctamente`);
     });
   }
 
-  filtrarDeptos(type: string, _pai_codi: number, _reg_codi: number) {
+  filtrarDeptos(type: string, _pai_codi: string, _reg_codi: string) {
 
     let query = 'api/CtPropo/LoadDeptos?';
     query += `pai_codi=${_pai_codi}`;
@@ -759,6 +794,8 @@ cleanDataForm() {
 
       if (resp.retorno === 0) {
         this.gndepar = resp.objTransaction.GnDepar;
+        if (this.radic.rad_depa !== undefined)
+        this.filtrarMunic('', this.radic.rad_pais, this.radic.rad_regi, this.radic.rad_depa);
       } else {
         this.showAlertMesssage(`${resp.txtRetorno}`);
       }
@@ -769,7 +806,10 @@ cleanDataForm() {
     });
   }
 
-  filtrarMunic(type: string, _pai_codi: number, _reg_codi: number, _dep_codi: number) {
+  filtrarMunic(type: string, _pai_codi: string, _reg_codi: string, _dep_codi: string) {
+
+    if (_dep_codi === '')
+      return;
 
     let query = 'api/CtPropo/LoadMunic?';
     query += `pai_codi=${_pai_codi}`;
@@ -784,6 +824,8 @@ cleanDataForm() {
 
       if (resp.retorno === 0) {
         this.gnmunic = resp.objTransaction.GnMunic;
+        if (this.radic.rad_muni !== undefined)
+        this.filtrarLocal('', this.radic.rad_pais, this.radic.rad_regi, this.radic.rad_depa, this.radic.rad_muni);
       } else {
         // this.spinner.hide();
         this.showAlertMesssage(`${resp.txtRetorno}`);
@@ -795,7 +837,10 @@ cleanDataForm() {
     });
   }
 
-  filtrarLocal(type: string, _pai_codi: number, _reg_codi: number, _dep_codi: number, _mun_codi: number) {
+  filtrarLocal(type: string, _pai_codi: string, _reg_codi: string, _dep_codi: string, _mun_codi: string) {
+
+    if (_mun_codi === '')
+      return;
 
     let query = 'api/CtPropo/LoadLocal?';
     query += `pai_codi=${_pai_codi}`;
@@ -810,6 +855,8 @@ cleanDataForm() {
 
       if (resp.retorno === 0) {
         this.gnlocal = resp.objTransaction.GnLocal;
+        if (this.radic.rad_loca !== undefined)
+        this.filtrarBarri('', this.radic.rad_pais, this.radic.rad_regi, this.radic.rad_depa, this.radic.rad_muni, this.radic.rad_loca);
       } else {
        // this.spinner.hide();
         this.showAlertMesssage(`${resp.txtRetorno}`);
@@ -821,7 +868,10 @@ cleanDataForm() {
     });
   }
 
-  filtrarBarri(type: string, _pai_codi: number, _reg_codi: number, _dep_codi: number, _mun_codi: number, _loc_codi: number) {
+  filtrarBarri(type: string, _pai_codi: string, _reg_codi: string, _dep_codi: string, _mun_codi: string, _loc_codi: string) {
+
+    if (_loc_codi === '')
+      return;
 
     let query = 'api/CtPropo/LoadBarri?';
     query += `pai_codi=${_pai_codi}`;
@@ -941,6 +991,7 @@ cleanDataForm() {
 
   hideShowControls() {
     this.hideControls();
+  
     if (this.cra_clar === 'A' && this.cra_prim === 'N' && this.cra_dest === 'F') {
       this.datTrabajador = true;
       this.nucleoFamilia = true;
@@ -968,6 +1019,10 @@ cleanDataForm() {
       this.numDocTrabaja = true;
     } else if (this.cra_clar === 'P' && this.cra_prim === 'N' && this.cra_dest === 'A') {
       this.numeDocumento = true;
+      this.nucleoFamilia = true;
+    } else if (this.cra_clar === 'P' && this.cra_prim === 'N' && this.cra_dest === 'P') {
+      this.numeDocumento = true;
+      this.nucleoFamilia = true;
     } else if (this.cra_clar === 'P' && this.cra_prim === 'N' && this.cra_dest === 'S') {
       this.numeDocumento = true;
     } else if (this.cra_clar === 'P' && this.cra_prim === 'S' && this.cra_dest === 'A') {

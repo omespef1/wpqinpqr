@@ -26,7 +26,7 @@ export class RnRadic {
     public rad_tdat = 'N';
     public rad_obse: string;
     public ite_depe: string;
-    public rad_nfol: number;
+    public rad_nfol = 0;
 
     public tip_codi: number;
     public tip_noma: string;
@@ -42,17 +42,17 @@ export class RnRadic {
     public rad_emai: string;
 
     // Geografía
-    public rad_pais: number;
+    public rad_pais: string;
     public pai_nomb: string;
-    public rad_regi: number;
+    public rad_regi: string;
     public reg_nomb: string;
-    public rad_depa: number;
+    public rad_depa: string;
     public dep_nomb: string;
-    public rad_muni: number;
+    public rad_muni: string;
     public mun_nomb: string;
-    public rad_loca: number;
+    public rad_loca: string;
     public loc_nomb: string;
-    public rad_barr: number;
+    public rad_barr: string;
     public bar_nomb: string;
 
     // Núcleo familiar
