@@ -431,10 +431,13 @@ export class RnradicComponent implements OnInit {
     this._tableDocumento.btnModalQb = 'btnDocumento';
     this._tableDocumento.ModalQb = 'modalDocumento';
 
-    // if (this.cra_clar === 'T' || this.cra_clar === 'A') {
-    //   const suafiliInitFilter = this.suafiliInit.filter(t => t.AFI_DOCU === this.radic.usu_codi);
-    //   this._tableDocumento.render(suafiliInitFilter);
-    // } else
+    if (this.cra_clar === 'T' || this.cra_clar === 'A') {
+      const suafiliInitFilter = this.suafiliInit.filter(t => t.AFI_DOCU === this.radic.usu_codi);
+      if (suafiliInitFilter.length === 0)
+        this._tableDocumento.render(this.suafiliInit);
+      else
+        this._tableDocumento.render(suafiliInitFilter);
+    } else
       this._tableDocumento.render(this.suafiliInit);
 
     this._tableDocumento.show();

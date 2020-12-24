@@ -128,8 +128,12 @@ export class SfforpoComponent implements OnInit {
     this.spinner.show();
     this._gnempre.GetGnEmpre(this.usu_codi).subscribe((resp: any) => {
       this.companies = resp.objTransaction;
-      this.spinner.hide();
-      this._EmpreModal.present();
+      if (this.companies !== null && this.companies.length === 1) {
+        this.emp_codi = this.companies[0].emp_codi;
+      } else {
+        this.spinner.hide();
+        this.modal.present();
+      }
     });
   }
 
